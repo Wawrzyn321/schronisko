@@ -1,0 +1,44 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Priviledge {
+  USER
+  CONST_POST
+  POST
+  ANIMAL
+}
+
+model User {
+  id              Int      @default(autoincrement()) @id
+  email           String   @unique
+  passwordHash    String
+  firstName       String
+  lastName        String
+  isActive        Boolean @default(true)
+  sessions Session[]
+}
+
+model Session {
+  id         String   @id @default(uuid())
+  userId     String
+  expiryTime DateTime
+  user       User     @relation(fields: [userId], references: [id])
+}
+
+model UserPriviledges {
+  @@id([ priviledge, userId ])
+  userId     Int
+  priviledge Priviledge
+}
+
+
+
