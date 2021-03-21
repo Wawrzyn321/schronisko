@@ -24,21 +24,21 @@ model User {
   firstName       String
   lastName        String
   isActive        Boolean @default(true)
-  sessions Session[]
+  sessions        Session[]
+  priviledges     UserPriviledges[]
 }
 
 model Session {
   id         String   @id @default(uuid())
-  userId     String
+  userId     Int
   expiryTime DateTime
   user       User     @relation(fields: [userId], references: [id])
 }
 
 model UserPriviledges {
   @@id([ priviledge, userId ])
-  userId     Int
-  priviledge Priviledge
+  userId      Int
+  user      User  @relation(fields: [userId], references: [id])
+  priviledge  Priviledge
+  @@unique([userId, priviledge])
 }
-
-
-
