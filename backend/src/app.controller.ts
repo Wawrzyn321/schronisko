@@ -1,9 +1,6 @@
-import { Controller, Get, Request, Post, UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from './auth/jwt-auth.guard';
-import { LocalAuthGuard } from './auth/local-auth.guard';
+import { Controller, Get, Request, Post } from '@nestjs/common';
 import { AuthService } from './auth/auth.service';
 import { Public } from './auth/auth.module';
-
 @Controller()
 export class AppController {
   constructor(private authService: AuthService) {}
