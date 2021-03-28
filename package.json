@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "concurrently \"npm run start:dev --prefix=backend\" \"npm run dev --prefix=backoffice\""
   },
   "keywords": [],
   "author": "",
@@ -16,6 +16,7 @@
     "typescript": "^4.2.3"
   },
   "dependencies": {
-    "@prisma/client": "^2.19.0"
+    "@prisma/client": "^2.19.0",
+    "concurrently": "^6.0.0"
   }
 }

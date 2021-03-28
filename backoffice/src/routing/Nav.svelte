@@ -1,0 +1,78 @@
+<script lang="ts">
+  import { auth, logout } from './../auth.context';
+  import { link } from 'svelte-spa-router';
+  import active from 'svelte-spa-router/active';
+
+  const routes = [
+    {
+      name: 'Użytkownicy',
+      requiredPermission: 'USER',
+      path: '/users',
+    },
+    {
+      name: 'Stałe posty',
+      requiredPermission: 'CONST_POST',
+      path: '/const-posts',
+    },
+    {
+      name: 'Posty',
+      requiredPermission: 'POST',
+      path: '/posts',
+    },
+    {
+      name: 'Zwierzęta',
+      requiredPermission: 'ANIMAL',
+      path: '/animals',
+    },
+  ];
+</script>
+
+<nav>
+  <a href="https://www.schronisko.sosnowiec.pl/" target="_blank">
+    Strona schroniska</a
+  >
+  {#if $auth}
+    <ul>
+      {#each routes as route}
+        {#if $auth.user.priviledges.includes(route.requiredPermission)}
+          <li>
+            <a use:link use:active href={`${route.path}`}>{route.name}</a>
+          </li>
+        {/if}
+      {/each}
+      <li><a use:link use:active href="/profile">Mój profil</a></li>
+    </ul>
+    <div>
+      <span>{$auth.user.firstName} {$auth.user.lastName}</span>
+      <button class="link" on:click={logout}>Wyloguj się</button>
+    </div>
+  {/if}
+</nav>
+
+<style lang="scss">
+  nav {
+    vertical-align: middle;
+    height: 60px;
+    background-color: whitesmoke;
+    display: flex;
+    place-items: center;
+    padding: 0 24px;
+    white-space: nowrap;
+
+    ul {
+      list-style-type: none;
+      width: 100%;
+    }
+
+    li {
+      display: inline-block;
+      margin-right: 10px;
+    }
+
+    a {
+      // margin-left: auto;
+      display: inline-block;
+      margin-right: 16px;
+    }
+  }
+</style>

@@ -53,7 +53,7 @@ async function main() {
             }
         },
     });
-    console.log(admin)
+    console.info(admin)
 }
 main()
     .catch(e => {
