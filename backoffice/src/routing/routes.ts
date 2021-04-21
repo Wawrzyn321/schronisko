@@ -10,7 +10,7 @@ import { unauthorizedWrapper } from './helpers';
 export const routes = {
     '/': unauthorizedWrapper(Profile),
     '/login': Login,
-    '/users': (Users),
+    '/users': unauthorizedWrapper(Users),
     '/const-posts': unauthorizedWrapper(ConstPosts),
     '/posts': unauthorizedWrapper(Posts),
     '/animals': unauthorizedWrapper(Animals),

@@ -1,7 +1,3 @@
-import type { PriviledgeType } from "../../../prisma/viewModels/UserViewModel";
-
-export const priviledges: PriviledgeType[] = ['USER', 'CONST_POST', 'POST', 'ANIMAL'];
-
 export const priviledgeNames = {
     USER: 'Użytkownicy',
     CONST_POST: 'Stałe posty',

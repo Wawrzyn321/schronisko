@@ -2,8 +2,15 @@
   import { auth, logout } from './../auth.context';
   import { link } from 'svelte-spa-router';
   import active from 'svelte-spa-router/active';
+  import type { Priviledge } from '@prisma/client';
 
-  const routes = [
+  interface Route {
+    name: string;
+    requiredPermission: Priviledge;
+    path: string;
+  }
+
+  const routes: Route[] = [
     {
       name: 'Użytkownicy',
       requiredPermission: 'USER',

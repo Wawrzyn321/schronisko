@@ -25,7 +25,7 @@
     <h2>{title}</h2>
     <Button type="is-light" on:click={close}>&times;</Button>
   </header>
-  <div class="content">
+  <div class="modal-content">
     <slot />
   </div>
   {#if confirmText || cancelText}
@@ -60,12 +60,16 @@
 
   h2 {
     font-size: 125%;
+    margin-left: 8px;
+    margin-top: 8px;
   }
 
   header,
-  .content,
   footer {
     padding: 8px;
+  }
+  .modal-content {
+    padding: 16px 16px 0;
   }
 
   footer {

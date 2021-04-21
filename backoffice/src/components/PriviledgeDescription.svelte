@@ -1,11 +1,12 @@
 <script lang="ts">
+import type { Priviledge } from '../prisma-types/priviledges';
+
   import {
     priviledgeDescriptions,
     priviledgeNames,
   } from '../common/PriviledgesInfo';
-  import type { PriviledgeType } from './../../../prisma/viewModels/UserViewModel';
 
-  export let priviledgeType: PriviledgeType;
+  export let priviledgeType: Priviledge;
 </script>
 
 <section>

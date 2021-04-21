@@ -29,10 +29,10 @@
 
 <form on:submit|preventDefault={logIn}>
   <Field label="Email">
-    <Input bind:value={email} placeholder="Email" />
+    <Input required bind:value={email} placeholder="Email" />
   </Field>
   <Field label="Hasło">
-    <Input bind:value={password} type="password" placeholder="Hasło" />
+    <Input required bind:value={password} type="password" placeholder="Hasło" />
   </Field>
   <Button
     on:click={logIn}

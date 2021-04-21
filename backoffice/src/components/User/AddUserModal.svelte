@@ -2,23 +2,30 @@
   import Modal from './../Modal.svelte';
   import { Field, Input, Modal as SModal } from 'svelma';
   import {
-    priviledges,
     priviledgeNames,
     priviledgeDescriptions,
   } from '../../common/PriviledgesInfo';
-  import type { PriviledgeType } from '../../../../prisma/viewModels/UserViewModel';
+  // import { auth } from '../../auth.context';
+import type { UserViewModel } from '../../prisma-types/viewModels/UserViewModel';
+import type { Priviledge } from '../../prisma-types/priviledges';
+import { priviledges } from '../../prisma-types/priviledges';
+import { throwingFetch } from '../../common/throwingFetch';
 
   export let modalVisible: boolean;
+  export let onUserAdded: (user: UserViewModel) => any;
+
+  let form: HTMLFormElement;
+  let isFormValid = false;
 
   const user = {
     email: '',
     firstName: '',
     lastName: '',
     password: '',
-    priviledges: [],
+    priviledges: ['ANIMAL'],
   };
 
-  const switchPriviledge = (priviledge: PriviledgeType) => (e: any) => {
+  const switchPriviledge = (priviledge: Priviledge) => (e: any) => {
     if (e.target.checked) {
       user.priviledges = [...user.priviledges, priviledge];
     } else {
@@ -26,42 +33,48 @@
     }
   };
 
-  function addUser() {
-    console.log(user);
+  async function addUser() {
+    const newUser = await throwingFetch('http://localhost:3000/api/users', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(user),
+    });
+    onUserAdded(newUser);
   }
 </script>
 
 <div>
-  <SModal bind:active={modalVisible}>
+  <SModal bind:active={modalVisible} onBody={false}>
     <Modal
       bind:isOpen={modalVisible}
       title="Dodaj użytkownika"
       confirmText="Dodaj"
       onConfirm={addUser}
-      disabledConfirm={false}
+      disabledConfirm={!isFormValid}
     >
-      <form>
+      <form bind:this={form} on:change={() => isFormValid = form.reportValidity()}>
         <Field label="Email">
-          <Input bind:value={user.email} placeholder="Email" />
+          <Input required type="email" bind:value={user.email} placeholder="Email" />
         </Field>
         <Field label="Imię">
-          <Input bind:value={user.firstName} placeholder="Imię" />
+          <Input required bind:value={user.firstName} placeholder="Imię" />
         </Field>
         <Field label="Nazwisko">
-          <Input bind:value={user.lastName} placeholder="Nazwisko" />
+          <Input required bind:value={user.lastName} placeholder="Nazwisko" />
         </Field>
         <Field
           label="Hasło"
-          message="Przekaż hasło użytkownikowi po jego stworzeniu"
+          message="Przekaż hasło użytkownikowi po jego stworzeniu."
         >
-          <Input bind:value={user.password} placeholder="Hasło" />
+          <Input required bind:value={user.password} placeholder="Hasło" />
         </Field>
         <Field label="Uprawnienia">
           <ul>
             {#each priviledges as priviledge}
               <li>
-                <label class="priviledge-checklist-item">
+                <label>
                   <input
+                    checked={user.priviledges.includes(priviledge)}
                     type="checkbox"
                     on:change={switchPriviledge(priviledge)}
                   />

@@ -31,7 +31,6 @@ export class AuthService {
       const { firstName, lastName, email, id:sub } = user;
       const priviledges = (await this.usersService.getPriviledges(user.id)).map(uP => uP.priviledge);
       const payload = { firstName, lastName, email, sub, priviledges };
-      console.log('ok')
       return {
         access_token: this.jwtService.sign(payload),
         user: {...user, priviledges},

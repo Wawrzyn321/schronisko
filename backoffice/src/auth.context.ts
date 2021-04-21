@@ -1,7 +1,8 @@
-import type { UserViewModel } from './../../prisma/viewModels/UserViewModel';
+import type { UserViewModel } from './prisma-types/viewModels/UserViewModel';
 import { writable } from 'svelte/store';
 // import jwt_decode from 'jwt-decode';
 import { push } from 'svelte-spa-router';
+import { throwingFetch } from './common/throwingFetch';
 
 interface Auth {
     token: string;
@@ -22,18 +23,17 @@ export const logout = () => {
     value.set(null);
     localStorage.setItem(AUTH_STORAGE_KEY, null);
     push('/login');
+    location.reload();
 }
 
 export const login = async (email: string, password: string) => {
-    const response = await fetch('http://localhost:3000/auth/login', {
+    const response = await throwingFetch('http://localhost:3000/auth/login', {
+        noAuth: true,
         method: 'POST',
         body: JSON.stringify({ email, password }),
         headers: { 'Content-Type': 'application/json' },
     });
-    if (!response.ok) throw Error(response.statusText);
-
-    const json = await response.json();
-    setUser(json.user, json.access_token);
+    setUser(response.user, response.access_token);
 }
 
 export const auth = value;

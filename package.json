@@ -1,9 +1,8 @@
 {
-  "name": "prisma-gen",
+  "name": "schronisko",
   "version": "1.0.0",
-  "main": "index.js",
   "scripts": {
-    "start": "concurrently \"npm run start:dev --prefix=backend\" \"npm run dev --prefix=backoffice\""
+    "start": "concurrently \"npm run dev --prefix=backend\" \"npm run dev --prefix=backoffice\""
   },
   "keywords": [],
   "author": "",
@@ -17,6 +16,7 @@
   },
   "dependencies": {
     "@prisma/client": "^2.19.0",
-    "concurrently": "^6.0.0"
+    "concurrently": "^6.0.0",
+    "email-validator": "^2.0.4"
   }
 }
