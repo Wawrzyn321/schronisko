@@ -12,5 +12,5 @@
 <style>
   :global(a.active) {
     font-weight: bolder;
-}
+  }
 </style>

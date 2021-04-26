@@ -1,4 +1,4 @@
-import { toUser, UserDto, validate } from './../prisma-types/UserDto';
+import { toUser, UserDto, toUserUpdate, validateCreate, validateUpdate } from './../prisma-types/UserDto';
 import { UserViewModel } from './../prisma-types/viewModels/UserViewModel';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma-connect/prisma.service';
@@ -15,11 +15,11 @@ export class UsersService {
   }
 
   async getAll(params?: PagingParams): Promise<UserViewModel[]> {
-    return await this.prisma.user.findMany(params).then(users => users.map(this.toViewModel));
+    return await this.prisma.user.findMany({ ...params, orderBy: [{ lastName: 'asc'}, {firstName: 'asc' }] }).then(users => users.map(this.toViewModel));
   }
 
   async create(user: UserDto): Promise<UserViewModel> {
-    if (!validate(user)) {
+    if (!validateCreate(user)) {
       throw new BadRequestException();
     }
     return await this.prisma.user.create(
@@ -27,7 +27,22 @@ export class UsersService {
     ).then(this.toViewModel);
   }
 
+  async update(id: number, user: UserDto): Promise<UserViewModel> {
+    if (!validateUpdate(id, user)) {
+      throw new BadRequestException();
+    }
+
+    await this.prisma.userPriviledges.deleteMany({where: { userId: id }})
+
+    const data = toUserUpdate(user);
+    return await this.prisma.user.update(
+      { where: { id }, data }
+    ).then(this.toViewModel);
+  }
+
   async delete(userId: number): Promise<UserViewModel> {
+    await this.prisma.userPriviledges.deleteMany({where: { userId }})
+
     return await this.prisma.user.delete({
       where: { id: userId },
     }).then(this.toViewModel);

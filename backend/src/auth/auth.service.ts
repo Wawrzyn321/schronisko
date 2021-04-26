@@ -16,7 +16,7 @@ export class AuthService {
     private bcryptService: BcryptService,
   ) { }
 
-  async validateUser(userDto: UserDto): Promise<any> {
+  async validateUserLogin(userDto: UserDto): Promise<any> {
     const user = await this.usersService.findOne(userDto.email);
     if (user && user.isActive && await this.bcryptService.compareHash(userDto.password, user.passwordHash)) {
       const { passwordHash, ...result } = user;
@@ -26,9 +26,9 @@ export class AuthService {
   }
 
   async login(userDto: UserDto) {
-    const user = await this.validateUser(userDto);
+    const user = await this.validateUserLogin(userDto);
     if (user) {
-      const { firstName, lastName, email, id:sub } = user;
+      const { firstName, lastName, email, id: sub } = user;
       const priviledges = (await this.usersService.getPriviledges(user.id)).map(uP => uP.priviledge);
       const payload = { firstName, lastName, email, sub, priviledges };
       return {

@@ -27,32 +27,34 @@
   }
 </script>
 
-<form on:submit|preventDefault={logIn}>
-  <Field label="Email">
-    <Input required bind:value={email} placeholder="Email" />
-  </Field>
-  <Field label="Hasło">
-    <Input required bind:value={password} type="password" placeholder="Hasło" />
-  </Field>
-  <Button
-    on:click={logIn}
-    type="is-primary"
-    nativeType="submit"
-    disabled={!email || !password}
-    {loading}>Zaloguj</Button
-  >
+<main class="login-form">
+  <form on:submit|preventDefault={logIn}>
+    <Field label="Email">
+      <Input required bind:value={email} placeholder="Email" />
+    </Field>
+    <Field label="Hasło">
+      <Input required bind:value={password} type="password" placeholder="Hasło" />
+    </Field>
+    <Button
+      on:click={logIn}
+      type="is-primary"
+      nativeType="submit"
+      disabled={!email || !password}
+      {loading}>Zaloguj</Button
+    >
+  </form>
   <Notification type="is-danger" bind:active={errorOpen}>
     Wygląda na to, że wprowadzone dane są nieprawidłowe. Jeśli zapomniałeś hasła
     bądź chcesz założyć konto skontaktuj się z administratorem schroniska.
   </Notification>
-</form>
+</main>
 
 <!-- <Field label="Username" type="is-success" message="Username is available">
   <Input value="joey55" />
 </Field> -->
 <style lang="scss">
-  form   {
+  .login-form   {
     margin: 20px auto 0;
-    max-width: 320px;
+    max-width: 360px;
   }
 </style>

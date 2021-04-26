@@ -1,5 +1,5 @@
 <script lang="ts">
-import type { Priviledge } from '../prisma-types/priviledges';
+  import type { Priviledge } from '../prisma-types/priviledges';
 
   import {
     priviledgeDescriptions,

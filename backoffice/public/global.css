@@ -211,3 +211,23 @@ ul {
 ul::marker {
   display: none;
 }
+
+td {
+  vertical-align: middle !important;
+}
+
+.text-align-center {
+  text-align: center;
+}
+
+.text-align-right {
+  text-align: right !important;
+}
+
+table button span {
+  display: grid;
+}
+
+table button {
+  padding: 12px !important;
+}

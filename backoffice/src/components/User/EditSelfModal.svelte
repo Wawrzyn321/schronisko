@@ -1,29 +1,27 @@
 <script lang="ts">
   import Modal from './../Modal.svelte';
   import { Field, Input, Modal as SModal } from 'svelma';
-  import { createDefaultUser } from './UserCreateParams';
   import type { UserViewModel } from '../../prisma-types/viewModels/UserViewModel';
-  import type { UserCreateParams } from './UserCreateParams';
-  import PriviledgesForm from './PriviledgesForm.svelte';
-  import { userService } from '../../services/UserService';
+  import { auth } from '../../auth.context';
+  import { userService } from './../../services/UserService';
 
+  export let onUserEdited: (u: UserViewModel) => void;
   export let modalVisible: boolean;
-  export let onUserAdded: (user: UserViewModel) => any;
 
   let form: HTMLFormElement;
   let isFormValid = false;
 
-  let user: UserCreateParams;
+  let user: UserViewModel;
 
-  const onMounted = (visible: boolean) => {
-    if (visible) user = createDefaultUser();
-  };
+  function onShow(_) {
+      if (modalVisible) user = {...$auth.user};
+  }
 
-  $: onMounted(modalVisible);
+  $: onShow(modalVisible);
 
-  async function addUser() {
-    const newUser = await userService.addUser(user);
-    onUserAdded(newUser);
+  async function updateSelf() {
+    const updatedUser = await userService.updateSelf(user);
+    onUserEdited(updatedUser);
   }
 </script>
 
@@ -31,9 +29,9 @@
   <SModal bind:active={modalVisible} onBody={false}>
     <Modal
       bind:isOpen={modalVisible}
-      title="Dodaj użytkownika"
-      confirmText="Dodaj"
-      onConfirm={addUser}
+      title="Twoje dane"
+      confirmText="Zatwierdź"
+      onConfirm={updateSelf}
       disabledConfirm={!isFormValid}
     >
       <form
@@ -54,16 +52,6 @@
         <Field label="Nazwisko">
           <Input required bind:value={user.lastName} placeholder="Nazwisko" />
         </Field>
-        <Field
-          label="Hasło"
-          message="Przekaż hasło użytkownikowi po jego stworzeniu."
-        >
-          <Input required bind:value={user.password} placeholder="Hasło" />
-        </Field>
-        <PriviledgesForm
-          priviledges={user.priviledges}
-          updatePriviledges={(p) => (user.priviledges = p)}
-        />
       </form>
     </Modal>
   </SModal>

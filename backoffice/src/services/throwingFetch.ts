@@ -1,6 +1,5 @@
 import { get } from 'svelte/store';
 import { auth } from "../auth.context";
-
 interface RequestInitWithAuth extends RequestInit {
     noAuth?: boolean;
 }

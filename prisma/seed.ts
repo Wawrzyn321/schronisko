@@ -25,16 +25,16 @@ const prisma = new PrismaClient()
 
 async function main() {
     const admin = await prisma.user.upsert({
-        where: { email: 'Wawrzyn321@gmail.com' },
+        where: { email: 'admin@gmail.com' },
         update: {
             isActive: true,
         },
         create: {
-            firstName: "Piotr",
-            lastName: "Wawrzyńczyk",
+            firstName: "adminek",
+            lastName: "admin",
             isActive: true,
-            email: 'Wawrzyn321@gmail.com',
-            passwordHash: await hashData('admin123!'),
+            email: 'admin@gmail.com',
+            passwordHash: await hashData('admin'),
             priviledges: {
                 create: [
                     {
@@ -53,7 +53,7 @@ async function main() {
             }
         },
     });
-    console.info(admin)
+    console.info(admin);
 }
 main()
     .catch(e => {

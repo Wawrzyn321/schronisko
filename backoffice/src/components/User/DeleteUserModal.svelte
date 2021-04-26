@@ -1,18 +1,15 @@
 <script lang="ts">
   import Modal from './../Modal.svelte';
   import { Modal as SModal } from 'svelma';
-  // import { auth } from '../../auth.context';
   import type { UserViewModel } from '../../prisma-types/viewModels/UserViewModel';
-  import { throwingFetch } from '../../common/throwingFetch';
+  import { userService } from '../../services/UserService';
 
   export let modalVisible: boolean;
   export let onUserDeleted: (user: UserViewModel) => any;
-  export let selectedUser: UserViewModel;
+  export let user: UserViewModel;
 
   async function deleteUser() {
-    const user = await throwingFetch(`http://localhost:3000/api/users/${selectedUser.id}`, {
-      method: 'DELETE',
-    });
+    await userService.delete(user.id);
     onUserDeleted(user);
   }
 </script>
@@ -25,7 +22,11 @@
       confirmText="Usuń"
       onConfirm={deleteUser}
     >
-    <p>Czy na pewno chceesz usunąć użytkownika <strong>{selectedUser.firstName} {selectedUser.lastName}</strong>?</p>
+      <p>
+        Czy na pewno chceesz usunąć użytkownika <strong
+          >{user.firstName} {user.lastName}</strong
+        >?
+      </p>
     </Modal>
   </SModal>
 </div>

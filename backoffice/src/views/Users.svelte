@@ -1,92 +1,52 @@
 <script lang="ts">
-  import GenericList from '../components/GenericList.svelte';
-  import UserRenderer from './UserRenderer.svelte';
-  import AddUserModal from './../components/User/AddUserModal.svelte';
-  import DeleteUserModal from './../components/User/DeleteUserModal.svelte';
-  import { Button, Toast } from 'svelma';
+  import Header from './../components/User/Header.svelte';
+  import List from './../components/User/List.svelte';
+  import { Toast } from 'svelma';
   import { onMount } from 'svelte';
-  import { auth } from '../auth.context';
   import type { UserViewModel } from '../prisma-types/viewModels/UserViewModel';
-  import type { ListAction } from '../components/ListAction';
-import { throwingFetch } from '../common/throwingFetch';
+  import { throwingFetch } from '../services/throwingFetch';
+  import { API_URL } from '../services/config';
+  import { insertInOrder } from '../common/insertInOrder';
+  import type { Priviledge } from '.prisma/client';
 
   onMount(async () => {
-    entries = await throwingFetch('http://localhost:3000/api/users');
+    users = await throwingFetch(`${API_URL}/api/users`);
   });
 
-  let entries: any[] = [];
-
-  let headerRenderer = ['Imię', 'Nazwisko', 'Email', 'Aktywny', ''];
-  let createModalVisible = false;
-  let deleteModalVisible = false;
-  let selectedUser: UserViewModel;
-
-  let actions = (user: UserViewModel): ListAction[] => [
-    {
-      type: 'edit',
-      func: console.log,
-    },
-    {
-      type: 'delete',
-      disabled: $auth.user.email === user.email,
-      func: (user: UserViewModel) => {
-        selectedUser = user;
-        deleteModalVisible = true;
-      },
-    },
-  ];
+  let users: any[] = [];
 
   function onUserAdded(u: UserViewModel) {
-    entries = [...entries, u];
+    users = insertInOrder(users, u, u => u.lastName);
     Toast.create({
-      message: 'Stworzono użytkownika',
+      message: 'Dodano użytkownika',
       type: 'is-success',
       position: 'is-bottom',
     });
   }
 
   function onUserDeleted(u: UserViewModel) {
-    entries = entries.filter((e) => e.id !== u.id);
+    users = users.filter((e) => e.id !== u.id);
     Toast.create({
-      message: 'Usunięto użytkownika',
+      message: `Usunięto użytkownika ${u.firstName} ${u.lastName}`,
       type: 'is-success',
       position: 'is-bottom',
     });
   }
+
+  function onUserEdited(u: UserViewModel) {
+    const user = users.find(user => user.id === u.id);
+    const index = users.indexOf(user);
+    users = [...users.slice(0, index), u, ...users.slice(index + 1)];
+  }
 </script>
 
 <main>
-  <header>
-    <h1>Użytkownicy</h1>
-    <Button type="is-primary" on:click={() => (createModalVisible = true)}>
-      +
-      </Button>
-  </header>
-  <GenericList
-    {entries}
-    {headerRenderer}
-    {actions}
-    rowRenderer={UserRenderer}
-  />
-  <AddUserModal bind:modalVisible={createModalVisible} {onUserAdded} />
-  <DeleteUserModal
-    bind:modalVisible={deleteModalVisible}
-    {onUserDeleted}
-    {selectedUser}
-  />
+  <Header {onUserAdded} />
+  <List {onUserDeleted} {onUserEdited} {users} />
 </main>
 
 <style lang="scss">
   main {
     margin: 24px;
-  }
-  header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 32px;
-
-    h1 {
-      font-size: 150%;
-    }
   }
 </style>
