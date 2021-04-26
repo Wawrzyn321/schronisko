@@ -20,6 +20,10 @@ export const setAuth = (user: UserViewModel, token: string) => {
     localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify({user, token}));
 }
 
+export const isSelf = (user: UserViewModel) => get(value).user.email === user.email;
+
+export const isLoggedIn = () => !!get(value);
+
 export const logout = () => {
     value.set(null);
     localStorage.setItem(AUTH_STORAGE_KEY, null);

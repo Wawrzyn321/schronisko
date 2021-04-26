@@ -1,6 +1,6 @@
 <script lang="ts">
   import Modal from './../Modal.svelte';
-  import { Field, Input, Modal as SModal } from 'svelma';
+  import { Field, Input } from 'svelma';
   import { createDefaultUser } from './UserCreateParams';
   import type { UserViewModel } from '../../prisma-types/viewModels/UserViewModel';
   import type { UserCreateParams } from './UserCreateParams';
@@ -27,44 +27,37 @@
   }
 </script>
 
-<div>
-  <SModal bind:active={modalVisible} onBody={false}>
-    <Modal
-      bind:isOpen={modalVisible}
-      title="Dodaj użytkownika"
-      confirmText="Dodaj"
-      onConfirm={addUser}
-      disabledConfirm={!isFormValid}
+<Modal
+  bind:isOpen={modalVisible}
+  title="Dodaj użytkownika"
+  confirmText="Dodaj"
+  onConfirm={addUser}
+  disabledConfirm={!isFormValid}
+>
+  <form bind:this={form} on:input={() => (isFormValid = form.checkValidity())}>
+    <Field label="Email">
+      <Input
+        required
+        type="email"
+        bind:value={user.email}
+        placeholder="Email"
+      />
+    </Field>
+    <Field label="Imię">
+      <Input required bind:value={user.firstName} placeholder="Imię" />
+    </Field>
+    <Field label="Nazwisko">
+      <Input required bind:value={user.lastName} placeholder="Nazwisko" />
+    </Field>
+    <Field
+      label="Hasło"
+      message="Przekaż hasło użytkownikowi po jego stworzeniu."
     >
-      <form
-        bind:this={form}
-        on:input={() => (isFormValid = form.checkValidity())}
-      >
-        <Field label="Email">
-          <Input
-            required
-            type="email"
-            bind:value={user.email}
-            placeholder="Email"
-          />
-        </Field>
-        <Field label="Imię">
-          <Input required bind:value={user.firstName} placeholder="Imię" />
-        </Field>
-        <Field label="Nazwisko">
-          <Input required bind:value={user.lastName} placeholder="Nazwisko" />
-        </Field>
-        <Field
-          label="Hasło"
-          message="Przekaż hasło użytkownikowi po jego stworzeniu."
-        >
-          <Input required bind:value={user.password} placeholder="Hasło" />
-        </Field>
-        <PriviledgesForm
-          priviledges={user.priviledges}
-          updatePriviledges={(p) => (user.priviledges = p)}
-        />
-      </form>
-    </Modal>
-  </SModal>
-</div>
+      <Input required bind:value={user.password} placeholder="Hasło" />
+    </Field>
+    <PriviledgesForm
+      priviledges={user.priviledges}
+      updatePriviledges={(p) => (user.priviledges = p)}
+    />
+  </form>
+</Modal>

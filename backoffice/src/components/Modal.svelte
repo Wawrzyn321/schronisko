@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onDestroy } from 'svelte';
-  import { Button } from 'svelma';
+  import { Button, Modal as SModal } from 'svelma';
 
   export let isOpen: boolean;
   export let title: string;
@@ -20,31 +20,33 @@
   onDestroy(close);
 </script>
 
-<div>
-  <header>
-    <h2>{title}</h2>
-    <Button type="is-light" on:click={close}>&times;</Button>
-  </header>
-  <div class="modal-content">
-    <slot />
+<SModal bind:active={isOpen} onBody={false}>
+  <div>
+    <header>
+      <h2>{title}</h2>
+      <Button type="is-light" on:click={close}>&times;</Button>
+    </header>
+    <div class="modal-content">
+      <slot />
+    </div>
+    {#if confirmText || cancelText}
+      <footer>
+        {#if cancelText}
+          <Button type="is-light" on:click={close}>{cancelText}</Button>
+        {/if}
+        {#if confirmText}
+          <Button
+            class="modal-confirm"
+            type="is-primary"
+            disabled={disabledConfirm}
+            on:click={confirm}
+            >{confirmText}
+          </Button>
+        {/if}
+      </footer>
+    {/if}
   </div>
-  {#if confirmText || cancelText}
-    <footer>
-      {#if cancelText}
-        <Button type="is-light" on:click={close}>{cancelText}</Button>
-      {/if}
-      {#if confirmText}
-        <Button
-          class="modal-confirm"
-          type="is-primary"
-          disabled={disabledConfirm}
-          on:click={confirm}
-          >{confirmText}
-        </Button>
-      {/if}
-    </footer>
-  {/if}
-</div>
+</SModal>
 
 <style lang="scss">
   div {

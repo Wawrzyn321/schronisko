@@ -1,6 +1,5 @@
 <script lang="ts">
   import Modal from './../Modal.svelte';
-  import { Modal as SModal } from 'svelma';
   import type { UserViewModel } from '../../prisma-types/viewModels/UserViewModel';
   import { userService } from '../../services/UserService';
 
@@ -14,19 +13,15 @@
   }
 </script>
 
-<div>
-  <SModal bind:active={modalVisible} onBody={false}>
-    <Modal
-      bind:isOpen={modalVisible}
-      title="Usuń użytkownika"
-      confirmText="Usuń"
-      onConfirm={deleteUser}
-    >
-      <p>
-        Czy na pewno chceesz usunąć użytkownika <strong
-          >{user.firstName} {user.lastName}</strong
-        >?
-      </p>
-    </Modal>
-  </SModal>
-</div>
+<Modal
+  bind:isOpen={modalVisible}
+  title="Usuń użytkownika"
+  confirmText="Usuń"
+  onConfirm={deleteUser}
+>
+  <p>
+    Czy na pewno chceesz usunąć użytkownika <strong
+      >{user.firstName} {user.lastName}</strong
+    >?
+  </p>
+</Modal>

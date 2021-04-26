@@ -1,6 +1,6 @@
 <script lang="ts">
   import Modal from './../Modal.svelte';
-  import { Field, Input, Modal as SModal } from 'svelma';
+  import { Field, Input } from 'svelma';
   import type { UserViewModel } from '../../prisma-types/viewModels/UserViewModel';
   import { auth } from '../../auth.context';
   import { userService } from './../../services/UserService';
@@ -14,7 +14,7 @@
   let user: UserViewModel;
 
   function onShow(_) {
-      if (modalVisible) user = {...$auth.user};
+    if (modalVisible) user = { ...$auth.user };
   }
 
   $: onShow(modalVisible);
@@ -25,34 +25,27 @@
   }
 </script>
 
-<div>
-  <SModal bind:active={modalVisible} onBody={false}>
-    <Modal
-      bind:isOpen={modalVisible}
-      title="Twoje dane"
-      confirmText="Zatwierdź"
-      onConfirm={updateSelf}
-      disabledConfirm={!isFormValid}
-    >
-      <form
-        bind:this={form}
-        on:input={() => (isFormValid = form.checkValidity())}
-      >
-        <Field label="Email">
-          <Input
-            required
-            type="email"
-            bind:value={user.email}
-            placeholder="Email"
-          />
-        </Field>
-        <Field label="Imię">
-          <Input required bind:value={user.firstName} placeholder="Imię" />
-        </Field>
-        <Field label="Nazwisko">
-          <Input required bind:value={user.lastName} placeholder="Nazwisko" />
-        </Field>
-      </form>
-    </Modal>
-  </SModal>
-</div>
+<Modal
+  bind:isOpen={modalVisible}
+  title="Twoje dane"
+  confirmText="Zatwierdź"
+  onConfirm={updateSelf}
+  disabledConfirm={!isFormValid}
+>
+  <form bind:this={form} on:input={() => (isFormValid = form.checkValidity())}>
+    <Field label="Email">
+      <Input
+        required
+        type="email"
+        bind:value={user.email}
+        placeholder="Email"
+      />
+    </Field>
+    <Field label="Imię">
+      <Input required bind:value={user.firstName} placeholder="Imię" />
+    </Field>
+    <Field label="Nazwisko">
+      <Input required bind:value={user.lastName} placeholder="Nazwisko" />
+    </Field>
+  </form>
+</Modal>

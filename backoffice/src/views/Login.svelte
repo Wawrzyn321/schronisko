@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { auth, login } from './../auth.context';
+  import { isLoggedIn, login } from './../auth.context';
   import { push } from 'svelte-spa-router';
 
   import { Field, Input, Button, Notification } from 'svelma';
@@ -22,7 +22,7 @@
     }
   }
 
-  if ($auth) {
+  if (isLoggedIn()) {
     push('/profile');
   }
 </script>
