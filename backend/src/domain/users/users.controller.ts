@@ -3,6 +3,7 @@ import { PriviledgesGuard } from './../auth/priviledges.guard';
 import { UsersService } from './users.service';
 import { Controller, Get, Post, Patch, UseGuards, Body, Param, Delete } from '@nestjs/common';
 import { Priviledge } from '@prisma/client';
+
 @Controller('api/users')
 export class UsersController {
     constructor(private usersService: UsersService) {}

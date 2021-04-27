@@ -20,9 +20,5 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 32px;
-
-    h1 {
-      font-size: 150%;
-    }
   }
 </style>

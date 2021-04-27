@@ -5,7 +5,7 @@
 
   export let modalVisible: boolean;
   export let onUserDeleted: (user: UserViewModel) => any;
-  export let user: UserViewModel;
+  export let user: UserViewModel = {};
 
   async function deleteUser() {
     await userService.delete(user.id);

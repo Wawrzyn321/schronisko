@@ -49,8 +49,6 @@ center,
 dl,
 dt,
 dd,
-ol,
-ul,
 li,
 fieldset,
 form,
@@ -107,10 +105,6 @@ section {
 }
 body {
   line-height: 1;
-}
-ol,
-ul {
-  list-style: none;
 }
 blockquote,
 q {
@@ -204,14 +198,6 @@ button:focus {
   cursor: pointer;
 }
 
-ul {
-  list-style-type: none;
-}
-
-ul::marker {
-  display: none;
-}
-
 td {
   vertical-align: middle !important;
 }
@@ -230,4 +216,55 @@ table button span {
 
 table button {
   padding: 12px !important;
+}
+
+header h1 {
+  font-size: 150%;
+}
+
+.tab {
+  height: fit-content;
+}
+
+.preview {
+  padding-left: 32px;
+  padding-right: 32px;
+}
+
+.preview * {
+  all: revert;
+  margin: 0;
+}
+
+.preview :not(strong) {
+  font-weight: unset;
+}
+
+.preview .ql-align-center {
+  text-align: center;
+}
+
+.preview .ql-align-right {
+  text-align: left;
+}
+
+.preview .ql-align-right {
+  text-align: left;
+}
+
+.preview .ql-align-justify {
+  text-align: justify;
+}
+
+.tab-content {
+  display: block !important;
+  overflow-x: revert !important;
+}
+
+.tab-content, .tab {
+  width: 100%;
+}
+
+.link {
+  background-color: initial;
 }

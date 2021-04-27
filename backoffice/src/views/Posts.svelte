@@ -1,7 +1,12 @@
 <script lang="ts">
+  import Editor from "../components/Editor.svelte";
   
-</script>
-
-<div>
-  posts
-</div>
+  let content = '';
+    
+  </script>
+  
+  <div>
+    <Editor bind:content={content} />
+    <button on:click={() => console.log(content)}>klik</button>
+  </div>
+  

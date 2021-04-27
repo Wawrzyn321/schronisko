@@ -28,6 +28,12 @@ model User {
   priviledges     UserPriviledges[]
 }
 
+model ConstPost {
+  id        String   @id @default(uuid())
+  name     String
+  content   String
+}
+
 model Session {
   id         String   @id @default(uuid())
   userId     Int

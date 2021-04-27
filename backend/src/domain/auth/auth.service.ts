@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
-import { BcryptService } from 'src/auth/bcrypt/bcrypt.service';
+import { BcryptService } from 'src/domain/auth/bcrypt/bcrypt.service';
 
 interface UserDto {
   email: string;

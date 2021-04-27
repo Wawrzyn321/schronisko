@@ -2,8 +2,8 @@
   import Modal from './../Modal.svelte';
   import { Field, Input } from 'svelma';
   import { createDefaultUser } from './UserCreateParams';
-  import type { UserViewModel } from '../../prisma-types/viewModels/UserViewModel';
   import type { UserCreateParams } from './UserCreateParams';
+  import type { UserViewModel } from '../../prisma-types/viewModels/UserViewModel';
   import PriviledgesForm from './PriviledgesForm.svelte';
   import { userService } from '../../services/UserService';
 
@@ -13,7 +13,7 @@
   let form: HTMLFormElement;
   let isFormValid = false;
 
-  let user: UserCreateParams;
+  let user: UserCreateParams = {priviledges:[]};
 
   const onMounted = (visible: boolean) => {
     if (visible) user = createDefaultUser();

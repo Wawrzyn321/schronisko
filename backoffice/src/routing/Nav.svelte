@@ -49,7 +49,7 @@
       {/each}
       <li><a use:link use:active href="/profile">Mój profil</a></li>
     </ul>
-    <div>
+    <div class="user-panel">
       <span>{$auth.user.firstName} {$auth.user.lastName}</span>
       <button class="link" on:click={logout}>Wyloguj się</button>
     </div>
@@ -66,20 +66,17 @@
     padding: 0 24px;
     white-space: nowrap;
 
-    ul {
-      list-style-type: none;
-      width: 100%;
-    }
-
     li {
       display: inline-block;
       margin-right: 10px;
     }
 
     a {
-      // margin-left: auto;
       display: inline-block;
       margin-right: 16px;
     }
+  }
+  .user-panel {
+    margin-left: auto;
   }
 </style>

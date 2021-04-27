@@ -4,19 +4,14 @@
   import { Toast } from 'svelma';
   import { onMount } from 'svelte';
   import type { UserViewModel } from '../prisma-types/viewModels/UserViewModel';
-  import { throwingFetch } from '../services/throwingFetch';
-  import { API_URL } from '../services/config';
   import { insertInOrder } from '../common/insertInOrder';
-  import type { Priviledge } from '.prisma/client';
+  import { userService } from '../services/UserService';
 
-  onMount(async () => {
-    users = await throwingFetch(`${API_URL}/api/users`);
-  });
-
-  let users: any[] = [];
+  let users: UserViewModel[] = [];
+  onMount(async () => users = await userService.getAll());
 
   function onUserAdded(u: UserViewModel) {
-    users = insertInOrder(users, u, u => u.lastName);
+    users = insertInOrder(users, u, (u) => u.lastName);
     Toast.create({
       message: 'Dodano użytkownika',
       type: 'is-success',
@@ -34,7 +29,7 @@
   }
 
   function onUserEdited(u: UserViewModel) {
-    const user = users.find(user => user.id === u.id);
+    const user = users.find((user) => user.id === u.id);
     const index = users.indexOf(user);
     users = [...users.slice(0, index), u, ...users.slice(index + 1)];
   }

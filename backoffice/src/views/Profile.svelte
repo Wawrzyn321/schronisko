@@ -1,6 +1,9 @@
 <script lang="ts">
   import { auth } from '../auth.context';
+  import ChangePasswordModal from '../components/ChangePasswordModal.svelte';
   import PriviledgeDescription from '../components/PriviledgeDescription.svelte';
+
+  let passwordModalVisible = false;
 </script>
 
 <main>
@@ -10,6 +13,9 @@
       {''}
       {$auth.user.lastName}</strong
     >.
+    <button class="link" on:click={() => (passwordModalVisible = true)}>
+      Zmień hasło
+    </button>
   </p>
   <section>
     <p>Twoje uprawnienia:</p>
@@ -23,6 +29,7 @@
     </p>
   </section>
 </main>
+<ChangePasswordModal bind:modalVisible={passwordModalVisible} />
 
 <style>
   main {

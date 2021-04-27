@@ -8,7 +8,7 @@
     priviledgeDescriptions,
   } from '../../common/PriviledgesInfo';
 
-  export let priviledges: Priviledge[];
+  export let priviledges: Priviledge[] = [];
   export let updatePriviledges: (p: Priviledge[]) => void;
 
   const switchPriviledge = (priviledge: Priviledge) => (e: any) => {

@@ -11,7 +11,7 @@
   let form: HTMLFormElement;
   let isFormValid = false;
 
-  let user: UserViewModel;
+  let user: UserViewModel = {priviledges:[]};
 
   function onShow(_) {
     if (modalVisible) user = { ...$auth.user };

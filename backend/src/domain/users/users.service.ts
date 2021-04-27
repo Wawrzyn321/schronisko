@@ -1,10 +1,10 @@
-import { toUser, UserDto, toUserUpdate, validateCreate, validateUpdate } from './../prisma-types/UserDto';
-import { UserViewModel } from './../prisma-types/viewModels/UserViewModel';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma-connect/prisma.service';
 import { User } from '@prisma/client';
-import { BcryptService } from 'src/auth/bcrypt/bcrypt.service';
+import { BcryptService } from 'src/domain/auth/bcrypt/bcrypt.service';
 import { PagingParams } from 'src/common/types';
+import { UserViewModel } from 'src/prisma-types/viewModels/UserViewModel';
+import { toUser, UserDto, toUserUpdate, validateCreate, validateUpdate } from 'src/prisma-types/UserDto';
 
 @Injectable()
 export class UsersService {

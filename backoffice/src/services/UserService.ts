@@ -8,6 +8,10 @@ import { setUser } from "../auth.context";
 const baseUrl = `${API_URL}/api/users`;
 
 export class UserService {
+    async getAll(): Promise<UserViewModel[]> {
+        return await throwingFetch(baseUrl);
+    }
+    
     async addUser(user: UserCreateParams): Promise<UserViewModel> {
         return await throwingFetch(baseUrl, {
             method: 'POST',
