@@ -26,7 +26,7 @@
     <th>Imię</th>
     <th>Nazwisko</th>
     <th>Login</th>
-    <th class="is-active-header">
+    <th class="text-align-center">
       <input type="checkbox" bind:checked={showActive}/>
       Aktywny
     </th>
@@ -37,7 +37,7 @@
       <td>{user.firstName}</td>
       <td>{user.lastName}</td>
       <td>{user.login}</td>
-      <td class="text-align-center is-active-header">{user.isActive ? 'TAK' : 'NIE'}</td>
+      <td class="text-align-center">{user.isActive ? 'TAK' : 'NIE'}</td>
       <td class="text-align-right actions-header">
         <Button
           type="is-primary"
@@ -85,12 +85,5 @@
   input[type=checkbox] {
     display: inline-block;
     margin-left: 10px;
-  }
-
-  .is-active-header {
-    width: 120px;
-  }
-  .actions-header {
-    width: 120px;
   }
 </style>

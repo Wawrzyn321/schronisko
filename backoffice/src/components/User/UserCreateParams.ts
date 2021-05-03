@@ -5,7 +5,7 @@ export type UserCreateParams = {
     firstName: string;
     lastName: string;
     password: string;
-    permissions: Permissions[];
+    permissions: Permission[];
 };
 
 export function createDefaultUser(): UserCreateParams {

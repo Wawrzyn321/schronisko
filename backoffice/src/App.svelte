@@ -9,7 +9,7 @@
   <Router {routes} />
 </div>
 
-<style>
+<style lang="scss">
   :global(a.active) {
     font-weight: bolder;
   }

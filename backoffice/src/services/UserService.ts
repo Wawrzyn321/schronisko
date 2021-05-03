@@ -1,8 +1,8 @@
+import type { Permission } from '@prisma/client';
 import type { UserCreateParams } from './../components/User/UserCreateParams';
 import { throwingFetch } from "./throwingFetch";
 import { API_URL } from './config';
 import type { UserViewModel } from '../prisma-types/viewModels/UserViewModel';
-import type { Permission } from ".prisma/client";
 import { setUser } from "../auth.context";
 
 const baseUrl = `${API_URL}/api/users`;
@@ -38,7 +38,7 @@ export class UserService {
         return await throwingFetch(`${baseUrl}/${id}`, { method: 'DELETE' });
     }
 
-    async getPermissions(id: number): Promise<Permissions[]> {
+    async getPermissions(id: number): Promise<Permission[]> {
         const permissions = await throwingFetch(`${API_URL}/api/users/${id}/permissions`);
         return permissions.map((p: any) => p.permission);
     }

@@ -52,9 +52,3 @@
   <Header {onUserAdded} bind:searchPhrase={searchPhrase}/>
   <List {onUserDeleted} {onUserEdited} users={filteredUsers} />
 </main>
-
-<style lang="scss">
-  main {
-    margin: 24px;
-  }
-</style>

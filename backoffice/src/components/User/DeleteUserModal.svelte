@@ -5,7 +5,7 @@
 
   export let modalVisible: boolean;
   export let onUserDeleted: (user: UserViewModel) => any;
-  export let user: UserViewModel = {};
+  export let user: UserViewModel;
 
   async function deleteUser() {
     await userService.delete(user.id);
@@ -19,9 +19,14 @@
   confirmText="Usuń"
   onConfirm={deleteUser}
 >
+  {#if !!user}
   <p>
-    Czy na pewno chceesz usunąć użytkownika <strong
-      >{user.firstName} {user.lastName}</strong
-    >?
+    Czy na pewno chceesz usunąć użytkownika
+    <strong>
+      {user.firstName}
+      {' '}
+      {user.lastName}
+    </strong>?
   </p>
+  {/if}
 </Modal>

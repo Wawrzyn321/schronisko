@@ -1,5 +1,6 @@
 <script lang="ts">
   import Quill from 'quill';
+  import { Notification } from 'svelma';
 
   const toolbarOptions = [
     [{ header: 1 }, { header: 2 }, 'blockquote', 'link', 'image'],
@@ -48,13 +49,35 @@
       );
     });
   }
+
+  function onEditorChange(e) {
+    content = e.detail.html;
+    onChange(content);
+  }
+
+  function requestMayBeTooLarge() {
+    return content?.length / 1024/ 1024 > 9.5; // 10 mb
+  }
 </script>
 
 <svelte:head>
 	<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
 </svelte:head>
-  <div
-    class="editor"
-    use:makeQuill
-    on:text-change={(e) => {content = e.detail.html;onChange(content)}}
-  />
+{#if requestMayBeTooLarge()}
+  <div class="warning-container">
+    <Notification type="is-warning">
+      Rozmiar posta może przewyższać 10MB - zapisanie go może się nie udać!
+    </Notification>
+  </div>
+{/if}
+<div
+  class="editor"
+  use:makeQuill
+  on:text-change={onEditorChange}
+/>
+
+<style lang="scss">
+.warning-container > :global(*) {
+  margin: 0 16px 22px;
+}
+</style>

@@ -9,12 +9,13 @@ import { join } from 'path';
 import { PagesModule } from './domain/pages/pages.module';
 import { NewsModule } from './domain/news/news.module';
 
+const domainModules = [AuthModule, UsersModule, PagesModule, NewsModule];
+const ServeStatic = ServeStaticModule.forRoot({
+  rootPath: join(__dirname, '..', 'static'),
+  //exclude: ['/api*'],
+});
 @Module({
-  imports: [AuthModule, UsersModule, PagesModule, NewsModule, ServeStaticModule.forRoot({
-    rootPath: join(__dirname, '..', 'static'),
-    //exclude: ['/api*'],
-  }),
-  ],
+  imports: [...domainModules, ServeStatic],
   controllers: [AppController],
   providers: [{
     provide: APP_GUARD,

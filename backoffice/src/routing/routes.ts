@@ -4,6 +4,8 @@ import Pages from '../views/Pages.svelte';
 import Page from '../views/Page.svelte';
 import News from '../views/News.svelte';
 import SingleNews from '../views/SingleNews.svelte';
+import CreateNews from '../views/CreateNews.svelte';
+
 import Animals from '../views/Animals.svelte';
 import Profile from '../views/Profile.svelte';
 
@@ -17,6 +19,7 @@ export const routes = {
     '/pages/:id': unauthorizedWrapper(Page),
     '/news': unauthorizedWrapper(News),
     '/news/:id': unauthorizedWrapper(SingleNews),
+    '/new-news': unauthorizedWrapper(CreateNews),
     '/animals': unauthorizedWrapper(Animals),
     '/profile': unauthorizedWrapper(Profile),
 };

@@ -37,6 +37,7 @@ model Page {
 model News {
   id                  String    @id @default(uuid())
   title               String
+  description         String
   content             String
   isPublished         Boolean   @default(false)
   createdAt           DateTime  @default(now())

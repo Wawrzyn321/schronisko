@@ -6,7 +6,7 @@
     <use xlink:href={"path/to/feather-sprite.svg#" + glyph}/>
 </svg>
 
-<style>
+<style lang="scss">
 .feather {
   width: 24px;
   height: 24px;

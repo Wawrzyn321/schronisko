@@ -17,6 +17,7 @@
       Zmień hasło
     </button>
   </p>
+  {#if $auth.user.permissions.length}
   <section>
     <p>Twoje uprawnienia:</p>
     <ul>
@@ -28,10 +29,11 @@
       Jeśli potrzebujesz innych uprawień, skontaktuj się z administratorem.
     </p>
   </section>
+  {/if}
 </main>
 <ChangePasswordModal bind:modalVisible={passwordModalVisible} />
 
-<style>
+<style lang="scss">
   main {
     margin: 32px;
   }

@@ -2,11 +2,10 @@
   import { onMount } from 'svelte';
   import { querystring } from 'svelte-spa-router';
   import { get } from 'svelte/store';
-  import { Button, Tabs, Tab, Toast } from 'svelma';
+  import { Button, Toast } from 'svelma';
   import { pageService } from '../services/PageService';
-  import type { Page } from '../services/PageService';
-  import PostPreview from '../components/PostPreview.svelte';
-  import Editor from '../components/Editor.svelte';
+  import EditorTabs from '../components/EditorTabs.svelte';
+  import type { Page } from '../Page';
 
   export let params: { id: string };
   const id = params.id;
@@ -43,17 +42,7 @@
       on:click={savePost}>Zapisz</Button
     >
   </header>
-  <Tabs active={0}>
-    <Tab label="Edycja">
-      <Editor
-        initialContent={page.content}
-        onChange={(c) => (editedContent = c)}
-      />
-    </Tab>
-    <Tab label="Podgląd">
-      <PostPreview source={editedContent} />
-    </Tab>
-  </Tabs>
+  <EditorTabs bind:editedContent={editedContent} initialContent={page.content} />
 {:else}
   Ładowanie...
 {/if}

@@ -2,14 +2,13 @@
   import Modal from './../Modal.svelte';
   import type { UserViewModel } from '../../prisma-types/viewModels/UserViewModel';
   import PermissionsForm from './PermissionsForm.svelte';
-  import type { Permission } from '.prisma/client';
   import { userService } from '../../services/UserService';
 
   export let modalVisible: boolean;
   export let user: UserViewModel;
   export let onUserEdited: (u: UserViewModel) => void;
 
-  let permissions: Permissions[];
+  let permissions: Permission[];
   let isActive: boolean;
 
   const onShow = async (_) => {
@@ -56,7 +55,7 @@
   </form>
 </Modal>
 
-<style>
+<style lang="scss">
   label {
     margin-bottom: 16px;
   }

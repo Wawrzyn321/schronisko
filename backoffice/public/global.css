@@ -232,6 +232,10 @@ header h1 {
   padding-right: 32px;
 }
 
+.preview img {
+  max-width: 100%;
+}
+
 .preview * {
   all: revert;
   margin: 0;
@@ -264,4 +268,18 @@ header h1 {
 
 .tab-content, .tab {
   width: 100%;
+}
+
+main {
+  margin: 24px;
+}
+
+main > header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 32px;
+}
+
+.actions-header {
+  width: 120px;
 }

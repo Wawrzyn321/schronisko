@@ -18,28 +18,30 @@
   );
 </script>
 
-<table class="table is-fullwidth">
-  <tr>
-    <th>Nazwa</th>
-    <th class="text-align-right actions-header">
-      <input placeholder="Szukaj..." bind:value={searchPhrase} />
-    </th>
-  </tr>
-  {#each filteredPages as page}
+<main>
+  <header>
+    <h1>Strony</h1>
+    <input placeholder="Szukaj..." bind:value={searchPhrase} />
+  </header>
+  <table class="table is-fullwidth">
     <tr>
-      <td
-        ><a href={`/#/pages/${page.id}?mode=preview`}
-          >{page.title}</a
-        ></td
-      >
-      <td class="text-align-right actions-header">
-        <Button
-          type="is-primary"
-          on:click={() => push(`/pages/${page.id}?mode=edit`)}
-        >
-          <Edit2Icon size="1.0x" />
-        </Button>
-      </td>
+      <th>Tytuł</th>
+      <th class="actions-header" />
     </tr>
-  {/each}
-</table>
+    {#each filteredPages as page}
+      <tr>
+        <td>
+          <a href={`/#/pages/${page.id}?mode=preview`}>{page.title}</a>
+        </td>
+        <td class="text-align-right actions-header">
+          <Button
+            type="is-primary"
+            on:click={() => push(`/pages/${page.id}?mode=edit`)}
+          >
+            <Edit2Icon size="1.0x" />
+          </Button>
+        </td>
+      </tr>
+    {/each}
+  </table>
+</main>

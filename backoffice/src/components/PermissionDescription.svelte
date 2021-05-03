@@ -6,7 +6,7 @@
     permissionNames,
   } from '../common/PermissionsInfo';
 
-  export let permissionType: Permissions;
+  export let permissionType: Permission;
 </script>
 
 <section>

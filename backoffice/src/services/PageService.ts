@@ -1,16 +1,8 @@
 import { throwingFetch } from "./throwingFetch";
 import { API_URL } from './config';
+import type { PageListElement, Page } from "../Page";
 
 const baseUrl = `${API_URL}/api/pages`
-
-export interface PageListElement {
-    id: string;
-    title: string;
-}
-
-export interface Page extends PageListElement {
-    content: string;
-}
 
 export class PageService {
     async getAll(): Promise<PageListElement[]> {
