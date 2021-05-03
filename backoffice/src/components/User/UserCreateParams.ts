@@ -1,19 +1,19 @@
-import type { Priviledge } from './../../prisma-types/priviledges';
+import type { Permission } from './../../prisma-types/permissions';
 
 export type UserCreateParams = {
-    email: string;
+    login: string;
     firstName: string;
     lastName: string;
     password: string;
-    priviledges: Priviledge[];
+    permissions: Permissions[];
 };
 
 export function createDefaultUser(): UserCreateParams {
     return {
-        email: '',
+        login: '',
         firstName: '',
         lastName: '',
         password: '',
-        priviledges: ['ANIMAL'],
+        permissions: ['ANIMAL'],
     };
 }

@@ -1,52 +1,51 @@
-import { User, UserPriviledges } from '@prisma/client';
-import * as EmailValidator from 'email-validator';
-import { priviledges } from './priviledges';
+import { User, UserPermissions } from '@prisma/client';
+import { allPermissions } from './permissions';
 
 export interface UserDto {
   id: number;
-  email: string;
+  login: string;
   firstName: string;
   lastName: string;
   password: string;
   isActive: boolean;
-  priviledges: any[];
+  permissions: any[];
 }
 
 export async function toUser(dto: UserDto, dataHasher: (str: string) => Promise<string>): Promise<any> {
   return {
-    email: dto.email,
+    login: dto.login,
     firstName: dto.firstName,
     lastName: dto.lastName,
     passwordHash: await dataHasher(dto.password),
     isActive: true,
-    priviledges: {
-      create: dto.priviledges.map(priviledge => ({ priviledge })),
+    permissions: {
+      create: dto.permissions.map(permission => ({ permission })),
     },
   };
 };
 
 export function toUserUpdate(dto: UserDto) {
   return {
-    email: dto.email,
+    login: dto.login,
     firstName: dto.firstName,
     lastName: dto.lastName,
     isActive: dto.isActive,
-    priviledges: {
-      create: dto.priviledges.map(p => ({ priviledge: p })),
+    permissions: {
+      create: dto.permissions.map(p => ({ permission: p })),
     },
   };
 };
 
 export function validateCreate(dto: UserDto): boolean {
-  if (!(EmailValidator.validate(dto.email) && !!dto.firstName && !!dto.lastName && !!dto.password)) {
+  if (!(!!dto.login && !!dto.firstName && !!dto.lastName && !!dto.password)) {
     return false;
   }
-  return dto.priviledges.every(priviledge => priviledges.includes(priviledge));
+  return dto.permissions.every(permission => allPermissions.includes(permission));
 };
 
 export function validateUpdate(id: number, dto: UserDto): boolean {
-  if (!(EmailValidator.validate(dto.email) && !!dto.firstName && !!dto.lastName && dto.id === id)) {
+  if (!(!!dto.login && !!dto.firstName && !!dto.lastName && dto.id === id)) {
     return false;
   }
-  return dto.priviledges.every(priviledge => priviledges.includes(priviledge));
+  return dto.permissions.every(permission => allPermissions.includes(permission));
 };

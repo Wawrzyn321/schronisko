@@ -1,27 +1,27 @@
 import { throwingFetch } from "./throwingFetch";
 import { API_URL } from './config';
 
-const baseUrl = `${API_URL}/api/const-posts`
+const baseUrl = `${API_URL}/api/pages`
 
-export interface ConstPostListElement {
+export interface PageListElement {
     id: string;
-    name: string;
+    title: string;
 }
 
-export interface ConstPost extends ConstPostListElement {
+export interface Page extends PageListElement {
     content: string;
 }
 
-export class ConstPostService {
-    async getAll(): Promise<ConstPostListElement[]> {
+export class PageService {
+    async getAll(): Promise<PageListElement[]> {
         return await throwingFetch(baseUrl);
     }
 
-    async get(id: string): Promise<ConstPost> {
+    async get(id: string): Promise<Page> {
         return await throwingFetch(`${baseUrl}/${id}`);
     }
 
-    async save(post: ConstPost): Promise<ConstPost> {
+    async save(post: Page): Promise<Page> {
         return await throwingFetch(`${baseUrl}/${post.id}`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
@@ -30,4 +30,4 @@ export class ConstPostService {
     }
 }
 
-export const constPostService = new ConstPostService();
+export const pageService = new PageService();

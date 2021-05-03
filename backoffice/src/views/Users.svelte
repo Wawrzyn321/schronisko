@@ -8,7 +8,20 @@
   import { userService } from '../services/UserService';
 
   let users: UserViewModel[] = [];
+  let filteredUsers: UserViewModel[];
+  let searchPhrase = '';
   onMount(async () => users = await userService.getAll());
+
+  $: {
+    const t = searchPhrase.toLowerCase();
+    filteredUsers = users.filter(
+    (u) =>
+      !searchPhrase ||
+      u.firstName.toLowerCase().includes(t) ||
+      u.lastName.toLowerCase().includes(t) ||
+      u.login.toLowerCase().includes(t)
+    );
+  }
 
   function onUserAdded(u: UserViewModel) {
     users = insertInOrder(users, u, (u) => u.lastName);
@@ -36,8 +49,8 @@
 </script>
 
 <main>
-  <Header {onUserAdded} />
-  <List {onUserDeleted} {onUserEdited} {users} />
+  <Header {onUserAdded} bind:searchPhrase={searchPhrase}/>
+  <List {onUserDeleted} {onUserEdited} users={filteredUsers} />
 </main>
 
 <style lang="scss">

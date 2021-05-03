@@ -1,45 +1,43 @@
-import { RequirePriviledge } from './../auth/priviledges.decorator';
-import { PriviledgesGuard } from './../auth/priviledges.guard';
+import { RequirePermission } from './../auth/Permissions.decorator';
+import { PermissionsGuard } from './../auth/Permissions.guard';
 import { UsersService } from './users.service';
-import { Controller, Get, Post, Patch, UseGuards, Body, Param, Delete } from '@nestjs/common';
-import { Priviledge } from '@prisma/client';
+import { Controller, Get, Post, Patch, UseGuards, Body, Param, Delete, Request } from '@nestjs/common';
+import { Permission } from '@prisma/client';
 
 @Controller('api/users')
 export class UsersController {
     constructor(private usersService: UsersService) {}
 
-    @RequirePriviledge(Priviledge.USER)
+    @RequirePermission(Permission.USER)
     @Get()
-    @UseGuards(PriviledgesGuard)
+    @UseGuards(PermissionsGuard)
     getUsers() {
         return this.usersService.getAll();
     }
 
-    @RequirePriviledge(Priviledge.USER)
+    @RequirePermission(Permission.USER)
     @Post()
-    @UseGuards(PriviledgesGuard)
+    @UseGuards(PermissionsGuard)
     createUser(@Body() body) {
         return this.usersService.create(body);
     }
 
-    @RequirePriviledge(Priviledge.USER)
     @Patch(':id')
-    @UseGuards(PriviledgesGuard)
-    updateUser(@Param("id") userId: string, @Body() body) {
-        return this.usersService.update(parseInt(userId), body);
+    updateUser(@Param("id") userId: string, @Body() body, @Request() req) {
+        return this.usersService.update(parseInt(userId), body, req.user);
     }
 
-    @RequirePriviledge(Priviledge.USER)
+    @RequirePermission(Permission.USER)
     @Delete(':id')
-    @UseGuards(PriviledgesGuard)
+    @UseGuards(PermissionsGuard)
     deleteUser(@Param("id") userId: string) {
         return this.usersService.delete(parseInt(userId));
     }
 
-    @RequirePriviledge(Priviledge.USER)
-    @Get(':id/priviledges')
-    @UseGuards(PriviledgesGuard)
-    getUserPriviledges(@Param("id") userId: string) {
-        return this.usersService.getPriviledges(parseInt(userId));
+    @RequirePermission(Permission.USER)
+    @Get(':id/permissions')
+    @UseGuards(PermissionsGuard)
+    getUserPermissions(@Param("id") userId: string) {
+        return this.usersService.getPermissions(parseInt(userId));
     }
 }

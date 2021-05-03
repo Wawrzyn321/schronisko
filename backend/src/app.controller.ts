@@ -1,4 +1,5 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { PermissionsGuard } from './domain/auth/Permissions.guard';
+import { Controller, Post, Body, Request, UseGuards } from '@nestjs/common';
 import { AuthService } from './domain/auth/auth.service';
 import { Public } from './domain/auth/public.decorator';
 
@@ -11,9 +12,10 @@ export class AppController {
   async login(@Body() user) {
     return this.authService.login(user);
   }
-
-  // @Get('profile')
-  // getProfile(@Request() req) {
-  //   return req.user;
-  // }
+  
+  @UseGuards(PermissionsGuard)
+  @Post('auth/change-password')
+  async changePassword(@Body() params, @Request() req) {
+    return this.authService.changePassword(params, req.user);
+  }
 }

@@ -2,7 +2,7 @@ import type { UserCreateParams } from './../components/User/UserCreateParams';
 import { throwingFetch } from "./throwingFetch";
 import { API_URL } from './config';
 import type { UserViewModel } from '../prisma-types/viewModels/UserViewModel';
-import type { Priviledge } from ".prisma/client";
+import type { Permission } from ".prisma/client";
 import { setUser } from "../auth.context";
 
 const baseUrl = `${API_URL}/api/users`;
@@ -30,7 +30,7 @@ export class UserService {
 
     async updateSelf(user: UserViewModel): Promise<UserViewModel> {
         const updatedUser = await this.update(user);
-        setUser({ ...updatedUser, priviledges: user.priviledges });
+        setUser({ ...updatedUser, permissions: user.permissions });
         return updatedUser;
     }
 
@@ -38,9 +38,9 @@ export class UserService {
         return await throwingFetch(`${baseUrl}/${id}`, { method: 'DELETE' });
     }
 
-    async getPriviledges(id: number): Promise<Priviledge[]> {
-        const priviledges = await throwingFetch(`${API_URL}/api/users/${id}/priviledges`);
-        return priviledges.map((p: any) => p.priviledge);
+    async getPermissions(id: number): Promise<Permissions[]> {
+        const permissions = await throwingFetch(`${API_URL}/api/users/${id}/permissions`);
+        return permissions.map((p: any) => p.permission);
     }
 }
 

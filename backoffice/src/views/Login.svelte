@@ -1,18 +1,18 @@
 <script lang="ts">
-  import { isLoggedIn, login } from './../auth.context';
+  import { isLoggedIn, logIn } from './../auth.context';
   import { push } from 'svelte-spa-router';
 
   import { Field, Input, Button, Notification } from 'svelma';
 
-  let email: string;
+  let login: string;
   let password: string;
   let loading: boolean = false;
   let errorOpen: boolean = false;
 
-  async function logIn() {
+  async function logInFn() {
     try {
       loading = true;
-      await login(email, password);
+      await logIn(login, password);
       push('/profile');
     } catch (e) {
       console.warn(e);
@@ -28,18 +28,17 @@
 </script>
 
 <main class="login-form">
-  <form on:submit|preventDefault={logIn}>
-    <Field label="Email">
-      <Input required bind:value={email} placeholder="Email" />
+  <form on:submit|preventDefault={logInFn}>
+    <Field label="Login">
+      <Input required bind:value={login} placeholder="Login" />
     </Field>
     <Field label="Hasło">
       <Input required bind:value={password} type="password" placeholder="Hasło" />
     </Field>
     <Button
-      on:click={logIn}
       type="is-primary"
       nativeType="submit"
-      disabled={!email || !password}
+      disabled={!login || !password}
       {loading}>Zaloguj</Button
     >
   </form>

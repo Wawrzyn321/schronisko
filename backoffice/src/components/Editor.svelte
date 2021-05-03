@@ -8,7 +8,6 @@
     [{ align: [] }],
   ];
   // Quill.register('modules/counter', function (quill, options) {
-  //   console.log(quill);
   // });
 
   let quill: Quill;

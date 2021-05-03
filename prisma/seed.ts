@@ -1,5 +1,5 @@
-import { PrismaClient } from '@prisma/client'
-import { genSalt, hash, compare } from "bcryptjs";
+import { PrismaClient } from '@prisma/client';
+import { genSalt, hash } from "bcryptjs";
 
 const _generateSalt = (rounds = 10): Promise<string> => {
     return new Promise((resolve, reject) => {
@@ -25,7 +25,7 @@ const prisma = new PrismaClient()
 
 async function main() {
     const admin = await prisma.user.upsert({
-        where: { email: 'admin@gmail.com' },
+        where: { login: 'admin' },
         update: {
             isActive: true,
         },
@@ -33,27 +33,47 @@ async function main() {
             firstName: "adminek",
             lastName: "admin",
             isActive: true,
-            email: 'admin@gmail.com',
+            login: 'admin',
             passwordHash: await hashData('admin'),
-            priviledges: {
+            permissions: {
                 create: [
                     {
-                        priviledge: 'USER',
+                        permission: 'USER',
                     },
                     {
-                        priviledge: 'POST',
+                        permission: 'NEWS',
                     },
                     {
-                        priviledge: 'CONST_POST',
+                        permission: 'PAGE',
                     },
                     {
-                        priviledge: 'ANIMAL',
+                        permission: 'ANIMAL',
                     },
                 ],
             }
         },
     });
     console.info(admin);
+    const pagesTitles = [
+        'Główna',
+        'O schronisku',
+        'Nasze potrzeby',
+        'Pomagają nam - dziękujemy',
+        'Wolontariat',
+        'Linki',
+        'Zbiórka publiczna',
+        'Finanse i Sprawozdania',
+        'Adopcje wirtualne',
+        'Ręka w łapę',
+        'Psy i koty do adopcji',
+    ];
+    for (const title of pagesTitles) {
+        await prisma.page.upsert({
+            where: {title},
+            update: {},
+            create: {title, content: ''}
+        });
+    }
 }
 main()
     .catch(e => {

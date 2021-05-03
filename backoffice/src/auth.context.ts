@@ -20,7 +20,7 @@ export const setAuth = (user: UserViewModel, token: string) => {
     localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify({user, token}));
 }
 
-export const isSelf = (user: UserViewModel) => get(value).user.email === user.email;
+export const isSelf = (user: UserViewModel) => get(value).user.login === user.login;
 
 export const isLoggedIn = () => !!get(value);
 
@@ -31,8 +31,8 @@ export const logout = () => {
     location.reload();
 }
 
-export const login = async (email: string, password: string) => {
-    const response = await loginService.login(email, password);
+export const logIn = async (login: string, password: string) => {
+    const response = await loginService.login(login, password);
     setAuth(response.user, response.access_token);
 }
 

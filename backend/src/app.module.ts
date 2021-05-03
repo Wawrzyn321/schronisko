@@ -6,11 +6,11 @@ import { JwtAuthGuard } from './domain/auth/jwt-auth.guard';
 import { UsersModule } from './domain/users/users.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
-import { ConstPostsModule } from './domain/const-posts/const-posts.module';
-import { PostsModule } from './domain/posts/posts.module';
+import { PagesModule } from './domain/pages/pages.module';
+import { NewsModule } from './domain/news/news.module';
 
 @Module({
-  imports: [AuthModule, UsersModule, ConstPostsModule, PostsModule, ServeStaticModule.forRoot({
+  imports: [AuthModule, UsersModule, PagesModule, NewsModule, ServeStaticModule.forRoot({
     rootPath: join(__dirname, '..', 'static'),
     //exclude: ['/api*'],
   }),

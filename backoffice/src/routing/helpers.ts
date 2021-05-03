@@ -3,7 +3,7 @@ import { wrap } from 'svelte-spa-router/wrap';
 import { push } from 'svelte-spa-router';
 import { isLoggedIn } from '../auth.context';
 
-export const unauthorizedWrapper = (component) =>
+export const unauthorizedWrapper = (component: any) =>
     wrap({
         component,
         conditions: [
@@ -17,16 +17,13 @@ export const unauthorizedWrapper = (component) =>
         ],
     });
 
-// export const rootWrapper = wrap({
-//     component: Profile,
-//     conditions: [
-//         () => {
-//             if (!user) {
-//                 push('/login');
-//                 return 
-//             }
-
-//             return false;
-//         }
-//     ]
-// });
+export const rootWrapper = (component: any) =>
+    wrap({
+        component, // ignored anyway
+        conditions: [
+            () => {
+                push(isLoggedIn() ? '/profile' : '/login');
+                return false;
+            }
+        ]
+    });

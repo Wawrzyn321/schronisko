@@ -10,28 +10,36 @@ generator client {
   provider = "prisma-client-js"
 }
 
-enum Priviledge {
+enum Permission {
   USER
-  CONST_POST
-  POST
+  PAGE
+  NEWS
   ANIMAL
 }
 
 model User {
-  id              Int      @default(autoincrement()) @id
-  email           String   @unique
-  passwordHash    String
-  firstName       String
-  lastName        String
-  isActive        Boolean @default(true)
-  sessions        Session[]
-  priviledges     UserPriviledges[]
+  id           Int               @id @default(autoincrement())
+  login        String            @unique
+  passwordHash String
+  firstName    String
+  lastName     String
+  isActive     Boolean           @default(true)
+  sessions     Session[]
+  permissions  UserPermissions[]
 }
 
-model ConstPost {
-  id        String   @id @default(uuid())
-  name     String
-  content   String
+model Page {
+  id      String @id @default(uuid())
+  title    String @unique
+  content String
+}
+
+model News {
+  id                  String    @id @default(uuid())
+  title               String
+  content             String
+  isPublished         Boolean   @default(false)
+  createdAt           DateTime  @default(now())
 }
 
 model Session {
@@ -41,10 +49,11 @@ model Session {
   user       User     @relation(fields: [userId], references: [id])
 }
 
-model UserPriviledges {
-  @@id([ priviledge, userId ])
-  userId      Int
-  user      User  @relation(fields: [userId], references: [id])
-  priviledge  Priviledge
-  @@unique([userId, priviledge])
+model UserPermissions {
+  userId     Int
+  user       User       @relation(fields: [userId], references: [id])
+  permission Permission
+
+  @@id([permission, userId])
+  @@unique([userId, permission])
 }

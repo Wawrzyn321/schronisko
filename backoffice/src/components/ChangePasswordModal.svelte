@@ -1,5 +1,6 @@
 <script lang="ts">
   import { Field, Input } from 'svelma';
+import { logout } from '../auth.context';
   import { ChangePasswordParams, loginService } from '../services/LoginService';
   import Modal from './Modal.svelte';
 
@@ -19,6 +20,7 @@
 
   async function changePassword() {
     await loginService.changePassword(formData);
+    logout();
   }
 
   function onInput() {

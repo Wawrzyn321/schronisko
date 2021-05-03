@@ -4,7 +4,7 @@
   import { createDefaultUser } from './UserCreateParams';
   import type { UserCreateParams } from './UserCreateParams';
   import type { UserViewModel } from '../../prisma-types/viewModels/UserViewModel';
-  import PriviledgesForm from './PriviledgesForm.svelte';
+  import PermissionsForm from './PermissionsForm.svelte';
   import { userService } from '../../services/UserService';
 
   export let modalVisible: boolean;
@@ -13,7 +13,7 @@
   let form: HTMLFormElement;
   let isFormValid = false;
 
-  let user: UserCreateParams = {priviledges:[]};
+  let user: UserCreateParams = {permissions:[]};
 
   const onMounted = (visible: boolean) => {
     if (visible) user = createDefaultUser();
@@ -35,12 +35,11 @@
   disabledConfirm={!isFormValid}
 >
   <form bind:this={form} on:input={() => (isFormValid = form.checkValidity())}>
-    <Field label="Email">
+    <Field label="Login">
       <Input
         required
-        type="email"
-        bind:value={user.email}
-        placeholder="Email"
+        bind:value={user.login}
+        placeholder="Login"
       />
     </Field>
     <Field label="Imię">
@@ -55,9 +54,9 @@
     >
       <Input required bind:value={user.password} placeholder="Hasło" />
     </Field>
-    <PriviledgesForm
-      priviledges={user.priviledges}
-      updatePriviledges={(p) => (user.priviledges = p)}
+    <PermissionsForm
+      permissions={user.permissions}
+      updatePermissions={(p) => (user.permissions = p)}
     />
   </form>
 </Modal>

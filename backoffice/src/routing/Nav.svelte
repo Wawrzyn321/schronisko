@@ -1,30 +1,31 @@
 <script lang="ts">
-  import { auth, logout } from './../auth.context';
+  import { auth } from './../auth.context';
   import { link } from 'svelte-spa-router';
+  import UserNavHeader from './UserNavHeader.svelte';
   import active from 'svelte-spa-router/active';
-  import type { Priviledge } from '@prisma/client';
+  import type { Permission } from '@prisma/client';
 
-  interface Route {
+  interface NavigationRoute {
     name: string;
-    requiredPermission: Priviledge;
+    requiredPermission: Permission;
     path: string;
   }
 
-  const routes: Route[] = [
+  const navigationRoutes: NavigationRoute[] = [
     {
       name: 'Użytkownicy',
       requiredPermission: 'USER',
       path: '/users',
     },
     {
-      name: 'Stałe posty',
-      requiredPermission: 'CONST_POST',
-      path: '/const-posts',
+      name: 'Strony',
+      requiredPermission: 'PAGE',
+      path: '/pages',
     },
     {
-      name: 'Posty',
-      requiredPermission: 'POST',
-      path: '/posts',
+      name: 'Newsy',
+      requiredPermission: 'NEWS',
+      path: '/news',
     },
     {
       name: 'Zwierzęta',
@@ -40,8 +41,8 @@
   >
   {#if $auth}
     <ul>
-      {#each routes as route}
-        {#if $auth.user.priviledges.includes(route.requiredPermission)}
+      {#each navigationRoutes as route}
+        {#if $auth.user.permissions.includes(route.requiredPermission)}
           <li>
             <a use:link use:active href={`${route.path}`}>{route.name}</a>
           </li>
@@ -49,10 +50,7 @@
       {/each}
       <li><a use:link use:active href="/profile">Mój profil</a></li>
     </ul>
-    <div class="user-panel">
-      <span>{$auth.user.firstName} {$auth.user.lastName}</span>
-      <button class="link" on:click={logout}>Wyloguj się</button>
-    </div>
+    <UserNavHeader />
   {/if}
 </nav>
 
@@ -75,8 +73,5 @@
       display: inline-block;
       margin-right: 16px;
     }
-  }
-  .user-panel {
-    margin-left: auto;
   }
 </style>

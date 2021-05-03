@@ -4,7 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { BcryptService } from 'src/domain/auth/bcrypt/bcrypt.service';
 
 interface UserDto {
-  email: string;
+  login: string;
   password: string;
 };
 
@@ -17,7 +17,7 @@ export class AuthService {
   ) { }
 
   async validateUserLogin(userDto: UserDto): Promise<any> {
-    const user = await this.usersService.findOne(userDto.email);
+    const user = await this.usersService.findByLogin(userDto.login);
     if (user && user.isActive && await this.bcryptService.compareHash(userDto.password, user.passwordHash)) {
       const { passwordHash, ...result } = user;
       return result;
@@ -28,15 +28,24 @@ export class AuthService {
   async login(userDto: UserDto) {
     const user = await this.validateUserLogin(userDto);
     if (user) {
-      const { firstName, lastName, email, id: sub } = user;
-      const priviledges = (await this.usersService.getPriviledges(user.id)).map(uP => uP.priviledge);
-      const payload = { firstName, lastName, email, sub, priviledges };
+      const { firstName, lastName, login, id: sub } = user;
+      const permissions = (await this.usersService.getPermissions(user.id)).map(uP => uP.permission);
+      const payload = { firstName, lastName, login, sub, permissions };
       return {
         access_token: this.jwtService.sign(payload),
-        user: {...user, priviledges},
+        user: {...user, permissions},
       };
     } else {
       throw new UnauthorizedException();
     }
+  }
+
+  async changePassword(params: any, loggedInUser: any) {
+    const user = await this.usersService.findById(loggedInUser.id);
+    if (user && user.isActive && await this.bcryptService.compareHash(params.currentPassword, user.passwordHash)) {
+        return this.usersService.updatePassword(user, params.newPassword);
+    }
+    
+    throw new UnauthorizedException();
   }
 }

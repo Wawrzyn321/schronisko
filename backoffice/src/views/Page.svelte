@@ -3,8 +3,8 @@
   import { querystring } from 'svelte-spa-router';
   import { get } from 'svelte/store';
   import { Button, Tabs, Tab, Toast } from 'svelma';
-  import { constPostService } from '../services/ConstPostService';
-  import type { ConstPost } from '../services/ConstPostService';
+  import { pageService } from '../services/PageService';
+  import type { Page } from '../services/PageService';
   import PostPreview from '../components/PostPreview.svelte';
   import Editor from '../components/Editor.svelte';
 
@@ -13,32 +13,32 @@
   let modeIndex =
     new URLSearchParams(get(querystring)).get('mode') === 'edit' ? 0 : 1;
 
-  let constPost: ConstPost;
+  let page: Page;
   let editedContent = '';
   let isSaving: boolean;
 
   onMount(async () => {
-    constPost = await constPostService.get(id);
-    editedContent = constPost.content;
+    page = await pageService.get(id);
+    editedContent = page.content;
   });
 
   async function savePost() {
-    await constPostService.save({ ...constPost, content: editedContent });
+    await pageService.save({ ...page, content: editedContent });
     Toast.create({
       message: 'Post zapisany',
       type: 'is-success',
       position: 'is-bottom',
     });
-    constPost.content = editedContent;
+    page.content = editedContent;
   }
 </script>
 
-{#if constPost}
+{#if page}
   <header>
-    <h1>{constPost.name}</h1>
+    <h1>{page.title}</h1>
     <Button
       type="is-primary"
-      disabled={isSaving || constPost.content === editedContent}
+      disabled={isSaving || page.content === editedContent}
       loading={isSaving}
       on:click={savePost}>Zapisz</Button
     >
@@ -46,7 +46,7 @@
   <Tabs active={0}>
     <Tab label="Edycja">
       <Editor
-        initialContent={constPost.content}
+        initialContent={page.content}
         onChange={(c) => (editedContent = c)}
       />
     </Tab>

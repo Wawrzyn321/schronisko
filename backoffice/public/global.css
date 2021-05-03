@@ -196,6 +196,7 @@ button:focus {
   text-decoration: underline;
   color: #3273dc;
   cursor: pointer;
+  background: initial;
 }
 
 td {
@@ -263,8 +264,4 @@ header h1 {
 
 .tab-content, .tab {
   width: 100%;
-}
-
-.link {
-  background-color: initial;
 }

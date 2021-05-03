@@ -25,7 +25,7 @@
   <tr>
     <th>Imię</th>
     <th>Nazwisko</th>
-    <th>Email</th>
+    <th>Login</th>
     <th class="is-active-header">
       <input type="checkbox" bind:checked={showActive}/>
       Aktywny
@@ -36,7 +36,7 @@
     <tr>
       <td>{user.firstName}</td>
       <td>{user.lastName}</td>
-      <td>{user.email}</td>
+      <td>{user.login}</td>
       <td class="text-align-center is-active-header">{user.isActive ? 'TAK' : 'NIE'}</td>
       <td class="text-align-right actions-header">
         <Button

@@ -16,7 +16,6 @@
   },
   "dependencies": {
     "@prisma/client": "^2.19.0",
-    "concurrently": "^6.0.0",
-    "email-validator": "^2.0.4"
+    "concurrently": "^6.0.0"
   }
 }

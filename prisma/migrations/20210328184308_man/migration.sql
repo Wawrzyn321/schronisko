@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "Priviledge" AS ENUM ('USER', 'CONST_POST', 'POST', 'ANIMAL');
+CREATE TYPE "Permissions" AS ENUM ('USER', 'PAGE', 'NEWS', 'ANIMAL');
 
 -- CreateTable
 CREATE TABLE "User" (
@@ -23,21 +23,21 @@ CREATE TABLE "Session" (
 );
 
 -- CreateTable
-CREATE TABLE "UserPriviledges" (
+CREATE TABLE "UserPermissions" (
     "userId" INTEGER NOT NULL,
-    "priviledge" "Priviledge" NOT NULL,
+    "permission" "Permissions" NOT NULL,
 
-    PRIMARY KEY ("priviledge","userId")
+    PRIMARY KEY ("permission","userId")
 );
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User.email_unique" ON "User"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "UserPriviledges.userId_priviledge_unique" ON "UserPriviledges"("userId", "priviledge");
+CREATE UNIQUE INDEX "UserPermission.userId_permission_unique" ON "UserPermissions"("userId", "permission");
 
 -- AddForeignKey
 ALTER TABLE "Session" ADD FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "UserPriviledges" ADD FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "UserPermissions" ADD FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;

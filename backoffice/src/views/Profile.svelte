@@ -1,7 +1,7 @@
 <script lang="ts">
   import { auth } from '../auth.context';
   import ChangePasswordModal from '../components/ChangePasswordModal.svelte';
-  import PriviledgeDescription from '../components/PriviledgeDescription.svelte';
+  import PermissionDescription from '../components/PermissionDescription.svelte';
 
   let passwordModalVisible = false;
 </script>
@@ -12,7 +12,7 @@
       {$auth.user.firstName}
       {''}
       {$auth.user.lastName}</strong
-    >.
+    > ({$auth.user.login}).
     <button class="link" on:click={() => (passwordModalVisible = true)}>
       Zmień hasło
     </button>
@@ -20,8 +20,8 @@
   <section>
     <p>Twoje uprawnienia:</p>
     <ul>
-      {#each $auth.user.priviledges as priviledge}
-        <li><PriviledgeDescription priviledgeType={priviledge} /></li>
+      {#each $auth.user.permissions as permission}
+        <li><PermissionDescription permissionType={permission} /></li>
       {/each}
     </ul>
     <p style="margin-top: 32px">

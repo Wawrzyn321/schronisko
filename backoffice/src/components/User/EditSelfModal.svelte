@@ -1,6 +1,6 @@
 <script lang="ts">
   import Modal from './../Modal.svelte';
-  import { Field, Input } from 'svelma';
+  import { Field, Input, Toast } from 'svelma';
   import type { UserViewModel } from '../../prisma-types/viewModels/UserViewModel';
   import { auth } from '../../auth.context';
   import { userService } from './../../services/UserService';
@@ -11,7 +11,7 @@
   let form: HTMLFormElement;
   let isFormValid = false;
 
-  let user: UserViewModel = {priviledges:[]};
+  let user: UserViewModel = {permissions:[]};
 
   function onShow(_) {
     if (modalVisible) user = { ...$auth.user };
@@ -22,6 +22,11 @@
   async function updateSelf() {
     const updatedUser = await userService.updateSelf(user);
     onUserEdited(updatedUser);
+    Toast.create({
+      message: 'Twoje dane zostały',
+      type: 'is-success',
+      position: 'is-bottom',
+    });
   }
 </script>
 
@@ -33,12 +38,11 @@
   disabledConfirm={!isFormValid}
 >
   <form bind:this={form} on:input={() => (isFormValid = form.checkValidity())}>
-    <Field label="Email">
+    <Field label="Login">
       <Input
         required
-        type="email"
-        bind:value={user.email}
-        placeholder="Email"
+        bind:value={user.login}
+        placeholder="Login"
       />
     </Field>
     <Field label="Imię">

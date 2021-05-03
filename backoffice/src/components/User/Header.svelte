@@ -3,6 +3,7 @@
   import type { UserViewModel } from '../../prisma-types/viewModels/UserViewModel';
   import AddUserModal from './AddUserModal.svelte';
 
+  export let searchPhrase = '';
   export let onUserAdded: (u: UserViewModel) => void;
 
   let createModalVisible = false;
@@ -11,7 +12,10 @@
 
 <header>
   <h1>Użytkownicy</h1>
-  <Button type="is-primary" on:click={showCreateModal}>+</Button>
+  <div>
+    <input placeholder="Szukaj..." bind:value={searchPhrase} />
+    <Button type="is-primary" on:click={showCreateModal}>+</Button>
+  </div>
 </header>
 <AddUserModal bind:modalVisible={createModalVisible} {onUserAdded} />
 
@@ -20,5 +24,8 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 32px;
+  }
+  input {
+    vertical-align: text-top;
   }
 </style>

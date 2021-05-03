@@ -1,21 +1,29 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma-connect/prisma.service';
-import { User } from '@prisma/client';
+import { Permission, User } from '@prisma/client';
 import { BcryptService } from 'src/domain/auth/bcrypt/bcrypt.service';
-import { PagingParams } from 'src/common/types';
 import { UserViewModel } from 'src/prisma-types/viewModels/UserViewModel';
 import { toUser, UserDto, toUserUpdate, validateCreate, validateUpdate } from 'src/prisma-types/UserDto';
 
+interface HttpUser {
+  id: number;
+  login: string;
+  permissions: Permission[];
+}
 @Injectable()
 export class UsersService {
   constructor(private prisma: PrismaService, private bcryptService: BcryptService) { }
 
-  async findOne(email: string = ''): Promise<User | undefined> {
-    return await this.prisma.user.findUnique({ where: { email } });
+  async findByLogin(login: string = ''): Promise<User | undefined> {
+    return await this.prisma.user.findUnique({ where: { login } });
   }
 
-  async getAll(params?: PagingParams): Promise<UserViewModel[]> {
-    return await this.prisma.user.findMany({ ...params, orderBy: [{ lastName: 'asc'}, {firstName: 'asc' }] }).then(users => users.map(this.toViewModel));
+  async findById(id: number): Promise<User | undefined> {
+    return await this.prisma.user.findUnique({ where: { id } });
+  }
+
+  async getAll(): Promise<UserViewModel[]> {
+    return await this.prisma.user.findMany({ orderBy: [{ lastName: 'asc'}, {firstName: 'asc' }] }).then(users => users.map(this.toViewModel));
   }
 
   async create(user: UserDto): Promise<UserViewModel> {
@@ -27,12 +35,15 @@ export class UsersService {
     ).then(this.toViewModel);
   }
 
-  async update(id: number, user: UserDto): Promise<UserViewModel> {
+  async update(id: number, user: UserDto, httpUser: HttpUser): Promise<UserViewModel> {
+    if (!httpUser.permissions.includes(Permission.USER) && id !== httpUser.id) {
+      throw new UnauthorizedException();
+    }
     if (!validateUpdate(id, user)) {
       throw new BadRequestException();
     }
 
-    await this.prisma.userPriviledges.deleteMany({where: { userId: id }})
+    await this.prisma.userPermissions.deleteMany({where: { userId: id }})
 
     const data = toUserUpdate(user);
     return await this.prisma.user.update(
@@ -41,15 +52,22 @@ export class UsersService {
   }
 
   async delete(userId: number): Promise<UserViewModel> {
-    await this.prisma.userPriviledges.deleteMany({where: { userId }})
+    await this.prisma.userPermissions.deleteMany({where: { userId }})
 
     return await this.prisma.user.delete({
       where: { id: userId },
     }).then(this.toViewModel);
   }
 
-  async getPriviledges(userId: number) {
-    return await this.prisma.userPriviledges.findMany({ where: { userId } });
+  async getPermissions(userId: number) {
+    return await this.prisma.userPermissions.findMany({ where: { userId } });
+  }
+
+  async updatePassword(user: UserViewModel, password: string) {
+    const passwordHash = await this.bcryptService.hashData(password);
+    return await this.prisma.user.update(
+      { where: { id: user.id }, data: {...user, passwordHash} }
+    ).then(this.toViewModel);
   }
 
   toViewModel(user: User): UserViewModel {
