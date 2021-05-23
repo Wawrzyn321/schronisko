@@ -1,26 +1,22 @@
-import { Injectable } from '@nestjs/common';
+// import { PageListElement } from './../../prisma-types/Page';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma-connect/prisma.service';
-
-// todo move to shared
-export interface PageListElement {
-  id: string;
-  title: string;
-}
-
-export interface Page extends PageListElement {
-  content: string;
-}
+import type { Page } from '.prisma/client';
 
 @Injectable()
 export class PagesService {
   constructor(private prisma: PrismaService) { }
 
-  async getAll(): Promise<PageListElement[]> {
+  async getAll(): Promise<any[]> {
     return await this.prisma.page.findMany({ select: { title: true, id: true }, orderBy: [{ title: 'asc' }] });
   }
 
   async get(id: string): Promise<Page> {
-    return await this.prisma.page.findUnique({where: { id }});
+    const page = await this.prisma.page.findUnique({where: { id }});
+    if (!page) {
+      throw new NotFoundException();
+    }
+    return page;
   }
 
   async update(id: string, post: Page): Promise<Page> {

@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { Toast } from 'svelma';
+  import type { News } from '.prisma/client';
+  import { Tab, Toast } from 'svelma';
   import { onMount } from 'svelte';
   import EditorTabs from '../components/EditorTabs.svelte';
   import NewsForm from '../components/News/NewsForm.svelte';
   import UpdateHeader from '../components/News/UpdateHeader.svelte';
-  import type { News } from '../News';
 
   import { newsService } from '../services/NewsService';
 
@@ -21,7 +21,7 @@
   });
 
   async function updateNews() {
-    await newsService.update({...news, content: editedContent});
+    await newsService.update({ ...news, content: editedContent });
     Toast.create({
       message: 'Post został zapisany',
       type: 'is-success',
@@ -32,12 +32,17 @@
 
 <main>
   {#if !!news}
-    <UpdateHeader timestamp={news.createdAt} {updateNews} {isValid} bind:isPublished={news.isPublished} />
-    <NewsForm
-      bind:title={news.title}
-      setFormValid={(valid) => (isValid = valid)}
+    <UpdateHeader
+      timestamp={news.createdAt}
+      {updateNews}
+      {isValid}
+      bind:isPublished={news.isPublished}
     />
-    <EditorTabs bind:editedContent={editedContent} initialContent={news.content} />
+    <EditorTabs bind:editedContent initialContent={news.content}>
+      <Tab label="Dane">
+        <NewsForm {news} setFormValid={(valid) => (isValid = valid)} />
+      </Tab>
+    </EditorTabs>
   {:else}
     Ładowanie...
   {/if}

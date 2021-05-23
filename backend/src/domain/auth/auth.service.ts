@@ -1,3 +1,4 @@
+import { Permission } from '@prisma/client';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
@@ -7,6 +8,19 @@ interface UserDto {
   login: string;
   password: string;
 };
+
+// todo to common
+export interface ChangePasswordParams { 
+  currentPassword: string;
+  newPassword: string;
+}
+
+// todo to common
+export interface LoggedInUser {
+  id: number;
+  login: string;
+  permissions: Permission[];
+}
 
 @Injectable()
 export class AuthService {
@@ -40,7 +54,7 @@ export class AuthService {
     }
   }
 
-  async changePassword(params: any, loggedInUser: any) {
+  async changePassword(params: ChangePasswordParams, loggedInUser: LoggedInUser) {
     const user = await this.usersService.findById(loggedInUser.id);
     if (user && user.isActive && await this.bcryptService.compareHash(params.currentPassword, user.passwordHash)) {
         return this.usersService.updatePassword(user, params.newPassword);

@@ -8,10 +8,11 @@
 </script>
 
 <Tabs>
-  <Tab label="Edycja">
+  <Tab label="Zawartość">
     <Editor {initialContent} onChange={(c) => (editedContent = c)} />
   </Tab>
   <Tab label="Podgląd">
     <PostPreview source={editedContent} />
   </Tab>
+  <slot></slot>
 </Tabs>

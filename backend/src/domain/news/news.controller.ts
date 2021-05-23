@@ -18,15 +18,14 @@ export class NewsController {
     @RequirePermission(Permission.NEWS)
     @Get(':id')
     @UseGuards(PermissionsGuard)
-    getSingleNews(@Param("id") pageId: string) {
-        return this.newsService.get(pageId);
+    getSingleNews(@Param("id") newsId: string) {
+        return this.newsService.get(newsId);
     }
 
     @RequirePermission(Permission.NEWS)
     @Post()
     @UseGuards(PermissionsGuard)
     createNews(@Body() body) {
-        console.log(body)
         return this.newsService.create(body);
     }
 

@@ -31,8 +31,6 @@
 
 <style lang="scss">
   header {
-    margin-bottom: 0;
-
     & > div {
       display: flex;
       align-items: center;

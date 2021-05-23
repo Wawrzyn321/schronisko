@@ -1,6 +1,6 @@
 import { throwingFetch } from "./throwingFetch";
 import { API_URL } from './config';
-import type { PageListElement, Page } from "../Page";
+import type { PageListElement, Page } from "../../../prisma/prisma-types/Page";
 
 const baseUrl = `${API_URL}/api/pages`
 

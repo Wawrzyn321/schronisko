@@ -16,6 +16,7 @@
 <table class="table is-fullwidth">
   <tr>
     <th>Nazwa</th>
+    <th>Opis</th>
     <th>Data utworzenia</th>
     <th>Opublikowany?</th>
     <th class="text-align-right actions-header" />
@@ -28,6 +29,9 @@
         </a>
       </td>
       <td>
+        {singleNews.description}
+      </td>
+      <td>
         <DateFromTimestamp timestamp={singleNews.createdAt} />
       </td>
       <td>
@@ -36,7 +40,7 @@
       <td class="text-align-right actions-header">
         <Button
           type="is-primary"
-          on:click={() => push(`/news/${singleNews.id}?mode=edit`)}
+          on:click={() => push(`/news/${singleNews.id}`)}
         >
           <Edit2Icon size="1.0x" />
         </Button>

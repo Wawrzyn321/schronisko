@@ -15,7 +15,7 @@ export const routes = {
     '/': rootWrapper(Profile),
     '/login': Login,
     '/users': unauthorizedWrapper(Users),
-    '/pages': (Pages),
+    '/pages': unauthorizedWrapper(Pages),
     '/pages/:id': unauthorizedWrapper(Page),
     '/news': unauthorizedWrapper(News),
     '/news/:id': unauthorizedWrapper(SingleNews),

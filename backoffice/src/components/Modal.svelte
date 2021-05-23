@@ -5,6 +5,7 @@
   export let isOpen: boolean;
   export let title: string;
   export let confirmText: string = 'OK';
+  export let id: string | undefined;
   export let onConfirm: () => any;
   export let disabledConfirm: boolean = false;
   export let cancelText: string = 'Anuluj';
@@ -20,33 +21,36 @@
   onDestroy(close);
 </script>
 
-<SModal bind:active={isOpen} onBody={false}>
-  <div>
-    <header>
-      <h2>{title}</h2>
-      <Button type="is-light" on:click={close}>&times;</Button>
-    </header>
-    <div class="modal-content">
-      <slot />
+<div {id}>
+  <SModal bind:active={isOpen} onBody={false}>
+    <div>
+      <header>
+        <h2>{title}</h2>
+        <Button type="is-light" on:click={close}>&times;</Button>
+      </header>
+      <div class="modal-content">
+        <slot />
+      </div>
+      {#if confirmText || cancelText}
+        <footer>
+          <slot name="footer" />
+          {#if cancelText}
+            <Button type="is-light" on:click={close}>{cancelText}</Button>
+          {/if}
+          {#if confirmText}
+            <Button
+              class="modal-confirm"
+              type="is-primary"
+              disabled={disabledConfirm}
+              on:click={confirm}
+              >{confirmText}
+            </Button>
+          {/if}
+        </footer>
+      {/if}
     </div>
-    {#if confirmText || cancelText}
-      <footer>
-        {#if cancelText}
-          <Button type="is-light" on:click={close}>{cancelText}</Button>
-        {/if}
-        {#if confirmText}
-          <Button
-            class="modal-confirm"
-            type="is-primary"
-            disabled={disabledConfirm}
-            on:click={confirm}
-            >{confirmText}
-          </Button>
-        {/if}
-      </footer>
-    {/if}
-  </div>
-</SModal>
+  </SModal>
+</div>
 
 <style lang="scss">
   div {

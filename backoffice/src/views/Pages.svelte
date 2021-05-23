@@ -3,8 +3,8 @@
   import { push } from 'svelte-spa-router';
   import { onMount } from 'svelte';
   import { Edit2Icon, EyeIcon } from 'svelte-feather-icons';
-  import type { PageListElement } from '../services/PageService';
   import { pageService } from '../services/PageService';
+  import type { PageListElement } from '../prisma-types/Page';
 
   let pages: PageListElement[] = [];
   let searchPhrase = '';
@@ -34,10 +34,7 @@
           <a href={`/#/pages/${page.id}?mode=preview`}>{page.title}</a>
         </td>
         <td class="text-align-right actions-header">
-          <Button
-            type="is-primary"
-            on:click={() => push(`/pages/${page.id}?mode=edit`)}
-          >
+          <Button type="is-primary" on:click={() => push(`/pages/${page.id}`)}>
             <Edit2Icon size="1.0x" />
           </Button>
         </td>

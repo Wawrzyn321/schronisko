@@ -12,6 +12,10 @@ import { NewsModule } from './domain/news/news.module';
 const domainModules = [AuthModule, UsersModule, PagesModule, NewsModule];
 const ServeStatic = ServeStaticModule.forRoot({
   rootPath: join(__dirname, '..', 'static'),
+  serveStaticOptions: {
+    index: false,
+    extensions: ['.png'],
+  },
   //exclude: ['/api*'],
 });
 @Module({

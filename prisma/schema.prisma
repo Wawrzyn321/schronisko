@@ -17,6 +17,29 @@ enum Permission {
   ANIMAL
 }
 
+enum AnimalType {
+  CAT
+  DOG
+}
+
+enum AnimalGender {
+  MALE
+  FEMALE
+}
+
+enum AnimalLocation {
+  DomTymczasowy
+  Hotel
+  Schronisko
+  KociaChatka
+  UOsobyPrywatnej
+}
+
+enum AnimalCategory {
+  PilniePotrzebuja
+  Weterani
+}
+
 model User {
   id           Int               @id @default(autoincrement())
   login        String            @unique
@@ -41,6 +64,26 @@ model News {
   content             String
   isPublished         Boolean   @default(false)
   createdAt           DateTime  @default(now())
+  imageName           String
+}
+
+model Animal {
+  id                  String    @id @default(uuid())
+  name                String
+  type                AnimalType
+  gender              AnimalGender
+  description         String
+  category            AnimalCategory
+  location            AnimalCategory?
+  virtualCaretaker    String?
+  images              AnimalImage[]
+}
+
+model AnimalImage {
+  id            String     @id @default(uuid())
+  animalId      String
+  user          Animal     @relation(fields: [animalId], references: [id])
+  path          String
 }
 
 model Session {

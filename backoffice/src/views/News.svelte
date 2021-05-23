@@ -1,10 +1,11 @@
 <script lang="ts">
   import { Toast } from 'svelma';
-  import type { News, NewsListElement } from '../services/NewsService';
   import { onMount } from 'svelte';
   import { newsService } from '../services/NewsService';
   import Header from '../components/News/Header.svelte';
   import List from '../components/News/List.svelte';
+  import type { News } from '.prisma/client';
+  import type { NewsListElement } from '../prisma-types/News';
 
   let news: NewsListElement[] = [];
   let searchPhrase = '';
@@ -14,8 +15,10 @@
   $: filteredNews = news.filter(
     (p) =>
       !searchPhrase ||
-      p.title.toLowerCase().includes(searchPhrase.toLowerCase())
+      p.title.toLowerCase().includes(searchPhrase.toLowerCase()) ||
+      p.description.toLowerCase().includes(searchPhrase.toLowerCase())
   );
+
   function onNewsDeleted(n: News) {
     news = news.filter((n) => n.id !== n.id);
     Toast.create({
