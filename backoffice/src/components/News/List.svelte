@@ -24,7 +24,7 @@
   {#each news as singleNews}
     <tr>
       <td>
-        <a href={`/#/news/${singleNews.id}?mode=preview`}>
+        <a href={`/#/news/${singleNews.id}`}>
           {singleNews.title}
         </a>
       </td>

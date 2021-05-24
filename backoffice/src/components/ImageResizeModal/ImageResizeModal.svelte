@@ -163,7 +163,7 @@
     on:mousemove={onMouseMove}
     on:wheel={zoom}
   />
-  <div slot="footer" class="footer">
+  <div slot="footer" class="modal-footer">
 		Użyj scrolla, by zmieniać rozmiar obszaru docelowego. Przeciągnij po obrazie, by zmienić jego pozycję.
 	</div>
 </Modal>
@@ -196,7 +196,7 @@
     height: 60vh;
   }
 
-  .footer {
+  .modal-footer {
     margin-right: 20px;
     font-size: smaller;
   }

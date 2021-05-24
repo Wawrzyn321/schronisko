@@ -31,7 +31,7 @@
     {#each filteredPages as page}
       <tr>
         <td>
-          <a href={`/#/pages/${page.id}?mode=preview`}>{page.title}</a>
+          <a href={`/#/pages/${page.id}`}>{page.title}</a>
         </td>
         <td class="text-align-right actions-header">
           <Button type="is-primary" on:click={() => push(`/pages/${page.id}`)}>

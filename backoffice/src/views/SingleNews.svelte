@@ -14,6 +14,7 @@
   let news: News;
   let editedContent: string;
   let isValid: boolean = true;
+  let imageData = '';
 
   onMount(async () => {
     news = await newsService.get(id);
@@ -21,7 +22,7 @@
   });
 
   async function updateNews() {
-    await newsService.update({ ...news, content: editedContent });
+    await newsService.update({ ...news, content: editedContent }, imageData);
     Toast.create({
       message: 'Post został zapisany',
       type: 'is-success',
@@ -40,7 +41,7 @@
     />
     <EditorTabs bind:editedContent initialContent={news.content}>
       <Tab label="Dane">
-        <NewsForm {news} setFormValid={(valid) => (isValid = valid)} />
+        <NewsForm {news} bind:imageData={imageData} setFormValid={(valid) => (isValid = valid)} />
       </Tab>
     </EditorTabs>
   {:else}

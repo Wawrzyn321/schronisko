@@ -1,16 +1,8 @@
-import { Permission } from '@prisma/client';
-import { LoggedInUser } from './auth.service';
+import { LoggedInUser, JWTValidationPayload } from './types';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from '@nestjs/common';
 import { jwtConstants } from './constants';
-
-// todo to common
-interface JWTValidationPayload {
-  sub: number;
-  login: string;
-  permissions: Permission[];
-}
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {

@@ -5,7 +5,7 @@
   export let isOpen: boolean;
   export let title: string;
   export let confirmText: string = 'OK';
-  export let id: string | undefined;
+  export let id: string | undefined = undefined;
   export let onConfirm: () => any;
   export let disabledConfirm: boolean = false;
   export let cancelText: string = 'Anuluj';

@@ -1,25 +1,9 @@
-// import { NewsListElement, NewsCreateParams } from './../../prisma-types/News';
+import { NewsCreateInput, NewsUpdateInput, NewsModifyParams, NewsListElement } from '../../../../prisma/prisma-types/News';
 import type { News } from '.prisma/client';
 import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma-connect/prisma.service';
 import { v4 as uuid } from 'uuid';
 import { saveFile } from './saveFile';
-
-export interface NewsCreateParams {
-  title: string;
-  description: string;
-  isPublished: boolean;
-  content: string;
-  imageData: string;
-}
-
-export interface NewsListElement {
-  id: string;
-  description: string;
-  title: string;
-  createdAt: Date;
-  isPublished: boolean;
-}
 
 
 function validateNews(news: any) {
@@ -43,30 +27,33 @@ export class NewsService {
   async get(id: string): Promise<News> {
     const news = await this.prisma.news.findUnique({ where: { id } });
     if (!news) {
-      throw new NotFoundException(); 
+      throw new NotFoundException();
     }
     return news;
   }
 
-  async create(params: NewsCreateParams): Promise<NewsListElement> {
-    if (!validateNews(params)) {
+  async create(params: NewsModifyParams<NewsCreateInput>): Promise<NewsListElement> {
+    if (!validateNews(params.news)) {
       throw new BadRequestException();
     }
 
-    const {imageData, ...news}: { imageData: string } & any = params;
-
-    news.imageName = `${uuid()}.png`;
-    await saveFile(news.imageName, imageData);
-    const createdNews = await this.prisma.news.create({ data: news });
+    params.news.imageName = `${uuid()}.png`;
+    await saveFile(params.news.imageName, params.imageData);
+    const createdNews = await this.prisma.news.create({ data: params.news });
     return this.toListElement(createdNews);
   }
 
-  async update(id: string, news: News): Promise<NewsListElement> {
-    if (!validateNews(news)) {
+  async update(id: string, params: NewsModifyParams<NewsUpdateInput>): Promise<NewsListElement> {
+    if (!validateNews(params.news)) {
       throw new BadRequestException();
     }
+
+    if (params.imageData) {
+      await saveFile(params.news.imageName, params.imageData);
+    }
+
     const updatedNews = await this.prisma.news.update({
-      where: { id }, data: news
+      where: { id }, data: params.news
     });
     return this.toListElement(updatedNews);
   }

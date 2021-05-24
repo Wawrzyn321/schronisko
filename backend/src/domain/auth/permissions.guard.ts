@@ -1,17 +1,30 @@
-import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
+import { PrismaService } from 'src/prisma-connect/prisma.service';
+import { Injectable, CanActivate, ExecutionContext, ForbiddenException } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Permission } from '@prisma/client';
 import { PERMISSIONS_KEY } from './Permissions.decorator';
 
 @Injectable()
 export class PermissionsGuard implements CanActivate {
-  constructor(private reflector: Reflector) {}
+  constructor(private reflector: Reflector, private prismaService: PrismaService) { }
 
-  canActivate(context: ExecutionContext): boolean {
+  async canActivate(context: ExecutionContext): Promise<boolean> {
     const { user } = context.switchToHttp().getRequest();
+
     if (!user) {
       return false;
     }
+
+    try {
+      const dbUser = await this.prismaService.user.findUnique({ where: { id: user.id } });
+      if (!dbUser.isActive) {
+        throw new ForbiddenException();
+      }
+    } catch (e) {
+      console.log(e);
+      return false;
+    }
+
     const requiredPermissions = this.reflector.getAllAndOverride<Permission[]>(PERMISSIONS_KEY, [
       context.getHandler(),
       context.getClass(),

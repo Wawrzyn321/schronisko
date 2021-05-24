@@ -41,18 +41,26 @@ export class NewsService {
     // }
 
     async create(news: NewsCreateParams, imageData: string): Promise<NewsListElement> {
+        const input = {
+            news,
+            imageData
+        };
         return await throwingFetch(baseUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ ...news, imageData }),
+            body: JSON.stringify(input),
         });
     }
 
-    async update(news: NewsUpdateParams, imageData?: string): Promise<NewsListElement> {
+    async update(news: NewsUpdateParams, imageData: string): Promise<NewsListElement> {
+        const input = {
+            news,
+            imageData
+        };
         return await throwingFetch(`${baseUrl}/${news.id}`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ ...news, imageData }),
+            body: JSON.stringify(input),
         });
     }
 

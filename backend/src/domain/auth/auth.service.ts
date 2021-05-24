@@ -1,25 +1,17 @@
-import { Permission } from '@prisma/client';
+import { LoggedInUser } from './types';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { BcryptService } from 'src/domain/auth/bcrypt/bcrypt.service';
 
-interface UserDto {
+interface UserLoginParams {
   login: string;
   password: string;
 };
 
-// todo to common
 export interface ChangePasswordParams { 
   currentPassword: string;
   newPassword: string;
-}
-
-// todo to common
-export interface LoggedInUser {
-  id: number;
-  login: string;
-  permissions: Permission[];
 }
 
 @Injectable()
@@ -30,16 +22,16 @@ export class AuthService {
     private bcryptService: BcryptService,
   ) { }
 
-  async validateUserLogin(userDto: UserDto): Promise<any> {
+  async validateUserLogin(userDto: UserLoginParams): Promise<any> {
     const user = await this.usersService.findByLogin(userDto.login);
-    if (user && user.isActive && await this.bcryptService.compareHash(userDto.password, user.passwordHash)) {
+    if (user?.isActive && await this.bcryptService.compareHash(userDto.password, user.passwordHash)) {
       const { passwordHash, ...result } = user;
       return result;
     }
     return null;
   }
 
-  async login(userDto: UserDto) {
+  async login(userDto: UserLoginParams) {
     const user = await this.validateUserLogin(userDto);
     if (user) {
       const { firstName, lastName, login, id: sub } = user;

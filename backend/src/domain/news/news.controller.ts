@@ -1,6 +1,6 @@
 import { NewsService } from './news.service';
 import { RequirePermission } from '../auth/Permissions.decorator';
-import { Controller, Get, UseGuards, Patch, Param, Body, Delete, Post } from '@nestjs/common';
+import { Controller, Get, UseGuards, Patch, Param, Body, Delete, Post, BadRequestException } from '@nestjs/common';
 import { Permission } from '@prisma/client';
 import { PermissionsGuard } from '../auth/Permissions.guard';
 
@@ -33,6 +33,9 @@ export class NewsController {
     @Patch(':id')
     @UseGuards(PermissionsGuard)
     updateNews(@Param("id") newsId: string, @Body() body) {
+        if (newsId !== body?.news?.id) {
+            throw new BadRequestException();
+        }
         return this.newsService.update(newsId, body);
     }
 

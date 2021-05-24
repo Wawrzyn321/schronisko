@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { ExternalLinkIcon } from 'svelte-feather-icons';
   import { auth } from './../auth.context';
   import { link } from 'svelte-spa-router';
   import UserNavHeader from './UserNavHeader.svelte';
@@ -37,8 +38,9 @@
 
 <nav>
   <a href="https://www.schronisko.sosnowiec.pl/" target="_blank">
-    Strona schroniska</a
-  >
+    Strona schroniska
+    <ExternalLinkIcon size="0.9x"/>
+  </a>
   {#if $auth}
     <ul>
       {#each navigationRoutes as route}

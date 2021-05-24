@@ -4,12 +4,8 @@ import { Permission, User } from '@prisma/client';
 import { BcryptService } from 'src/domain/auth/bcrypt/bcrypt.service';
 import { UserViewModel } from 'src/prisma-types/viewModels/UserViewModel';
 import { toUser, UserDto, toUserUpdate, validateCreate, validateUpdate } from 'src/prisma-types/UserDto';
+import { LoggedInUser } from '../auth/types';
 
-interface HttpUser {
-  id: number;
-  login: string;
-  permissions: Permission[];
-}
 @Injectable()
 export class UsersService {
   constructor(private prisma: PrismaService, private bcryptService: BcryptService) { }
@@ -35,8 +31,8 @@ export class UsersService {
     ).then(this.toViewModel);
   }
 
-  async update(id: number, user: UserDto, httpUser: HttpUser): Promise<UserViewModel> {
-    if (!httpUser.permissions.includes(Permission.USER) && id !== httpUser.id) {
+  async update(id: number, user: UserDto, loggedInUser: LoggedInUser): Promise<UserViewModel> {
+    if (!loggedInUser.permissions.includes(Permission.USER) && id !== loggedInUser.id) {
       throw new UnauthorizedException();
     }
     if (!validateUpdate(id, user)) {

@@ -1,6 +1,7 @@
 <script lang="ts">
-  import { Field, Input } from 'svelma';
+  import { Button, Field, Input } from 'svelma';
   import ImageResizeModal from '../ImageResizeModal/ImageResizeModal.svelte';
+  import ImagePreview from './ImagePreview.svelte';
 
   export let news: {
     title: string;
@@ -17,15 +18,25 @@
   async function onFileChange(e: any) {
     if (!e.target) return;
     file = e.target.files[0];
+    openResizeModal();
+  }
+
+  function openResizeModal() {
     resizeModalVisible = true;
-    e.target.files = null;
-    e.target.value = null;
+  }
+
+  function revertImage() {
+      imageData = null;
+  }
+
+  function revalidateForm() {
+    setFormValid(form.checkValidity() && (!!imageData || !!news.imageName));
   }
 </script>
 
-<form bind:this={form} on:input={setFormValid(form.checkValidity())}>
+<form bind:this={form} on:input={revalidateForm}>
   <div>
-    <div style="width: 100%">
+    <div>
       <Field label="Tytuł">
         <Input required bind:value={news.title} placeholder="Tytuł" />
       </Field>
@@ -33,17 +44,13 @@
         <Input bind:value={news.description} placeholder="Opis" />
       </Field>
       <Field label="Tło" message="Widoczne na sliderze.">
+        <div style="display: flex">
         <Input type="file" on:input={onFileChange} />
+        <Button on:click={openResizeModal} disabled={!file}>Przytnij</Button>
+      </div>
       </Field>
     </div>
-    <div>
-      <!-- <canvas bind:this={previewCanvas} width="515" height="345" /> -->
-      {#if imageData}
-        <img src={imageData} alt="Podgląd" />
-      {:else if news.imageName}
-        <img src={`http://localhost:3000/${news.imageName}`} alt="Podgląd" />
-      {/if}
-    </div>
+    <ImagePreview {imageData} {revertImage} imageName={news.imageName} />
   </div>
 </form>
 <ImageResizeModal
@@ -66,26 +73,14 @@
       justify-content: space-between;
     }
 
-    img {
-      width: 515px;
-      height: 345px;
-      max-width: unset;
-      display: block;
-      margin-left: 32px;
-    }
     @media (max-width: 800px) {
       & > div {
         display: block;
       }
 
-      img {
-        margin: 16px auto 0;
+      :global(input) {
+        max-width: 75vw;
       }
-
-    :global(input) {
-      max-width: 75vw;
-    }
-
     }
   }
 </style>
