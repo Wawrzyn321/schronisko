@@ -12,20 +12,20 @@
   let searchPhrase = '';
 
   onMount(() => {
-    // userService.getAll().then((u) => (users = u));
+    userService.getAll().then((u) => (users = u));
     console.log('users mount');
     return () => console.log('users unmount'); // not called
   });
-  // $: {
-  //   const t = searchPhrase.toLowerCase();
-  //   filteredUsers = users.filter(
-  //   (u) =>
-  //     !searchPhrase ||
-  //     u.firstName.toLowerCase().includes(t) ||
-  //     u.lastName.toLowerCase().includes(t) ||
-  //     u.login.toLowerCase().includes(t)
-  //   );
-  // }
+  $: {
+    const t = searchPhrase.toLowerCase();
+    filteredUsers = users.filter(
+    (u) =>
+      !searchPhrase ||
+      u.firstName.toLowerCase().includes(t) ||
+      u.lastName.toLowerCase().includes(t) ||
+      u.login.toLowerCase().includes(t)
+    );
+  }
 
   function onUserAdded(u: UserViewModel) {
     users = insertInOrder(users, u, (u) => u.lastName);
@@ -36,23 +36,23 @@
     });
   }
 
-  // function onUserDeleted(u: UserViewModel) {
-  //   users = users.filter((e) => e.id !== u.id);
-  //   Toast.create({
-  //     message: `Usunięto użytkownika ${u.firstName} ${u.lastName}`,
-  //     type: 'is-success',
-  //     position: 'is-bottom',
-  //   });
-  // }
+  function onUserDeleted(u: UserViewModel) {
+    users = users.filter((e) => e.id !== u.id);
+    Toast.create({
+      message: `Usunięto użytkownika ${u.firstName} ${u.lastName}`,
+      type: 'is-success',
+      position: 'is-bottom',
+    });
+  }
 
-  // function onUserEdited(u: UserViewModel) {
-  //   const user = users.find((user) => user.id === u.id);
-  //   const index = users.indexOf(user);
-  //   users = [...users.slice(0, index), u, ...users.slice(index + 1)];
-  // }
+  function onUserEdited(u: UserViewModel) {
+    const user = users.find((user) => user.id === u.id);
+    const index = users.indexOf(user);
+    users = [...users.slice(0, index), u, ...users.slice(index + 1)];
+  }
 </script>
 
 <main>
   <Header {onUserAdded} bind:searchPhrase={searchPhrase}/>
-  <!-- <List {onUserDeleted} {onUserEdited} users={filteredUsers} /> -->
+  <List {onUserDeleted} {onUserEdited} users={filteredUsers} />
 </main>

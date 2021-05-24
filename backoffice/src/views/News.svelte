@@ -13,7 +13,7 @@
 
   onMount(() => {
     console.log('news mount');
-    // newsService.getAll().then((n) => (news = n));
+    newsService.getAll().then((n) => (news = n));
 
     return () => console.log('news unmount'); // not called
   });
@@ -36,5 +36,5 @@
 
 <main>
   <Header bind:searchPhrase />
-  <!-- <List news={filteredNews} {onNewsDeleted}/> -->
+  <List news={filteredNews} {onNewsDeleted}/>
 </main>
