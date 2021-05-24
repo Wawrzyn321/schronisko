@@ -3,6 +3,7 @@
   import type { UserViewModel } from '../../prisma-types/viewModels/UserViewModel';
   import PermissionsForm from './PermissionsForm.svelte';
   import { userService } from '../../services/UserService';
+  import type { Permission } from '.prisma/client';
 
   export let modalVisible: boolean;
   export let user: UserViewModel;

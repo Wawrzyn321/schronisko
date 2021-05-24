@@ -11,12 +11,8 @@
   let searchPhrase = '';
   let filteredNews: NewsListElement[];
 
-  onMount(() => {
-    console.log('news mount');
-    newsService.getAll().then((n) => (news = n));
+  onMount(async () => (news = await newsService.getAll()));
 
-    return () => console.log('news unmount'); // not called
-  });
   $: filteredNews = news.filter(
     (p) =>
       !searchPhrase ||

@@ -11,19 +11,16 @@
   let filteredUsers: UserViewModel[];
   let searchPhrase = '';
 
-  onMount(() => {
-    userService.getAll().then((u) => (users = u));
-    console.log('users mount');
-    return () => console.log('users unmount'); // not called
-  });
+  onMount(async () => (users = await userService.getAll()));
+  
   $: {
     const t = searchPhrase.toLowerCase();
     filteredUsers = users.filter(
-    (u) =>
-      !searchPhrase ||
-      u.firstName.toLowerCase().includes(t) ||
-      u.lastName.toLowerCase().includes(t) ||
-      u.login.toLowerCase().includes(t)
+      (u) =>
+        !searchPhrase ||
+        u.firstName.toLowerCase().includes(t) ||
+        u.lastName.toLowerCase().includes(t) ||
+        u.login.toLowerCase().includes(t)
     );
   }
 
@@ -49,10 +46,16 @@
     const user = users.find((user) => user.id === u.id);
     const index = users.indexOf(user);
     users = [...users.slice(0, index), u, ...users.slice(index + 1)];
+
+    Toast.create({
+      message: `Zaktualizowano użytkownika ${u.firstName} ${u.lastName}`,
+      type: 'is-success',
+      position: 'is-bottom',
+    });
   }
 </script>
 
 <main>
-  <Header {onUserAdded} bind:searchPhrase={searchPhrase}/>
+  <Header {onUserAdded} bind:searchPhrase />
   <List {onUserDeleted} {onUserEdited} users={filteredUsers} />
 </main>

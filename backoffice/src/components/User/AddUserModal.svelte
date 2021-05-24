@@ -13,7 +13,7 @@
   let form: HTMLFormElement;
   let isFormValid = false;
 
-  let user: UserCreateParams = {permissions:[]};
+  let user: UserCreateParams;
 
   const onMounted = (visible: boolean) => {
     if (visible) user = createDefaultUser();
@@ -36,11 +36,7 @@
 >
   <form bind:this={form} on:input={() => (isFormValid = form.checkValidity())}>
     <Field label="Login">
-      <Input
-        required
-        bind:value={user.login}
-        placeholder="Login"
-      />
+      <Input required bind:value={user.login} placeholder="Login" />
     </Field>
     <Field label="Imię">
       <Input required bind:value={user.firstName} placeholder="Imię" />
