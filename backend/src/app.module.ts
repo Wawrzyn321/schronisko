@@ -10,9 +10,11 @@ import { join } from 'path';
 import { PagesModule } from './domain/pages/pages.module';
 import { NewsModule } from './domain/news/news.module';
 
+export const STATIC_FILES_PATH = 'static';
+
 const domainModules = [AuthModule, UsersModule, PagesModule, NewsModule];
 const ServeStatic = ServeStaticModule.forRoot({
-  rootPath: join(__dirname, '..', 'static'),
+  rootPath: join(__dirname, '..', STATIC_FILES_PATH),
   serveStaticOptions: {
     index: false,
     extensions: ['.png'],

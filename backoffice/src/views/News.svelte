@@ -10,8 +10,13 @@
   let news: NewsListElement[] = [];
   let searchPhrase = '';
   let filteredNews: NewsListElement[];
-  onMount(async () => (news = await newsService.getAll()));
 
+  onMount(() => {
+    console.log('news mount');
+    // newsService.getAll().then((n) => (news = n));
+
+    return () => console.log('news unmount'); // not called
+  });
   $: filteredNews = news.filter(
     (p) =>
       !searchPhrase ||
@@ -31,5 +36,5 @@
 
 <main>
   <Header bind:searchPhrase />
-  <List news={filteredNews} {onNewsDeleted}/>
+  <!-- <List news={filteredNews} {onNewsDeleted}/> -->
 </main>

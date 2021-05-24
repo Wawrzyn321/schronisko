@@ -37,11 +37,16 @@
       timestamp={news.createdAt}
       {updateNews}
       {isValid}
+      {news}
       bind:isPublished={news.isPublished}
     />
     <EditorTabs bind:editedContent initialContent={news.content}>
       <Tab label="Dane">
-        <NewsForm {news} bind:imageData={imageData} setFormValid={(valid) => (isValid = valid)} />
+        <NewsForm
+          {news}
+          bind:imageData
+          setFormValid={(valid) => (isValid = valid)}
+        />
       </Tab>
     </EditorTabs>
   {:else}

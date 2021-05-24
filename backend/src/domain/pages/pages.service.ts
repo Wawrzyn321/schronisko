@@ -1,4 +1,3 @@
-// import { PageListElement } from './../../prisma-types/Page';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma-connect/prisma.service';
 import type { Page } from '.prisma/client';

@@ -15,6 +15,8 @@
   let resizeModalVisible = false;
   let file: File;
 
+  $: imageData && revalidateForm();
+
   async function onFileChange(e: any) {
     if (!e.target) return;
     file = e.target.files[0];

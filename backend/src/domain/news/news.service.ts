@@ -1,9 +1,9 @@
-import { NewsCreateInput, NewsUpdateInput, NewsModifyParams, NewsListElement } from '../../../../prisma/prisma-types/News';
+import { NewsCreateInput, NewsUpdateInput, NewsModifyParams, NewsListElement } from 'src/prisma-types/News';
 import type { News } from '.prisma/client';
 import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma-connect/prisma.service';
 import { v4 as uuid } from 'uuid';
-import { saveFile } from './saveFile';
+import { saveImage, deleteImage } from './img-fs';
 
 
 function validateNews(news: any) {
@@ -38,7 +38,7 @@ export class NewsService {
     }
 
     params.news.imageName = `${uuid()}.png`;
-    await saveFile(params.news.imageName, params.imageData);
+    await saveImage(params.news.imageName, params.imageData);
     const createdNews = await this.prisma.news.create({ data: params.news });
     return this.toListElement(createdNews);
   }
@@ -49,7 +49,7 @@ export class NewsService {
     }
 
     if (params.imageData) {
-      await saveFile(params.news.imageName, params.imageData);
+      await saveImage(params.news.imageName, params.imageData);
     }
 
     const updatedNews = await this.prisma.news.update({
@@ -59,6 +59,8 @@ export class NewsService {
   }
 
   async delete(id: string): Promise<News> {
+    const post = await this.prisma.news.findUnique({ where: { id } });
+    await deleteImage(post.imageName);
     return await this.prisma.news.delete({
       where: { id }
     });

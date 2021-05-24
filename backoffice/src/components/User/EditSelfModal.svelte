@@ -11,7 +11,14 @@
   let form: HTMLFormElement;
   let isFormValid = false;
 
-  let user: UserViewModel = {permissions:[]};
+  let user: UserViewModel = {
+    id: -1,
+    login: '',
+    firstName: '',
+    lastName: '',
+    permissions: [],
+    isActive: false,
+  };
 
   function onShow(_) {
     if (modalVisible) user = { ...$auth.user };
@@ -23,7 +30,7 @@
     const updatedUser = await userService.updateSelf(user);
     onUserEdited(updatedUser);
     Toast.create({
-      message: 'Twoje dane zostały',
+      message: 'Twoje dane zostały zapisane',
       type: 'is-success',
       position: 'is-bottom',
     });
@@ -39,11 +46,7 @@
 >
   <form bind:this={form} on:input={() => (isFormValid = form.checkValidity())}>
     <Field label="Login">
-      <Input
-        required
-        bind:value={user.login}
-        placeholder="Login"
-      />
+      <Input required bind:value={user.login} placeholder="Login" />
     </Field>
     <Field label="Imię">
       <Input required bind:value={user.firstName} placeholder="Imię" />

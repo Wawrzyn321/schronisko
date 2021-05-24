@@ -7,6 +7,10 @@
   let editSelfModalVisible = false;
 </script>
 
+<EditSelfModal
+  bind:modalVisible={editSelfModalVisible}
+  onUserEdited={() => {}}
+/>
 <div class="user-panel">
   <span>{$auth.user.firstName} {$auth.user.lastName}</span>
   <Button type="is-primary" id="edit-self-button" on:click={() => (editSelfModalVisible = true)}>
@@ -14,10 +18,6 @@
   </Button>
   <button class="link" on:click={logout}>Wyloguj się</button>
 </div>
-<EditSelfModal
-  bind:modalVisible={editSelfModalVisible}
-  onUserEdited={() => {}}
-/>
 
 <style lang="scss">
   .user-panel {
