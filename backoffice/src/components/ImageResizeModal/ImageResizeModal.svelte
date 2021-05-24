@@ -179,22 +179,22 @@
     right: 0;
   }
 
-  :global(#resize-modal-wrapper > div > .modal-content) {
+  :global(#resize-modal-wrapper dialog) {
     width: 80vw;
     height: 60vh;
   }
 
-  :global(#resize-modal-wrapper .modal-content .modal-content) {
+  :global(#resize-modal-wrapper .modal-content) {
     width: 80vw;
-    height: 46vh;
+    height: 45vh;
     padding: 0;
     margin: 0;
   }
 
-  :global(#resize-modal-wrapper > div > .modal-content > *) {
-    width: 80vw;
-    height: 60vh;
-  }
+  // :global(#resize-modal-wrapper > div > .modal-content > *) {
+  //   width: 80vw;
+  //   height: 60vh;
+  // }
 
   .modal-footer {
     margin-right: 20px;

@@ -5,7 +5,7 @@
   import { Button, Toast } from 'svelma';
   import { pageService } from '../services/PageService';
   import EditorTabs from '../components/EditorTabs.svelte';
-  import type { Page } from '../Page';
+  import type { Page } from '.prisma/client';
 
   export let params: { id: string };
   const id = params.id;
@@ -42,7 +42,7 @@
       on:click={savePost}>Zapisz</Button
     >
   </header>
-  <EditorTabs bind:editedContent={editedContent} initialContent={page.content} />
+  <EditorTabs bind:editedContent initialContent={page.content} />
 {:else}
   Ładowanie...
 {/if}

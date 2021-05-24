@@ -6,7 +6,7 @@ import { v4 as uuid } from 'uuid';
 import { saveImage, deleteImage } from './img-fs';
 
 
-function validateNews(news: any) {
+function validateNews<T>(news: NewsCreateInput): boolean {
   return !!news.title;
 }
 

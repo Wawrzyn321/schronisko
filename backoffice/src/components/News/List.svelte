@@ -19,7 +19,7 @@
     <th>Opis</th>
     <th>Data utworzenia</th>
     <th>Opublikowany?</th>
-    <th class="text-align-right actions-header" />
+    <th class="g-text-align-right g-actions-header" />
   </tr>
   {#each news as singleNews}
     <tr>
@@ -37,7 +37,7 @@
       <td>
         {singleNews.isPublished ? 'TAK' : 'NIE'}
       </td>
-      <td class="text-align-right actions-header">
+      <td class="g-text-align-right g-actions-header">
         <Button
           type="is-primary"
           on:click={() => push(`/news/${singleNews.id}`)}

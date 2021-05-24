@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Trash2Icon, Edit2Icon } from 'svelte-feather-icons';
-  import { Button } from 'svelma';
+  import { Button, Toast } from 'svelma';
   import { isSelf } from '../../auth.context';
   import type { UserViewModel } from '../../prisma-types/viewModels/UserViewModel';
   import DeleteUserModal from './DeleteUserModal.svelte';
@@ -19,6 +19,15 @@
   let selectedUser: UserViewModel;
 
   $: filteredUsers = users.filter(u => !showActive || u.isActive);
+
+  function onNotSelfUserEdited(u: UserViewModel) {
+    Toast.create({
+      message: `Zaktualizowano użytkownika ${u.firstName} ${u.lastName}`,
+      type: 'is-success',
+      position: 'is-bottom',
+    });
+    onUserEdited(u);
+  }
 </script>
 
 <table class="table is-fullwidth">
@@ -26,19 +35,19 @@
     <th>Imię</th>
     <th>Nazwisko</th>
     <th>Login</th>
-    <th class="text-align-center">
+    <th class="g-text-align-center">
       <input type="checkbox" bind:checked={showActive}/>
       Aktywny
     </th>
-    <th class="actions-header" />
+    <th class="g-actions-header" />
   </tr>
   {#each filteredUsers as user}
     <tr>
       <td>{user.firstName}</td>
       <td>{user.lastName}</td>
       <td>{user.login}</td>
-      <td class="text-align-center">{user.isActive ? 'TAK' : 'NIE'}</td>
-      <td class="text-align-right actions-header">
+      <td class="g-text-align-center">{user.isActive ? 'TAK' : 'NIE'}</td>
+      <td class="g-text-align-right g-actions-header">
         <Button
           type="is-primary"
           on:click={() => {
@@ -73,12 +82,12 @@
 />
 <EditUserModal
   bind:modalVisible={editModalVisible}
-  {onUserEdited}
+  onUserEdited={onNotSelfUserEdited}
   user={selectedUser}
 />
 <EditSelfModal
   bind:modalVisible={editSelfModalVisible}
-  {onUserEdited}
+  onSelfEdited={onUserEdited}
 />
 
 <style lang="scss">

@@ -5,20 +5,13 @@
   import { auth } from '../../auth.context';
   import { userService } from './../../services/UserService';
 
-  export let onUserEdited: (u: UserViewModel) => void;
+  export let onSelfEdited: (u: UserViewModel) => void = undefined;
   export let modalVisible: boolean;
 
   let form: HTMLFormElement;
   let isFormValid = false;
 
-  let user: UserViewModel = {
-    id: -1,
-    login: '',
-    firstName: '',
-    lastName: '',
-    permissions: [],
-    isActive: false,
-  };
+  let user: UserViewModel;
 
   function onShow(_) {
     if (modalVisible) user = { ...$auth.user };
@@ -28,7 +21,7 @@
 
   async function updateSelf() {
     const updatedUser = await userService.updateSelf(user);
-    onUserEdited(updatedUser);
+    onSelfEdited && onSelfEdited(updatedUser);
     Toast.create({
       message: 'Twoje dane zostały zapisane',
       type: 'is-success',

@@ -1,6 +1,10 @@
 import type { Permission } from '@prisma/client';
 import { allPermissions } from './permissions';
 
+export interface UserPermissionsWrapper {
+  permission: Permission;
+}
+
 export interface UserDto {
   id: number;
   login: string;
@@ -11,7 +15,28 @@ export interface UserDto {
   permissions: Permission[];
 }
 
-export async function toUser(dto: UserDto, dataHasher: (str: string) => Promise<string>): Promise<any> {
+export interface UserCreateDto {
+  login: string;
+  firstName: string;
+  lastName: string;
+  passwordHash: string;
+  isActive: true;
+  permissions: {
+    create: UserPermissionsWrapper[];
+  }
+}
+
+export interface UserUpdateDto {
+  login: string;
+  firstName: string;
+  lastName: string;
+  isActive: boolean;
+  permissions: {
+    create: UserPermissionsWrapper[];
+  }
+}
+
+export async function toUser(dto: UserDto, dataHasher: (str: string) => Promise<string>): Promise<UserCreateDto> {
   return {
     login: dto.login,
     firstName: dto.firstName,
@@ -24,7 +49,7 @@ export async function toUser(dto: UserDto, dataHasher: (str: string) => Promise<
   };
 };
 
-export function toUserUpdate(dto: UserDto) {
+export function toUserUpdate(dto: UserDto): UserUpdateDto {
   return {
     login: dto.login,
     firstName: dto.firstName,

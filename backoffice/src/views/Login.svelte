@@ -39,8 +39,9 @@
       type="is-primary"
       nativeType="submit"
       disabled={!login || !password}
-      {loading}>Zaloguj</Button
-    >
+      {loading}>
+      Zaloguj
+      </Button>
   </form>
   <Notification type="is-danger" bind:active={errorOpen}>
     Wygląda na to, że wprowadzone dane są nieprawidłowe. Jeśli zapomniałeś hasła

@@ -7,7 +7,7 @@
   import DeleteNewsModal from './DeleteNewsModal.svelte';
 
   export let isPublished: boolean;
-  export let timestamp: any;
+  export let timestamp: Date;
   export let isValid: boolean;
   export let news: News;
   export let updateNews: () => any;
@@ -24,7 +24,7 @@
   }
 </script>
 
-<header>
+<header class="g-flex-between-100">
   <h1>Edycja newsa</h1>
   <span>
     Utworzony:
@@ -44,7 +44,7 @@
     </Button>
     <Button
       type="is-danger"
-      on:click={() => deleteModalVisible = true}
+      on:click={() => (deleteModalVisible = true)}
       style="margin-left: 8px"
     >
       Usuń
@@ -58,14 +58,12 @@
 />
 
 <style lang="scss">
-  header {
-    & > div {
-      display: flex;
-      align-items: center;
-    }
+  header > div {
+    display: flex;
+    justify-content: center;
+  }
 
-    label {
-      margin-right: 16px;
-    }
+  label {
+    margin-right: 16px;
   }
 </style>

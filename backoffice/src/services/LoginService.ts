@@ -1,5 +1,7 @@
 import { throwingFetch } from "./throwingFetch";
 import { API_URL } from './config';
+import type { UserViewModel } from "../prisma-types/viewModels/UserViewModel";
+
 export class ChangePasswordParams {
     currentPassword: string = '';
     newPassword: string = '';
@@ -11,7 +13,7 @@ export class ChangePasswordParams {
 }
 
 export class LoginService {
-    async login(login: string, password: string) {
+    async login(login: string, password: string): Promise<{access_token: string, user: UserViewModel}> {
         return await throwingFetch(`${API_URL}/auth/login`, {
             noAuth: true,
             method: 'POST',
@@ -20,7 +22,7 @@ export class LoginService {
         });
     }
 
-    async changePassword(params: ChangePasswordParams) {
+    async changePassword(params: ChangePasswordParams): Promise<void> {
         return await throwingFetch(`${API_URL}/auth/change-password`, {
             method: 'POST',
             body: JSON.stringify({

@@ -6,7 +6,7 @@
   export let createNews: () => any;
 </script>
 
-<header>
+<header class="g-flex-between-100">
   <h1>Utwórz newsa</h1>
   <div>
     <label>
@@ -24,16 +24,7 @@
 </header>
 
 <style lang="scss">
-  header {
-    margin-bottom: 0;
-    
-    & > div {
-      display: flex;
-      align-items: center;
-    }
-
-    label {
-      margin-right: 16px;
-    }
+  label {
+    margin-right: 16px;
   }
 </style>

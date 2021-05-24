@@ -32,14 +32,6 @@ export class NewsService {
         return await throwingFetch(`${baseUrl}/${id}`);
     }
 
-    // async save(news: NewsCreateParams): Promise<News> {
-    //     return await throwingFetch(`${baseUrl}/${news.id}`, {
-    //         method: 'PATCH',
-    //         headers: { 'Content-Type': 'application/json' },
-    //         body: JSON.stringify(news),
-    //     });
-    // }
-
     async create(news: NewsCreateParams, imageData: string): Promise<NewsListElement> {
         const input = {
             news,

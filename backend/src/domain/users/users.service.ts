@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma-connect/prisma.service';
-import { Permission, User } from '@prisma/client';
+import { Permission, User, UserPermissions } from '@prisma/client';
 import { BcryptService } from 'src/domain/auth/bcrypt/bcrypt.service';
 import { UserViewModel } from 'src/prisma-types/viewModels/UserViewModel';
 import { toUser, UserDto, toUserUpdate, validateCreate, validateUpdate } from 'src/prisma-types/UserDto';
@@ -55,7 +55,7 @@ export class UsersService {
     }).then(this.toViewModel);
   }
 
-  async getPermissions(userId: number) {
+  async getPermissions(userId: number): Promise<UserPermissions[]> {
     return await this.prisma.userPermissions.findMany({ where: { userId } });
   }
 
@@ -67,7 +67,7 @@ export class UsersService {
   }
 
   toViewModel(user: User): UserViewModel {
-    const { passwordHash, ...u } = user;
+    const { passwordHash, ...u }: {passwordHash: string} & UserViewModel = user;
     return u;
   }
 }

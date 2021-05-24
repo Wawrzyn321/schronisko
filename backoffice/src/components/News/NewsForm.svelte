@@ -3,6 +3,10 @@
   import ImageResizeModal from '../ImageResizeModal/ImageResizeModal.svelte';
   import ImagePreview from './ImagePreview.svelte';
 
+  interface HtmlInputEvent extends Event {
+    target: HTMLInputElement & EventTarget;
+  }
+
   export let news: {
     title: string;
     description: string;
@@ -17,7 +21,7 @@
 
   $: imageData && revalidateForm();
 
-  async function onFileChange(e: any) {
+  async function onFileChange(e: HtmlInputEvent) {
     if (!e.target) return;
     file = e.target.files[0];
     openResizeModal();
@@ -28,7 +32,7 @@
   }
 
   function revertImage() {
-      imageData = null;
+    imageData = null;
   }
 
   function revalidateForm() {
@@ -47,9 +51,9 @@
       </Field>
       <Field label="Tło" message="Widoczne na sliderze.">
         <div style="display: flex">
-        <Input type="file" on:input={onFileChange} />
-        <Button on:click={openResizeModal} disabled={!file}>Przytnij</Button>
-      </div>
+          <Input type="file" on:input={onFileChange} />
+          <Button on:click={openResizeModal} disabled={!file}>Przytnij</Button>
+        </div>
       </Field>
     </div>
     <ImagePreview {imageData} {revertImage} imageName={news.imageName} />

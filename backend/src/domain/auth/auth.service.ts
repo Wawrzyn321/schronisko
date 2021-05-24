@@ -1,3 +1,4 @@
+import { UserViewModel } from './../../../../prisma/prisma-types/viewModels/UserViewModel';
 import { LoggedInUser } from './types';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
@@ -22,7 +23,7 @@ export class AuthService {
     private bcryptService: BcryptService,
   ) { }
 
-  async validateUserLogin(userDto: UserLoginParams): Promise<any> {
+  async validateUserLogin(userDto: UserLoginParams): Promise<UserViewModel> {
     const user = await this.usersService.findByLogin(userDto.login);
     if (user?.isActive && await this.bcryptService.compareHash(userDto.password, user.passwordHash)) {
       const { passwordHash, ...result } = user;
@@ -31,7 +32,7 @@ export class AuthService {
     return null;
   }
 
-  async login(userDto: UserLoginParams) {
+  async login(userDto: UserLoginParams): Promise<{access_token: string, user: UserViewModel}> {
     const user = await this.validateUserLogin(userDto);
     if (user) {
       const { firstName, lastName, login, id: sub } = user;
@@ -46,12 +47,11 @@ export class AuthService {
     }
   }
 
-  async changePassword(params: ChangePasswordParams, loggedInUser: LoggedInUser) {
+  async changePassword(params: ChangePasswordParams, loggedInUser: LoggedInUser): Promise<UserViewModel> {
     const user = await this.usersService.findById(loggedInUser.id);
     if (user && user.isActive && await this.bcryptService.compareHash(params.currentPassword, user.passwordHash)) {
         return this.usersService.updatePassword(user, params.newPassword);
     }
-    
     throw new UnauthorizedException();
   }
 }

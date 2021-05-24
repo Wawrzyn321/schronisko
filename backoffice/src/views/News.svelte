@@ -13,12 +13,15 @@
 
   onMount(async () => (news = await newsService.getAll()));
 
-  $: filteredNews = news.filter(
-    (p) =>
-      !searchPhrase ||
-      p.title.toLowerCase().includes(searchPhrase.toLowerCase()) ||
-      p.description.toLowerCase().includes(searchPhrase.toLowerCase())
-  );
+  $: {
+    const searchLower = searchPhrase.toLowerCase();
+    filteredNews = news.filter(
+      (newsPiece: NewsListElement) =>
+        !searchPhrase ||
+        newsPiece.title.toLowerCase().includes(searchLower) ||
+        newsPiece.description.toLowerCase().includes(searchLower)
+    );
+  }
 
   function onNewsDeleted(n: News) {
     news = news.filter((n) => n.id !== n.id);
@@ -32,5 +35,5 @@
 
 <main>
   <Header bind:searchPhrase />
-  <List news={filteredNews} {onNewsDeleted}/>
+  <List news={filteredNews} {onNewsDeleted} />
 </main>

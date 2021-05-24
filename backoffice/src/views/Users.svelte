@@ -12,7 +12,7 @@
   let searchPhrase = '';
 
   onMount(async () => (users = await userService.getAll()));
-  
+
   $: {
     const t = searchPhrase.toLowerCase();
     filteredUsers = users.filter(
@@ -46,12 +46,6 @@
     const user = users.find((user) => user.id === u.id);
     const index = users.indexOf(user);
     users = [...users.slice(0, index), u, ...users.slice(index + 1)];
-
-    Toast.create({
-      message: `Zaktualizowano użytkownika ${u.firstName} ${u.lastName}`,
-      type: 'is-success',
-      position: 'is-bottom',
-    });
   }
 </script>
 
