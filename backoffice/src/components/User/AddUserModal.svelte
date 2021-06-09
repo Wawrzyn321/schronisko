@@ -15,11 +15,7 @@
 
   let user: UserCreateParams;
 
-  const onMounted = (visible: boolean) => {
-    if (visible) user = createDefaultUser();
-  };
-
-  $: onMounted(modalVisible);
+  $: if (modalVisible) user = createDefaultUser();
 
   async function addUser() {
     const newUser = await userService.addUser(user);

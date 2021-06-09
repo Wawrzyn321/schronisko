@@ -8,21 +8,17 @@
   import { userService } from '../services/UserService';
 
   let users: UserViewModel[] = [];
-  let filteredUsers: UserViewModel[];
   let searchPhrase = '';
 
   onMount(async () => (users = await userService.getAll()));
 
-  $: {
-    const t = searchPhrase.toLowerCase();
-    filteredUsers = users.filter(
-      (u) =>
-        !searchPhrase ||
-        u.firstName.toLowerCase().includes(t) ||
-        u.lastName.toLowerCase().includes(t) ||
-        u.login.toLowerCase().includes(t)
-    );
-  }
+  $: filteredUsers = users.filter(
+    (u: UserViewModel) =>
+      !searchPhrase ||
+      u.firstName.toLowerCase().includes(searchPhrase.toLowerCase()) ||
+      u.lastName.toLowerCase().includes(searchPhrase.toLowerCase()) ||
+      u.login.toLowerCase().includes(searchPhrase.toLowerCase())
+  );
 
   function onUserAdded(u: UserViewModel) {
     users = insertInOrder(users, u, (u) => u.lastName);

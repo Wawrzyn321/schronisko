@@ -8,11 +8,10 @@
 
   let pages: PageListElement[] = [];
   let searchPhrase = '';
-  let filteredPages: PageListElement[];
   onMount(async () => (pages = await pageService.getAll()));
 
   $: filteredPages = pages.filter(
-    (p) =>
+    (p: PageListElement) =>
       !searchPhrase ||
       p.title.toLowerCase().includes(searchPhrase.toLowerCase())
   );
@@ -24,7 +23,10 @@
       <h1>Strony</h1>
       <input placeholder="Szukaj..." bind:value={searchPhrase} />
     </div>
-    <p class="g-description">Tutaj znajduje się spis statycznych stron, na stałe osadzonych na głównej stronie.</p>
+    <p class="g-description">
+      Tutaj znajduje się spis statycznych stron, na stałe osadzonych na głównej
+      stronie.
+    </p>
   </header>
   <table class="table is-fullwidth">
     <tr>

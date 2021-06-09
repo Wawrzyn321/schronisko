@@ -9,19 +9,15 @@
 
   let news: NewsListElement[] = [];
   let searchPhrase = '';
-  let filteredNews: NewsListElement[];
 
   onMount(async () => (news = await newsService.getAll()));
 
-  $: {
-    const searchLower = searchPhrase.toLowerCase();
-    filteredNews = news.filter(
-      (newsPiece: NewsListElement) =>
-        !searchPhrase ||
-        newsPiece.title.toLowerCase().includes(searchLower) ||
-        newsPiece.description.toLowerCase().includes(searchLower)
-    );
-  }
+  $: filteredNews = news.filter(
+    (newsPiece: NewsListElement) =>
+      !searchPhrase ||
+      newsPiece.title.toLowerCase().includes(searchPhrase.toLowerCase()) ||
+      newsPiece.description.toLowerCase().includes(searchPhrase.toLowerCase())
+  );
 
   function onNewsDeleted(n: News) {
     news = news.filter((n) => n.id !== n.id);

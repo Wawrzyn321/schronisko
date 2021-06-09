@@ -13,11 +13,7 @@
 
   let user: UserViewModel;
 
-  function onShow(_) {
-    if (modalVisible) user = { ...$auth.user };
-  }
-
-  $: onShow(modalVisible);
+  $: if (modalVisible) user = { ...$auth.user };
 
   async function updateSelf() {
     const updatedUser = await userService.updateSelf(user);

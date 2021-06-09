@@ -17,21 +17,20 @@
   export let onChange: (c: string) => any;
   export let initialContent: string;
 
-  function updateContentFromInitial(_) {
-    if (!quill) return;
-    content = initialContent;
-    quill.root.innerHTML = initialContent;
+  $: {
+    if (quill) {
+      content = initialContent;
+      quill.root.innerHTML = initialContent;
+    }
   }
 
-  $: updateContentFromInitial(initialContent);
-
-  function makeQuill(node) {
+  function makeQuill(node: HTMLElement) {
     const options = {
       modules: {
         toolbar: toolbarOptions,
         // counter: {},
       },
-      theme: "snow",
+      theme: 'snow',
     };
     quill = new Quill(node, options);
     content = initialContent;
@@ -56,12 +55,12 @@
   }
 
   function requestMayBeTooLarge() {
-    return content?.length / 1024/ 1024 > 9.5; // 10 mb
+    return content?.length / 1024 / 1024 > 9.5; // 10 mb
   }
 </script>
 
 <svelte:head>
-	<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
 </svelte:head>
 {#if requestMayBeTooLarge()}
   <div class="warning-container">
@@ -70,14 +69,10 @@
     </Notification>
   </div>
 {/if}
-<div
-  class="editor"
-  use:makeQuill
-  on:text-change={onEditorChange}
-/>
+<div class="editor" use:makeQuill on:text-change={onEditorChange} />
 
 <style lang="scss">
-.warning-container > :global(*) {
-  margin: 0 16px 22px;
-}
+  .warning-container > :global(*) {
+    margin: 0 16px 22px;
+  }
 </style>

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Field, Input } from 'svelma';
-import { logout } from '../auth.context';
+  import { logout } from '../auth.context';
   import { ChangePasswordParams, loginService } from '../services/LoginService';
   import Modal from './Modal.svelte';
 
@@ -10,13 +10,7 @@ import { logout } from '../auth.context';
   let isFormValid = false;
   let formData = new ChangePasswordParams();
 
-  const onMounted = (visible: boolean) => {
-    if (visible) {
-      formData = new ChangePasswordParams();
-    }
-  };
-
-  $: onMounted(modalVisible);
+  $: if (modalVisible) formData = new ChangePasswordParams();
 
   async function changePassword() {
     await loginService.changePassword(formData);

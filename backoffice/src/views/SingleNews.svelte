@@ -9,7 +9,6 @@
   import { newsService } from '../services/NewsService';
 
   export let params: { id: string };
-  const id = params.id;
 
   let news: News;
   let editedContent: string;
@@ -17,7 +16,7 @@
   let imageData = '';
 
   onMount(async () => {
-    news = await newsService.get(id);
+    news = await newsService.get(params.id);
     editedContent = news.content;
   });
 

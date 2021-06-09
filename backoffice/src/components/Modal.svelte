@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { onDestroy } from 'svelte';
   import { Button } from 'svelma';
 
   export let isOpen: boolean;
@@ -24,11 +23,9 @@
       close();
     }
   };
-
-  onDestroy(close);
 </script>
 
-<svelte:window on:keydown={closeOnEsc}/>
+<svelte:window on:keydown={closeOnEsc} />
 {#if isOpen}
   <div {id}>
     <!-- <div class="bg" style={`display: ${isOpen ? 'flex' : 'none'}`}>
@@ -54,7 +51,8 @@
                 type="is-primary"
                 disabled={disabledConfirm}
                 on:click={confirm}
-                >{confirmText}
+              >
+                {confirmText}
               </Button>
             {/if}
           </footer>

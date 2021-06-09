@@ -38,6 +38,10 @@ enum AnimalLocation {
 enum AnimalCategory {
   PilniePotrzebuja
   Weterani
+  DoAdopcji
+  ZnalazlyDom
+  ZaTeczowymMostem
+  NiedawnoZnalezione
 }
 
 model User {

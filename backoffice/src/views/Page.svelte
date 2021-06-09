@@ -39,8 +39,10 @@
       type="is-primary"
       disabled={isSaving || page.content === editedContent}
       loading={isSaving}
-      on:click={savePost}>Zapisz</Button
+      on:click={savePost}
     >
+      Zapisz
+    </Button>
   </header>
   <EditorTabs bind:editedContent initialContent={page.content} />
 {:else}
