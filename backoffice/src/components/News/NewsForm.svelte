@@ -18,6 +18,7 @@
   let form: HTMLFormElement;
   let resizeModalVisible = false;
   let file: File;
+  let forceRefresh: boolean;
 
   $: imageData && revalidateForm();
 
@@ -29,6 +30,7 @@
 
   function openResizeModal() {
     resizeModalVisible = true;
+    forceRefresh = true;
   }
 
   function revertImage() {
@@ -61,6 +63,7 @@
 </form>
 <ImageResizeModal
   {file}
+  bind:forceRefresh={forceRefresh}
   setImageData={(data) => (imageData = data)}
   bind:modalVisible={resizeModalVisible}
 />

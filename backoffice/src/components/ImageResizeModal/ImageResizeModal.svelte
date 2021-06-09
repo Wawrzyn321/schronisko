@@ -16,6 +16,7 @@
   export let modalVisible: boolean;
   export let file: File;
   export let setImageData: (image: string) => any;
+  export let forceRefresh: boolean;
 
   let imageCanvas: HTMLCanvasElement;
   let frameCanvas: HTMLCanvasElement;
@@ -25,11 +26,10 @@
   let imageWidth = 0;
   let imageHeight = 0;
   let isMouseDown = false;
-  let lastFileName: string;
 
   $: {
-    if (file && imageCanvas && frameCanvas && file.name !== lastFileName) {
-      lastFileName = file.name;
+    if (file && imageCanvas && frameCanvas && forceRefresh) {
+      forceRefresh = false;
       setupCanvas();
     }
   }
