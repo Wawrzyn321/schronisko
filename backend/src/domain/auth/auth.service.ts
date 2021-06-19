@@ -1,16 +1,22 @@
-import { UserViewModel } from './../../../../prisma/prisma-types/viewModels/UserViewModel';
 import { LoggedInUser } from './types';
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, ForbiddenException, NotFoundException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { BcryptService } from 'src/domain/auth/bcrypt/bcrypt.service';
+
+
+import type { Permission, User } from "@prisma/client";
+
+export interface UserViewModel extends Omit<User, "passwordHash"> {
+  permissions?: Permission[];
+}
 
 interface UserLoginParams {
   login: string;
   password: string;
 };
 
-export interface ChangePasswordParams { 
+export interface ChangePasswordParams {
   currentPassword: string;
   newPassword: string;
 }
@@ -32,7 +38,7 @@ export class AuthService {
     return null;
   }
 
-  async login(userDto: UserLoginParams): Promise<{access_token: string, user: UserViewModel}> {
+  async login(userDto: UserLoginParams): Promise<{ access_token: string, user: UserViewModel }> {
     const user = await this.validateUserLogin(userDto);
     if (user) {
       const { firstName, lastName, login, id: sub } = user;
@@ -40,18 +46,29 @@ export class AuthService {
       const payload = { firstName, lastName, login, sub, permissions };
       return {
         access_token: this.jwtService.sign(payload),
-        user: {...user, permissions},
+        user: { ...user, permissions },
       };
     } else {
       throw new UnauthorizedException();
     }
   }
 
-  async changePassword(params: ChangePasswordParams, loggedInUser: LoggedInUser): Promise<UserViewModel> {
+  async changeSelfPassword(params: ChangePasswordParams, loggedInUser: LoggedInUser): Promise<UserViewModel> {
     const user = await this.usersService.findById(loggedInUser.id);
-    if (user && user.isActive && await this.bcryptService.compareHash(params.currentPassword, user.passwordHash)) {
-        return this.usersService.updatePassword(user, params.newPassword);
+    if (!user) {
+      throw new NotFoundException();
     }
-    throw new UnauthorizedException();
+    if (user.isActive && await this.bcryptService.compareHash(params.currentPassword, user.passwordHash)) {
+      return this.usersService.updatePassword(user, params.newPassword);
+    }
+    throw new ForbiddenException();
+  }
+
+  async changePassword(user: UserViewModel, password: string): Promise<UserViewModel> {
+    const dbUser = await this.usersService.findById(user.id);
+    if (!dbUser) {
+      throw new NotFoundException();
+    }
+    return this.usersService.updatePassword(user, password);
   }
 }

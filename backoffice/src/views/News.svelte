@@ -1,35 +1,37 @@
 <script lang="ts">
-  import { Toast } from 'svelma';
   import { onMount } from 'svelte';
+  import type { NewsListElement } from '../services/NewsService';
   import { newsService } from '../services/NewsService';
-  import Header from '../components/News/Header.svelte';
-  import List from '../components/News/List.svelte';
+  import NewsHeader from '../components/News/NewsHeader.svelte';
+  import NewsList from '../components/News/NewsList.svelte';
   import type { News } from '.prisma/client';
-  import type { NewsListElement } from '../prisma-types/News';
+  import { notifyError, notifySuccess } from '../contexts/notification.context';
 
   let news: NewsListElement[] = [];
   let searchPhrase = '';
 
-  onMount(async () => (news = await newsService.getAll()));
+  onMount(async () => {
+    try {
+      news = await newsService.getAll();
+    } catch (e) {
+      notifyError({ message: 'Nie można pobrać newsów: ' + e.message });
+    }
+  });
 
-  $: filteredNews = news.filter(
-    (newsPiece: NewsListElement) =>
-      !searchPhrase ||
-      newsPiece.title.toLowerCase().includes(searchPhrase.toLowerCase()) ||
-      newsPiece.description.toLowerCase().includes(searchPhrase.toLowerCase())
-  );
+  $: filteredNews = news.filter(filterNews(searchPhrase));
+
+  const filterNews = (searchPhrase: string) => (newsPiece: NewsListElement) =>
+    !searchPhrase ||
+    newsPiece.title.toLowerCase().includes(searchPhrase.toLowerCase()) ||
+    newsPiece.description.toLowerCase().includes(searchPhrase.toLowerCase());
 
   function onNewsDeleted(n: News) {
     news = news.filter((n) => n.id !== n.id);
-    Toast.create({
-      message: `Usunięto post ${n.title}`,
-      type: 'is-success',
-      position: 'is-bottom',
-    });
+    notifySuccess({ message: `Usunięto newsa ${n.title}` });
   }
 </script>
 
 <main>
-  <Header bind:searchPhrase />
-  <List news={filteredNews} {onNewsDeleted} />
+  <NewsHeader bind:searchPhrase />
+  <NewsList news={filteredNews} {onNewsDeleted} />
 </main>

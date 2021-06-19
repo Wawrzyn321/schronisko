@@ -1,13 +1,15 @@
 <script lang="ts">
   import Router from 'svelte-spa-router';
+  import { notify } from './contexts/notification.context';
+  import NotificationContext from './contexts/NotificationContext.svelte';
   import Nav from './routing/Nav.svelte';
   import { routes } from './routing/routes';
 </script>
 
-<div>
+<NotificationContext>
   <Nav />
   <Router {routes} />
-</div>
+</NotificationContext>
 
 <style lang="scss">
   :global(a.active) {

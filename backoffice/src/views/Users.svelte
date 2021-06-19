@@ -1,16 +1,24 @@
 <script lang="ts">
-  import Header from './../components/User/Header.svelte';
-  import List from './../components/User/List.svelte';
-  import { Toast } from 'svelma';
+  import UsersHeader from '../components/User/UsersHeader.svelte';
+  import UsersList from '../components/User/UsersList.svelte';
   import { onMount } from 'svelte';
   import type { UserViewModel } from '../prisma-types/viewModels/UserViewModel';
   import { insertInOrder } from '../common/insertInOrder';
   import { userService } from '../services/UserService';
+  import { notifyError, notifySuccess } from '../contexts/notification.context';
 
   let users: UserViewModel[] = [];
   let searchPhrase = '';
 
-  onMount(async () => (users = await userService.getAll()));
+  onMount(async () => {
+    try {
+      users = await userService.getAll();
+    } catch (e) {
+      notifyError({
+        message: 'Błąd pobierania użytkowników: ' + e.message,
+      });
+    }
+  });
 
   $: filteredUsers = users.filter(
     (u: UserViewModel) =>
@@ -22,30 +30,23 @@
 
   function onUserAdded(u: UserViewModel) {
     users = insertInOrder(users, u, (u) => u.lastName);
-    Toast.create({
-      message: 'Dodano użytkownika',
-      type: 'is-success',
-      position: 'is-bottom',
-    });
+    notifySuccess({message: 'Dodano użytkownika'});
   }
 
   function onUserDeleted(u: UserViewModel) {
     users = users.filter((e) => e.id !== u.id);
-    Toast.create({
-      message: `Usunięto użytkownika ${u.firstName} ${u.lastName}`,
-      type: 'is-success',
-      position: 'is-bottom',
-    });
+    notifySuccess({message: `Usunięto użytkownika ${u.firstName} ${u.lastName}`});
   }
 
   function onUserEdited(u: UserViewModel) {
     const user = users.find((user) => user.id === u.id);
     const index = users.indexOf(user);
     users = [...users.slice(0, index), u, ...users.slice(index + 1)];
+    notifySuccess({message: `Zaktualizowano dane użytkownika ${u.firstName} ${u.lastName}`});
   }
 </script>
 
 <main>
-  <Header {onUserAdded} bind:searchPhrase />
-  <List {onUserDeleted} {onUserEdited} users={filteredUsers} />
+  <UsersHeader {onUserAdded} bind:searchPhrase />
+  <UsersList {onUserDeleted} {onUserEdited} users={filteredUsers} />
 </main>

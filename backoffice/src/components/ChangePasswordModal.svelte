@@ -1,8 +1,9 @@
 <script lang="ts">
-  import { Field, Input } from 'svelma';
-  import { logout } from '../auth.context';
-  import { ChangePasswordParams, loginService } from '../services/LoginService';
+  import { logout } from '../contexts/auth.context';
+import { notifyError } from '../contexts/notification.context';
+  import { ChangePasswordParams, authService } from '../services/AuthService';
   import Modal from './Modal.svelte';
+  import PasswordInput from './PasswordInput.svelte';
 
   export let modalVisible: boolean;
 
@@ -13,8 +14,12 @@
   $: if (modalVisible) formData = new ChangePasswordParams();
 
   async function changePassword() {
-    await loginService.changePassword(formData);
-    logout();
+    try {
+      await authService.changeSelfPassword(formData);
+      logout();
+    } catch (e) {
+      notifyError({ message: 'Nie udało się zmienić hasła: ' + e.message });
+    }
   }
 
   function onInput() {
@@ -30,32 +35,16 @@
   disabledConfirm={!isFormValid}
 >
   <form bind:this={form} on:input={onInput}>
-    <Field label="Obecne hasło">
-      <Input
-        required
-        type="password"
-        bind:value={formData.currentPassword}
-        placeholder="Obecne hasło"
-      />
-    </Field>
-    <Field label="Nowe hasło">
-      <Input
-        required
-        type="password"
-        bind:value={formData.newPassword}
-        placeholder="Nowe hasło"
-      />
-    </Field>
-    <Field label="Potwierdź nowe hasło">
-      <Input
-        required
-        type="password"
-        bind:value={formData.newPasswordAgain}
-        placeholder="Potwierdź nowe"
-      />
-    </Field>
-    {#if !formData.isValid}
-      Hasła muszą się zgadzać.
-    {/if}
+    <PasswordInput
+      label="Obecne hasło"
+      bind:password={formData.currentPassword}
+    />
+    <PasswordInput label="Nowe hasło" bind:password={formData.newPassword} />
+    <PasswordInput
+      label="Potwierdź nowe hasło"
+      bind:password={formData.newPasswordAgain}
+      message={formData.isValid ? '' : 'Hasła muszą się zgadzać.'}
+    />
+    <em>Po zmianie hasła nastąpi wylogowanie.</em>
   </form>
 </Modal>

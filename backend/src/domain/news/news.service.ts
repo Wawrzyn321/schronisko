@@ -1,4 +1,4 @@
-import { NewsCreateInput, NewsUpdateInput, NewsModifyParams, NewsListElement } from 'src/prisma-types/News';
+import { NewsCreateInput, NewsUpdateInput, NewsModifyParams, NewsListElement } from './News';
 import type { News } from '.prisma/client';
 import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma-connect/prisma.service';

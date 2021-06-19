@@ -14,7 +14,7 @@
   <h1>Użytkownicy</h1>
   <div>
     <input placeholder="Szukaj..." bind:value={searchPhrase} />
-    <Button type="is-primary" on:click={showCreateModal}>+</Button>
+    <Button type="is-primary" on:click={showCreateModal}><strong>+</strong></Button>
   </div>
 </header>
 <AddUserModal bind:modalVisible={createModalVisible} {onUserAdded} />

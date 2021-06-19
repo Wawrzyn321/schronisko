@@ -1,9 +1,9 @@
+import { UserDto, validateCreate, toUser, toUserUpdate, validateUpdate } from '../UserDto';
+import { UserViewModel } from './../auth/auth.service';
 import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma-connect/prisma.service';
 import { Permission, User, UserPermissions } from '@prisma/client';
 import { BcryptService } from 'src/domain/auth/bcrypt/bcrypt.service';
-import { UserViewModel } from 'src/prisma-types/viewModels/UserViewModel';
-import { toUser, UserDto, toUserUpdate, validateCreate, validateUpdate } from 'src/prisma-types/UserDto';
 import { LoggedInUser } from '../auth/types';
 
 @Injectable()

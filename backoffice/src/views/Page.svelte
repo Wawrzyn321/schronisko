@@ -2,10 +2,11 @@
   import { onMount } from 'svelte';
   import { querystring } from 'svelte-spa-router';
   import { get } from 'svelte/store';
-  import { Button, Toast } from 'svelma';
+  import { Button } from 'svelma';
   import { pageService } from '../services/PageService';
   import EditorTabs from '../components/EditorTabs.svelte';
   import type { Page } from '.prisma/client';
+  import { notifyError, notifySuccess } from '../contexts/notification.context';
 
   export let params: { id: string };
   const id = params.id;
@@ -17,18 +18,22 @@
   let isSaving: boolean;
 
   onMount(async () => {
-    page = await pageService.get(id);
-    editedContent = page.content;
+    try {
+      page = await pageService.get(id);
+      editedContent = page.content;
+    } catch (e) {
+      notifyError({ message: 'Nie można pobrać strony: ' + e.message });
+    }
   });
 
   async function savePost() {
-    await pageService.save({ ...page, content: editedContent });
-    Toast.create({
-      message: 'Post zapisany',
-      type: 'is-success',
-      position: 'is-bottom',
-    });
-    page.content = editedContent;
+    try {
+      await pageService.save({ ...page, content: editedContent });
+      notifySuccess({ message: 'Zmiany zostały zapisane' });
+      page.content = editedContent;
+    } catch (e) {
+      notifyError({ message: 'Nie można zapisać strony: ' + e.message });
+    }
   }
 </script>
 

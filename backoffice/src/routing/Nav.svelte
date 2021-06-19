@@ -1,6 +1,6 @@
 <script lang="ts">
   import { ExternalLinkIcon } from 'svelte-feather-icons';
-  import { auth } from './../auth.context';
+  import { auth } from '../contexts/auth.context';
   import { link } from 'svelte-spa-router';
   import UserNavHeader from './UserNavHeader.svelte';
   import active from 'svelte-spa-router/active';

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { auth, logout } from './../auth.context';
+  import { auth, logout } from '../contexts/auth.context';
   import { Button } from 'svelma';
   import { Edit2Icon } from 'svelte-feather-icons';
   import EditSelfModal from './../components/User/EditSelfModal.svelte';

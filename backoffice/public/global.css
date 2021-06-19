@@ -161,8 +161,6 @@ select,
 textarea {
   font-family: inherit;
   font-size: inherit;
-  -webkit-padding: 0.4em 0;
-  padding: 0.4em;
   margin: 0 0 0.5em 0;
   box-sizing: border-box;
   border: 1px solid #ccc;
@@ -209,10 +207,6 @@ td {
 
 table button span {
   display: grid;
-}
-
-table button {
-  padding: 12px !important;
 }
 
 header h1 {
@@ -262,12 +256,16 @@ header h1 {
   overflow-x: revert !important;
 }
 
+nav.tabs {
+  margin-bottom: 0 !important;
+}
+
 .tab-content, .tab {
   width: 100%;
 }
 
 .g-actions-header {
-  width: 120px;
+  width: 160px;
 }
 
 .g-description {
@@ -282,8 +280,27 @@ header h1 {
   text-align: right !important;
 }
 
+.g-header-actions {
+  display: flex;
+  align-items: center;
+}
+
+.g-actions-header button {
+ padding: 12px;
+}
+
 .g-flex-between-100 {
   width: 100%;
   display: flex;
   justify-content: space-between;
+}
+
+.g-table-ellipsis {
+  max-width: 10vw;
+}
+
+.g-button-transparent {
+  cursor: pointer;
+  border: none;
+  background: none;
 }

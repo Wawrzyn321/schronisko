@@ -14,5 +14,5 @@
   <Tab label="Podgląd">
     <PostPreview source={editedContent} />
   </Tab>
-  <slot></slot>
+  <slot />
 </Tabs>

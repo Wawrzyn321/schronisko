@@ -2,17 +2,20 @@ import { PrismaService } from 'src/prisma-connect/prisma.service';
 import { Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 import { AppController } from './app.controller';
-import { AuthModule } from './domain/auth/auth.module';
 import { JwtAuthGuard } from './domain/auth/jwt-auth.guard';
-import { UsersModule } from './domain/users/users.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+
+import { AuthModule } from './domain/auth/auth.module';
+import { UsersModule } from './domain/users/users.module';
 import { PagesModule } from './domain/pages/pages.module';
 import { NewsModule } from './domain/news/news.module';
+import { AnimalsModule } from './domain/animals/animals.module';
 
 export const STATIC_FILES_PATH = 'static';
 
-const domainModules = [AuthModule, UsersModule, PagesModule, NewsModule];
+const domainModules = [AuthModule, UsersModule, PagesModule, NewsModule, AnimalsModule];
+
 const ServeStatic = ServeStaticModule.forRoot({
   rootPath: join(__dirname, '..', STATIC_FILES_PATH),
   serveStaticOptions: {

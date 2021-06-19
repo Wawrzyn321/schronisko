@@ -4,6 +4,7 @@
   import PermissionsForm from './PermissionsForm.svelte';
   import { userService } from '../../services/UserService';
   import type { Permission } from '.prisma/client';
+  import { notifyError } from '../../contexts/notification.context';
 
   export let modalVisible: boolean;
   export let user: UserViewModel;
@@ -15,18 +16,28 @@
   const onShow = async (_) => {
     if (!user) return;
     isActive = user.isActive;
-    permissions = await userService.getPermissions(user.id);
+    try {
+      permissions = await userService.getPermissions(user.id);
+    } catch (e) {
+      notifyError({ message: 'Nie można pobrać uprawnień: ' + e.message });
+    }
   };
 
   $: onShow(user);
 
   async function updateUser() {
-    const updatedUser = await userService.update({
-      ...user,
-      permissions,
-      isActive,
-    });
-    onUserEdited(updatedUser);
+    try {
+      const updatedUser = await userService.updateUser({
+        ...user,
+        permissions,
+        isActive,
+      });
+      onUserEdited(updatedUser);
+    } catch (e) {
+      notifyError({
+        message: 'Nie udało się zaktualizować użytkownika: ' + e.message,
+      });
+    }
   }
 </script>
 

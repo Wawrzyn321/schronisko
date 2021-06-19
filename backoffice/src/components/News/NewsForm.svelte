@@ -63,9 +63,11 @@
 </form>
 <ImageResizeModal
   {file}
-  bind:forceRefresh={forceRefresh}
+  bind:forceRefresh
   setImageData={(data) => (imageData = data)}
   bind:modalVisible={resizeModalVisible}
+  defaultWidth={515}
+  defaultHeight={345}
 />
 
 <style lang="scss">

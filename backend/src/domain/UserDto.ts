@@ -1,5 +1,5 @@
 import type { Permission } from '@prisma/client';
-import { allPermissions } from './permissions';
+import { allPermissions } from './auth/permissions';
 
 export interface UserPermissionsWrapper {
   permission: Permission;

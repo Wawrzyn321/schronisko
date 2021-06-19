@@ -1,10 +1,11 @@
 <script lang="ts">
   import type { News } from '.prisma/client';
-  import { Tab, Toast } from 'svelma';
+  import { Tab } from 'svelma';
   import { onMount } from 'svelte';
   import EditorTabs from '../components/EditorTabs.svelte';
   import NewsForm from '../components/News/NewsForm.svelte';
   import UpdateHeader from '../components/News/UpdateHeader.svelte';
+  import { notifyError, notifySuccess } from '../contexts/notification.context';
 
   import { newsService } from '../services/NewsService';
 
@@ -16,17 +17,21 @@
   let imageData = '';
 
   onMount(async () => {
-    news = await newsService.get(params.id);
-    editedContent = news.content;
+    try {
+      news = await newsService.get(params.id);
+      editedContent = news.content;
+    } catch (e) {
+      notifyError({ message: 'Nie można pobrać newsa: ' + e.message });
+    }
   });
 
   async function updateNews() {
-    await newsService.update({ ...news, content: editedContent }, imageData);
-    Toast.create({
-      message: 'Post został zapisany',
-      type: 'is-success',
-      position: 'is-bottom',
-    });
+    try {
+      await newsService.update({ ...news, content: editedContent }, imageData);
+      notifySuccess({ message: 'News został zapisany' });
+    } catch (e) {
+      notifyError({ message: 'Nie możnac zapisa newsa: ' + e.message });
+    }
   }
 </script>
 

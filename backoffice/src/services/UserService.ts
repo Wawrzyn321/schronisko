@@ -3,7 +3,7 @@ import type { UserCreateParams } from './../components/User/UserCreateParams';
 import { throwingFetch } from "./throwingFetch";
 import { API_URL } from './config';
 import type { UserViewModel } from '../prisma-types/viewModels/UserViewModel';
-import { setUser } from "../auth.context";
+import { setUser } from "../contexts/auth.context";
 
 const baseUrl = `${API_URL}/api/users`;
 
@@ -11,7 +11,7 @@ export class UserService {
     async getAll(): Promise<UserViewModel[]> {
         return await throwingFetch(baseUrl);
     }
-    
+
     async addUser(user: UserCreateParams): Promise<UserViewModel> {
         return await throwingFetch(baseUrl, {
             method: 'POST',
@@ -20,7 +20,7 @@ export class UserService {
         });
     }
 
-    async update(user: UserViewModel): Promise<UserViewModel> {
+    async updateUser(user: UserViewModel): Promise<UserViewModel> {
         return await throwingFetch(`${baseUrl}/${user.id}`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
@@ -29,18 +29,18 @@ export class UserService {
     }
 
     async updateSelf(user: UserViewModel): Promise<UserViewModel> {
-        const updatedUser = await this.update(user);
+        const updatedUser = await this.updateUser(user);
         setUser({ ...updatedUser, permissions: user.permissions });
         return updatedUser;
     }
 
-    async delete(id: number): Promise<UserViewModel> {
+    async deleteUser(id: number): Promise<UserViewModel> {
         return await throwingFetch(`${baseUrl}/${id}`, { method: 'DELETE' });
     }
 
     async getPermissions(id: number): Promise<Permission[]> {
         const permissions = await throwingFetch(`${API_URL}/api/users/${id}/permissions`);
-        return permissions.map((p: {permission: Permission}) => p.permission);
+        return permissions.map((p: { permission: Permission }) => p.permission);
     }
 }
 

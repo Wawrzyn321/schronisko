@@ -8,7 +8,7 @@
 
 <header class="g-flex-between-100">
   <h1>Utwórz newsa</h1>
-  <div>
+  <div class="g-header-actions">
     <label>
       <input
         checked={isPublished}

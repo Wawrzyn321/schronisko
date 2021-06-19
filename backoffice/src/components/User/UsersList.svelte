@@ -1,11 +1,13 @@
 <script lang="ts">
-  import { Trash2Icon, Edit2Icon } from 'svelte-feather-icons';
-  import { Button, Toast } from 'svelma';
-  import { isSelf } from '../../auth.context';
+  import { Trash2Icon, Edit2Icon, LockIcon } from 'svelte-feather-icons';
+  import { Button } from 'svelma';
+  import { isSelf } from '../../contexts/auth.context';
   import type { UserViewModel } from '../../prisma-types/viewModels/UserViewModel';
   import DeleteUserModal from './DeleteUserModal.svelte';
   import EditUserModal from './EditUserModal.svelte';
   import EditSelfModal from './EditSelfModal.svelte';
+  import ChangeUserPasswordModal from './ChangeUserPasswordModal.svelte';
+  import ChangePasswordModal from './../ChangePasswordModal.svelte';
 
   export let onUserDeleted: (u: UserViewModel) => void;
   export let onUserEdited: (u: UserViewModel) => void;
@@ -16,18 +18,11 @@
   let deleteModalVisible = false;
   let editModalVisible = false;
   let editSelfModalVisible = false;
+  let edifSelfPasswordVisible = false;
+  let changeUserPasswordModalVisible = false;
   let selectedUser: UserViewModel;
 
-  $: filteredUsers = users.filter(u => !showActive || u.isActive);
-
-  function onNotSelfUserEdited(u: UserViewModel) {
-    Toast.create({
-      message: `Zaktualizowano użytkownika ${u.firstName} ${u.lastName}`,
-      type: 'is-success',
-      position: 'is-bottom',
-    });
-    onUserEdited(u);
-  }
+  $: filteredUsers = users.filter((u) => !showActive || u.isActive);
 </script>
 
 <table class="table is-fullwidth">
@@ -36,7 +31,7 @@
     <th>Nazwisko</th>
     <th>Login</th>
     <th class="g-text-align-center">
-      <input type="checkbox" bind:checked={showActive}/>
+      <input type="checkbox" bind:checked={showActive} />
       Aktywny
     </th>
     <th class="g-actions-header" />
@@ -62,6 +57,19 @@
           <Edit2Icon size="1.0x" />
         </Button>
         <Button
+          type="is-primary"
+          on:click={() => {
+            if (isSelf(user)) {
+              edifSelfPasswordVisible = true;
+            } else {
+              selectedUser = { ...user };
+              changeUserPasswordModalVisible = true;
+            }
+          }}
+        >
+          <LockIcon size="1.0x" />
+        </Button>
+        <Button
           type="is-danger"
           disabled={isSelf(user)}
           on:click={() => {
@@ -82,16 +90,21 @@
 />
 <EditUserModal
   bind:modalVisible={editModalVisible}
-  onUserEdited={onNotSelfUserEdited}
+  {onUserEdited}
   user={selectedUser}
 />
 <EditSelfModal
   bind:modalVisible={editSelfModalVisible}
   onSelfEdited={onUserEdited}
 />
+<ChangeUserPasswordModal
+  bind:modalVisible={changeUserPasswordModalVisible}
+  user={selectedUser}
+/>
+<ChangePasswordModal bind:modalVisible={edifSelfPasswordVisible} />
 
 <style lang="scss">
-  input[type=checkbox] {
+  input[type='checkbox'] {
     display: inline-block;
     margin-left: 10px;
   }

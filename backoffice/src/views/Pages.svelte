@@ -2,13 +2,20 @@
   import { Button } from 'svelma';
   import { push } from 'svelte-spa-router';
   import { onMount } from 'svelte';
-  import { Edit2Icon, EyeIcon } from 'svelte-feather-icons';
+  import { Edit2Icon } from 'svelte-feather-icons';
+  import type { PageListElement } from '../services/PageService';
   import { pageService } from '../services/PageService';
-  import type { PageListElement } from '../prisma-types/Page';
+  import { notifyError } from '../contexts/notification.context';
 
   let pages: PageListElement[] = [];
   let searchPhrase = '';
-  onMount(async () => (pages = await pageService.getAll()));
+  onMount(async () => {
+    try {
+      pages = await pageService.getAll();
+    } catch (e) {
+      notifyError({ message: 'Nie można pobrać stron: ' + e.message });
+    }
+  });
 
   $: filteredPages = pages.filter(
     (p: PageListElement) =>

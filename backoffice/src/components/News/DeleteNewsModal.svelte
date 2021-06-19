@@ -2,14 +2,19 @@
   import Modal from './../Modal.svelte';
   import type { NewsListElement } from '../../services/NewsService';
   import { newsService } from '../../services/NewsService';
+  import { notifyError } from '../../contexts/notification.context';
 
   export let modalVisible: boolean;
   export let onNewsDeleted: (news: NewsListElement) => any;
   export let news: NewsListElement;
 
   async function deleteNews() {
-    await newsService.delete(news.id);
-    onNewsDeleted(news);
+    try {
+      await newsService.delete(news.id);
+      onNewsDeleted(news);
+    } catch (e) {
+      notifyError({ message: 'Nie można usunąć posta: ' + e.message });
+    }
   }
 </script>
 

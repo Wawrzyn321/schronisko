@@ -1,8 +1,9 @@
 <script lang="ts">
   import type { News } from '.prisma/client';
 
-  import { Button, Toast } from 'svelma';
+  import { Button } from 'svelma';
   import { push } from 'svelte-spa-router';
+  import { notifySuccess } from '../../contexts/notification.context';
   import DateFromTimestamp from '../DateFromTimestamp.svelte';
   import DeleteNewsModal from './DeleteNewsModal.svelte';
 
@@ -15,11 +16,7 @@
   let deleteModalVisible = false;
 
   function onNewsDeleted() {
-    Toast.create({
-      message: `Usunięto post ${news.title}`,
-      type: 'is-success',
-      position: 'is-bottom',
-    });
+    notifySuccess({ message: 'News został usunięty.' });
     push('/news');
   }
 </script>

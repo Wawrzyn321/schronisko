@@ -2,6 +2,8 @@ import { throwingFetch } from "./throwingFetch";
 import { API_URL } from './config';
 import type { UserViewModel } from "../prisma-types/viewModels/UserViewModel";
 
+const baseUrl = `${API_URL}/auth`;
+
 export class ChangePasswordParams {
     currentPassword: string = '';
     newPassword: string = '';
@@ -12,9 +14,9 @@ export class ChangePasswordParams {
     }
 }
 
-export class LoginService {
+export class AuthService {
     async login(login: string, password: string): Promise<{access_token: string, user: UserViewModel}> {
-        return await throwingFetch(`${API_URL}/auth/login`, {
+        return await throwingFetch(`${baseUrl}/login`, {
             noAuth: true,
             method: 'POST',
             body: JSON.stringify({ login, password }),
@@ -22,8 +24,8 @@ export class LoginService {
         });
     }
 
-    async changePassword(params: ChangePasswordParams): Promise<void> {
-        return await throwingFetch(`${API_URL}/auth/change-password`, {
+    async changeSelfPassword(params: ChangePasswordParams): Promise<void> {
+        return await throwingFetch(`${baseUrl}/change-password`, {
             method: 'POST',
             body: JSON.stringify({
                 currentPassword: params.currentPassword,
@@ -32,6 +34,16 @@ export class LoginService {
             headers: { 'Content-Type': 'application/json' },
         });
     }
+
+
+    async changeUserPassword(user: UserViewModel, password: string): Promise<UserViewModel> {
+        return await throwingFetch(`${baseUrl}/change-user-password`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ user, password }),
+        });
+    }
+
 }
 
-export const loginService = new LoginService();
+export const authService = new AuthService();

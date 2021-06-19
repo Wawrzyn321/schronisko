@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { isLoggedIn, logIn } from './../auth.context';
+  import { isLoggedIn, logIn } from '../contexts/auth.context';
   import { push } from 'svelte-spa-router';
 
   import { Field, Input, Button, Notification } from 'svelma';

@@ -1,13 +1,12 @@
 <script lang="ts">
-  import { scaleToFit } from './helpers';
-
+  import { scaleToFit, restrictPosition } from './helpers';
   import Modal from './../Modal.svelte';
 
-  const MIN_TARGET_X = 102;
-  const MIN_TARGET_Y = 68;
+  export let defaultWidth: number;
+  export let defaultHeight: number;
 
-  const DEFAULT_WIDTH = 515;
-  const DEFAULT_HEIGHT = 345;
+  const minTargetX = 100;
+  const minTargetY = Math.floor((minTargetX * defaultHeight) / defaultWidth);
 
   let targetWidth: number;
   let targetHeight: number;
@@ -16,15 +15,12 @@
   export let modalVisible: boolean;
   export let file: File;
   export let setImageData: (image: string) => any;
-  export let forceRefresh: boolean;
+  export let forceRefresh: boolean; // todo as actions?
 
   let imageCanvas: HTMLCanvasElement;
   let frameCanvas: HTMLCanvasElement;
-  let frameCanvasContext: CanvasRenderingContext2D;
   let x = 0;
   let y = 0;
-  let imageWidth = 0;
-  let imageHeight = 0;
   let isMouseDown = false;
 
   $: {
@@ -35,19 +31,14 @@
   }
 
   function drawFrame() {
-    frameCanvasContext = frameCanvas.getContext('2d');
-    frameCanvasContext.clearRect(0, 0, imageWidth, imageHeight);
-    frameCanvasContext.strokeRect(
-      x,
-      y,
-      targetWidth * scale,
-      targetHeight * scale
-    );
+    const ctx = frameCanvas.getContext('2d');
+    ctx.clearRect(0, 0, frameCanvas.width, frameCanvas.height);
+    ctx.strokeRect(x, y, targetWidth * scale, targetHeight * scale);
   }
 
   function initFrame() {
-    x = (imageWidth - targetWidth) / 2;
-    y = (imageHeight - targetHeight) / 2;
+    x = (frameCanvas.width - targetWidth) / 2;
+    y = (frameCanvas.height - targetHeight) / 2;
     drawFrame();
   }
 
@@ -56,15 +47,15 @@
     const scaledH = targetHeight * scale;
     x += deltaX;
     y += deltaY;
-    restrictPosition(scaledW, scaledH);
+    [x, y] = restrictPosition(
+      x,
+      y,
+      scaledW,
+      scaledH,
+      frameCanvas.width,
+      frameCanvas.height
+    );
     drawFrame();
-  }
-
-  function restrictPosition(sizeX: number, sizeY: number) {
-    if (x < 0) x = 0;
-    if (y < 0) y = 0;
-    if (x > imageWidth - sizeX) x = imageWidth - sizeX;
-    if (y > imageHeight - sizeY) y = imageHeight - sizeY;
   }
 
   function onMouseMove(e: MouseEvent) {
@@ -79,18 +70,25 @@
     const newTargetHeight = targetHeight * newScale;
     if (
       (e.deltaY < 0 &&
-        newTargetWidth > MIN_TARGET_X &&
-        newTargetHeight > MIN_TARGET_Y) ||
+        newTargetWidth > minTargetX &&
+        newTargetHeight > minTargetY) ||
       (e.deltaY > 0 &&
-        newTargetWidth < imageWidth &&
-        newTargetHeight < imageHeight &&
-        x + newTargetWidth < imageWidth &&
-        y + newTargetHeight < imageHeight)
+        newTargetWidth < frameCanvas.width &&
+        newTargetHeight < frameCanvas.height &&
+        x + newTargetWidth < frameCanvas.width &&
+        y + newTargetHeight < frameCanvas.height)
     ) {
       // recenter
       x += (targetWidth * scale - newTargetWidth) * 0.5;
       y += (targetHeight * scale - newTargetHeight) * 0.5;
-      restrictPosition(newTargetWidth, newTargetHeight);
+      [x, y] = restrictPosition(
+        x,
+        y,
+        newTargetWidth,
+        newTargetHeight,
+        frameCanvas.width,
+        frameCanvas.height
+      );
       scale = newScale;
       drawFrame();
     }
@@ -99,8 +97,8 @@
   function setupCanvas() {
     const context = imageCanvas.getContext('2d');
 
-    targetWidth = DEFAULT_WIDTH;
-    targetHeight = DEFAULT_HEIGHT;
+    targetWidth = defaultWidth;
+    targetHeight = defaultHeight;
     scale = 1;
     x = 0;
     y = 0;
@@ -109,8 +107,8 @@
     img.onload = function () {
       const maxWidth = window.innerWidth * 0.8 - 80;
       const maxHeight = window.innerHeight * 0.51 - 120;
-      let { width, height } = this as any;
-      [imageWidth, imageHeight] = scaleToFit(
+      const { width, height } = this as any;
+      const [imageWidth, imageHeight] = scaleToFit(
         width,
         height,
         maxWidth,
@@ -164,8 +162,9 @@
     on:wheel={zoom}
   />
   <div slot="footer" class="modal-footer">
-		Użyj scrolla, by zmieniać rozmiar obszaru docelowego. Przeciągnij po obrazie, by zmienić jego pozycję.
-	</div>
+    Użyj scrolla, by zmieniać rozmiar obszaru docelowego. Przeciągnij po
+    obrazie, by zmienić jego pozycję.
+  </div>
 </Modal>
 
 <style lang="scss">
@@ -190,11 +189,6 @@
     padding: 0;
     margin: 0;
   }
-
-  // :global(#resize-modal-wrapper > div > .modal-content > *) {
-  //   width: 80vw;
-  //   height: 60vh;
-  // }
 
   .modal-footer {
     margin-right: 20px;

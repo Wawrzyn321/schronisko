@@ -6,6 +6,7 @@
   import type { UserViewModel } from '../../prisma-types/viewModels/UserViewModel';
   import PermissionsForm from './PermissionsForm.svelte';
   import { userService } from '../../services/UserService';
+  import { notifyError } from '../../contexts/notification.context';
 
   export let modalVisible: boolean;
   export let onUserAdded: (user: UserViewModel) => any;
@@ -18,8 +19,12 @@
   $: if (modalVisible) user = createDefaultUser();
 
   async function addUser() {
-    const newUser = await userService.addUser(user);
-    onUserAdded(newUser);
+    try {
+      const newUser = await userService.addUser(user);
+      onUserAdded(newUser);
+    } catch (e) {
+      notifyError({ message: 'Nie można dodać użytkownika: ' + e.message });
+    }
   }
 </script>
 

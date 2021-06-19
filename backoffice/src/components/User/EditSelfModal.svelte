@@ -1,9 +1,10 @@
 <script lang="ts">
   import Modal from './../Modal.svelte';
-  import { Field, Input, Toast } from 'svelma';
+  import { Field, Input } from 'svelma';
   import type { UserViewModel } from '../../prisma-types/viewModels/UserViewModel';
-  import { auth } from '../../auth.context';
+  import { auth } from '../../contexts/auth.context';
   import { userService } from './../../services/UserService';
+import { notifyError, notifySuccess } from '../../contexts/notification.context';
 
   export let onSelfEdited: (u: UserViewModel) => void = undefined;
   export let modalVisible: boolean;
@@ -13,16 +14,18 @@
 
   let user: UserViewModel;
 
-  $: if (modalVisible) user = { ...$auth.user };
+  $: if (modalVisible) {
+    if (!user) user = { ...$auth.user };
+  }
 
   async function updateSelf() {
-    const updatedUser = await userService.updateSelf(user);
-    onSelfEdited && onSelfEdited(updatedUser);
-    Toast.create({
-      message: 'Twoje dane zostały zapisane',
-      type: 'is-success',
-      position: 'is-bottom',
-    });
+    try {
+      const updatedUser = await userService.updateSelf(user);
+      onSelfEdited && onSelfEdited(updatedUser);
+      notifySuccess({ message: 'Twoje dane zostały zapisane' });
+    } catch (e) {
+      notifyError({ message: 'Błąd zapisywania danych: ' + e.message });
+    }
   }
 </script>
 

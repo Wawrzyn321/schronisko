@@ -44,6 +44,12 @@ enum AnimalCategory {
   NiedawnoZnalezione
 }
 
+enum VirtualCaretakerType {
+  NiePrzypisany
+  Szuka
+  Znalazl
+}
+
 model User {
   id           Int               @id @default(autoincrement())
   login        String            @unique
@@ -72,19 +78,23 @@ model News {
 }
 
 model Animal {
-  id                  String    @id @default(uuid())
-  name                String
-  type                AnimalType
-  gender              AnimalGender
-  description         String
-  category            AnimalCategory
-  location            AnimalCategory?
-  virtualCaretaker    String?
-  images              AnimalImage[]
+  id                    String    @id @default(uuid())
+  name                  String
+  type                  AnimalType
+  gender                AnimalGender
+  description           String
+  category              AnimalCategory
+  location              AnimalLocation?
+  virtualCaretakerType  VirtualCaretakerType
+  virtualCaretakerName  String?
+  isPublic              Boolean
+  images                AnimalImage[]
+  addedDate             DateTime  @default(now())
 }
 
 model AnimalImage {
   id            String     @id @default(uuid())
+  order         Int
   animalId      String
   user          Animal     @relation(fields: [animalId], references: [id])
   path          String

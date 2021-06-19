@@ -1,7 +1,7 @@
 
 import { wrap } from 'svelte-spa-router/wrap';
 import { push } from 'svelte-spa-router';
-import { isLoggedIn } from '../auth.context';
+import { isLoggedIn } from '../contexts/auth.context';
 
 export const unauthorizedWrapper = (component: any) =>
     wrap({

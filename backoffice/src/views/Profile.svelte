@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { auth } from '../auth.context';
+  import { auth } from '../contexts/auth.context';
   import ChangePasswordModal from '../components/ChangePasswordModal.svelte';
   import PermissionDescription from '../components/PermissionDescription.svelte';
 
@@ -8,7 +8,8 @@
 
 <main>
   <p style="margin-bottom: 32px">
-    Jesteś zalogowany jako <strong>
+    Jesteś zalogowany jako
+    <strong>
       {$auth.user.firstName}
       {''}
       {$auth.user.lastName}

@@ -15,7 +15,13 @@ export class AppController {
   
   @UseGuards(PermissionsGuard)
   @Post('auth/change-password')
-  async changePassword(@Body() params: ChangePasswordParams, @Request() req) {
-    return this.authService.changePassword(params, req.user);
+  async changeSelfPassword(@Body() params: ChangePasswordParams, @Request() req) {
+    return this.authService.changeSelfPassword(params, req.user);
+  }
+
+  @UseGuards(PermissionsGuard)
+  @Post('auth/change-user-password')
+  async changePassword(@Body() params) {
+    return this.authService.changePassword(params.user, params.password);
   }
 }

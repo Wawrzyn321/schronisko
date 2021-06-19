@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma-connect/prisma.service';
 import type { Page } from '.prisma/client';
-import { PageListElement } from 'src/prisma-types/Page';
+import { PageListElement } from './Page';
 
 @Injectable()
 export class PagesService {

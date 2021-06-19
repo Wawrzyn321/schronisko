@@ -1,4 +1,4 @@
-import type { Permission } from './../../prisma-types/permissions';
+import type { Permission } from '@prisma/client';
 
 export type UserCreateParams = {
     login: string;
