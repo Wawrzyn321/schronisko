@@ -1,3 +1,4 @@
+import { LoggedInUser } from './types';
 import { PrismaService } from 'src/prisma-connect/prisma.service';
 import { Injectable, CanActivate, ExecutionContext, ForbiddenException } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
@@ -9,7 +10,7 @@ export class PermissionsGuard implements CanActivate {
   constructor(private reflector: Reflector, private prismaService: PrismaService) { }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const { user } = context.switchToHttp().getRequest();
+    const { user }: {user: LoggedInUser} = context.switchToHttp().getRequest();
 
     if (!user) {
       return false;
@@ -20,7 +21,7 @@ export class PermissionsGuard implements CanActivate {
       if (!dbUser.isActive) {
         throw new ForbiddenException();
       }
-    } catch (e) {
+    } catch (e: unknown) {
       console.warn(e);
       return false;
     }

@@ -39,7 +39,7 @@ export class UserService {
     }
 
     async getPermissions(id: number): Promise<Permission[]> {
-        const permissions = await throwingFetch(`${API_URL}/api/users/${id}/permissions`);
+        const permissions: { permission: Permission }[] = await throwingFetch(`${API_URL}/api/users/${id}/permissions`);
         return permissions.map((p: { permission: Permission }) => p.permission);
     }
 }

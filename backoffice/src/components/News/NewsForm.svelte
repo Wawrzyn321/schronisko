@@ -18,7 +18,7 @@
   let form: HTMLFormElement;
   let resizeModalVisible = false;
   let file: File;
-  let forceRefresh: boolean;
+  let forceRefresh = false;
 
   $: imageData && revalidateForm();
 

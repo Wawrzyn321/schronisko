@@ -2,7 +2,8 @@
   "name": "schronisko",
   "version": "1.0.0",
   "scripts": {
-    "start": "concurrently \"npm run dev --prefix=backend\" \"npm run dev --prefix=backoffice\""
+    "start": "concurrently \"npm run dev --prefix=backend\" \"npm run dev --prefix=backoffice\"",
+    "ts-coverage": "npx typescript-coverage-report && open coverage-ts/index.html"
   },
   "keywords": [],
   "author": "",

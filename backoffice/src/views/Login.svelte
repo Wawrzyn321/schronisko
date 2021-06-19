@@ -1,8 +1,12 @@
 <script lang="ts">
   import { isLoggedIn, logIn } from '../contexts/auth.context';
-  import { push } from 'svelte-spa-router';
+  import { push, querystring } from 'svelte-spa-router';
 
   import { Field, Input, Button, Notification } from 'svelma';
+  import { onMount } from 'svelte';
+  import { get } from 'svelte/store';
+  import { notify } from '../contexts/notification.context';
+  import type { NotifyParams } from '../contexts/notification.context';
 
   let login: string;
   let password: string;
@@ -22,9 +26,25 @@
     }
   }
 
+  function tryGetLogoutReason(queryString: string): NotifyParams | null {
+    try {
+      const reasonStr = new URLSearchParams(queryString).get('reason');
+      return JSON.parse(reasonStr);
+    } catch (_) {
+      return null;
+    }
+  }
+
   if (isLoggedIn()) {
     push('/profile');
   }
+
+  onMount(() => {
+    const logoutReason = tryGetLogoutReason(get(querystring));
+    if (logoutReason) {
+      notify(logoutReason);
+    }
+  });
 </script>
 
 <main class="login-form">
@@ -33,15 +53,21 @@
       <Input required bind:value={login} placeholder="Login" />
     </Field>
     <Field label="Hasło">
-      <Input required bind:value={password} type="password" placeholder="Hasło" />
+      <Input
+        required
+        bind:value={password}
+        type="password"
+        placeholder="Hasło"
+      />
     </Field>
     <Button
       type="is-primary"
       nativeType="submit"
       disabled={!login || !password}
-      {loading}>
+      {loading}
+    >
       Zaloguj
-      </Button>
+    </Button>
   </form>
   <Notification type="is-danger" bind:active={errorOpen}>
     Wygląda na to, że wprowadzone dane są nieprawidłowe. Jeśli zapomniałeś hasła
@@ -53,7 +79,7 @@
   <Input value="joey55" />
 </Field> -->
 <style lang="scss">
-  .login-form   {
+  .login-form {
     margin: 20px auto 0;
     max-width: 360px;
   }

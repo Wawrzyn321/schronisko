@@ -1,6 +1,6 @@
 <script lang="ts">
   let isOpen = false;
-  let dropdownRef: any;
+  let dropdownRef: HTMLDivElement;
 
   function onClick(e) {
     if (dropdownRef !== e.target && !dropdownRef.contains(e.target)) {

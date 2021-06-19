@@ -19,7 +19,9 @@ export class UsersService {
   }
 
   async getAll(): Promise<UserViewModel[]> {
-    return await this.prisma.user.findMany({ orderBy: [{ lastName: 'asc'}, {firstName: 'asc' }] }).then(users => users.map(this.toViewModel));
+    return await this.prisma.user
+      .findMany({ orderBy: [{ lastName: 'asc'}, {firstName: 'asc' }] })
+      .then((users: User[]) => users.map(this.toViewModel));
   }
 
   async create(user: UserDto): Promise<UserViewModel> {

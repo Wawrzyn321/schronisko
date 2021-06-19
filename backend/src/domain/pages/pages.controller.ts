@@ -1,3 +1,4 @@
+import { Page } from './../../../../backoffice/src/services/PageService';
 import { PagesService } from './pages.service';
 import { RequirePermission } from '../auth/Permissions.decorator';
 import { Controller, Get, UseGuards, Param, Patch, Body } from '@nestjs/common';
@@ -25,7 +26,7 @@ export class PagesController {
     @RequirePermission(Permission.PAGE)
     @Patch(':id')
     @UseGuards(PermissionsGuard)
-    updatePage(@Param("id") pageId: string, @Body() body) {
+    updatePage(@Param("id") pageId: string, @Body() body: Page) {
         return this.pagesService.update(pageId, body);
     }
 }

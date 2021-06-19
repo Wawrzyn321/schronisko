@@ -1,4 +1,4 @@
-import { notify } from './notification.context';
+import { notify, NotifyParams } from './notification.context';
 import { authService } from './../services/AuthService';
 import type { UserViewModel } from './../../../prisma/prisma-types/viewModels/UserViewModel';
 import { get, writable } from 'svelte/store';
@@ -12,7 +12,7 @@ interface Auth {
 
 const AUTH_STORAGE_KEY = 'AUTH_STORAGE';
 
-const savedValue = JSON.parse(localStorage.getItem(AUTH_STORAGE_KEY) || 'null');
+const savedValue: Auth | null = JSON.parse(localStorage.getItem(AUTH_STORAGE_KEY) || 'null');
 const value = writable<Auth>(savedValue);
 
 export const setUser = (user: UserViewModel) => setAuth(user, get(value).token);
@@ -26,12 +26,14 @@ export const isSelf = (user: UserViewModel) => get(value).user.login === user.lo
 
 export const isLoggedIn = () => !!get(value);
 
-export const logout = () => {
-    alert('todo fajna wiadomość')
+export const logout = (notifyParams?: NotifyParams) => {
     value.set(null);
     localStorage.setItem(AUTH_STORAGE_KEY, null);
-    push('/login');
-    location.reload();
+    if (notifyParams) {
+        push('/login?reason=' + JSON.stringify(notifyParams));
+    } else {
+        push('/login');
+    }
 }
 
 export const logIn = async (login: string, password: string) => {
@@ -42,18 +44,19 @@ export const logIn = async (login: string, password: string) => {
 export const auth = value;
 
 export const checkForTokenExpiration = (token: string) => {
-    const WARNING_TIME = 5 * 60; // mins
+    const TIME = 5;
+    const WARNING_TIME = TIME * 60; // mins
     const decoded: { exp: number } = jwt_decode(token);
 
     const diff = decoded.exp * 1000 - Date.now();
     const seconds = diff / 1000;
 
     if (seconds < 0) {
-        logout();
+        logout({ type: 'is-info', message: 'Wylogowano z powodu zakończenia sesji.' });
     }
     if (seconds < WARNING_TIME) {
         notify({
-            message: "Pozostało mniej niż 5 minut do końca sesji, zapisz swoje zmiany i zaloguj sięp ponownie",
+            message: `Pozostało mniej niż ${TIME} minut do końca sesji, zapisz swoje zmiany i zaloguj sięp ponownie`,
             type: "is-warning",
             duration: seconds * 1000,
         });

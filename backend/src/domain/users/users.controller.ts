@@ -1,12 +1,14 @@
+import { UserDto } from './../../../dist/domain/UserDto.d';
 import { RequirePermission } from './../auth/Permissions.decorator';
 import { PermissionsGuard } from './../auth/Permissions.guard';
 import { UsersService } from './users.service';
 import { Controller, Get, Post, Patch, UseGuards, Body, Param, Delete, Request } from '@nestjs/common';
 import { Permission } from '@prisma/client';
+import { LoggedInUser } from '../auth/types';
 
 @Controller('api/users')
 export class UsersController {
-    constructor(private usersService: UsersService) {}
+    constructor(private usersService: UsersService) { }
 
     @RequirePermission(Permission.USER)
     @Get()
@@ -18,12 +20,12 @@ export class UsersController {
     @RequirePermission(Permission.USER)
     @Post()
     @UseGuards(PermissionsGuard)
-    createUser(@Body() body) {
+    createUser(@Body() body: UserDto) {
         return this.usersService.create(body);
     }
 
     @Patch(':id')
-    updateUser(@Param("id") userId: string, @Body() body, @Request() req) {
+    updateUser(@Param("id") userId: string, @Body() body: UserDto, @Request() req: { user: LoggedInUser }) {
         return this.usersService.update(parseInt(userId), body, req.user);
     }
 

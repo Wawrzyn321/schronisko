@@ -1,3 +1,4 @@
+import { NewsModifyParams, NewsCreateInput, NewsUpdateInput } from './News';
 import { NewsService } from './news.service';
 import { RequirePermission } from '../auth/Permissions.decorator';
 import { Controller, Get, UseGuards, Patch, Param, Body, Delete, Post, BadRequestException } from '@nestjs/common';
@@ -25,14 +26,14 @@ export class NewsController {
     @RequirePermission(Permission.NEWS)
     @Post()
     @UseGuards(PermissionsGuard)
-    createNews(@Body() body) {
+    createNews(@Body() body: NewsModifyParams<NewsCreateInput>) {
         return this.newsService.create(body);
     }
 
     @RequirePermission(Permission.NEWS)
     @Patch(':id')
     @UseGuards(PermissionsGuard)
-    updateNews(@Param("id") newsId: string, @Body() body) {
+    updateNews(@Param("id") newsId: string, @Body() body: NewsModifyParams<NewsUpdateInput>) {
         if (newsId !== body?.news?.id) {
             throw new BadRequestException();
         }

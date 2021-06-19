@@ -22,7 +22,6 @@ export class AnimalsService {
     }
 
     async get(id: string): Promise<Animal> {
-        console.log('todo co jak błąd')
         return await throwingFetch(`${baseUrl}/${id}`);
     }
 

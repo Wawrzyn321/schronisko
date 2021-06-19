@@ -5,7 +5,6 @@ import { PrismaService } from 'src/prisma-connect/prisma.service';
 import { v4 as uuid } from 'uuid';
 import { saveImage, deleteImage } from './img-fs';
 
-
 function validateNews<T>(news: NewsCreateInput): boolean {
   return !!news.title;
 }

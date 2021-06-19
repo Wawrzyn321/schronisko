@@ -11,7 +11,7 @@ export interface UserViewModel extends Omit<User, "passwordHash"> {
   permissions?: Permission[];
 }
 
-interface UserLoginParams {
+export interface UserLoginParams {
   login: string;
   password: string;
 };

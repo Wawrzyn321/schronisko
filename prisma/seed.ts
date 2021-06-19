@@ -69,14 +69,14 @@ async function main() {
     ];
     for (const title of pagesTitles) {
         await prisma.page.upsert({
-            where: {title},
+            where: { title },
             update: {},
-            create: {title, content: ''}
+            create: { title, content: '' }
         });
     }
 }
 main()
-    .catch(e => {
+    .catch((e: Error) => {
         console.error(e)
         process.exit(1)
     })

@@ -17,7 +17,13 @@ export async function throwingFetch(input: RequestInfo, init?: RequestInitWithAu
             Authorization: `Bearer ${token}`
         };
     }
-    const response = await fetch(input, fetchInit);
+    let response: Response;
+    try {
+        response = await fetch(input, fetchInit);
+    } catch (e: unknown) {
+        console.warn(e);
+        throw { ...response, message: "Serwer jest nieosiągalny." };
+    }
     if (response.ok) {
         if (response.headers.get('content-type')?.includes('application/json')) {
             return await response.json();
@@ -25,20 +31,16 @@ export async function throwingFetch(input: RequestInfo, init?: RequestInitWithAu
             throw { ...response, message: "Nieobsługiwany format danych." };
         }
     } else {
-        let message: string;
-        if (response.status === 401) {
-            message = "Brak uwierzytelnienia, zaloguj się ponownie.";
+        const map = {
+            401: "Brak uwierzytelnienia, zaloguj się ponownie.",
+            403: "Nie masz uprawnień do wykonania tej akcji.",
+            404: "Szukany obiekt nie istnieje."
         }
-        else if (response.status === 403) {
-            message = "Nie masz uprawnień do wykonania tej akcji.";
-        }
-        else if (response.status === 404) {
-            message = "Szukany obiekt nie istnieje.";
-        }
-        else {
+        let message = map[response.status];
+        if (!message) {
             console.warn(response);
             message = "Błąd wykonania na serwerze!";
         }
-        throw { ...response, message: message || response.statusText };
+        throw { ...response, message };
     }
 }
