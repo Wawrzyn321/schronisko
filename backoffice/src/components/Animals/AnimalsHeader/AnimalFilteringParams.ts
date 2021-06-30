@@ -1,7 +1,7 @@
 import type { AnimalType, AnimalGender, AnimalLocation, AnimalCategory, Animal } from '.prisma/client';
 
 export type AnimalFilteringParams = {
-    showNonPublic: boolean;
+    showOnlyPublic: boolean;
     typeFilter: AnimalType[];
     genderFilter: AnimalGender[];
     searchPhrase: string;
@@ -15,7 +15,7 @@ const filterBySearchPhrase =
         animal.name.toLowerCase().includes(params.searchPhrase.toLowerCase());
 
 const filterByPublic = (params: AnimalFilteringParams) => (animal: Animal) =>
-    animal.isPublic || params.showNonPublic;
+    !params.showOnlyPublic || animal.isPublic;
 
 const filterByType = (params: AnimalFilteringParams) => (animal: Animal) =>
     !params.typeFilter.length || params.typeFilter.includes(animal.type);
@@ -43,7 +43,7 @@ export const applyFiltering = (animals: Animal[], params: AnimalFilteringParams)
 
 export function createDefaultFilteringParams(): AnimalFilteringParams {
     return {
-        showNonPublic: false,
+        showOnlyPublic: true,
         typeFilter: [],
         searchPhrase: '',
         genderFilter: [],

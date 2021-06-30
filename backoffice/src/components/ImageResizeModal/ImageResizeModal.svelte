@@ -15,7 +15,7 @@
   export let modalVisible: boolean;
   export let file: File;
   export let setImageData: (image: string) => any;
-  export let forceRefresh: boolean; // todo as actions?
+  export let forceRefresh: boolean;
 
   let imageCanvas: HTMLCanvasElement;
   let frameCanvas: HTMLCanvasElement;

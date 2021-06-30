@@ -1,6 +1,7 @@
 <script lang="ts">
   import { Button } from 'svelma';
   import { push } from 'svelte-spa-router';
+  import { FilterIcon } from 'svelte-feather-icons';
   import type { AnimalColumnParams } from './AnimalColumnParams';
   import AnimalsHeaderFiltering from './AnimalsHeaderFiltering.svelte';
 
@@ -16,13 +17,16 @@
       <Button
         style="margin: 0 4px"
         type="is-primary"
-        on:click={() => push('/add-animal')}
+        on:click={() => push('/animals-add')}
       >
         <strong>+</strong>
       </Button>
       <AnimalsHeaderFiltering bind:params={columnParams} />
     </div>
   </div>
+  <p class="g-description">
+    Użyj filtrów <FilterIcon size="0.8x" /> po prawej by wyświetlić więcej kolumn.
+  </p>
 </header>
 
 <style lang="scss">

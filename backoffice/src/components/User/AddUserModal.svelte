@@ -3,7 +3,7 @@
   import { Field, Input } from 'svelma';
   import { createDefaultUser } from './UserCreateParams';
   import type { UserCreateParams } from './UserCreateParams';
-  import type { UserViewModel } from '../../prisma-types/viewModels/UserViewModel';
+  import type { UserViewModel } from '../../common/UserViewModel';
   import PermissionsForm from './PermissionsForm.svelte';
   import { userService } from '../../services/UserService';
   import { notifyError } from '../../contexts/notification.context';
@@ -13,6 +13,7 @@
 
   let form: HTMLFormElement;
   let isFormValid = false;
+  let loading = false;
 
   let user: UserCreateParams;
 
@@ -20,11 +21,13 @@
 
   async function addUser() {
     try {
+      loading = true;
       const newUser = await userService.addUser(user);
       onUserAdded(newUser);
     } catch (e) {
       notifyError({ message: 'Nie można dodać użytkownika: ' + e.message });
     }
+    loading = false;
   }
 </script>
 
@@ -33,7 +36,8 @@
   title="Dodaj użytkownika"
   confirmText="Dodaj"
   onConfirm={addUser}
-  disabledConfirm={!isFormValid}
+  disabledConfirm={!isFormValid || loading}
+  loadingConfirm={loading}
 >
   <form bind:this={form} on:input={() => (isFormValid = form.checkValidity())}>
     <Field label="Login">

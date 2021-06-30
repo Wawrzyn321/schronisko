@@ -2,7 +2,7 @@
   import UsersHeader from '../components/User/UsersHeader.svelte';
   import UsersList from '../components/User/UsersList.svelte';
   import { onMount } from 'svelte';
-  import type { UserViewModel } from '../prisma-types/viewModels/UserViewModel';
+  import type { UserViewModel } from '../common/UserViewModel';
   import { insertInOrder } from '../common/insertInOrder';
   import { userService } from '../services/UserService';
   import { notifyError, notifySuccess } from '../contexts/notification.context';

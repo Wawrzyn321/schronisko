@@ -1,13 +1,15 @@
 <script lang="ts">
   import { API_URL } from '../../services/config';
-  import { Trash2Icon, RotateCcwIcon } from 'svelte-feather-icons';
+  import { RotateCcwIcon } from 'svelte-feather-icons';
 
+  export let width: number;
+  export let height: number;
   export let imageData: string | null;
   export let imageName: string | null;
   export let revertImage: () => any;
 </script>
 
-<div class="image-preview">
+<div class="image-preview" style={`--width: ${width}px; --height: ${height}px;`}>
   {#if imageData}
     <img src={imageData} alt="Podgląd" />
   {:else if imageName}
@@ -24,13 +26,13 @@
 
 <style lang="scss">
   .image-preview {
-    width: 515px;
-    height: 345px;
+    width: var(--width);
+    height: var(--height);
     margin-left: 32px;
 
     & > * {
-      width: 515px;
-      height: 345px;
+      width: var(--width);
+      height: var(--height);
       position: absolute;
     }
   }
@@ -52,12 +54,12 @@
     padding: 10px;
   }
 
-  .overlay_button {
-    border: none;
-    background: rgba(255, 255, 255, 0.5);
+  // .overlay_button {
+  //   border: none;
+  //   background: rgba(255, 255, 255, 0.5);
 
-    &:first-of-type {
-        margin-right: 10px;
-    }
-  }
+  //   &:first-of-type {
+  //       margin-right: 10px;
+  //   }
+  // }
 </style>

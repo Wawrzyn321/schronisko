@@ -16,13 +16,16 @@
   import { notifyError, notifySuccess } from '../contexts/notification.context';
 
   let animals: Animal[] = [];
+  let loading = false;
   let columnParams = createDefaultColumnParams();
   let filteringParams = createDefaultFilteringParams();
   let sortingParams = createDefaultSortingParams();
 
   onMount(async () => {
+    loading = true;
     try {
       animals = await animalsService.getAll();
+      loading = false;
     } catch (e) {
       notifyError({
         message: 'Błąd pobierania zwierząt: ' + e.message,
@@ -48,6 +51,7 @@
   />
   <AnimalsList
     animals={filteredAnimals}
+    {loading}
     {onAnimalDeleted}
     {columnParams}
     bind:filteringParams

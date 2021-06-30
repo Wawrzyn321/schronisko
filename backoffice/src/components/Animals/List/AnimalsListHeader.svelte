@@ -20,6 +20,9 @@
 </script>
 
 <tr>
+  {#if columnParams.showImage}
+    <th>Zdjęcie</th>
+  {/if}
   <th>
     <div style="display: flex">
       Imię <SortControl bind:sortingOrder={sortingParams.sortByName} />
@@ -82,6 +85,9 @@
       </div>
     </th>
   {/if}
+  {#if columnParams.showVirtualCaretaker}
+    <th>Opiekun wirtualny</th>
+  {/if}
   {#if columnParams.showTimestamp}
     <th>
       <div style="display: flex">
@@ -92,7 +98,7 @@
     </th>
   {/if}
   <th class="is-public-column">
-    <input type="checkbox" bind:checked={filteringParams.showNonPublic} />
+    <input type="checkbox" bind:checked={filteringParams.showOnlyPublic} />
     Widoczny na stronie
   </th>
   <th class="g-text-align-right g-actions-header" />

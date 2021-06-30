@@ -10,7 +10,7 @@
   export let virtualCaretakerType: VirtualCaretakerType;
 </script>
 
-<div class="g-flex-between-100" style="margin-top: 10px">
+<div class="v-caretaker-control">
   <Field label="Wirtualny opiekun" />
   {#each virtualCaretakerTypes as type}
     <label>
@@ -29,3 +29,11 @@
     <Input required bind:value={virtualCaretakerName} />
   </Field>
 {/if}
+
+<style lang="scss">
+  .v-caretaker-control {
+    margin-top: 10px;
+    max-width: 60vw;
+    min-width: 30vw;
+  }
+</style>

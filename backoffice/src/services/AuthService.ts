@@ -1,6 +1,6 @@
 import { throwingFetch } from "./throwingFetch";
 import { API_URL } from './config';
-import type { UserViewModel } from "../prisma-types/viewModels/UserViewModel";
+import type { UserViewModel } from "../common/UserViewModel";
 
 const baseUrl = `${API_URL}/auth`;
 

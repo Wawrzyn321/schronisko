@@ -1,8 +1,7 @@
 import { LoggedInUser } from './domain/auth/types';
-import { UserViewModel } from './../../prisma/prisma-types/viewModels/UserViewModel';
 import { PermissionsGuard } from './domain/auth/Permissions.guard';
 import { Controller, Post, Body, Request, UseGuards } from '@nestjs/common';
-import { AuthService, ChangePasswordParams, UserLoginParams } from './domain/auth/auth.service';
+import { AuthService, ChangePasswordParams, UserLoginParams, UserViewModel } from './domain/auth/auth.service';
 import { Public } from './domain/auth/public.decorator';
 
 @Controller()

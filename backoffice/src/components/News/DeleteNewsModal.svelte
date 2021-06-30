@@ -8,13 +8,17 @@
   export let onNewsDeleted: (news: NewsListElement) => any;
   export let news: NewsListElement;
 
+  let loading = false;
+
   async function deleteNews() {
     try {
+      loading = true;
       await newsService.delete(news.id);
       onNewsDeleted(news);
     } catch (e) {
       notifyError({ message: 'Nie można usunąć posta: ' + e.message });
     }
+    loading = false;
   }
 </script>
 
@@ -23,6 +27,8 @@
   title="Usuń newsa"
   confirmText="Usuń"
   onConfirm={deleteNews}
+  disabledConfirm={loading}
+  loadingConfirm={loading}
 >
   {#if !!news}
     <p>

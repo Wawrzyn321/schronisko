@@ -4,17 +4,21 @@
   import type { Animal } from '.prisma/client';
   import { notifyError } from '../../contexts/notification.context';
 
+  let loading = false;
+
   export let modalVisible: boolean;
   export let onAnimalDeleted: (animal: Animal) => any;
   export let animal: Animal;
 
   async function deleteAnimal() {
     try {
+      loading = true;
       await animalsService.delete(animal.id);
       onAnimalDeleted(animal);
     } catch (e) {
       notifyError({ message: 'Nie udało się usunąć zwierzęcia: ' + e.message });
     }
+    loading = false;
   }
 </script>
 
@@ -23,6 +27,8 @@
   title="Usuń zwierze"
   confirmText="Usuń"
   onConfirm={deleteAnimal}
+  disabledConfirm={loading}
+  loadingConfirm={loading}
 >
   {#if !!animal}
     <p>

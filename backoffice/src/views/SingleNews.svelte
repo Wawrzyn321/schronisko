@@ -2,6 +2,7 @@
   import type { News } from '.prisma/client';
   import { Tab } from 'svelma';
   import { onMount } from 'svelte';
+  import Loader from '../components/Loader.svelte';
   import EditorTabs from '../components/EditorTabs.svelte';
   import NewsForm from '../components/News/NewsForm.svelte';
   import UpdateHeader from '../components/News/UpdateHeader.svelte';
@@ -30,7 +31,7 @@
       await newsService.update({ ...news, content: editedContent }, imageData);
       notifySuccess({ message: 'News został zapisany' });
     } catch (e) {
-      notifyError({ message: 'Nie możnac zapisa newsa: ' + e.message });
+      notifyError({ message: 'Nie możnac zapisać newsa: ' + e.message });
     }
   }
 </script>
@@ -54,6 +55,6 @@
       </Tab>
     </EditorTabs>
   {:else}
-    Ładowanie...
+    <Loader />
   {/if}
 </main>

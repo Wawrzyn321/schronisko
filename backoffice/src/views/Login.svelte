@@ -19,7 +19,6 @@
       await logIn(login, password);
       push('/profile');
     } catch (e) {
-      console.warn(e);
       errorOpen = true;
     } finally {
       loading = false;
@@ -43,6 +42,7 @@
     const logoutReason = tryGetLogoutReason(get(querystring));
     if (logoutReason) {
       notify(logoutReason);
+      push('/login');
     }
   });
 </script>
@@ -50,7 +50,12 @@
 <main class="login-form">
   <form on:submit|preventDefault={logInFn}>
     <Field label="Login">
-      <Input required bind:value={login} placeholder="Login" />
+      <Input
+        required
+        bind:value={login}
+        placeholder="Login"
+        autocomplete="username"
+      />
     </Field>
     <Field label="Hasło">
       <Input
@@ -58,6 +63,7 @@
         bind:value={password}
         type="password"
         placeholder="Hasło"
+        autocomplete="current-password"
       />
     </Field>
     <Button
@@ -75,9 +81,6 @@
   </Notification>
 </main>
 
-<!-- <Field label="Username" type="is-success" message="Username is available">
-  <Input value="joey55" />
-</Field> -->
 <style lang="scss">
   .login-form {
     margin: 20px auto 0;

@@ -4,6 +4,9 @@
   import { notificationQueue, dropFirst } from './notification.context';
 
   function showNotification(params: NotifyParams) {
+    if (params.type === 'is-danger' && !params.duration) {
+      params.duration = 10000;
+    }
     Toast.create(params);
   }
 

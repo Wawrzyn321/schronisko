@@ -1,10 +1,11 @@
 <script lang="ts">
   import Modal from './../Modal.svelte';
-  import type { UserViewModel } from '../../prisma-types/viewModels/UserViewModel';
+  import type { UserViewModel } from '../../common/UserViewModel';
   import PermissionsForm from './PermissionsForm.svelte';
   import { userService } from '../../services/UserService';
   import type { Permission } from '.prisma/client';
   import { notifyError } from '../../contexts/notification.context';
+  import Loader from '../Loader.svelte';
 
   export let modalVisible: boolean;
   export let user: UserViewModel;
@@ -12,12 +13,16 @@
 
   let permissions: Permission[];
   let isActive: boolean;
+  let loading = false;
 
   const onShow = async (_) => {
+    loading = true;
+    permissions = [];
     if (!user) return;
     isActive = user.isActive;
     try {
       permissions = await userService.getPermissions(user.id);
+      loading = false;
     } catch (e) {
       notifyError({ message: 'Nie można pobrać uprawnień: ' + e.message });
     }
@@ -27,6 +32,7 @@
 
   async function updateUser() {
     try {
+      loading = true;
       const updatedUser = await userService.updateUser({
         ...user,
         permissions,
@@ -37,32 +43,36 @@
       notifyError({
         message: 'Nie udało się zaktualizować użytkownika: ' + e.message,
       });
+      loading = false;
     }
   }
 </script>
 
 <Modal
   bind:isOpen={modalVisible}
-  title="Edytuj użytkownika"
+  title={`Edytuj użytkownika ${user?.login}`}
   confirmText="Zatwierdź"
   onConfirm={updateUser}
+  disabledConfirm={loading}
 >
   <form>
-    <label>
-      <input
-        checked={isActive}
-        type="checkbox"
-        on:change={() => (isActive = !isActive)}
-      />
-      Aktywny
-    </label>
-    {#if permissions}
+    {#if permissions.length}
+      <label>
+        <input
+          checked={isActive}
+          type="checkbox"
+          on:change={() => (isActive = !isActive)}
+        />
+        Aktywny
+      </label>
       <PermissionsForm
         {permissions}
         updatePermissions={(p) => (permissions = p)}
       />
     {:else}
-      <em>Ładowanie uprawnień...</em>
+      <div style="height: 50px">
+        <Loader size="2em" />
+      </div>
     {/if}
   </form>
 </Modal>

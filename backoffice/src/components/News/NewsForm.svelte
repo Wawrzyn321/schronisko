@@ -1,11 +1,7 @@
 <script lang="ts">
-  import { Button, Field, Input } from 'svelma';
-  import ImageResizeModal from '../ImageResizeModal/ImageResizeModal.svelte';
+  import { Field, Input } from 'svelma';
+  import ResizableImageInput from '../ResizableImageInput.svelte';
   import ImagePreview from './ImagePreview.svelte';
-
-  interface HtmlInputEvent extends Event {
-    target: HTMLInputElement & EventTarget;
-  }
 
   export let news: {
     title: string;
@@ -16,29 +12,15 @@
   export let setFormValid: (valid: boolean) => any;
 
   let form: HTMLFormElement;
-  let resizeModalVisible = false;
-  let file: File;
-  let forceRefresh = false;
 
   $: imageData && revalidateForm();
 
-  async function onFileChange(e: HtmlInputEvent) {
-    if (!e.target) return;
-    file = e.target.files[0];
-    openResizeModal();
-  }
-
-  function openResizeModal() {
-    resizeModalVisible = true;
-    forceRefresh = true;
+  function revalidateForm() {
+    setFormValid(form.checkValidity() && (!!imageData || !!news.imageName));
   }
 
   function revertImage() {
     imageData = null;
-  }
-
-  function revalidateForm() {
-    setFormValid(form.checkValidity() && (!!imageData || !!news.imageName));
   }
 </script>
 
@@ -51,24 +33,23 @@
       <Field label="Opis">
         <Input bind:value={news.description} placeholder="Opis" />
       </Field>
-      <Field label="Tło" message="Widoczne na sliderze.">
-        <div style="display: flex">
-          <Input type="file" on:input={onFileChange} />
-          <Button on:click={openResizeModal} disabled={!file}>Przytnij</Button>
-        </div>
-      </Field>
+      <ResizableImageInput
+        label="Tło"
+        message="Widoczne na sliderze."
+        bind:imageData
+        width={515}
+        height={345}
+      />
     </div>
-    <ImagePreview {imageData} {revertImage} imageName={news.imageName} />
+    <ImagePreview
+      {imageData}
+      {revertImage}
+      imageName={news.imageName}
+      width={515}
+      height={345}
+    />
   </div>
 </form>
-<ImageResizeModal
-  {file}
-  bind:forceRefresh
-  setImageData={(data) => (imageData = data)}
-  bind:modalVisible={resizeModalVisible}
-  defaultWidth={515}
-  defaultHeight={345}
-/>
 
 <style lang="scss">
   form {

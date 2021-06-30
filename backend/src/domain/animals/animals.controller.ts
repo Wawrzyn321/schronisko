@@ -1,9 +1,13 @@
 import { Animal } from '.prisma/client';
-import { AnimalsService, AnimalCreateParams } from './animals.service';
+import { AnimalsService, AnimalData } from './animals.service';
 import { RequirePermission } from '../auth/Permissions.decorator';
 import { Controller, Get, UseGuards, Param, Patch, Body, Post, Delete } from '@nestjs/common';
 import { Permission } from '@prisma/client';
 import { PermissionsGuard } from '../auth/Permissions.guard';
+
+interface AnimalHttpParams extends Animal {
+    imageData: string;
+}
 
 @Controller('api/animals')
 export class AnimalsController {
@@ -26,14 +30,14 @@ export class AnimalsController {
     @RequirePermission(Permission.ANIMAL)
     @Post()
     @UseGuards(PermissionsGuard)
-    addAnimal(@Body() body: AnimalCreateParams) {
+    addAnimal(@Body() body: AnimalData) {
         return this.animalsService.add(body);
     }
 
     @RequirePermission(Permission.ANIMAL)
     @Patch(':id')
     @UseGuards(PermissionsGuard)
-    updateAnimal(@Param("id") animalId: string, @Body() body: Animal) {
+    updateAnimal(@Param("id") animalId: string, @Body() body: AnimalData) {
         return this.animalsService.update(animalId, body);
     }
 

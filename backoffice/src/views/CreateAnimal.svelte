@@ -6,16 +6,18 @@
     AnimalType,
     VirtualCaretakerType,
   } from '.prisma/client';
-  import { Tab, Tabs } from 'svelma';
   import { push } from 'svelte-spa-router';
   import CreateAnimalHeader from '../components/Animals/CreateAnimalHeader.svelte';
   import AnimalForm from '../components/Animals/Form/AnimalForm.svelte';
   import { animalsService } from '../services/AnimalsService';
-  import type { AnimalCreateParams } from '../services/AnimalsService';
-import { notifyError, notifySuccess } from '../contexts/notification.context';
+  import type { AnimalData } from '../services/AnimalsService';
+  import { notifyError, notifySuccess } from '../contexts/notification.context';
+  import AnimalImages from '../components/Animals/AnimalImages.svelte';
+  import type { AnimalImageParams } from './../services/AnimalImagesService';
 
   let isValid: boolean = false;
-  let animal: AnimalCreateParams = {
+  let animal: AnimalData = {
+    id: '',
     name: '',
     category: AnimalCategory.DoAdopcji,
     gender: AnimalGender.FEMALE,
@@ -25,15 +27,24 @@ import { notifyError, notifySuccess } from '../contexts/notification.context';
     type: AnimalType.CAT,
     virtualCaretakerName: null,
     virtualCaretakerType: VirtualCaretakerType.Szuka,
+    imageData: '',
   };
+  let images: AnimalImageParams[] = [];
 
   async function createAnimal() {
     try {
-      const { id } = await animalsService.create(animal);
-      push(`/animal/${id}`);
-      notifySuccess({message: 'Zwierzę zostało dodane'})
+      const { id } = await animalsService.create(animal, images);
+      push(`/animals/${id}`);
+      notifySuccess({ message: 'Zwierzę zostało dodane' });
     } catch (e) {
-      notifyError({message: 'Nie można dodać zwierzęcia: ' + e.message})
+      if (e.status === 409) {
+        notifyError({
+          message:
+            'Nie można dodać zwierzęcia: Podany identyfikator jest już zajęty.',
+        });
+      } else {
+        notifyError({ message: 'Nie można dodać zwierzęcia: ' + e.message });
+      }
     }
   }
 </script>
@@ -45,10 +56,9 @@ import { notifyError, notifySuccess } from '../contexts/notification.context';
     bind:isPublic={animal.isPublic}
   />
 
-  <Tabs>
-    <Tab label="Dane">
-      <AnimalForm bind:animal setFormValid={(valid) => (isValid = valid)} />
-    </Tab>
-    <Tab label="Zdjęcia">zdj</Tab>
-  </Tabs>
+  <AnimalForm
+    bind:animal
+    bind:images
+    setFormValid={(valid) => (isValid = valid)}
+  />
 </main>

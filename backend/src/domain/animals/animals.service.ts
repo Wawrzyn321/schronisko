@@ -1,9 +1,12 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException, ConflictException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma-connect/prisma.service';
 import type { Animal, AnimalCategory, AnimalGender, AnimalLocation, AnimalType } from '.prisma/client';
 import { VirtualCaretakerType } from '@prisma/client';
+import { v4 as uuid } from 'uuid';
+import { saveImage } from '../news/img-fs';
 
-export interface AnimalCreateParams {
+export interface AnimalData {
+  id: string
   name: string
   type: AnimalType
   gender: AnimalGender
@@ -13,6 +16,16 @@ export interface AnimalCreateParams {
   virtualCaretakerName: string | null
   virtualCaretakerType: VirtualCaretakerType
   isPublic: boolean
+  imageData?: string
+  imageName?: string
+}
+
+function validateAnimalCreate(animal: AnimalData,): boolean {
+  return validateAnimalUpdate(animal) && !!animal.imageData;
+}
+
+function validateAnimalUpdate(animal: AnimalData): boolean {
+  return !!animal.name && !!animal.id;
 }
 
 @Injectable()
@@ -31,25 +44,52 @@ export class AnimalsService {
     return animal;
   }
 
-  async add(animal: AnimalCreateParams): Promise<Animal> {
-    if (!animal.virtualCaretakerName && animal.virtualCaretakerType === VirtualCaretakerType.Znalazl) {
-      throw new BadRequestException(animal, "Brak nazwy wirtualnego opiekuna.");
+  async add(animal: AnimalData): Promise<Animal> {
+    if (!validateAnimalCreate(animal)) {
+      throw new BadRequestException(null, "Brak nazwy, id lub zdjęcia.");
     }
+    if (!animal.virtualCaretakerName && animal.virtualCaretakerType === VirtualCaretakerType.Znalazl) {
+      throw new BadRequestException(null, "Brak nazwy wirtualnego opiekuna.");
+    }
+    const existingAnimal = await this.prisma.animal.findUnique({ where: { id: animal.id } });
+    if (!!existingAnimal) {
+      throw new ConflictException(animal, "Zwierzę o podanym numerze już istnieje.");
+    }
+
+    const imageName = `${uuid()}.png`;
+    await saveImage(imageName, animal.imageData, 'Animal Miniature');
+
+    const { imageData, ...animalData } = animal;
     return await this.prisma.animal.create({
-      data: animal
+      data: { ...animalData, imageName }
     });
   }
 
-  async update(id: string, animal: Animal): Promise<Animal> {
+  async update(id: string, animal: AnimalData): Promise<Animal> {
+    if (!validateAnimalUpdate(animal)) {
+      throw new BadRequestException(id, "Brak nazwy lub id.");
+    }
     if (!animal.virtualCaretakerName && animal.virtualCaretakerType === VirtualCaretakerType.Znalazl) {
       throw new BadRequestException(id, "Brak nazwy wirtualnego opiekuna.");
     }
+    if (!this.prisma.animal.findUnique({where: {id}})) {
+      throw new NotFoundException();
+    }
+
+    if (animal.imageData) {
+      await saveImage(animal.imageName, animal.imageData, 'Animal Miniature');
+    }
+
+    const { imageData, ...animalData } = animal;
     return await this.prisma.animal.update({
-      where: { id }, data: animal
+      where: { id }, data: animalData
     });
   }
 
   async delete(id: string): Promise<Animal> {
+    if (!this.prisma.animal.findUnique({where: {id}})) {
+      throw new NotFoundException();
+    }
     return await this.prisma.animal.delete({
       where: { id }
     });

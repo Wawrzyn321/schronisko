@@ -17,7 +17,7 @@
   >
     <Edit2Icon size="0.5x" />
   </Button>
-  <button class="link" on:click={logout}>Wyloguj się</button>
+  <button class="link" on:click={() => logout()}>Wyloguj się</button>
 </div>
 
 <style lang="scss">

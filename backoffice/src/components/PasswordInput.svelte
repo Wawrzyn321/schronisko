@@ -5,6 +5,7 @@
   export let message = '';
   export let plain = false;
   export let password: string;
+  export let autocomplete: string = '';
 </script>
 
 <Field {label} message={message}>
@@ -13,5 +14,6 @@
     type={plain ? 'text' : 'password'}
     bind:value={password}
     placeholder={label}
+    {autocomplete}
   />
 </Field>

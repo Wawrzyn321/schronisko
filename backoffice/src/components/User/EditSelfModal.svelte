@@ -1,16 +1,20 @@
 <script lang="ts">
   import Modal from './../Modal.svelte';
   import { Field, Input } from 'svelma';
-  import type { UserViewModel } from '../../prisma-types/viewModels/UserViewModel';
+  import type { UserViewModel } from '../../common/UserViewModel';
   import { auth } from '../../contexts/auth.context';
   import { userService } from './../../services/UserService';
-import { notifyError, notifySuccess } from '../../contexts/notification.context';
+  import {
+    notifyError,
+    notifySuccess,
+  } from '../../contexts/notification.context';
 
   export let onSelfEdited: (u: UserViewModel) => void = undefined;
   export let modalVisible: boolean;
 
   let form: HTMLFormElement;
   let isFormValid = false;
+  let loading = false;
 
   let user: UserViewModel;
 
@@ -20,12 +24,14 @@ import { notifyError, notifySuccess } from '../../contexts/notification.context'
 
   async function updateSelf() {
     try {
+      loading = true;
       const updatedUser = await userService.updateSelf(user);
       onSelfEdited && onSelfEdited(updatedUser);
       notifySuccess({ message: 'Twoje dane zostały zapisane' });
     } catch (e) {
       notifyError({ message: 'Błąd zapisywania danych: ' + e.message });
     }
+    loading = false;
   }
 </script>
 
@@ -34,7 +40,8 @@ import { notifyError, notifySuccess } from '../../contexts/notification.context'
   title="Twoje dane"
   confirmText="Zatwierdź"
   onConfirm={updateSelf}
-  disabledConfirm={!isFormValid}
+  disabledConfirm={!isFormValid || loading}
+  loadingConfirm={loading}
 >
   <form bind:this={form} on:input={() => (isFormValid = form.checkValidity())}>
     <Field label="Login">

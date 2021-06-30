@@ -262,10 +262,7 @@ nav.tabs {
 
 .tab-content, .tab {
   width: 100%;
-}
-
-.g-actions-header {
-  width: 160px;
+  margin-top: 8px;
 }
 
 .g-description {

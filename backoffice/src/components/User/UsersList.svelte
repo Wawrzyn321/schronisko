@@ -2,12 +2,13 @@
   import { Trash2Icon, Edit2Icon, LockIcon } from 'svelte-feather-icons';
   import { Button } from 'svelma';
   import { isSelf } from '../../contexts/auth.context';
-  import type { UserViewModel } from '../../prisma-types/viewModels/UserViewModel';
+  import type { UserViewModel } from '../../common/UserViewModel';
   import DeleteUserModal from './DeleteUserModal.svelte';
   import EditUserModal from './EditUserModal.svelte';
   import EditSelfModal from './EditSelfModal.svelte';
   import ChangeUserPasswordModal from './ChangeUserPasswordModal.svelte';
   import ChangePasswordModal from './../ChangePasswordModal.svelte';
+  import Loader from './../../components/Loader.svelte';
 
   export let onUserDeleted: (u: UserViewModel) => void;
   export let onUserEdited: (u: UserViewModel) => void;
@@ -83,6 +84,9 @@
     </tr>
   {/each}
 </table>
+{#if !users?.length}
+  <Loader centered={true}/>
+{/if}
 <DeleteUserModal
   bind:modalVisible={deleteModalVisible}
   {onUserDeleted}

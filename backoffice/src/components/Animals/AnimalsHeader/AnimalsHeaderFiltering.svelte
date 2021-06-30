@@ -5,6 +5,16 @@
   import type { AnimalColumnParams } from './AnimalColumnParams';
 
   export let params: AnimalColumnParams;
+
+  const dataRows = [
+    { caption: 'Zdjęcie', property: 'showImage' },
+    { caption: 'Opis', property: 'showDescription' },
+    { caption: 'Płeć', property: 'showGender' },
+    { caption: 'Miejsce', property: 'showLocation' },
+    { caption: 'Kategoria', property: 'showCategory' },
+    { caption: 'Opiekun wirtualny', property: 'showVirtualCaretaker' },
+    { caption: 'Data dodania', property: 'showTimestamp' },
+  ];
 </script>
 
 <Dropdown>
@@ -12,53 +22,23 @@
     <FilterIcon size="1.0x" />
   </Button>
   <div slot="content" class="dropdown-content">
-    <label>
-      <input
-        checked={params.showDescription}
-        type="checkbox"
-        on:change={() => (params.showDescription = !params.showDescription)}
-      />
-      Opis
-    </label>
-    <label>
-      <input
-        checked={params.showGender}
-        type="checkbox"
-        on:change={() => (params.showGender = !params.showGender)}
-      />
-      Płeć
-    </label>
-    <label>
-      <input
-        checked={params.showLocation}
-        type="checkbox"
-        on:change={() => (params.showLocation = !params.showLocation)}
-      />
-      Miejsce
-    </label>
-    <label>
-      <input
-        checked={params.showCategory}
-        type="checkbox"
-        on:change={() => (params.showCategory = !params.showCategory)}
-      />
-      Kategoria
-    </label>
-    <label>
-      <input
-        checked={params.showTimestamp}
-        type="checkbox"
-        on:change={() => (params.showTimestamp = !params.showTimestamp)}
-      />
-      Data dodania
-    </label>
+    {#each dataRows as row}
+      <label>
+        <input
+          checked={params[row.property]}
+          type="checkbox"
+          on:change={() => (params[row.property] = !params[row.property])}
+        />
+        {row.caption}
+      </label>
+    {/each}
   </div>
 </Dropdown>
 
 <style lang="scss">
   .dropdown-content {
-    transform: translateX(-110px);
-    width: 150px;
+    transform: translateX(-130px);
+    width: 170px;
     padding: 10px;
     z-index: 1000;
   }

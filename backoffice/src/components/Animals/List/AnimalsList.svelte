@@ -6,18 +6,22 @@
   import DeleteAnimalModal from './../DeleteAnimalModal.svelte';
   import DateFromTimestamp from '../../DateFromTimestamp.svelte';
   import AnimalsListHeader from './AnimalsListHeader.svelte';
+  import Loader from './../../../components/Loader.svelte';
   import type { Animal } from '.prisma/client';
   import {
     animalGendersMap,
     animalLocationsMap,
     animalCategoriesMap,
     animalTypesMap,
+    virtualCaretakerTypesMap,
   } from './../animalMetadata';
   import type { AnimalColumnParams } from './../AnimalsHeader/AnimalColumnParams';
   import type { AnimalFilteringParams } from './../AnimalsHeader/AnimalFilteringParams';
   import type { AnimalSortingParams } from './../AnimalsHeader/AnimalSortingParams';
+  import { API_URL } from '../../../services/config';
 
   export let animals: Animal[];
+  export let loading: boolean;
   export let columnParams: AnimalColumnParams;
   export let filteringParams: AnimalFilteringParams;
   export let sortingParams: AnimalSortingParams;
@@ -31,8 +35,13 @@
   <AnimalsListHeader {columnParams} bind:filteringParams bind:sortingParams />
   {#each animals as animal}
     <tr>
+      {#if columnParams.showImage}
+        <td style="padding-bottom: 0">
+          <img src={`${API_URL}/${animal.imageName}`} alt={animal.name} />
+        </td>
+      {/if}
       <td>
-        <a href={`/#/news/${animal.id}`}>
+        <a href={`/#/animals/${animal.id}`}>
           {animal.name}
         </a>
       </td>
@@ -57,6 +66,11 @@
       {#if columnParams.showCategory}
         <td>
           {animalCategoriesMap[animal.category]}
+        </td>
+      {/if}
+      {#if columnParams.showVirtualCaretaker}
+        <td>
+          {virtualCaretakerTypesMap[animal.virtualCaretakerType]}
         </td>
       {/if}
       {#if columnParams.showTimestamp}
@@ -87,6 +101,10 @@
     </tr>
   {/each}
 </table>
+{#if loading}
+  <Loader />
+{/if}
+
 <DeleteAnimalModal
   bind:modalVisible={deleteModalVisible}
   {onAnimalDeleted}

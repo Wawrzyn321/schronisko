@@ -1,4 +1,4 @@
-import { Page } from './../../../../backoffice/src/services/PageService';
+import { Page } from './Page';
 import { PagesService } from './pages.service';
 import { RequirePermission } from '../auth/Permissions.decorator';
 import { Controller, Get, UseGuards, Param, Patch, Body } from '@nestjs/common';

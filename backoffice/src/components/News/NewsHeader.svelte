@@ -13,7 +13,7 @@
         bind:value={searchPhrase}
         style="margin-right: 10px"
       />
-      <Button type="is-primary" on:click={() => push('/new-news')}
+      <Button type="is-primary" on:click={() => push('/news-add')}
         ><strong>+</strong></Button
       >
     </div>

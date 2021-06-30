@@ -6,12 +6,17 @@
   import type { PageListElement } from '../services/PageService';
   import { pageService } from '../services/PageService';
   import { notifyError } from '../contexts/notification.context';
+  import Loader from './../components/Loader.svelte';
 
   let pages: PageListElement[] = [];
   let searchPhrase = '';
+  let loading = false;
+
   onMount(async () => {
+    loading = true;
     try {
       pages = await pageService.getAll();
+      loading = false;
     } catch (e) {
       notifyError({ message: 'Nie można pobrać stron: ' + e.message });
     }
@@ -53,6 +58,9 @@
       </tr>
     {/each}
   </table>
+  {#if loading}
+    <Loader />
+  {/if}
 </main>
 
 <style lang="scss">

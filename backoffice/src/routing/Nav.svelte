@@ -4,7 +4,7 @@
   import { link } from 'svelte-spa-router';
   import UserNavHeader from './UserNavHeader.svelte';
   import active from 'svelte-spa-router/active';
-  import type { Permission } from '@prisma/client';
+  import { Permission } from '@prisma/client';
 
   interface NavigationRoute {
     name: string;
@@ -15,22 +15,22 @@
   const navigationRoutes: NavigationRoute[] = [
     {
       name: 'Użytkownicy',
-      requiredPermission: 'USER',
+      requiredPermission: Permission.USER,
       path: '/users',
     },
     {
       name: 'Strony',
-      requiredPermission: 'PAGE',
+      requiredPermission: Permission.PAGE,
       path: '/pages',
     },
     {
       name: 'Newsy',
-      requiredPermission: 'NEWS',
+      requiredPermission: Permission.NEWS,
       path: '/news',
     },
     {
       name: 'Zwierzęta',
-      requiredPermission: 'ANIMAL',
+      requiredPermission: Permission.ANIMAL,
       path: '/animals',
     },
   ];
@@ -39,14 +39,16 @@
 <nav>
   <a href="https://www.schronisko.sosnowiec.pl/" target="_blank">
     Strona schroniska
-    <ExternalLinkIcon size="0.9x"/>
+    <ExternalLinkIcon size="0.9x" />
   </a>
   {#if $auth}
     <ul>
       {#each navigationRoutes as route}
         {#if $auth.user.permissions.includes(route.requiredPermission)}
           <li>
-            <a use:link use:active href={`${route.path}`}>{route.name}</a>
+            <a use:link use:active={`${route.path}.*`} href={`${route.path}`}>
+              {route.name}
+            </a>
           </li>
         {/if}
       {/each}

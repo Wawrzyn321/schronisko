@@ -9,10 +9,13 @@
 
   let news: NewsListElement[] = [];
   let searchPhrase = '';
+  let loading = false;
 
   onMount(async () => {
+    loading = true;
     try {
       news = await newsService.getAll();
+      loading = false;
     } catch (e) {
       notifyError({ message: 'Nie można pobrać newsów: ' + e.message });
     }
@@ -33,5 +36,5 @@
 
 <main>
   <NewsHeader bind:searchPhrase />
-  <NewsList news={filteredNews} {onNewsDeleted} />
+  <NewsList news={filteredNews} {loading} {onNewsDeleted} />
 </main>

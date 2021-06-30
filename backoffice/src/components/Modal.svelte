@@ -7,6 +7,7 @@
   export let id: string | undefined = undefined;
   export let onConfirm: () => any;
   export let disabledConfirm: boolean = false;
+  export let loadingConfirm: boolean = false;
   export let cancelText: string = 'Anuluj';
 
   const close = () => (isOpen = false);
@@ -50,6 +51,7 @@
                 class="modal-confirm"
                 type="is-primary"
                 disabled={disabledConfirm}
+                loading={loadingConfirm}
                 on:click={confirm}
               >
                 {confirmText}

@@ -1,6 +1,6 @@
+import type { UserViewModel } from './../common/UserViewModel';
 import { notify, NotifyParams } from './notification.context';
 import { authService } from './../services/AuthService';
-import type { UserViewModel } from './../../../prisma/prisma-types/viewModels/UserViewModel';
 import { get, writable } from 'svelte/store';
 import jwt_decode from 'jwt-decode';
 import { push } from 'svelte-spa-router';
@@ -33,6 +33,7 @@ export const logout = (notifyParams?: NotifyParams) => {
         push('/login?reason=' + JSON.stringify(notifyParams));
     } else {
         push('/login');
+        location.reload();
     }
 }
 
@@ -53,6 +54,8 @@ export const checkForTokenExpiration = (token: string) => {
 
     if (seconds < 0) {
         logout({ type: 'is-info', message: 'Wylogowano z powodu zakończenia sesji.' });
+        location.reload();
+        return false;
     }
     if (seconds < WARNING_TIME) {
         notify({
@@ -61,4 +64,5 @@ export const checkForTokenExpiration = (token: string) => {
             duration: seconds * 1000,
         });
     }
+    return true;
 }

@@ -35,7 +35,7 @@ enum AnimalLocation {
   UOsobyPrywatnej
 }
 
-enum AnimalCategory {
+enum AnimalCategory {x
   PilniePotrzebuja
   Weterani
   DoAdopcji
@@ -78,7 +78,7 @@ model News {
 }
 
 model Animal {
-  id                    String    @id @default(uuid())
+  id                    String    @id
   name                  String
   type                  AnimalType
   gender                AnimalGender
@@ -90,14 +90,16 @@ model Animal {
   isPublic              Boolean
   images                AnimalImage[]
   addedDate             DateTime  @default(now())
+  imageName             String
 }
 
 model AnimalImage {
   id            String     @id @default(uuid())
   order         Int
   animalId      String
-  user          Animal     @relation(fields: [animalId], references: [id])
-  path          String
+  animal        Animal     @relation(fields: [animalId], references: [id])
+  imageName     String
+  visible       Boolean
 }
 
 model Session {

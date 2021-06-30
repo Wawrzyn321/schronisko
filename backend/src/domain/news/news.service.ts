@@ -5,8 +5,12 @@ import { PrismaService } from 'src/prisma-connect/prisma.service';
 import { v4 as uuid } from 'uuid';
 import { saveImage, deleteImage } from './img-fs';
 
-function validateNews<T>(news: NewsCreateInput): boolean {
+function validateNewsUpdate<T>(news: NewsCreateInput,): boolean {
   return !!news.title;
+}
+
+function validateNewsCreate<T>(news: NewsCreateInput, imageData: string): boolean {
+  return validateNewsUpdate(news) && !!imageData;
 }
 
 @Injectable()
@@ -32,23 +36,23 @@ export class NewsService {
   }
 
   async create(params: NewsModifyParams<NewsCreateInput>): Promise<NewsListElement> {
-    if (!validateNews(params.news)) {
-      throw new BadRequestException();
+    if (!validateNewsCreate(params.news, params.imageData)) {
+      throw new BadRequestException(null, "Brak tytułu lub zdjęcia");
     }
 
     params.news.imageName = `${uuid()}.png`;
-    await saveImage(params.news.imageName, params.imageData);
+    await saveImage(params.news.imageName, params.imageData, 'News');
     const createdNews = await this.prisma.news.create({ data: params.news });
     return this.toListElement(createdNews);
   }
 
   async update(id: string, params: NewsModifyParams<NewsUpdateInput>): Promise<NewsListElement> {
-    if (!validateNews(params.news)) {
-      throw new BadRequestException();
+    if (!validateNewsUpdate(params.news)) {
+      throw new BadRequestException(id, "Brak tytułu.");
     }
 
     if (params.imageData) {
-      await saveImage(params.news.imageName, params.imageData);
+      await saveImage(params.news.imageName, params.imageData, 'News');
     }
 
     const updatedNews = await this.prisma.news.update({
@@ -59,7 +63,11 @@ export class NewsService {
 
   async delete(id: string): Promise<News> {
     const post = await this.prisma.news.findUnique({ where: { id } });
-    await deleteImage(post.imageName);
+    try {
+      await deleteImage(post.imageName);
+    } catch (e) {
+      console.warn(e);
+    }
     return await this.prisma.news.delete({
       where: { id }
     });

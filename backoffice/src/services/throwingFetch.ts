@@ -11,7 +11,9 @@ export async function throwingFetch(input: RequestInfo, init?: RequestInitWithAu
         if (!token) {
             throw Error("No auth.");
         }
-        checkForTokenExpiration(token);
+        if (!checkForTokenExpiration(token)) {
+            return null;
+        }
         fetchInit.headers = {
             ...(fetchInit.headers || {}),
             Authorization: `Bearer ${token}`
@@ -28,7 +30,7 @@ export async function throwingFetch(input: RequestInfo, init?: RequestInitWithAu
         if (response.headers.get('content-type')?.includes('application/json')) {
             return await response.json();
         } else {
-            throw { ...response, message: "Nieobsługiwany format danych." };
+            return null;
         }
     } else {
         const map = {
@@ -41,6 +43,6 @@ export async function throwingFetch(input: RequestInfo, init?: RequestInitWithAu
             console.warn(response);
             message = "Błąd wykonania na serwerze!";
         }
-        throw { ...response, message };
+        throw { status: response.status, statusText: response.statusText, message };
     }
 }

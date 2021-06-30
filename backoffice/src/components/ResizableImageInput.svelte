@@ -1,0 +1,49 @@
+<script lang="ts">
+  import { Button, Field, Input } from 'svelma';
+  import ImageResizeModal from './ImageResizeModal/ImageResizeModal.svelte';
+
+  export let imageData = '';
+  export let label: string;
+  export let message: string = null;
+  export let revalidateForm: () => any = null;
+  export let width: number;
+  export let height: number;
+
+  let file = null;
+  let resizeModalVisible = false;
+  let forceRefresh = false;
+
+  interface HtmlInputEvent extends Event {
+    target: HTMLInputElement & EventTarget;
+  }
+
+  async function onFileChange(e: HtmlInputEvent) {
+    if (!e.target) return;
+    file = e.target.files[0];
+    openResizeModal();
+    e.target.value = null;
+  }
+
+  function openResizeModal() {
+    resizeModalVisible = true;
+    forceRefresh = true;
+  }
+</script>
+
+<Field {label} {message}>
+  <div style="display: flex">
+    <Input type="file" on:input={onFileChange} />
+    <Button on:click={openResizeModal} disabled={!file}>Przytnij</Button>
+  </div>
+</Field>
+<ImageResizeModal
+  {file}
+  bind:forceRefresh
+  setImageData={(data) => {
+    imageData = data;
+    revalidateForm && revalidateForm();
+  }}
+  bind:modalVisible={resizeModalVisible}
+  defaultWidth={width}
+  defaultHeight={height}
+/>

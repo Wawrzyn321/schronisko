@@ -1,4 +1,4 @@
-import { UserDto, validateCreate, toUser, toUserUpdate, validateUpdate } from '../UserDto';
+import { UserDto, validateCreate, toUser, toUserUpdate, validateUpdate } from '../common/UserDto';
 import { UserViewModel } from './../auth/auth.service';
 import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma-connect/prisma.service';

@@ -24,9 +24,9 @@ export const routes = {
     '/pages/:id': unauthorizedWrapper(Page),
     '/news': unauthorizedWrapper(News),
     '/news/:id': unauthorizedWrapper(SingleNews),
-    '/new-news': unauthorizedWrapper(CreateNews),
+    '/news-add': unauthorizedWrapper(CreateNews),
     '/animals': unauthorizedWrapper(Animals),
     '/animals/:id': unauthorizedWrapper(Animal),
-    '/add-animal': unauthorizedWrapper(CreateAnimal),
+    '/animals-add': unauthorizedWrapper(CreateAnimal),
     '/profile': unauthorizedWrapper(Profile),
 };

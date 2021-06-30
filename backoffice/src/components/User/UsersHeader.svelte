@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Button } from 'svelma';
-  import type { UserViewModel } from '../../prisma-types/viewModels/UserViewModel';
+  import type { UserViewModel } from '../../common/UserViewModel';
   import AddUserModal from './AddUserModal.svelte';
 
   export let searchPhrase = '';
@@ -12,8 +12,8 @@
 
 <header>
   <h1>Użytkownicy</h1>
-  <div>
-    <input placeholder="Szukaj..." bind:value={searchPhrase} />
+  <div style="display: flex">
+    <input placeholder="Szukaj..." style="margin-right: 10px" bind:value={searchPhrase} />
     <Button type="is-primary" on:click={showCreateModal}><strong>+</strong></Button>
   </div>
 </header>

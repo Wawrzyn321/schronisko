@@ -5,9 +5,11 @@
   import type { NewsListElement } from '../../services/NewsService';
   import DeleteNewsModal from './DeleteNewsModal.svelte';
   import DateFromTimestamp from '../DateFromTimestamp.svelte';
+  import Loader from '../Loader.svelte';
 
   export let news: NewsListElement[];
   export let onNewsDeleted: (news: NewsListElement) => any;
+  export let loading: boolean;
 
   let deleteModalVisible = false;
   let selectedNews: NewsListElement = null;
@@ -57,6 +59,9 @@
     </tr>
   {/each}
 </table>
+{#if loading}
+  <Loader />
+{/if}
 <DeleteNewsModal
   bind:modalVisible={deleteModalVisible}
   {onNewsDeleted}
