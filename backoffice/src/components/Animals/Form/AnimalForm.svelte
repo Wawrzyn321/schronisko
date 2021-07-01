@@ -11,6 +11,7 @@
   import ImagePreview from '../../News/ImagePreview.svelte';
   import ResizableImageInput from '../../ResizableImageInput.svelte';
   import type { AnimalImageParams } from '../../../services/AnimalImagesService';
+import { onMount } from 'svelte';
 
   export let animal: AnimalData;
   export let images: AnimalImageParams[];
@@ -18,6 +19,7 @@
   export let setFormValid: (valid: boolean) => any;
 
   let form: HTMLFormElement;
+  let tabs: any;
 
   function revertImage() {
     animal.imageData = null;
@@ -37,10 +39,12 @@
         imagesValid
     );
   }
+
+  onMount(() => tabs.setActive(0));
 </script>
 
 <form bind:this={form} on:input={revalidateForm} on:change={revalidateForm}>
-  <Tabs>
+  <Tabs bind:this={tabs}>
     <Tab label="Dane">
       <div id="first-row">
         <Field label="Imię">

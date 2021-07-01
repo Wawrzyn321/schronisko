@@ -1,6 +1,6 @@
 import { STATIC_FILES_PATH } from './../../app.module';
 import { promises as fsp } from "fs"
-const sharp = require('sharp');
+const sharp: any = require('sharp');
 
 type ResizingPresets = 'News' | 'Animal Gallery' | 'Animal Miniature';
 

@@ -19,6 +19,11 @@
       path: '/users',
     },
     {
+      name: 'Logi',
+      requiredPermission: Permission.USER,
+      path: '/logs',
+    },
+    {
       name: 'Strony',
       requiredPermission: Permission.PAGE,
       path: '/pages',

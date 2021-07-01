@@ -7,7 +7,7 @@
   import DateFromTimestamp from '../../DateFromTimestamp.svelte';
   import AnimalsListHeader from './AnimalsListHeader.svelte';
   import Loader from './../../../components/Loader.svelte';
-  import type { Animal } from '.prisma/client';
+  import { Animal, VirtualCaretakerType } from '.prisma/client';
   import {
     animalGendersMap,
     animalLocationsMap,
@@ -71,6 +71,9 @@
       {#if columnParams.showVirtualCaretaker}
         <td>
           {virtualCaretakerTypesMap[animal.virtualCaretakerType]}
+          {#if animal.virtualCaretakerType === VirtualCaretakerType.Znalazl}
+            ({animal.virtualCaretakerName})
+          {/if}
         </td>
       {/if}
       {#if columnParams.showTimestamp}

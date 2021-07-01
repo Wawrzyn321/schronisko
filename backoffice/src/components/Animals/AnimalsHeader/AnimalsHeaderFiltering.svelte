@@ -7,7 +7,7 @@
   export let params: AnimalColumnParams;
 
   const dataRows = [
-    { caption: 'Zdjęcie', property: 'showImage' },
+    { caption: 'Miniaturka', property: 'showImage' },
     { caption: 'Opis', property: 'showDescription' },
     { caption: 'Płeć', property: 'showGender' },
     { caption: 'Miejsce', property: 'showLocation' },

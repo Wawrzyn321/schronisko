@@ -21,7 +21,7 @@
 
 <tr>
   {#if columnParams.showImage}
-    <th>Zdjęcie</th>
+    <th>Miniaturka</th>
   {/if}
   <th>
     <div style="display: flex">

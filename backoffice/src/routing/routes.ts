@@ -1,6 +1,8 @@
 import Login from '../views/Login.svelte';
 
 import Users from '../views/Users.svelte';
+import Logs from '../views/Logs.svelte';
+
 import Profile from '../views/Profile.svelte';
 
 import Pages from '../views/Pages.svelte';
@@ -20,6 +22,7 @@ export const routes = {
     '/': rootWrapper(Profile),
     '/login': Login,
     '/users': unauthorizedWrapper(Users),
+    '/logs': unauthorizedWrapper(Logs),
     '/pages': unauthorizedWrapper(Pages),
     '/pages/:id': unauthorizedWrapper(Page),
     '/news': unauthorizedWrapper(News),
