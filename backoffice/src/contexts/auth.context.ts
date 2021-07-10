@@ -11,6 +11,7 @@ interface Auth {
 }
 
 const AUTH_STORAGE_KEY = 'AUTH_STORAGE';
+export const LOGOUT_NOTIFY_PARAMS = 'LOGOUT_NOTIFY_PARAMS';
 
 const savedValue: Auth | null = JSON.parse(localStorage.getItem(AUTH_STORAGE_KEY) || 'null');
 const value = writable<Auth>(savedValue);
@@ -30,10 +31,10 @@ export const logout = (notifyParams?: NotifyParams) => {
     value.set(null);
     localStorage.setItem(AUTH_STORAGE_KEY, null);
     if (notifyParams) {
-        push('/login?reason=' + JSON.stringify(notifyParams));
+        localStorage.setItem(LOGOUT_NOTIFY_PARAMS, JSON.stringify(notifyParams));
+        location.reload();
     } else {
         push('/login');
-        location.reload();
     }
 }
 
@@ -52,10 +53,9 @@ export const checkForTokenExpiration = (token: string) => {
     const diff = decoded.exp * 1000 - Date.now();
     const seconds = diff / 1000;
 
-    if (seconds < 0) {
+    if (seconds < 0 || true) {
         logout({ type: 'is-info', message: 'Wylogowano z powodu zakończenia sesji.' });
-        location.reload();
-        return false;
+        return  ;
     }
     if (seconds < WARNING_TIME) {
         notify({

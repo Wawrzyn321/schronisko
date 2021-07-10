@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { isLoggedIn, logIn } from '../contexts/auth.context';
+  import { logIn, LOGOUT_NOTIFY_PARAMS } from '../contexts/auth.context';
   import { push, querystring } from 'svelte-spa-router';
 
   import { Field, Input, Button, Notification } from 'svelma';
@@ -25,24 +25,30 @@
     }
   }
 
-  function tryGetLogoutReason(queryString: string): NotifyParams | null {
+  // function tryGetLogoutReason(queryString: string): NotifyParams | null {
+  //   try {
+  //     const reasonStr = new URLSearchParams(queryString).get('reason');
+  //     console.log(reasonStr)
+  //     return JSON.parse(reasonStr);
+  //   } catch (_) {
+  //     return null;
+  //   }
+  // }
+
+  function tryGetLogoutReason():NotifyParams | null {
     try {
-      const reasonStr = new URLSearchParams(queryString).get('reason');
+      const reasonStr = localStorage.getItem(LOGOUT_NOTIFY_PARAMS);
+      localStorage.removeItem(LOGOUT_NOTIFY_PARAMS);
       return JSON.parse(reasonStr);
     } catch (_) {
       return null;
     }
   }
 
-  if (isLoggedIn()) {
-    push('/profile');
-  }
-
   onMount(() => {
-    const logoutReason = tryGetLogoutReason(get(querystring));
+    const logoutReason = tryGetLogoutReason(/*get(querystring)*/);
     if (logoutReason) {
       notify(logoutReason);
-      push('/login');
     }
   });
 </script>

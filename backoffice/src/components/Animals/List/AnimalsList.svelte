@@ -19,6 +19,7 @@
   import type { AnimalFilteringParams } from './../AnimalsHeader/AnimalFilteringParams';
   import type { AnimalSortingParams } from './../AnimalsHeader/AnimalSortingParams';
   import { API_URL } from '../../../services/config';
+  import EmptyListMessage from '../../EmptyListMessage.svelte';
 
   export let animals: Animal[];
   export let loading: boolean;
@@ -104,6 +105,9 @@
     </tr>
   {/each}
 </table>
+{#if !loading && !animals.length}
+  <EmptyListMessage entityType="zwierząt" />
+{/if}
 {#if loading}
   <Loader />
 {/if}

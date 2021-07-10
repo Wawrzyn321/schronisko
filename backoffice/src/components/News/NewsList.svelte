@@ -6,6 +6,7 @@
   import DeleteNewsModal from './DeleteNewsModal.svelte';
   import DateFromTimestamp from '../DateFromTimestamp.svelte';
   import Loader from '../Loader.svelte';
+import EmptyListMessage from '../EmptyListMessage.svelte';
 
   export let news: NewsListElement[];
   export let onNewsDeleted: (news: NewsListElement) => any;
@@ -59,6 +60,9 @@
     </tr>
   {/each}
 </table>
+{#if !loading && !news.length}
+  <EmptyListMessage entityType="newsów" />
+{/if}
 {#if loading}
   <Loader />
 {/if}

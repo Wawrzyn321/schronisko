@@ -16,11 +16,11 @@ import Animals from '../views/Animals.svelte';
 import Animal from '../views/Animal.svelte';
 import CreateAnimal from '../views/CreateAnimal.svelte';
 
-import { unauthorizedWrapper, rootWrapper } from './helpers';
+import { unauthorizedWrapper, loginWrapper, rootWrapper } from './helpers';
 
 export const routes = {
     '/': rootWrapper(Profile),
-    '/login': Login,
+    '/login': loginWrapper(Login),
     '/users': unauthorizedWrapper(Users),
     '/logs': unauthorizedWrapper(Logs),
     '/pages': unauthorizedWrapper(Pages),

@@ -1,6 +1,5 @@
 import { throwingFetch } from "./throwingFetch";
 import { API_URL } from './config';
-import type { AnimalImage } from '.prisma/client';
 
 const baseUrl = `${API_URL}/api/animal-images`
 

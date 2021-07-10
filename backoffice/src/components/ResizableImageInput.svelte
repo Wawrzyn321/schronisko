@@ -32,7 +32,7 @@
 
 <Field {label} {message}>
   <div style="display: flex">
-    <Input type="file" on:input={onFileChange} />
+    <Input type="file" accept="image/png, image/jpeg" on:input={onFileChange} />
     <Button on:click={openResizeModal} disabled={!file}>Przytnij</Button>
   </div>
 </Field>

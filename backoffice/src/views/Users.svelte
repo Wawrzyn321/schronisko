@@ -9,6 +9,7 @@
 
   let users: UserViewModel[] = [];
   let searchPhrase = '';
+  let loading = true;
 
   onMount(async () => {
     try {
@@ -18,6 +19,7 @@
         message: 'Błąd pobierania użytkowników: ' + e.message,
       });
     }
+    loading = false;
   });
 
   $: filteredUsers = users.filter(
@@ -48,5 +50,5 @@
 
 <main>
   <UsersHeader {onUserAdded} bind:searchPhrase />
-  <UsersList {onUserDeleted} {onUserEdited} users={filteredUsers} />
+  <UsersList {onUserDeleted} {loading} {onUserEdited} users={filteredUsers} />
 </main>

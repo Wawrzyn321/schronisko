@@ -9,10 +9,12 @@
   import ChangeUserPasswordModal from './ChangeUserPasswordModal.svelte';
   import ChangePasswordModal from './../ChangePasswordModal.svelte';
   import Loader from './../../components/Loader.svelte';
+import EmptyListMessage from '../EmptyListMessage.svelte';
 
   export let onUserDeleted: (u: UserViewModel) => void;
   export let onUserEdited: (u: UserViewModel) => void;
   export let users: UserViewModel[];
+  export let loading: boolean;
 
   let showActive = true;
 
@@ -84,7 +86,10 @@
     </tr>
   {/each}
 </table>
-{#if !users?.length}
+{#if !loading && !filteredUsers.length}
+<EmptyListMessage entityType="stron" />
+{/if}
+{#if loading}
   <Loader centered={true}/>
 {/if}
 <DeleteUserModal

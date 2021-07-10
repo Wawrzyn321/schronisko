@@ -7,6 +7,7 @@
   import { pageService } from '../services/PageService';
   import { notifyError } from '../contexts/notification.context';
   import Loader from './../components/Loader.svelte';
+  import EmptyListMessage from '../components/EmptyListMessage.svelte';
 
   let pages: PageListElement[] = [];
   let searchPhrase = '';
@@ -60,6 +61,9 @@
   </table>
   {#if loading}
     <Loader />
+  {/if}
+  {#if !loading && !filteredPages.length}
+    <EmptyListMessage entityType="stron" />
   {/if}
 </main>
 

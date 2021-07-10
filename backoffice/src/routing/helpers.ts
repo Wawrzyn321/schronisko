@@ -18,6 +18,21 @@ export const unauthorizedWrapper = (component: typeof SvelteComponent) =>
         ],
     });
 
+export const loginWrapper = (component: typeof SvelteComponent) =>
+    wrap({
+        component,
+        conditions: [
+            () => {
+                if (isLoggedIn()) {
+                    push('/profile');
+                    return false;
+                }
+                return true;
+            },
+        ],
+    });
+
+
 export const rootWrapper = (component: typeof SvelteComponent) =>
     wrap({
         component, // ignored anyway
