@@ -88,7 +88,7 @@
   {#if columnParams.showVirtualCaretaker}
     <th>Opiekun wirtualny</th>
   {/if}
-  {#if columnParams.showTimestamp}
+  {#if columnParams.showAddedDate}
     <th>
       <div style="display: flex">
         Data dodania <SortControl
@@ -96,6 +96,9 @@
         />
       </div>
     </th>
+  {/if}
+  {#if columnParams.showNote}
+    <th class="g-table-ellipsis">Notatka</th>
   {/if}
   <th class="is-public-column">
     <input type="checkbox" bind:checked={filteringParams.showOnlyPublic} />

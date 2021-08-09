@@ -18,7 +18,7 @@ export class PermissionsGuard implements CanActivate {
 
     try {
       const dbUser = await this.prismaService.user.findUnique({ where: { id: user.id } });
-      if (!dbUser?.isActive) {
+      if (!dbUser || !dbUser.isActive) {
         throw new ForbiddenException();
       }
     } catch (e: unknown) {

@@ -1,4 +1,4 @@
-import { AnimalImagesService } from './animal-images.service';
+import { AnimalImagesService, UpsertParams } from './animal-images.service';
 import { RequirePermission } from '../auth/Permissions.decorator';
 import { Controller, Get, UseGuards, Param, Patch, Body, Post, Delete, Put } from '@nestjs/common';
 import { Permission } from '@prisma/client';
@@ -24,14 +24,14 @@ export class AnimalImagesController {
     @RequirePermission(Permission.ANIMAL)
     @Put(':id')
     @UseGuards(PermissionsGuard)
-    upsertImages(@Param("id") animalId: string, @Body() images: AnimalImageParams[]) {
-        return this.animalImagesService.upsert(animalId, images);
+    upsertImages(@Param("id") animalId: string, @Body() images: UpsertParams[]) {
+        return this.animalImagesService.upsert(decodeURIComponent(animalId), images);
     }
 
     @RequirePermission(Permission.ANIMAL)
     @Delete(':id')
     @UseGuards(PermissionsGuard)
     deleteImages(@Param("id") animalId: string) {
-        return this.animalImagesService.delete(animalId);
+        return this.animalImagesService.deleteByAnimal(decodeURIComponent(animalId));
     }
 }

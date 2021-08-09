@@ -16,7 +16,7 @@ export class AnimalImagesService {
     }
 
     async upsert(animalId: string, images: AnimalImageParams[]): Promise<AnimalImageParams[]> {
-        return await throwingFetch(`${baseUrl}/${animalId}`, {
+        return await throwingFetch(`${baseUrl}/${encodeURIComponent(animalId)}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(images),
@@ -24,7 +24,7 @@ export class AnimalImagesService {
     }
 
     async delete(animalId: string): Promise<void> {
-        return await throwingFetch(`${baseUrl}/${animalId}`, {
+        return await throwingFetch(`${baseUrl}/${encodeURIComponent(animalId)}`, {
             method: 'DELETE',
         });
     }

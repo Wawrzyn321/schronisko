@@ -20,8 +20,8 @@ export class UsersController {
     @RequirePermission(Permission.USER)
     @Post()
     @UseGuards(PermissionsGuard)
-    createUser(@Body() body: UserDto) {
-        return this.usersService.create(body);
+    createUser(@Body() body: UserDto, @Request() req: { user: LoggedInUser }) {
+        return this.usersService.create(req.user, body);
     }
 
     @Patch(':id')
@@ -32,8 +32,8 @@ export class UsersController {
     @RequirePermission(Permission.USER)
     @Delete(':id')
     @UseGuards(PermissionsGuard)
-    deleteUser(@Param("id") userId: string) {
-        return this.usersService.delete(parseInt(userId));
+    deleteUser(@Param("id") userId: string, @Request() req: { user: LoggedInUser }) {
+        return this.usersService.delete(req.user, parseInt(userId));
     }
 
     @RequirePermission(Permission.USER)

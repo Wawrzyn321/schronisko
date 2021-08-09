@@ -12,10 +12,11 @@ import { PagesModule } from './domain/pages/pages.module';
 import { NewsModule } from './domain/news/news.module';
 import { AnimalsModule } from './domain/animals/animals.module';
 import { AnimalImagesModule } from './domain/animal-images/animal-images.module';
+import { LogsModule } from './domain/logs/logs.module';
 
 export const STATIC_FILES_PATH = 'static';
 
-const domainModules = [AuthModule, UsersModule, PagesModule, NewsModule, AnimalsModule, AnimalImagesModule];
+const domainModules = [AuthModule, UsersModule, PagesModule, NewsModule, AnimalsModule, AnimalImagesModule, LogsModule];
 
 const ServeStatic = ServeStaticModule.forRoot({
   rootPath: join(__dirname, '..', STATIC_FILES_PATH),

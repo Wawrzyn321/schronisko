@@ -35,7 +35,7 @@ enum AnimalLocation {
   UOsobyPrywatnej
 }
 
-enum AnimalCategory {x
+enum AnimalCategory {
   PilniePotrzebuja
   Weterani
   DoAdopcji
@@ -57,57 +57,58 @@ model User {
   firstName    String
   lastName     String
   isActive     Boolean           @default(true)
-  sessions     Session[]
+  // sessions     Session[]
   permissions  UserPermissions[]
 }
 
 model Page {
   id      String @id @default(uuid())
-  title    String @unique
+  title   String @unique
   content String
 }
 
 model News {
-  id                  String    @id @default(uuid())
-  title               String
-  description         String
-  content             String
-  isPublished         Boolean   @default(false)
-  createdAt           DateTime  @default(now())
-  imageName           String
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  content     String
+  isPublished Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  imageName   String
 }
 
 model Animal {
-  id                    String    @id
-  name                  String
-  type                  AnimalType
-  gender                AnimalGender
-  description           String
-  category              AnimalCategory
-  location              AnimalLocation?
-  virtualCaretakerType  VirtualCaretakerType
-  virtualCaretakerName  String?
-  isPublic              Boolean
-  images                AnimalImage[]
-  addedDate             DateTime  @default(now())
-  imageName             String
+  id                   String               @id
+  name                 String
+  type                 AnimalType
+  gender               AnimalGender
+  description          String
+  category             AnimalCategory
+  location             AnimalLocation?
+  virtualCaretakerType VirtualCaretakerType
+  virtualCaretakerName String?
+  isPublic             Boolean
+  images               AnimalImage[]
+  addedDate            DateTime             @default(now())
+  imageName            String
+  note                 String?
 }
 
 model AnimalImage {
-  id            String     @id @default(uuid())
-  order         Int
-  animalId      String
-  animal        Animal     @relation(fields: [animalId], references: [id])
-  imageName     String
-  visible       Boolean
+  id        String  @id @default(uuid())
+  order     Int
+  animalId  String
+  animal    Animal  @relation(fields: [animalId], references: [id])
+  imageName String
+  visible   Boolean
 }
 
-model Session {
-  id         String   @id @default(uuid())
-  userId     Int
-  expiryTime DateTime
-  user       User     @relation(fields: [userId], references: [id])
-}
+// model Session {
+//   id         String   @id @default(uuid())
+//   userId     Int
+//   expiryTime DateTime
+//   user       User     @relation(fields: [userId], references: [id])
+// }
 
 model UserPermissions {
   userId     Int
@@ -116,4 +117,13 @@ model UserPermissions {
 
   @@id([permission, userId])
   @@unique([userId, permission])
+}
+
+model Logs {
+  id          String     @id @default(uuid())
+  time        DateTime
+  userId      Int
+  login       String
+  message String
+  permission  Permission
 }

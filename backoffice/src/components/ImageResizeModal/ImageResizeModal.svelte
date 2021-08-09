@@ -14,6 +14,7 @@
 
   export let modalVisible: boolean;
   export let file: File;
+  export let title: string;
   export let setImageData: (image: string) => any;
   export let forceRefresh: boolean;
 
@@ -147,7 +148,7 @@
 
 <Modal
   bind:isOpen={modalVisible}
-  title="Dodaj tło newsa"
+  {title}
   confirmText="Dodaj"
   onConfirm={apply}
   id="resize-modal-wrapper"

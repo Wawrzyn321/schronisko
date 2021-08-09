@@ -5,6 +5,8 @@ import { AnimalImageParams } from './animal-images.controller';
 import { v4 as uuid } from 'uuid';
 import { AnimalImage } from '@prisma/client';
 
+export interface UpsertParams extends AnimalImageParams, AnimalImage {}
+
 @Injectable()
 export class AnimalImagesService {
   constructor(private prisma: PrismaService) { }
@@ -17,44 +19,62 @@ export class AnimalImagesService {
     return await this.prisma.animalImage.findMany({ where: { animalId } });
   }
 
-  async upsert(animalId: string, images: AnimalImageParams[]): Promise<AnimalImageParams[]> {
+  async upsert(animalId: string, images: UpsertParams[]): Promise<AnimalImageParams[]> {
     if (images.length >= 8) {
       // po prostu 8 i tyle
       throw new BadRequestException(images.length, "Maksymalnie można wstawić 8 obrazów.");
     }
 
-    await this.delete(animalId);
+    const imagesAlready = (await this.get(animalId)).map(image => ({ image, handled: false }))
 
     for (const image of images) {
-      const imageName = `${uuid()}.png`;
-      await saveImage(imageName, image.data, 'Animal Gallery');
-      const { data, ...imageWithNoData } = image;
-      console.log({
-        ...imageWithNoData,
-        imageName,
-        animalId,
-      })
-      await this.prisma.animalImage.create({
-        data: {
-          ...imageWithNoData,
-          imageName,
-          animalId,
-        }
-      })
+      if (image.imageName) {
+        const img = imagesAlready.find(i => i.image.imageName == image.imageName);
+        if (!img) throw new BadRequestException("");
+        img.handled = true;
+      } else {
+        const imageName = `${uuid()}.png`;
+        await saveImage(imageName, image.data, 'Animal Gallery');
+        const { data, ...imageWithNoData } = image;
+
+        await this.prisma.animalImage.create({
+          data: {
+            ...imageWithNoData,
+            imageName,
+            animalId,
+          }
+        })
+      }
+    }
+
+    for (const { image, handled } of imagesAlready) {
+      if (!handled) {
+        await this.deleteImage(image.id);
+      }
     }
 
     return images;
   }
 
-  async delete(animalId: string): Promise<void> {
+  async deleteByAnimal(animalId: string): Promise<void> {
     const images = await this.get(animalId);
     for (const image of images) {
       try {
         await deleteImage(image.imageName);
-      } catch (e) {
+      } catch (e: unknown) {
         console.warn(e);
       }
     }
     await this.prisma.animalImage.deleteMany({ where: { animalId } })
+  }
+
+  async deleteImage(id: string): Promise<void> {
+    const image = await this.prisma.animalImage.findFirst({ where: { id } })
+    try {
+      await deleteImage(image.imageName);
+    } catch (e: unknown) {
+      console.warn(e);
+    }
+    await this.prisma.animalImage.delete({ where: { id } })
   }
 }

@@ -19,10 +19,10 @@
 
   onMount(async () => {
     try {
-      animal = await animalsService.get(params.id);
+      const id = encodeURIComponent(params.id)
+      animal = await animalsService.get(id);
       animalData = animal as AnimalData;
-      images = await animalImagesService.get(params.id);
-      console.log(images);
+      images = await animalImagesService.get(id);
     } catch (e) {
       notifyError({
         message: 'Nie można pobrać danych zwierzęcia: ' + e.message,

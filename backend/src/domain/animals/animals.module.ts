@@ -1,11 +1,11 @@
 import { PrismaService } from '../../prisma-connect/prisma.service';
 import { Module } from '@nestjs/common';
 import { AnimalsService } from './animals.service';
-import { BcryptService } from 'src/domain/auth/bcrypt/bcrypt.service';
 import { AnimalsController } from './animals.controller';
+import { LogsService } from '../logs/logs.service';
 
 @Module({
-  providers: [AnimalsService, PrismaService, BcryptService],
+  providers: [AnimalsService, PrismaService, LogsService],
   exports: [AnimalsService],
   controllers: [AnimalsController],
 })

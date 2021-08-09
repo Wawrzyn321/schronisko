@@ -13,7 +13,8 @@
     { caption: 'Miejsce', property: 'showLocation' },
     { caption: 'Kategoria', property: 'showCategory' },
     { caption: 'Opiekun wirtualny', property: 'showVirtualCaretaker' },
-    { caption: 'Data dodania', property: 'showTimestamp' },
+    { caption: 'Data dodania', property: 'showAddedDate' },
+    { caption: 'Notatka', property: 'showNote' },
   ];
 </script>
 

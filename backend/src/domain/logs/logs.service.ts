@@ -1,0 +1,31 @@
+import { LoggedInUser } from './../auth/types';
+import { Injectable } from '@nestjs/common';
+import { Logs, Permission } from '@prisma/client';
+import { PrismaService } from 'src/prisma-connect/prisma.service';
+
+type LogData = {
+  user: LoggedInUser;
+  permission: Permission;
+  message: string;
+}
+
+@Injectable()
+export class LogsService {
+  constructor(private prisma: PrismaService) { }
+
+  async get(): Promise<Logs[]> {
+    return await this.prisma.logs.findMany();
+  }
+
+  async log({ user, permission, message }: LogData) {
+    await this.prisma.logs.create({
+      data: {
+        userId: user.id,
+        login: user.login,
+        permission,
+        message: user.login + " " + message,
+        time: new Date()
+      }
+    })
+  }
+}

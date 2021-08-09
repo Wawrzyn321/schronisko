@@ -1,7 +1,8 @@
+import { LoggedInUser } from './../auth/types';
 import { NewsModifyParams, NewsCreateInput, NewsUpdateInput } from './News';
 import { NewsService } from './news.service';
 import { RequirePermission } from '../auth/Permissions.decorator';
-import { Controller, Get, UseGuards, Patch, Param, Body, Delete, Post, BadRequestException } from '@nestjs/common';
+import { Controller, Get, UseGuards, Patch, Param, Body, Delete, Post, BadRequestException, Request } from '@nestjs/common';
 import { Permission } from '@prisma/client';
 import { PermissionsGuard } from '../auth/Permissions.guard';
 
@@ -26,24 +27,24 @@ export class NewsController {
     @RequirePermission(Permission.NEWS)
     @Post()
     @UseGuards(PermissionsGuard)
-    createNews(@Body() body: NewsModifyParams<NewsCreateInput>) {
-        return this.newsService.create(body);
+    createNews(@Body() body: NewsModifyParams<NewsCreateInput>, @Request() req: { user: LoggedInUser }) {
+        return this.newsService.create(req.user, body);
     }
 
     @RequirePermission(Permission.NEWS)
     @Patch(':id')
     @UseGuards(PermissionsGuard)
-    updateNews(@Param("id") newsId: string, @Body() body: NewsModifyParams<NewsUpdateInput>) {
+    updateNews(@Param("id") newsId: string, @Body() body: NewsModifyParams<NewsUpdateInput>, @Request() req: { user: LoggedInUser }) {
         if (newsId !== body?.news?.id) {
             throw new BadRequestException();
         }
-        return this.newsService.update(newsId, body);
+        return this.newsService.update(req.user, newsId, body);
     }
 
     @RequirePermission(Permission.NEWS)
     @Delete(':id')
     @UseGuards(PermissionsGuard)
-    deleteNews(@Param("id") newsId: string) {
-        return this.newsService.delete(newsId);
+    deleteNews(@Param("id") newsId: string, @Request() req: { user: LoggedInUser }) {
+        return this.newsService.delete(req.user, newsId);
     }
 }

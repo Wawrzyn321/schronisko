@@ -2,7 +2,7 @@ import type { Permission } from '@prisma/client';
 import type { UserCreateParams } from './../components/User/UserCreateParams';
 import { throwingFetch } from "./throwingFetch";
 import { API_URL } from './config';
-import type { UserViewModel } from '../common/UserViewModel
+import type { UserViewModel } from '../common/UserViewModel';
 import { setUser } from "../contexts/auth.context";
 
 const baseUrl = `${API_URL}/api/users`;

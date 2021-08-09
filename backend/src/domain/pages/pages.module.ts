@@ -1,11 +1,11 @@
 import { PrismaService } from '../../prisma-connect/prisma.service';
 import { Module } from '@nestjs/common';
 import { PagesService } from './pages.service';
-import { BcryptService } from 'src/domain/auth/bcrypt/bcrypt.service';
 import { PagesController } from './pages.controller';
+import { LogsService } from '../logs/logs.service';
 
 @Module({
-  providers: [PagesService, PrismaService, BcryptService],
+  providers: [PagesService, PrismaService, LogsService],
   exports: [PagesService],
   controllers: [PagesController],
 })

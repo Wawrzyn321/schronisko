@@ -37,6 +37,7 @@
   </div>
 </Field>
 <ImageResizeModal
+  title={label}
   {file}
   bind:forceRefresh
   setImageData={(data) => {

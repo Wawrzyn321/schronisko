@@ -53,7 +53,7 @@ export const checkForTokenExpiration = (token: string) => {
     const diff = decoded.exp * 1000 - Date.now();
     const seconds = diff / 1000;
 
-    if (seconds < 0 || true) {
+    if (seconds < 0) {
         logout({ type: 'is-info', message: 'Wylogowano z powodu zakończenia sesji.' });
         return  ;
     }

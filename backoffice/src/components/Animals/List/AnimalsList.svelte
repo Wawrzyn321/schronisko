@@ -42,7 +42,7 @@
         </td>
       {/if}
       <td>
-        <a href={`/#/animals/${animal.id}`}>
+        <a href={`/#/animals/${encodeURIComponent(animal.id)}`}>
           {animal.name}
         </a>
       </td>
@@ -77,7 +77,12 @@
           {/if}
         </td>
       {/if}
-      {#if columnParams.showTimestamp}
+      {#if columnParams.showNote}
+        <td class="g-table-ellipsis">
+          {animal.note || "-"}
+        </td>
+      {/if}
+      {#if columnParams.showAddedDate}
         <td>
           <DateFromTimestamp timestamp={animal.addedDate} />
         </td>

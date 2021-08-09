@@ -1,0 +1,46 @@
+<script lang="ts">
+  import { FilterIcon } from 'svelte-feather-icons';
+  import { allPermissions } from '../../common/allPermissions';
+  import { permissionNames } from '../../common/PermissionsInfo';
+  import type { Permission } from '@prisma/client';
+  import Dropdown from '../Dropdown.svelte';
+
+  function updateFilter(permission: Permission) {
+    if (permissionFilter.includes(permission)) {
+      permissionFilter = permissionFilter.filter(
+        (p: Permission) => p !== permission
+      );
+    } else {
+      permissionFilter = [...permissionFilter, permission];
+    }
+  }
+
+  export let permissionFilter: Permission[];
+</script>
+
+<Dropdown>
+  <button slot="trigger" class="g-button-transparent">
+    <FilterIcon size="0.8x" />
+  </button>
+  <div slot="content" class="dropdown-content">
+    {#each allPermissions as permission}
+      <label>
+        <input
+          checked={permissionFilter.includes(permission)}
+          type="checkbox"
+          on:change={() => updateFilter(permission)}
+        />
+        {permissionNames[permission]}
+      </label>
+    {/each}
+  </div>
+</Dropdown>
+
+<style lang="scss">
+  .dropdown-content {
+    transform: translateX(-125px);
+    width: 160px;
+    padding: 10px;
+    z-index: 1000;
+  }
+</style>

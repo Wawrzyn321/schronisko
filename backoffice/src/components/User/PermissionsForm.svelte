@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { Permission } from '.prisma/client';
   import { Field } from 'svelma';
+import { allPermissions } from '../../common/allPermissions';
 
   import {
     permissionNames,
@@ -9,13 +10,6 @@
 
   export let permissions: Permission[] = [];
   export let updatePermissions: (p: Permission[]) => void;
-
-  const allPermissions: Permission[] = [
-    'USER',
-    'PAGE',
-    'NEWS',
-    'ANIMAL',
-  ];
 
   const switchPermission = (permission: Permission) => (e: any) => {
     if (e.target.checked) {

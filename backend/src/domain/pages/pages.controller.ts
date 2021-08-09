@@ -1,7 +1,8 @@
+import { LoggedInUser } from './../auth/types';
 import { Page } from './Page';
 import { PagesService } from './pages.service';
 import { RequirePermission } from '../auth/Permissions.decorator';
-import { Controller, Get, UseGuards, Param, Patch, Body } from '@nestjs/common';
+import { Controller, Get, UseGuards, Param, Patch, Body, Request } from '@nestjs/common';
 import { Permission } from '@prisma/client';
 import { PermissionsGuard } from '../auth/Permissions.guard';
 
@@ -26,7 +27,7 @@ export class PagesController {
     @RequirePermission(Permission.PAGE)
     @Patch(':id')
     @UseGuards(PermissionsGuard)
-    updatePage(@Param("id") pageId: string, @Body() body: Page) {
-        return this.pagesService.update(pageId, body);
+    updatePage(@Param("id") pageId: string, @Body() body: Page, @Request() req: { user: LoggedInUser }) {
+        return this.pagesService.update(req.user, pageId, body);
     }
 }

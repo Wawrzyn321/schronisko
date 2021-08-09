@@ -19,6 +19,7 @@ export interface AnimalData {
     isPublic: boolean
     imageData?: string
     imageName?: string
+    note?: string;
 }
 
 export class AnimalsService {
@@ -31,7 +32,7 @@ export class AnimalsService {
     }
 
     async create(animal: AnimalData, images: AnimalImageParams[]): Promise<Animal> {
-        const createdAnimal = await throwingFetch(baseUrl, {
+        const createdAnimal: Animal = await throwingFetch(baseUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(animal),
@@ -41,7 +42,7 @@ export class AnimalsService {
     }
 
     async update(animal: AnimalData, images: AnimalImageParams[]): Promise<Animal> {
-        const updatedAnimal = await throwingFetch(`${baseUrl}/${animal.id}`, {
+        const updatedAnimal: Animal = await throwingFetch(`${baseUrl}/${encodeURIComponent(animal.id)}`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(animal),
@@ -50,10 +51,6 @@ export class AnimalsService {
         return updatedAnimal;
     }
 
-    // async updateImages(id: string, images: AnimalImageParams[]): Promise<AnimalImageParams[]> {
-    //     return await animalImagesService.upsert(id, images);
-    // }
-
     async delete(id: string): Promise<Animal> {
         try {
             await animalImagesService.delete(id);
@@ -61,7 +58,7 @@ export class AnimalsService {
             console.warn(e);
             throw Error("Nie można usunąć zdjęć zwierzęcia.");
         }
-        return await throwingFetch(`${baseUrl}/${id}`, {
+        return await throwingFetch(`${baseUrl}/${(encodeURIComponent(id))}`, {
             method: 'DELETE',
         });
     }
