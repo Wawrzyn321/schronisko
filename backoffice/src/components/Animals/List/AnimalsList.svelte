@@ -4,9 +4,9 @@
   import { Edit2Icon, Trash2Icon } from 'svelte-feather-icons';
 
   import DeleteAnimalModal from './../DeleteAnimalModal.svelte';
-  import DateFromTimestamp from '../../DateFromTimestamp.svelte';
+  import DateFromTimestamp from '../../shared/DateFromTimestamp.svelte';
   import AnimalsListHeader from './AnimalsListHeader.svelte';
-  import Loader from './../../../components/Loader.svelte';
+  import Loader from '../../shared/Loader.svelte';
   import { Animal, VirtualCaretakerType } from '.prisma/client';
   import {
     animalGendersMap,
@@ -19,7 +19,7 @@
   import type { AnimalFilteringParams } from './../AnimalsHeader/AnimalFilteringParams';
   import type { AnimalSortingParams } from './../AnimalsHeader/AnimalSortingParams';
   import { API_URL } from '../../../services/config';
-  import EmptyListMessage from '../../EmptyListMessage.svelte';
+  import EmptyListMessage from '../../shared/EmptyListMessage.svelte';
 
   export let animals: Animal[];
   export let loading: boolean;
@@ -110,11 +110,11 @@
     </tr>
   {/each}
 </table>
-{#if !loading && !animals.length}
-  <EmptyListMessage entityType="zwierząt" />
-{/if}
 {#if loading}
   <Loader />
+{/if}
+{#if !loading && !animals.length}
+  <EmptyListMessage entityType="zwierząt" />
 {/if}
 
 <DeleteAnimalModal

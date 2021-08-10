@@ -2,7 +2,7 @@ import { LoggedInUser } from './../auth/types';
 import { NewsModifyParams, NewsCreateInput, NewsUpdateInput } from './News';
 import { NewsService } from './news.service';
 import { RequirePermission } from '../auth/Permissions.decorator';
-import { Controller, Get, UseGuards, Patch, Param, Body, Delete, Post, BadRequestException, Request } from '@nestjs/common';
+import { Controller, Get, UseGuards, Patch, Param, Body, Delete, Post, BadRequestException, Request, Query } from '@nestjs/common';
 import { Permission } from '@prisma/client';
 import { PermissionsGuard } from '../auth/Permissions.guard';
 
@@ -13,8 +13,9 @@ export class NewsController {
     @RequirePermission(Permission.NEWS)
     @Get()
     @UseGuards(PermissionsGuard)
-    getNews() {
-        return this.newsService.getAll();
+    getNews(@Query() query) {
+        const takeTop = parseInt(query.takeTop) || undefined;
+        return this.newsService.getAll(takeTop);
     }
 
     @RequirePermission(Permission.NEWS)

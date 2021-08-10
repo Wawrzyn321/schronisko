@@ -6,18 +6,24 @@
   import type { PageListElement } from '../services/PageService';
   import { pageService } from '../services/PageService';
   import { notifyError } from '../contexts/notification.context';
-  import Loader from './../components/Loader.svelte';
-  import EmptyListMessage from '../components/EmptyListMessage.svelte';
+  import Loader from '../components/shared/Loader.svelte';
+  import EmptyListMessage from '../components/shared/EmptyListMessage.svelte';
+  import Pagination from '../components/shared/Pagination/Pagination.svelte';
+  import { paginate } from '../components/shared/Pagination/pagination';
 
   let pages: PageListElement[] = [];
   let searchPhrase = '';
   let loading = false;
 
+  let currentPage = 0;
+  let pageSize = 10;
+
   onMount(async () => {
     loading = true;
     try {
-      pages = await pageService.getAll();
+      pages = await pageService.getInitial();
       loading = false;
+      pages = await pageService.getAll();
     } catch (e) {
       notifyError({ message: 'Nie można pobrać stron: ' + e.message });
     }
@@ -28,6 +34,8 @@
       !searchPhrase ||
       p.title.toLowerCase().includes(searchPhrase.toLowerCase())
   );
+
+  $: paginatedPages = paginate(filteredPages, pageSize, currentPage);
 </script>
 
 <main>
@@ -46,7 +54,7 @@
       <th>Tytuł</th>
       <th class="g-actions-header" />
     </tr>
-    {#each filteredPages as page}
+    {#each paginatedPages as page}
       <tr>
         <td>
           <a href={`/#/pages/${page.id}`}>{page.title}</a>
@@ -64,6 +72,13 @@
   {/if}
   {#if !loading && !filteredPages.length}
     <EmptyListMessage entityType="stron" />
+  {/if}
+  {#if !loading && pages.length}
+    <Pagination
+      bind:pageSize
+      itemsCount={filteredPages.length}
+      bind:currentPage
+    />
   {/if}
 </main>
 

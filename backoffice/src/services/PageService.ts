@@ -13,6 +13,10 @@ export interface Page extends PageListElement {
 const baseUrl = `${API_URL}/api/pages`
 
 export class PageService {
+    async getInitial(): Promise<PageListElement[]> {
+        return await throwingFetch(baseUrl + '?takeTop=10');
+    }
+
     async getAll(): Promise<PageListElement[]> {
         return await throwingFetch(baseUrl);
     }

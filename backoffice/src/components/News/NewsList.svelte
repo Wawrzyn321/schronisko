@@ -4,9 +4,9 @@
   import { Edit2Icon, Trash2Icon } from 'svelte-feather-icons';
   import type { NewsListElement } from '../../services/NewsService';
   import DeleteNewsModal from './DeleteNewsModal.svelte';
-  import DateFromTimestamp from '../DateFromTimestamp.svelte';
-  import Loader from '../Loader.svelte';
-import EmptyListMessage from '../EmptyListMessage.svelte';
+  import DateFromTimestamp from '../shared/DateFromTimestamp.svelte';
+  import Loader from '../shared/Loader.svelte';
+import EmptyListMessage from '../shared/EmptyListMessage.svelte';
 
   export let news: NewsListElement[];
   export let onNewsDeleted: (news: NewsListElement) => any;

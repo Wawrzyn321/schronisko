@@ -1,6 +1,6 @@
 <script lang="ts">
   import { auth } from '../contexts/auth.context';
-  import ChangePasswordModal from '../components/ChangePasswordModal.svelte';
+  import ChangePasswordModal from '../components/User/ChangePasswordModal.svelte';
   import PermissionDescription from '../components/PermissionDescription.svelte';
 
   let passwordModalVisible = false;

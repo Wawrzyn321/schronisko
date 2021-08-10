@@ -1,5 +1,5 @@
 import type { Animal } from '.prisma/client';
-import type { SortingOrder } from './../../SortControl/SortControl';
+import type { SortingOrder } from '../../shared/SortControl/SortControl';
 
 export type AnimalSortingParams = {
     sortByName: SortingOrder;

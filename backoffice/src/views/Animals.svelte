@@ -14,6 +14,8 @@
     createDefaultSortingParams,
   } from '../components/Animals/AnimalsHeader/AnimalSortingParams';
   import { notifyError, notifySuccess } from '../contexts/notification.context';
+  import Pagination from '../components/shared/Pagination/Pagination.svelte';
+  import { paginate } from '../components/shared/Pagination/pagination';
 
   let animals: Animal[] = [];
   let loading = false;
@@ -21,11 +23,15 @@
   let filteringParams = createDefaultFilteringParams();
   let sortingParams = createDefaultSortingParams();
 
+  let currentPage = 0;
+  let pageSize = 10;
+
   onMount(async () => {
     loading = true;
     try {
-      animals = await animalsService.getAll();
+      animals = await animalsService.getInitial();
       loading = false;
+      animals = await animalsService.getAll();
     } catch (e) {
       notifyError({
         message: 'Błąd pobierania zwierząt: ' + e.message,
@@ -37,6 +43,8 @@
     applyFiltering(animals, filteringParams),
     sortingParams
   );
+
+  $: paginatedAnimals = paginate(filteredAnimals, pageSize, currentPage);
 
   function onAnimalDeleted(deletedAnimal: Animal) {
     animals = animals.filter((a) => a.id !== deletedAnimal.id);
@@ -50,11 +58,18 @@
     bind:columnParams
   />
   <AnimalsList
-    animals={filteredAnimals}
+    animals={paginatedAnimals}
     {loading}
     {onAnimalDeleted}
     {columnParams}
     bind:filteringParams
     bind:sortingParams
   />
+  {#if !loading && filteredAnimals.length}
+    <Pagination
+      bind:pageSize
+      itemsCount={filteredAnimals.length}
+      bind:currentPage
+    />
+  {/if}
 </main>

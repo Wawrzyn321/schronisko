@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { logout } from '../contexts/auth.context';
-  import { notifyError } from '../contexts/notification.context';
-  import { ChangePasswordParams, authService } from '../services/AuthService';
-  import Modal from './Modal.svelte';
-  import PasswordInput from './PasswordInput.svelte';
+  import { logout } from '../../contexts/auth.context';
+  import { notifyError } from '../../contexts/notification.context';
+  import { ChangePasswordParams, authService } from '../../services/AuthService';
+  import Modal from '../Modal.svelte';
+  import PasswordInput from '../PasswordInput.svelte';
 
   export let modalVisible: boolean;
 

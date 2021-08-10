@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Field, Input, Tab, Tabs, Tooltip } from 'svelma';
+  import { Field, Input, Tab, Tabs, Tooltip, Button } from 'svelma';
   import type { AnimalData } from '../../../services/AnimalsService';
   import AnimalTypeSelect from './AnimalTypeSelect.svelte';
   import AnimalGenderSelect from './AnimalGenderSelect.svelte';
@@ -12,6 +12,7 @@
   import ResizableImageInput from '../../ResizableImageInput.svelte';
   import type { AnimalImageParams } from '../../../services/AnimalImagesService';
   import { onMount } from 'svelte';
+  import { descriptionTemplates } from './descriptionTemplates';
 
   export let animal: AnimalData;
   export let images: AnimalImageParams[] = [];
@@ -80,20 +81,38 @@
           type={animal.type}
         />
       </div>
-      <Field label="Opis">
-        <Tooltip label="Opis widoczny na stronie">
-          <Input
-            required
-            maxlength="1500"
-            bind:value={animal.description}
-            type="textarea"
-            placeholder="Opis zwierzęcia"
-          />
-        </Tooltip>
-      </Field>
+      <div class="flex-between">
+        <Field label="Opis" />
+        {#if descriptionTemplates[animal.category][animal.gender]}
+          <Button
+            type="is-primary"
+            on:click={() =>
+              (animal.description =
+                descriptionTemplates[animal.category][animal.gender])}
+          >
+            Użyj szablonu
+          </Button>
+        {:else}
+          <Tooltip
+            position="is-left"
+            label={'Tylko kategorie "Do adopcji" oraz "Niedawno znalezione" posiadają szablony.'}
+          >
+            <Button type="is-primary" disabled>Użyj szablonu</Button>
+          </Tooltip>
+        {/if}
+      </div>
+      <Tooltip label="Opis widoczny na stronie.">
+        <Input
+          required
+          maxlength="1500"
+          bind:value={animal.description}
+          type="textarea"
+          placeholder="Opis zwierzęcia"
+        />
+      </Tooltip>
       <Field label="Notatka">
         <Tooltip
-          label="Notatka dla pracowników, niewidoczna na stronie głównej"
+          label="Notatka dla pracowników, niewidoczna na stronie głównej."
         >
           <Input
             maxlength="200"
@@ -105,7 +124,7 @@
       </Field>
       <div class="g-flex-between-100">
         <div style="margin-right: 24px">
-          <Tooltip label="Widoczna na obu stronach">
+          <Tooltip label="Widoczna na obu stronach.">
             <ResizableImageInput
               label="Miniaturka"
               bind:imageData={animal.imageData}
@@ -154,5 +173,11 @@
     :global(.tooltip-wrapper) {
       display: block;
     }
+  }
+
+  .flex-between {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
   }
 </style>

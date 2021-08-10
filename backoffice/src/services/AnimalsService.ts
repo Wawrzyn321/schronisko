@@ -23,6 +23,10 @@ export interface AnimalData {
 }
 
 export class AnimalsService {
+    async getInitial(): Promise<Animal[]> {
+        return await throwingFetch(baseUrl+"?takeTop=10");
+    }
+
     async getAll(): Promise<Animal[]> {
         return await throwingFetch(baseUrl);
     }

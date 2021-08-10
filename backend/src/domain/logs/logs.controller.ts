@@ -1,6 +1,6 @@
 import { LogsService } from './logs.service';
 import { RequirePermission } from '../auth/Permissions.decorator';
-import { Controller, Get, UseGuards, Param } from '@nestjs/common';
+import { Controller, Get, UseGuards, Param, Query } from '@nestjs/common';
 import { Permission } from '@prisma/client';
 import { PermissionsGuard } from '../auth/Permissions.guard';
 
@@ -11,7 +11,8 @@ export class LogsController {
     @RequirePermission(Permission.USER)
     @Get()
     @UseGuards(PermissionsGuard)
-    gegLogs() {
-        return this.logsService.get();
+    gegLogs(@Query() query) {
+        const takeTop = parseInt(query.takeTop) || undefined;
+        return this.logsService.get(takeTop);
     }
 }

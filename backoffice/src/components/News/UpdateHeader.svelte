@@ -4,7 +4,7 @@
   import { Button } from 'svelma';
   import { push } from 'svelte-spa-router';
   import { notifySuccess } from '../../contexts/notification.context';
-  import DateFromTimestamp from '../DateFromTimestamp.svelte';
+  import DateFromTimestamp from '../shared/DateFromTimestamp.svelte';
   import DeleteNewsModal from './DeleteNewsModal.svelte';
 
   export let isPublished: boolean;

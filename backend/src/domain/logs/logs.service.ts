@@ -13,8 +13,8 @@ type LogData = {
 export class LogsService {
   constructor(private prisma: PrismaService) { }
 
-  async get(): Promise<Logs[]> {
-    return await this.prisma.logs.findMany();
+  async get(takeTop?: number): Promise<Logs[]> {
+    return await this.prisma.logs.findMany({take: takeTop, orderBy: [{ time: 'desc' }]});
   }
 
   async log({ user, permission, message }: LogData) {

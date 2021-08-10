@@ -3,7 +3,7 @@
   import { allPermissions } from '../../common/allPermissions';
   import { permissionNames } from '../../common/PermissionsInfo';
   import type { Permission } from '@prisma/client';
-  import Dropdown from '../Dropdown.svelte';
+  import Dropdown from '../shared/Dropdown.svelte';
 
   function updateFilter(permission: Permission) {
     if (permissionFilter.includes(permission)) {

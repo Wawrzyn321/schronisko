@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Button } from 'svelma';
   import { FilterIcon } from 'svelte-feather-icons';
-  import Dropdown from '../../../components/Dropdown.svelte';
+  import Dropdown from '../../shared/Dropdown.svelte';
   import type { AnimalColumnParams } from './AnimalColumnParams';
 
   export let params: AnimalColumnParams;

@@ -5,7 +5,7 @@
   import { userService } from '../../services/UserService';
   import type { Permission } from '.prisma/client';
   import { notifyError } from '../../contexts/notification.context';
-  import Loader from '../Loader.svelte';
+  import Loader from '../shared/Loader.svelte';
 
   export let modalVisible: boolean;
   export let user: UserViewModel;

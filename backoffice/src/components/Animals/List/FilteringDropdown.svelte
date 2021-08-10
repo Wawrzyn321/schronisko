@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Dropdown from '../../Dropdown.svelte';
+  import Dropdown from '../../shared/Dropdown.svelte';
   import { FilterIcon } from 'svelte-feather-icons';
   import type { AnimalFilteringParams } from '../AnimalsHeader/AnimalFilteringParams';
 

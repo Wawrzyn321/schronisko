@@ -4,7 +4,7 @@
     import { Button } from 'svelma';
     import { push } from 'svelte-spa-router';
     import { notifySuccess } from '../../contexts/notification.context';
-    import DateFromTimestamp from '../DateFromTimestamp.svelte';
+    import DateFromTimestamp from '../shared/DateFromTimestamp.svelte';
     import DeleteAnimalModal from './DeleteAnimalModal.svelte';
   
     export let isPublic: boolean;
@@ -34,7 +34,7 @@
           type="checkbox"
           on:change={() => (isPublic = !isPublic)}
         />
-        Publiczny
+        Widoczny na stronie
       </label>
       <Button type="is-primary" on:click={updateAnimal} disabled={!isValid}>
         Zapisz

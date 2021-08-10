@@ -2,7 +2,7 @@ import { LoggedInUser } from './../auth/types';
 import { Animal } from '.prisma/client';
 import { AnimalsService, AnimalData } from './animals.service';
 import { RequirePermission } from '../auth/Permissions.decorator';
-import { Controller, Get, UseGuards, Param, Patch, Body, Post, Delete, Request } from '@nestjs/common';
+import { Controller, Get, UseGuards, Param, Patch, Body, Post, Delete, Request, Query } from '@nestjs/common';
 import { Permission } from '@prisma/client';
 import { PermissionsGuard } from '../auth/Permissions.guard';
 
@@ -17,8 +17,9 @@ export class AnimalsController {
     @RequirePermission(Permission.ANIMAL)
     @Get()
     @UseGuards(PermissionsGuard)
-    getAnimals() {
-        return this.animalsService.getAll();
+    getAnimals(@Query() query) {
+        const takeTop = parseInt(query.takeTop) || undefined;
+        return this.animalsService.getAll(takeTop);
     }
 
     @RequirePermission(Permission.ANIMAL)

@@ -2,7 +2,7 @@
   import type { News } from '.prisma/client';
   import { Tab } from 'svelma';
   import { onMount } from 'svelte';
-  import Loader from '../components/Loader.svelte';
+  import Loader from '../components/shared/Loader.svelte';
   import EditorTabs from '../components/EditorTabs.svelte';
   import NewsForm from '../components/News/NewsForm.svelte';
   import UpdateHeader from '../components/News/UpdateHeader.svelte';

@@ -19,9 +19,9 @@ export class NewsService {
     return listElement;
   }
 
-  async getAll(): Promise<NewsListElement[]> {
+  async getAll(takeTop?: number): Promise<NewsListElement[]> {
     const fields = { title: true, description: true, id: true, isPublished: true, createdAt: true };
-    return await this.prisma.news.findMany({ select: fields, orderBy: [{ title: 'asc' }] });
+    return await this.prisma.news.findMany({ select: fields, take: takeTop, orderBy: [{ title: 'asc' }] });
   }
 
   async get(id: string): Promise<News> {

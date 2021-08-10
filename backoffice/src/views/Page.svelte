@@ -7,7 +7,7 @@
   import EditorTabs from '../components/EditorTabs.svelte';
   import type { Page } from '.prisma/client';
   import { notifyError, notifySuccess } from '../contexts/notification.context';
-  import Loader from '../components/Loader.svelte';
+  import Loader from '../components/shared/Loader.svelte';
 
   export let params: { id: string };
   const id = params.id;

@@ -24,6 +24,10 @@ export interface NewsUpdateParams extends NewsCreateParams {
 }
 
 export class NewsService {
+    async getInitial(): Promise<NewsListElement[]> {
+        return await throwingFetch(baseUrl + '?takeTop=10');
+    }
+
     async getAll(): Promise<NewsListElement[]> {
         return await throwingFetch(baseUrl);
     }

@@ -201,6 +201,10 @@ main {
   background: initial;
 }
 
+.link[disabled] {
+  cursor: initial;
+}
+
 td {
   vertical-align: middle !important;
 }

@@ -11,8 +11,8 @@ import { formattedDiff } from '../logs/diff';
 export class PagesService {
   constructor(private prisma: PrismaService, private logsService: LogsService) { }
 
-  async getAll(): Promise<PageListElement[]> {
-    return await this.prisma.page.findMany({ select: { title: true, id: true }, orderBy: [{ title: 'asc' }] });
+  async getAll(takeTop?: number): Promise<PageListElement[]> {
+    return await this.prisma.page.findMany({ select: { title: true, id: true }, take: takeTop, orderBy: [{ title: 'asc' }] });
   }
 
   async get(id: string): Promise<Page> {

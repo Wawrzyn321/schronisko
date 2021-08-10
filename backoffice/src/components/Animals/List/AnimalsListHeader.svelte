@@ -1,5 +1,5 @@
 <script lang="ts">
-  import SortControl from './../../SortControl/SortControl.svelte';
+  import SortControl from './../../shared/SortControl/SortControl.svelte';
   import type { AnimalColumnParams } from './../AnimalsHeader/AnimalColumnParams';
   import type { AnimalFilteringParams } from './../AnimalsHeader/AnimalFilteringParams';
   import type { AnimalSortingParams } from './../AnimalsHeader/AnimalSortingParams';

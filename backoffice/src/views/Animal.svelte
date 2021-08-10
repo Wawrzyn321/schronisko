@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import Loader from '../components/Loader.svelte';
+  import Loader from '../components/shared/Loader.svelte';
   import AnimalForm from '../components/Animals/Form/AnimalForm.svelte';
   import UpdateHeader from '../components/Animals/UpdateHeader.svelte';
   import { notifyError, notifySuccess } from '../contexts/notification.context';

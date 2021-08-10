@@ -5,6 +5,7 @@ import { RequirePermission } from '../auth/Permissions.decorator';
 import { Controller, Get, UseGuards, Param, Patch, Body, Request } from '@nestjs/common';
 import { Permission } from '@prisma/client';
 import { PermissionsGuard } from '../auth/Permissions.guard';
+import { Query } from '@nestjs/common';
 
 @Controller('api/pages')
 export class PagesController {
@@ -13,8 +14,9 @@ export class PagesController {
     @RequirePermission(Permission.PAGE)
     @Get()
     @UseGuards(PermissionsGuard)
-    getPages() {
-        return this.pagesService.getAll();
+    getPages(@Query() query) {
+        const takeTop = parseInt(query.takeTop) || undefined;
+        return this.pagesService.getAll(takeTop);
     }
 
     @RequirePermission(Permission.PAGE)

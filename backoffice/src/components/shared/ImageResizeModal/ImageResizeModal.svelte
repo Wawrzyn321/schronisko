@@ -1,6 +1,6 @@
 <script lang="ts">
   import { scaleToFit, restrictPosition } from './helpers';
-  import Modal from './../Modal.svelte';
+  import Modal from '../../Modal.svelte';
 
   export let defaultWidth: number;
   export let defaultHeight: number;

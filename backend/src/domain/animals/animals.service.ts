@@ -35,8 +35,8 @@ function validateAnimalUpdate(animal: AnimalData): boolean {
 export class AnimalsService {
   constructor(private prisma: PrismaService, private logsService: LogsService) { }
 
-  async getAll(): Promise<Animal[]> {
-    return await this.prisma.animal.findMany();
+  async getAll(takeTop?: number): Promise<Animal[]> {
+    return await this.prisma.animal.findMany({ take: takeTop });
   }
 
   async get(id: string): Promise<Animal> {

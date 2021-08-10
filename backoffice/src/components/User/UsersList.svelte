@@ -7,9 +7,9 @@
   import EditUserModal from './EditUserModal.svelte';
   import EditSelfModal from './EditSelfModal.svelte';
   import ChangeUserPasswordModal from './ChangeUserPasswordModal.svelte';
-  import ChangePasswordModal from './../ChangePasswordModal.svelte';
-  import Loader from './../../components/Loader.svelte';
-import EmptyListMessage from '../EmptyListMessage.svelte';
+  import ChangePasswordModal from './ChangePasswordModal.svelte';
+  import Loader from '../shared/Loader.svelte';
+import EmptyListMessage from '../shared/EmptyListMessage.svelte';
 
   export let onUserDeleted: (u: UserViewModel) => void;
   export let onUserEdited: (u: UserViewModel) => void;
