@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Modal from './../Modal.svelte';
+  import Modal from '../shared/Modal.svelte';
   import { Field, Input } from 'svelma';
   import { createDefaultUser } from './UserCreateParams';
   import type { UserCreateParams } from './UserCreateParams';

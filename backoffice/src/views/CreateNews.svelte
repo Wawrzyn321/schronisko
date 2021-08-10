@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Tab } from 'svelma';
   import { push } from 'svelte-spa-router';
-  import EditorTabs from '../components/EditorTabs.svelte';
+  import EditorTabs from '../components/shared/EditorTabs.svelte';
   import CreateNewsHeader from '../components/News/CreateNewsHeader.svelte';
   import NewsForm from '../components/News/NewsForm.svelte';
   import { notifyError, notifySuccess } from '../contexts/notification.context';

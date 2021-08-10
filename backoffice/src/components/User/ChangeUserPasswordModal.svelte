@@ -1,8 +1,8 @@
 <script lang="ts">
-  import Modal from './../Modal.svelte';
+  import Modal from '../shared/Modal.svelte';
   import type { UserViewModel } from '../../common/UserViewModel';
   import { authService } from '../../services/AuthService';
-  import PasswordInput from './../PasswordInput.svelte';
+  import PasswordInput from './PasswordInput.svelte';
   import {
     notifyError,
     notifySuccess,

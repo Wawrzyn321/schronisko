@@ -9,7 +9,7 @@
   import AnimalImages from './../AnimalImages.svelte';
   import { VirtualCaretakerType } from '.prisma/client';
   import AnimalImagePreview from './AnimalImagePreview.svelte';
-  import ResizableImageInput from '../../ResizableImageInput.svelte';
+  import ResizableImageInput from '../../shared/ResizableImageInput.svelte';
   import type { AnimalImageParams } from '../../../services/AnimalImagesService';
   import { onMount } from 'svelte';
   import { descriptionTemplates } from './descriptionTemplates';

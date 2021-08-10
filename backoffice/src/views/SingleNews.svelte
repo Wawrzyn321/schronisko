@@ -3,7 +3,7 @@
   import { Tab } from 'svelma';
   import { onMount } from 'svelte';
   import Loader from '../components/shared/Loader.svelte';
-  import EditorTabs from '../components/EditorTabs.svelte';
+  import EditorTabs from '../components/shared/EditorTabs.svelte';
   import NewsForm from '../components/News/NewsForm.svelte';
   import UpdateHeader from '../components/News/UpdateHeader.svelte';
   import { notifyError, notifySuccess } from '../contexts/notification.context';

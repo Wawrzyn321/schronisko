@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Modal from './../Modal.svelte';
+  import Modal from '../shared/Modal.svelte';
   import type { NewsListElement } from '../../services/NewsService';
   import { newsService } from '../../services/NewsService';
   import { notifyError } from '../../contexts/notification.context';

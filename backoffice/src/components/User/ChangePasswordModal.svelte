@@ -1,9 +1,13 @@
 <script lang="ts">
+  import { Tooltip } from 'svelma';
   import { logout } from '../../contexts/auth.context';
   import { notifyError } from '../../contexts/notification.context';
-  import { ChangePasswordParams, authService } from '../../services/AuthService';
-  import Modal from '../Modal.svelte';
-  import PasswordInput from '../PasswordInput.svelte';
+  import {
+    ChangePasswordParams,
+    authService,
+  } from '../../services/AuthService';
+  import Modal from '../shared/Modal.svelte';
+  import PasswordInput from './PasswordInput.svelte';
 
   export let modalVisible: boolean;
 
@@ -44,11 +48,19 @@
       bind:password={formData.currentPassword}
       autocomplete="current-password"
     />
-    <PasswordInput
-      label="Nowe hasło"
-      bind:password={formData.newPassword}
-      autocomplete="new-password"
-    />
+    <div class="tooltip-wrapper-wrapper">
+      <Tooltip
+        multilined={true}
+        style="width: 420px"
+        label="Nie ma wymagań co do siły hasła. Jeśli ktoś Ci je odgadnie i narobi szkód, będzie to widoczne w logach jako Twoja robota... Używanie słabego hasła to wybór."
+      >
+        <PasswordInput
+          label="Nowe hasło"
+          bind:password={formData.newPassword}
+          autocomplete="new-password"
+        />
+      </Tooltip>
+    </div>
     <PasswordInput
       label="Potwierdź nowe hasło"
       bind:password={formData.newPasswordAgain}
@@ -58,3 +70,12 @@
     <em>Po zmianie hasła nastąpi wylogowanie.</em>
   </form>
 </Modal>
+
+<style lang="scss">
+  .tooltip-wrapper-wrapper {
+    :global(.tooltip-wrapper) {
+      display: block;
+      margin-bottom: 12px;
+    }
+  }
+</style>

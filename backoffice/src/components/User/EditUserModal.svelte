@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Modal from './../Modal.svelte';
+  import Modal from '../shared/Modal.svelte';
   import type { UserViewModel } from '../../common/UserViewModel';
   import PermissionsForm from './PermissionsForm.svelte';
   import { userService } from '../../services/UserService';

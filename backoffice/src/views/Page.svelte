@@ -4,7 +4,7 @@
   import { get } from 'svelte/store';
   import { Button } from 'svelma';
   import { pageService } from '../services/PageService';
-  import EditorTabs from '../components/EditorTabs.svelte';
+  import EditorTabs from '../components/shared/EditorTabs.svelte';
   import type { Page } from '.prisma/client';
   import { notifyError, notifySuccess } from '../contexts/notification.context';
   import Loader from '../components/shared/Loader.svelte';

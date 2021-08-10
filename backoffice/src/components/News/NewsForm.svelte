@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Field, Input } from 'svelma';
-  import ResizableImageInput from '../ResizableImageInput.svelte';
+  import ResizableImageInput from '../shared/ResizableImageInput.svelte';
   import ImagePreview from './ImagePreview.svelte';
 
   export let news: {

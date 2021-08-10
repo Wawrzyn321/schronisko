@@ -4,7 +4,7 @@
   import Editor from './Editor.svelte';
   import PostPreview from './PostPreview.svelte';
 
-  export let tabs: any;
+  let tabs: any;
 
   export let editedContent = '';
   export let initialContent = '';

@@ -9,6 +9,7 @@ export type LogsFilteringParams = {
     searchPhrase: string,
     timeFrom?: Date,
     timeEnd?: Date,
+    hideSelf: boolean,
 };
 
 export function createDefaultParams(): LogsFilteringParams {
@@ -19,10 +20,11 @@ export function createDefaultParams(): LogsFilteringParams {
         searchPhrase: '',
         timeFrom: null,
         timeEnd: null,
+        hideSelf: true,
     }
 }
 
-export function filterLogs(logs: Logs[], filteringParams: LogsFilteringParams) {
+export function filterLogs(logs: Logs[], filteringParams: LogsFilteringParams, selfLogin: string) {
     const loginFilter = filteringParams.loginFilter.toLowerCase();
     const userIdFilter = filteringParams.userIdFilter.toLowerCase();
     const searchPhrase = filteringParams.searchPhrase.toLowerCase();
@@ -34,5 +36,6 @@ export function filterLogs(logs: Logs[], filteringParams: LogsFilteringParams) {
         .filter(l => l.id.toLowerCase().includes(userIdFilter))
         .filter(l => l.message.toLowerCase().includes(searchPhrase))
         .filter(l => timeFrom ? new Date(l.time) >= timeFrom : true)
-        .filter(l => timeEnd ? new Date(l.time) <= timeEnd : true);
+        .filter(l => timeEnd ? new Date(l.time) <= timeEnd : true)
+        .filter(l => !filteringParams.hideSelf || l.login !== selfLogin);
 }

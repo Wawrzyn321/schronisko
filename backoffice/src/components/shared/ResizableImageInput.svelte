@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Button, Field, Input } from 'svelma';
-  import ImageResizeModal from './shared/ImageResizeModal/ImageResizeModal.svelte';
+  import ImageResizeModal from './ImageResizeModal/ImageResizeModal.svelte';
 
   export let imageData = '';
   export let label: string;

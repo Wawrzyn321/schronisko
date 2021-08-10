@@ -16,6 +16,7 @@
   import LogsHeader from '../components/Logs/LogsHeader.svelte';
   import Pagination from '../components/shared/Pagination/Pagination.svelte';
   import { paginate } from '../components/shared/Pagination/pagination';
+  import { auth } from '../contexts/auth.context';
 
   let logs: Logs[] = [];
   let filteringParams: LogsFilteringParams = createDefaultParams();
@@ -35,7 +36,7 @@
     }
   });
 
-  $: filteredLogs = filterLogs(logs, filteringParams);
+  $: filteredLogs = filterLogs(logs, filteringParams, $auth?.user?.login || '');
 
   $: paginatedLogs = paginate(filteredLogs, pageSize, currentPage);
 </script>
@@ -74,6 +75,10 @@
     <EmptyListMessage entityType="logów" />
   {/if}
   {#if !loading && logs.length}
-    <Pagination bind:pageSize itemsCount={filteredLogs.length} bind:currentPage />
+    <Pagination
+      bind:pageSize
+      itemsCount={filteredLogs.length}
+      bind:currentPage
+    />
   {/if}
 </main>

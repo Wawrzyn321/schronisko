@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Field, Input } from 'svelma';
   import type { LogsFilteringParams } from './LogsFilteringParams';
-import TimeInput from './TimeInput.svelte';
+  import TimeInput from './TimeInput.svelte';
 
   export let filteringParams: LogsFilteringParams;
 </script>
@@ -9,6 +9,17 @@ import TimeInput from './TimeInput.svelte';
 <header>
   <div class="g-flex-between-100">
     <h1>Logi</h1>
+    <div class="g-header-actions">
+      <label>
+        <input
+          checked={filteringParams.hideSelf}
+          type="checkbox"
+          on:change={() =>
+            (filteringParams.hideSelf = !filteringParams.hideSelf)}
+        />
+        Ukryj własne logi
+      </label>
+    </div>
   </div>
   <div class="g-flex-between-100" style="margin-top: 16px">
     <Field label="ID użytkownika">

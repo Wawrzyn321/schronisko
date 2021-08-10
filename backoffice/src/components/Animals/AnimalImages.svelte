@@ -10,7 +10,7 @@
 
   import type { AnimalImageParams } from '../../services/AnimalImagesService';
   import { API_URL } from '../../services/config';
-  import ResizableImageInput from './../ResizableImageInput.svelte';
+  import ResizableImageInput from '../shared/ResizableImageInput.svelte';
 
   export let images: AnimalImageParams[];
   export let revalidateForm: () => any;

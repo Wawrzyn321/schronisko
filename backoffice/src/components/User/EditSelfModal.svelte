@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Modal from './../Modal.svelte';
+  import Modal from '../shared/Modal.svelte';
   import { Field, Input } from 'svelma';
   import type { UserViewModel } from '../../common/UserViewModel';
   import { auth } from '../../contexts/auth.context';
