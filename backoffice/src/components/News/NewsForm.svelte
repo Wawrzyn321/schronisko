@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { Field, Input } from 'svelma';
+  import Field from './../shared/Field.svelte';
+  import { Input } from 'svelma';
   import ResizableImageInput from '../shared/ResizableImageInput.svelte';
   import ImagePreview from './ImagePreview.svelte';
 
@@ -27,10 +28,10 @@
 <form bind:this={form} on:input={revalidateForm}>
   <div>
     <div>
-      <Field label="Tytuł">
+      <Field label="Tytuł" required>
         <Input required bind:value={news.title} placeholder="Tytuł" />
       </Field>
-      <Field label="Opis">
+      <Field label="Opis" required>
         <Input bind:value={news.description} placeholder="Opis" />
       </Field>
       <ResizableImageInput

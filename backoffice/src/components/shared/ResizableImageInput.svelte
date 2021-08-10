@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { Button, Field, Input } from 'svelma';
+  import { Button, Input } from 'svelma';
+  import Field from './Field.svelte';
   import ImageResizeModal from './ImageResizeModal/ImageResizeModal.svelte';
 
   export let imageData = '';
@@ -30,7 +31,7 @@
   }
 </script>
 
-<Field {label} {message}>
+<Field {label} {message} required>
   <div style="display: flex">
     <Input type="file" accept="image/png, image/jpeg" on:input={onFileChange} />
     <Button on:click={openResizeModal} disabled={!file}>Przytnij</Button>

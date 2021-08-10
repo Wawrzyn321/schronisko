@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { Field, Input } from 'svelma';
+  import Field from './../shared/Field.svelte'
+  import { Input } from 'svelma';
 
   export let label = 'Hasło';
   export let message = '';
@@ -8,7 +9,7 @@
   export let autocomplete: string = '';
 </script>
 
-<Field {label} message={message}>
+<Field {label} message={message} required>
   <Input
     required
     type={plain ? 'text' : 'password'}

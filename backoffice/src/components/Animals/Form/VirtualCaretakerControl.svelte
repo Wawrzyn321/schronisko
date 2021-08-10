@@ -1,10 +1,11 @@
 <script lang="ts">
-  import { Field, Input } from 'svelma';
+  import { Input } from 'svelma';
   import { VirtualCaretakerType } from '@prisma/client';
   import {
     virtualCaretakerTypes,
     virtualCaretakerTypesMap,
   } from './../animalMetadata';
+  import Field from '../../shared/Field.svelte';
 
   export let virtualCaretakerName: string | undefined;
   export let virtualCaretakerType: VirtualCaretakerType;
@@ -25,7 +26,7 @@
   {/each}
 </div>
 {#if virtualCaretakerType === VirtualCaretakerType.Znalazl}
-  <Field label="Moim wirtualnym opiekunem jest">
+  <Field required label="Moim wirtualnym opiekunem jest">
     <Input required bind:value={virtualCaretakerName} />
   </Field>
 {/if}

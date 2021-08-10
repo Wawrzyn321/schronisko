@@ -1,10 +1,9 @@
 <script lang="ts">
   import type { Permission } from '.prisma/client';
-
   import {
     permissionDescriptions,
     permissionNames,
-  } from '../../../common/PermissionsInfo';
+  } from '../../common/PermissionsInfo';
 
   export let permissionType: Permission;
 </script>

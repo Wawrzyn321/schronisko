@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { Field, Input, Tab, Tabs, Tooltip, Button } from 'svelma';
+  import Field from '../../shared/Field.svelte';
+  import { Input, Tab, Tabs, Tooltip, Button } from 'svelma';
   import type { AnimalData } from '../../../services/AnimalsService';
   import AnimalTypeSelect from './AnimalTypeSelect.svelte';
   import AnimalGenderSelect from './AnimalGenderSelect.svelte';
@@ -50,7 +51,7 @@
   <Tabs bind:this={tabs}>
     <Tab label="Dane">
       <div id="first-row">
-        <Field label="Imię">
+        <Field label="Imię" required>
           <Input
             required
             bind:value={animal.name}
@@ -61,7 +62,7 @@
         <AnimalGenderSelect bind:gender={animal.gender} />
       </div>
       <div id="second-row">
-        <Field label="Numer ewidencyjny">
+        <Field label="Numer ewidencyjny" required>
           <Tooltip label="Musi być unikalny.">
             <Input
               required
@@ -82,7 +83,7 @@
         />
       </div>
       <div class="flex-between">
-        <Field label="Opis" />
+        <Field label="Opis" required/>
         {#if descriptionTemplates[animal.category][animal.gender]}
           <Button
             type="is-primary"
