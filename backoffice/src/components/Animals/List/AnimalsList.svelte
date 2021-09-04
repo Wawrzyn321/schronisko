@@ -7,7 +7,7 @@
   import DateFromTimestamp from '../../shared/DateFromTimestamp.svelte';
   import AnimalsListHeader from './AnimalsListHeader.svelte';
   import Loader from '../../shared/Loader.svelte';
-  import { Animal, VirtualCaretakerType } from '.prisma/client';
+  import { Animal, AnimalCategory, VirtualCaretakerType } from '.prisma/client';
   import {
     animalGendersMap,
     animalLocationsMap,
@@ -38,7 +38,12 @@
     <tr>
       {#if columnParams.showImage}
         <td style="padding-bottom: 0">
-          <img src={`${API_URL}/${animal.imageName}`} alt={animal.name} />
+          <img
+            src={`${API_URL}/${animal.imageName}`}
+            alt={animal.name}
+            class:is-grayscale={animal.category ===
+              AnimalCategory.ZaTeczowymMostem}
+          />
         </td>
       {/if}
       <td>
@@ -61,7 +66,10 @@
       {/if}
       {#if columnParams.showLocation}
         <td>
-          {animalLocationsMap[animal.location]}
+          {animalLocationsMap[animal.location]} 
+          {#if animal.locationDescription}
+            ({animal.locationDescription})
+          {/if}
         </td>
       {/if}
       {#if columnParams.showCategory}
@@ -79,7 +87,7 @@
       {/if}
       {#if columnParams.showNote}
         <td class="g-table-ellipsis">
-          {animal.note || "-"}
+          {animal.note || '-'}
         </td>
       {/if}
       {#if columnParams.showAddedDate}
@@ -126,5 +134,9 @@
 <style lang="scss">
   .is-public-column {
     width: 190px;
+  }
+
+  .is-grayscale {
+    filter: grayscale(1);
   }
 </style>

@@ -8,12 +8,13 @@
   import AnimalLocationSelect from './AnimalLocationSelect.svelte';
   import VirtualCaretakerControl from './VirtualCaretakerControl.svelte';
   import AnimalImages from './../AnimalImages.svelte';
-  import { VirtualCaretakerType } from '.prisma/client';
+  import { AnimalCategory, VirtualCaretakerType } from '.prisma/client';
   import AnimalImagePreview from './AnimalImagePreview.svelte';
   import ResizableImageInput from '../../shared/ResizableImageInput.svelte';
   import type { AnimalImageParams } from '../../../services/AnimalImagesService';
   import { onMount } from 'svelte';
   import { descriptionTemplates } from './descriptionTemplates';
+  import { notifyInfo } from '../../../contexts/notification.context';
 
   export let animal: AnimalData;
   export let images: AnimalImageParams[] = [];
@@ -44,106 +45,133 @@
     );
   }
 
+  function onCategoryChange(category: AnimalCategory) {
+    if (category === AnimalCategory.ZaTeczowymMostem) {
+      animal.virtualCaretakerType = VirtualCaretakerType.NiePrzypisany;
+      notifyInfo({ message: 'Zmieniono rodzaj wirtualnego opiekuna.' });
+    } else if (
+      category === AnimalCategory.ZnalazlyDom &&
+      animal.virtualCaretakerType === VirtualCaretakerType.Szuka
+    ) {
+      animal.virtualCaretakerType = VirtualCaretakerType.NiePrzypisany;
+      notifyInfo({ message: 'Zmieniono rodzaj wirtualnego opiekuna.' });
+    }
+  }
+
   onMount(() => tabs.setActive(0));
 </script>
 
 <form bind:this={form} on:input={revalidateForm} on:change={revalidateForm}>
   <Tabs bind:this={tabs}>
     <Tab label="Dane">
-      <div id="first-row">
-        <Field label="Imię" required>
-          <Input
-            required
-            bind:value={animal.name}
-            placeholder="Imię zwierzęcia"
-          />
-        </Field>
-        <AnimalTypeSelect bind:type={animal.type} />
-        <AnimalGenderSelect bind:gender={animal.gender} />
-      </div>
-      <div id="second-row">
-        <Field label="Numer ewidencyjny" required>
-          <Tooltip label="Musi być unikalny.">
+      <div id="name-and-id">
+        <section>
+          <Field label="Imię" required>
             <Input
               required
-              bind:value={animal.id}
-              placeholder="Numer ewidencyjny"
-              disabled={isUpdate}
+              bind:value={animal.name}
+              placeholder="Imię zwierzęcia"
+            />
+          </Field>
+          <Field label="Numer ewidencyjny" required>
+            <Tooltip label="Musi być unikalny.">
+              <Input
+                required
+                bind:value={animal.id}
+                placeholder="Numer ewidencyjny"
+                disabled={isUpdate}
+              />
+            </Tooltip>
+          </Field>
+        </section>
+        <section>
+          <div id="first-row">
+            <AnimalTypeSelect bind:type={animal.type} />
+            <AnimalGenderSelect bind:gender={animal.gender} />
+            <AnimalCategorySelect
+              bind:category={animal.category}
+              virtualCaretakerType={animal.virtualCaretakerType}
+              onChange={onCategoryChange}
+            />
+          </div>
+          <div id="second-row">
+            <AnimalLocationSelect
+              bind:location={animal.location}
+              type={animal.type}
+            />
+            <Field label="Dodatkowy opis miejsca">
+              <Input
+                bind:value={animal.locationDescription}
+                placeholder="Dodatkowy opis"
+              />
+            </Field>
+          </div>
+        </section>
+      </div>
+      <div>
+        <div class="flex-between">
+          <Field label="Opis" required />
+          {#if descriptionTemplates[animal.category] && descriptionTemplates[animal.category][animal.gender]}
+            <Button
+              type="is-primary"
+              on:click={() =>
+                (animal.description =
+                  descriptionTemplates[animal.category][animal.gender])}
+            >
+              Użyj szablonu
+            </Button>
+          {:else}
+            <Tooltip
+              position="is-left"
+              label={'Tylko kategorie "Do adopcji" oraz "Niedawno znalezione" posiadają szablony.'}
+            >
+              <Button type="is-primary" disabled>Użyj szablonu</Button>
+            </Tooltip>
+          {/if}
+        </div>
+        <Tooltip label="Opis widoczny na stronie.">
+          <Input
+            required
+            maxlength="1500"
+            bind:value={animal.description}
+            type="textarea"
+            placeholder="Opis zwierzęcia"
+          />
+        </Tooltip>
+        <Field label="Notatka">
+          <Tooltip
+            label="Notatka dla pracowników, niewidoczna na stronie głównej."
+          >
+            <Input
+              maxlength="200"
+              bind:value={animal.note}
+              type="textarea"
+              placeholder="Notatka"
             />
           </Tooltip>
         </Field>
-
-        <AnimalCategorySelect
-          bind:category={animal.category}
-          virtualCaretakerType={animal.virtualCaretakerType}
-        />
-        <AnimalLocationSelect
-          bind:location={animal.location}
-          type={animal.type}
-        />
-      </div>
-      <div class="flex-between">
-        <Field label="Opis" required/>
-        {#if descriptionTemplates[animal.category][animal.gender]}
-          <Button
-            type="is-primary"
-            on:click={() =>
-              (animal.description =
-                descriptionTemplates[animal.category][animal.gender])}
-          >
-            Użyj szablonu
-          </Button>
-        {:else}
-          <Tooltip
-            position="is-left"
-            label={'Tylko kategorie "Do adopcji" oraz "Niedawno znalezione" posiadają szablony.'}
-          >
-            <Button type="is-primary" disabled>Użyj szablonu</Button>
-          </Tooltip>
-        {/if}
-      </div>
-      <Tooltip label="Opis widoczny na stronie.">
-        <Input
-          required
-          maxlength="1500"
-          bind:value={animal.description}
-          type="textarea"
-          placeholder="Opis zwierzęcia"
-        />
-      </Tooltip>
-      <Field label="Notatka">
-        <Tooltip
-          label="Notatka dla pracowników, niewidoczna na stronie głównej."
-        >
-          <Input
-            maxlength="200"
-            bind:value={animal.note}
-            type="textarea"
-            placeholder="Notatka"
-          />
-        </Tooltip>
-      </Field>
-      <div class="g-flex-between-100">
-        <div style="margin-right: 24px">
-          <Tooltip label="Widoczna na obu stronach.">
-            <ResizableImageInput
-              label="Miniaturka"
-              bind:imageData={animal.imageData}
-              {revalidateForm}
-              width={152}
-              height={112}
+        <div class="g-flex-between-100">
+          <div style="margin-right: 24px">
+            <Tooltip label="Widoczna na obu stronach.">
+              <ResizableImageInput
+                label="Miniaturka"
+                bind:imageData={animal.imageData}
+                {revalidateForm}
+                width={152}
+                height={112}
+              />
+            </Tooltip>
+            <AnimalImagePreview {animal} {revertImage} />
+          </div>
+          <div>
+            <VirtualCaretakerControl
+              bind:virtualCaretakerName={animal.virtualCaretakerName}
+              bind:virtualCaretakerType={animal.virtualCaretakerType}
             />
-          </Tooltip>
-          <AnimalImagePreview {animal} {revertImage} />
+          </div>
         </div>
-        <div>
-          <VirtualCaretakerControl
-            bind:virtualCaretakerName={animal.virtualCaretakerName}
-            bind:virtualCaretakerType={animal.virtualCaretakerType}
-          />
-        </div>
-      </div>
-    </Tab>
+      </div></Tab
+    >
     <Tab label="Zdjęcia"><AnimalImages bind:images {revalidateForm} /></Tab>
   </Tabs>
 </form>
@@ -152,6 +180,13 @@
   form {
     margin-top: 16px;
     margin-bottom: 16px;
+
+    .flex-between {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 4px;
+      align-items: flex-end;
+    }
 
     @mixin grouped($cols) {
       display: grid;
@@ -163,22 +198,20 @@
         grid-gap: 0;
       }
     }
-
-    :global(#first-row) {
-      @include grouped(2fr 1fr 1fr);
+    #name-and-id {
+      @include grouped(2fr 3fr);
     }
-    :global(#second-row) {
-      @include grouped(2fr 1fr 1fr);
+
+    #first-row {
+      @include grouped(1fr 1fr 1fr);
+    }
+
+    #second-row {
+      @include grouped(1fr 2fr);
     }
 
     :global(.tooltip-wrapper) {
       display: block;
     }
-  }
-
-  .flex-between {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 4px;
   }
 </style>

@@ -16,6 +16,7 @@ export interface AnimalData {
   description: string
   category: AnimalCategory
   location: AnimalLocation | null
+  locationDescription: string | null
   virtualCaretakerName: string | null
   virtualCaretakerType: VirtualCaretakerType
   isPublic: boolean
@@ -117,6 +118,7 @@ export class AnimalsService {
       { name: 'Rodzaj', selector: (n: Animal) => n.type },
       { name: 'Opiekun wirtualny', selector: (n: Animal) => n.virtualCaretakerType },
       { name: 'Nazwa opiekuna wirtualnego', selector: (n: Animal) => n.virtualCaretakerName },
+      { name: 'Opis miejsca przebywania', selector: (n: Animal) => n.locationDescription },
     ], animal.imageData ? [{ name: 'Miniaturka' }] : []);
 
     await this.logsService.log({

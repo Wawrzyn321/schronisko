@@ -14,6 +14,7 @@ export interface AnimalData {
     description: string
     category: AnimalCategory
     location: AnimalLocation | null
+    locationDescription: string | null
     virtualCaretakerName: string | null
     virtualCaretakerType: VirtualCaretakerType
     isPublic: boolean

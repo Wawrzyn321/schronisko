@@ -24,7 +24,7 @@
 
 <Modal
   bind:isOpen={modalVisible}
-  title="Usuń zwierze"
+  title="Usuń zwierzę"
   confirmText="Usuń"
   onConfirm={deleteAnimal}
   disabledConfirm={loading}
@@ -32,7 +32,7 @@
 >
   {#if !!animal}
     <p>
-      Czy na pewno chceesz usunąć zwierzę <strong> {animal.name}</strong>?
+      Czy na pewno chcesz usunąć zwierzę <strong> {animal.name}</strong>?
       Pamiętaj, że zawsze możesz określić je jako niewidoczne lub przenieść za
       tęczowy most.
     </p>

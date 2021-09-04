@@ -16,6 +16,8 @@ import Animals from '../views/Animals.svelte';
 import Animal from '../views/Animal.svelte';
 import CreateAnimal from '../views/CreateAnimal.svelte';
 
+import Settings from '../views/Settings.svelte';
+
 import { unauthorizedWrapper, loginWrapper, rootWrapper } from './helpers';
 
 export const routes = {
@@ -32,4 +34,5 @@ export const routes = {
     '/animals/:id': unauthorizedWrapper(Animal),
     '/animals-add': unauthorizedWrapper(CreateAnimal),
     '/profile': unauthorizedWrapper(Profile),
+    '/settings': unauthorizedWrapper(Settings),
 };

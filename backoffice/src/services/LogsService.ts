@@ -12,6 +12,10 @@ export class LogsService {
     async getAll(): Promise<Logs[]> {
         return await throwingFetch(baseUrl);
     }
+
+    async delete(): Promise<Logs[]> {
+        return await throwingFetch(baseUrl, { method: 'DELETE' });
+    }
 }
 
 export const logsService = new LogsService();

@@ -8,6 +8,14 @@
   let showOverlay = false;
 </script>
 
+<label>
+  <input
+    checked={showOverlay}
+    type="checkbox"
+    on:change={() => (showOverlay = !showOverlay)}
+  />
+  Podgląd nakładki
+</label>
 <div class="preview-wrapper">
   <ImagePreview
     imageData={animal.imageData}
@@ -20,14 +28,6 @@
     <img src="img/overlay.svg" style="height: 112px" alt="nakładka" />
   {/if}
 </div>
-<label>
-  <input
-    checked={showOverlay}
-    type="checkbox"
-    on:change={() => (showOverlay = !showOverlay)}
-  />
-  Podgląd nakładki
-</label>
 
 <style lang="scss">
   .preview-wrapper {

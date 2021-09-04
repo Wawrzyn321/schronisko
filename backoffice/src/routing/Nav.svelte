@@ -38,6 +38,11 @@
       requiredPermission: Permission.ANIMAL,
       path: '/animals',
     },
+    {
+      name: 'Dodatkowe ustawienia',
+      requiredPermission: Permission.USER,
+      path: '/settings',
+    },
   ];
 </script>
 

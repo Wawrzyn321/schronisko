@@ -2,7 +2,7 @@
   import type { Logs } from '@prisma/client';
   import { onMount } from 'svelte';
   import { logsService } from '../services/LogsService';
-  import { notifyError } from '../contexts/notification.context';
+  import { notifyError, notifySuccess } from '../contexts/notification.context';
   import Loader from '../components/shared/Loader.svelte';
   import EmptyListMessage from '../components/shared/EmptyListMessage.svelte';
   import DateFromTimestamp from '../components/shared/DateFromTimestamp.svelte';
@@ -25,7 +25,7 @@
   let currentPage = 0;
   let pageSize = 10;
 
-  onMount(async () => {
+  async function loadLogs() {
     loading = true;
     try {
       logs = await logsService.getInitial();
@@ -34,7 +34,14 @@
     } catch (e) {
       notifyError({ message: 'Nie można pobrać logów: ' + e.message });
     }
-  });
+  }
+
+  onMount(loadLogs);
+
+  const onLogsDeleted = async () => {
+    notifySuccess({ message: 'Logi zostały usunięte' });
+    await loadLogs();
+  };
 
   $: filteredLogs = filterLogs(logs, filteringParams, $auth?.user?.login || '');
 
@@ -42,7 +49,7 @@
 </script>
 
 <main>
-  <LogsHeader bind:filteringParams />
+  <LogsHeader bind:filteringParams {onLogsDeleted} />
   <table class="table is-fullwidth">
     <tr>
       <th>ID użytkownika</th>

@@ -1,6 +1,6 @@
 import { UserDto } from './../common/UserDto';
-import { RequirePermission } from './../auth/Permissions.decorator';
-import { PermissionsGuard } from './../auth/Permissions.guard';
+import { RequirePermission } from '../auth/Permissions.decorator';
+import { PermissionsGuard } from '../auth/Permissions.guard';
 import { UsersService } from './users.service';
 import { Controller, Get, Post, Patch, UseGuards, Body, Param, Delete, Request } from '@nestjs/common';
 import { Permission } from '@prisma/client';

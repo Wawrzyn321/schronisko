@@ -1,8 +1,12 @@
 <script lang="ts">
-  import { Field, Input } from 'svelma';
+  import { Field, Input, Button } from 'svelma';
+  import DeleteLogsModal from './DeleteLogsModal.svelte';
   import type { LogsFilteringParams } from './LogsFilteringParams';
   import TimeInput from './TimeInput.svelte';
 
+  let deleteLogsModalVisible = false;
+
+  export let onLogsDeleted: () => any;
   export let filteringParams: LogsFilteringParams;
 </script>
 
@@ -19,6 +23,9 @@
         />
         Ukryj własne logi
       </label>
+      <Button type="is-danger" on:click={() => (deleteLogsModalVisible = true)}>
+        Usuń logi
+      </Button>
     </div>
   </div>
   <div class="g-flex-between-100" style="margin-top: 16px">
@@ -47,9 +54,14 @@
     <TimeInput bind:time={filteringParams.timeEnd} label="Do" />
   </div>
 </header>
+<DeleteLogsModal bind:modalVisible={deleteLogsModalVisible} {onLogsDeleted} />
 
 <style lang="scss">
   header {
     margin-bottom: 32px;
+  }
+
+  label {
+    margin-right: 10px;
   }
 </style>

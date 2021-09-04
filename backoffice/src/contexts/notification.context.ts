@@ -22,6 +22,10 @@ export const notifyError = (notifyParams: NotifyParamsSpecialized) => {
     notify({ ...notifyParams, type: 'is-danger' });
 }
 
+export const notifyInfo = (notifyParams: NotifyParamsSpecialized) => {
+    notify({ ...notifyParams, type: 'is-info' });
+}
+
 export const dropFirst = () => {
     notificationQueue.update(prev => prev.splice(1));
 }

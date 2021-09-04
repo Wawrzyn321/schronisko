@@ -5,33 +5,52 @@
 
   export let virtualCaretakerType: VirtualCaretakerType;
   export let category: AnimalCategory;
+  export let onChange: (category: AnimalCategory) => any;
 
-  function computeWarning(type: VirtualCaretakerType, category: AnimalCategory): boolean {
+  function computeWarning(
+    type: VirtualCaretakerType,
+    category: AnimalCategory
+  ): boolean {
     // ZaTeczowymMostem
-    if (category === AnimalCategory.ZaTeczowymMostem && type === VirtualCaretakerType.Szuka) {
+    if (
+      category === AnimalCategory.ZaTeczowymMostem &&
+      type === VirtualCaretakerType.Szuka
+    ) {
       return true;
     }
     // ZnalazlyDom
-    if (category === AnimalCategory.ZnalazlyDom && type !== VirtualCaretakerType.NiePrzypisany) {
+    if (
+      category === AnimalCategory.ZnalazlyDom &&
+      type !== VirtualCaretakerType.NiePrzypisany
+    ) {
       return true;
     }
     // NiedawnoZnalezione
-    if (category === AnimalCategory.NiedawnoZnalezione && type !== VirtualCaretakerType.NiePrzypisany) {
+    if (
+      category === AnimalCategory.NiedawnoZnalezione &&
+      type !== VirtualCaretakerType.NiePrzypisany
+    ) {
       return true;
     }
     return false;
   }
-  
+
+  const onInput = (e: { detail: AnimalCategory }) => onChange(e.detail);
+
   $: hasWarning = computeWarning(virtualCaretakerType, category);
 </script>
 
-<Field label="Kategoria" message={hasWarning ? "Czy to na pewno właściwa kategoria?" : ""}>
+<Field
+  label="Kategoria"
+  message={hasWarning ? 'Czy to na pewno właściwa kategoria?' : ''}
+>
   <Select
     placeholder="Wybierz kategorię..."
     required
     expanded
     nativeSize={1}
     bind:selected={category}
+    on:input={onInput}
   >
     {#each animalCategories as category}
       <option value={category}>{animalCategoriesMap[category]}</option>
