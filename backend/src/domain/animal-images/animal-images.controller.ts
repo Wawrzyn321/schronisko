@@ -1,3 +1,4 @@
+import { Public } from './../auth/public.decorator';
 import { AnimalImagesService, UpsertParams } from './animal-images.service';
 import { RequirePermission } from '../auth/Permissions.decorator';
 import { Controller, Get, UseGuards, Param, Patch, Body, Post, Delete, Put } from '@nestjs/common';
@@ -14,9 +15,7 @@ export interface AnimalImageParams {
 export class AnimalImagesController {
     constructor(private animalImagesService: AnimalImagesService) { }
 
-    @RequirePermission(Permission.ANIMAL)
-    @Get(':id')
-    @UseGuards(PermissionsGuard)
+    @Public()
     getImages(@Param("id") animalId: string) {
         return this.animalImagesService.get(animalId);
     }

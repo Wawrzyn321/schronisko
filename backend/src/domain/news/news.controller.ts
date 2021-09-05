@@ -1,3 +1,4 @@
+import { Public } from './../auth/public.decorator';
 import { LoggedInUser } from './../auth/types';
 import { NewsModifyParams, NewsCreateInput, NewsUpdateInput } from './News';
 import { NewsService } from './news.service';
@@ -10,17 +11,15 @@ import { PermissionsGuard } from '../auth/Permissions.guard';
 export class NewsController {
     constructor(private newsService: NewsService) {}
 
-    @RequirePermission(Permission.NEWS)
+    @Public()
     @Get()
-    @UseGuards(PermissionsGuard)
     getNews(@Query() query) {
         const takeTop = parseInt(query.takeTop) || undefined;
         return this.newsService.getAll(takeTop);
     }
 
-    @RequirePermission(Permission.NEWS)
+    @Public()
     @Get(':id')
-    @UseGuards(PermissionsGuard)
     getSingleNews(@Param("id") newsId: string) {
         return this.newsService.get(newsId);
     }

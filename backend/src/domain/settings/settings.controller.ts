@@ -1,3 +1,4 @@
+import { Public } from './../auth/public.decorator';
 import { LoggedInUser } from '../auth/types';
 import { SettingsService } from './settings.service';
 import { RequirePermission } from '../auth/Permissions.decorator';
@@ -9,7 +10,7 @@ import { PermissionsGuard } from '../auth/Permissions.guard';
 export class SettingsController {
     constructor(private settingsService: SettingsService) { }
 
-    @UseGuards(PermissionsGuard)
+    @Public()
     @Get()
     getSettings() {
         return this.settingsService.getAll();

@@ -1,0 +1,16 @@
+strony w pages muszą mieć default export
+
+Next.js supports pages with dynamic routes. For example, if you create a file called pages/posts/[id].js, then it will be accessible at posts/1, posts/2, etc.
+
+next/image z automatu optymalizuje i wczytuje odpowiednie wersje obrazków na odpowiednie widoki, co więcej - nie wczytuje wszystkiego od zwierzętami
+
+komponent pages/_app umożliwia załadowanie globalnych cssów - nie jest to możliwe nigdzie indziej!
+jest on wspólny dla wszystkich stron.
+
+preload:
+- static site generation - generuje przy budowaniu apki
+- server side rendering - renderuje na serwerze za każdym żądaniem => getServerSideProps
+- static site generation with data - generuje przy budowaniu apki, wykonując wybrane żądania => getStaticProps
+- Client-side Rendering - statycznie część generujemy przy buildzie, dynamiczne dane są pobierane u klienta - dobre do stronek niewymagających SEO
+
+

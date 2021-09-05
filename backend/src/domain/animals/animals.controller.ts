@@ -1,3 +1,4 @@
+import { Public } from './../auth/public.decorator';
 import { LoggedInUser } from './../auth/types';
 import { Animal } from '.prisma/client';
 import { AnimalsService, AnimalData } from './animals.service';
@@ -6,25 +7,19 @@ import { Controller, Get, UseGuards, Param, Patch, Body, Post, Delete, Request, 
 import { Permission } from '@prisma/client';
 import { PermissionsGuard } from '../auth/Permissions.guard';
 
-interface AnimalHttpParams extends Animal {
-    imageData: string;
-}
-
 @Controller('api/animals')
 export class AnimalsController {
     constructor(private animalsService: AnimalsService) { }
 
-    @RequirePermission(Permission.ANIMAL)
+    @Public()
     @Get()
-    @UseGuards(PermissionsGuard)
     getAnimals(@Query() query) {
         const takeTop = parseInt(query.takeTop) || undefined;
         return this.animalsService.getAll(takeTop);
     }
 
-    @RequirePermission(Permission.ANIMAL)
+    @Public()
     @Get(':id')
-    @UseGuards(PermissionsGuard)
     getAnimal(@Param("id") animalId: string) {
         return this.animalsService.get(animalId);
     }

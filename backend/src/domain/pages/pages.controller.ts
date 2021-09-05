@@ -1,3 +1,4 @@
+import { Public } from './../auth/public.decorator';
 import { LoggedInUser } from './../auth/types';
 import { Page } from './Page';
 import { PagesService } from './pages.service';
@@ -11,17 +12,16 @@ import { Query } from '@nestjs/common';
 export class PagesController {
     constructor(private pagesService: PagesService) {}
 
-    @RequirePermission(Permission.PAGE)
+    @Public()
     @Get()
-    @UseGuards(PermissionsGuard)
     getPages(@Query() query) {
+        console.log(query);
         const takeTop = parseInt(query.takeTop) || undefined;
         return this.pagesService.getAll(takeTop);
     }
 
-    @RequirePermission(Permission.PAGE)
+    @Public()
     @Get(':id')
-    @UseGuards(PermissionsGuard)
     getPage(@Param("id") pageId: string) {
         return this.pagesService.get(pageId);
     }
