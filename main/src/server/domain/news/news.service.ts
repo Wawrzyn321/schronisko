@@ -3,7 +3,7 @@ import { LoggedInUser } from './../auth/types';
 import { NewsCreateInput, NewsUpdateInput, NewsModifyParams, NewsListElement } from './News';
 import type { News } from '.prisma/client';
 import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
-import { PrismaService } from 'src/prisma-connect/prisma.service';
+import { PrismaService } from '../../prisma-connect/prisma.service';
 import { v4 as uuid } from 'uuid';
 import { saveImage, deleteImage } from './img-fs';
 import { validateNewsCreate, validateNewsUpdate } from './helpers';

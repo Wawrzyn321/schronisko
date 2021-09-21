@@ -1,9 +1,9 @@
 import { UserDto, validateCreate, toUser, toUserUpdate, validateUpdate } from '../common/UserDto';
 import { UserViewModel } from './../auth/auth.service';
 import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
-import { PrismaService } from 'src/prisma-connect/prisma.service';
+import { PrismaService } from '../../prisma-connect/prisma.service';
 import { Permission, User, UserPermissions } from '@prisma/client';
-import { BcryptService } from 'src/domain/auth/bcrypt/bcrypt.service';
+import { BcryptService } from '../auth/bcrypt/bcrypt.service';
 import { LoggedInUser } from '../auth/types';
 import { LogsService } from '../logs/logs.service';
 import { formattedDiff, havePermissionsChanged } from '../logs/diff';

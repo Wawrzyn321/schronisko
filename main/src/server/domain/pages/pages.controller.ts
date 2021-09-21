@@ -15,7 +15,6 @@ export class PagesController {
     @Public()
     @Get()
     getPages(@Query() query) {
-        console.log(query);
         const takeTop = parseInt(query.takeTop) || undefined;
         return this.pagesService.getAll(takeTop);
     }

@@ -1,6 +1,6 @@
 import { Permission } from '@prisma/client';
 import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
-import { PrismaService } from 'src/prisma-connect/prisma.service';
+import { PrismaService } from '../../prisma-connect/prisma.service';
 import type { Page } from '.prisma/client';
 import { PageListElement } from './Page';
 import { LoggedInUser } from '../auth/types';

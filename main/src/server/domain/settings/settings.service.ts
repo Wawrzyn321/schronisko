@@ -1,6 +1,6 @@
 import { Permission, Settings } from '@prisma/client';
 import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
-import { PrismaService } from 'src/prisma-connect/prisma.service';
+import { PrismaService } from '../../prisma-connect/prisma.service';
 import { LoggedInUser } from '../auth/types';
 import { LogsService } from '../logs/logs.service';
 import { formattedDiff } from '../logs/diff';

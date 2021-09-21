@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException, BadRequestException, ConflictException } from '@nestjs/common';
-import { PrismaService } from 'src/prisma-connect/prisma.service';
+import { PrismaService } from '../../prisma-connect/prisma.service';
 import type { Animal, AnimalCategory, AnimalGender, AnimalLocation, AnimalType } from '.prisma/client';
 import { VirtualCaretakerType, Permission } from '@prisma/client';
 import { v4 as uuid } from 'uuid';

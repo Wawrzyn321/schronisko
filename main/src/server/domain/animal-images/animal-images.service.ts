@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
-import { PrismaService } from 'src/prisma-connect/prisma.service';
+import { PrismaService } from '../../prisma-connect/prisma.service';
 import { deleteImage, saveImage } from '../news/img-fs';
 import { AnimalImageParams } from './animal-images.controller';
 import { v4 as uuid } from 'uuid';
