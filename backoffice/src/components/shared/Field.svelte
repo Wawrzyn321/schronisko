@@ -2,6 +2,8 @@
   import { onMount, setContext } from 'svelte';
   import { omit } from './../../../node_modules/svelma/src/utils';
 
+  export let noStar: boolean = false;
+
   /** Type (color) of the field and help message. Also adds a matching icon.
    * @svelte-prop {String} [type]
    * @values $$colors$$
@@ -120,8 +122,11 @@
     for={labelFor}
     class="label"
     bind:this={labelEl}
-    class:is-required={required}>{label}</label
+    class:is-required={required}
+    class:no-star={noStar}
   >
+    {label}
+  </label>
   <slot statusType={type} />
   {#if message}
     <p class="help {type}" bind:this={messageEl}>{message}</p>
@@ -149,6 +154,10 @@
       content: '*';
       margin-left: 4px;
       color: red;
+    }
+
+    .is-required.no-star::after {
+      content: '';
     }
   }
 </style>

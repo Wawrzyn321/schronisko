@@ -10,7 +10,7 @@
     notifySuccess,
   } from '../../contexts/notification.context';
 
-  export let onSelfEdited: (u: UserViewModel) => void = undefined;
+  export let onSelfEdited: (u: UserViewModel, notify?: boolean) => void = undefined;
   export let modalVisible: boolean;
 
   let form: HTMLFormElement;
@@ -27,8 +27,8 @@
     try {
       loading = true;
       const updatedUser = await userService.updateSelf(user);
-      onSelfEdited && onSelfEdited(updatedUser);
-      notifySuccess({ message: 'Twoje dane zostały zapisane' });
+      onSelfEdited && onSelfEdited(updatedUser, false);
+      notifySuccess({ message: 'Twoje dane zostały zapisane.' });
     } catch (e) {
       notifyError({ message: 'Błąd zapisywania danych: ' + e.message });
     }

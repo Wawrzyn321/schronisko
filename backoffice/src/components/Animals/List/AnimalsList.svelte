@@ -30,6 +30,14 @@
 
   let deleteModalVisible = false;
   let selectedAnimal: Animal = null;
+
+  function restrictChars(str: string, chars = 40): string {
+    if (str.length <= chars) {
+      return str;
+    } else {
+      return str.substr(0, chars) + '...';
+    }
+  }
 </script>
 
 <table class="table is-fullwidth">
@@ -38,12 +46,14 @@
     <tr>
       {#if columnParams.showImage}
         <td style="padding-bottom: 0">
-          <img
-            src={`${API_URL}/${animal.imageName}`}
-            alt={animal.name}
-            class:is-grayscale={animal.category ===
-              AnimalCategory.ZaTeczowymMostem}
-          />
+          <a href={`/#/animals/${encodeURIComponent(animal.id)}`}>
+            <img
+              src={`${API_URL}/${animal.imageName}`}
+              alt={animal.name}
+              class:is-grayscale={animal.category ===
+                AnimalCategory.ZaTeczowymMostem}
+            />
+          </a>
         </td>
       {/if}
       <td>
@@ -53,7 +63,7 @@
       </td>
       {#if columnParams.showDescription}
         <td class="g-table-ellipsis">
-          {animal.description}
+          {restrictChars(animal.description)}
         </td>
       {/if}
       <td>
@@ -66,7 +76,7 @@
       {/if}
       {#if columnParams.showLocation}
         <td>
-          {animalLocationsMap[animal.location]} 
+          {animalLocationsMap[animal.location]}
           {#if animal.locationDescription}
             ({animal.locationDescription})
           {/if}
@@ -87,7 +97,7 @@
       {/if}
       {#if columnParams.showNote}
         <td class="g-table-ellipsis">
-          {animal.note || '-'}
+          {restrictChars(animal.note || '-')}
         </td>
       {/if}
       {#if columnParams.showAddedDate}

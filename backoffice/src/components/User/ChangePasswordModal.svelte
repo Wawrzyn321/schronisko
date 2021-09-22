@@ -22,7 +22,7 @@
     try {
       loading = true;
       await authService.changeSelfPassword(formData);
-      logout();
+      logout({ type: 'is-info', message: 'Hasło zostało zmienione.' });
     } catch (e) {
       notifyError({ message: 'Nie udało się zmienić hasła: ' + e.message });
     }
@@ -52,7 +52,7 @@
       <Tooltip
         multilined={true}
         style="width: 420px"
-        label="Nie ma wymagań co do siły hasła. Jeśli ktoś Ci je odgadnie i narobi szkód, będzie to widoczne w logach jako Twoja robota... Używanie słabego hasła to wybór."
+        label="Nie ma wymagań co do siły hasła. Używanie słabego hasła to wybór."
       >
         <PasswordInput
           label="Nowe hasło"

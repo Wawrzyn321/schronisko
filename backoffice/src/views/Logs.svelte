@@ -39,7 +39,7 @@
   onMount(loadLogs);
 
   const onLogsDeleted = async () => {
-    notifySuccess({ message: 'Logi zostały usunięte' });
+    notifySuccess({ message: 'Logi zostały usunięte.' });
     await loadLogs();
   };
 

@@ -48,7 +48,7 @@
                 (!dogAdoptionsOpen).toString()
               );
               dogAdoptionsOpen = !dogAdoptionsOpen;
-              notifySuccess({ message: 'Zapisano ustawienie' });
+              notifySuccess({ message: 'Zapisano ustawienie.' });
             } catch (e) {
               notifyError({
                 message: 'Nie można zapisać ustawienia: ' + e.message,
@@ -69,7 +69,7 @@
 
 <style lang="scss">
   main {
-    margin: 32px;
+    margin: 24px;
   }
 
   header {

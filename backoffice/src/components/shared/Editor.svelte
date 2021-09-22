@@ -2,11 +2,14 @@
   import Quill from 'quill';
   import { Notification } from 'svelma';
 
+  //https://quilljs.com/docs/modules/toolbar/
   const toolbarOptions = [
-    [{ header: 1 }, { header: 2 }, 'blockquote', 'link', 'image'],
+    [{ header: [1, 2, 3, 4, 5, 6, false] }],
+    ['blockquote', 'link', 'image'],
     ['bold', 'italic', 'underline', 'strike'],
-    [{ list: 'ordered' }, { list: 'ordered' }],
+    [{ list: 'ordered' }, { list: 'bullet' }],
     [{ align: [] }],
+    ['clean'],
   ];
   // Quill.register('modules/counter', function (quill, options) {
   // });

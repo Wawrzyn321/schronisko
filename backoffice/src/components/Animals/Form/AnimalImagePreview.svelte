@@ -25,19 +25,30 @@
     height={112}
   />
   {#if showOverlay}
-    <img src="img/overlay.svg" style="height: 112px" alt="nakładka" />
+    <img
+      class="overlay"
+      src="img/overlay.svg"
+      style="height: 112px"
+      alt="nakładka"
+    />
   {/if}
 </div>
 
 <style lang="scss">
   .preview-wrapper {
+    --padding: 32px;
     position: relative;
     height: 115px;
+    width: calc(152px + var(--padding));
 
     & > :global(*) {
       position: absolute;
       left: 0;
-      margin-left: 32px;
+    }
+
+    .overlay {
+      left: 100%;
+      margin-left: var(--padding);
     }
   }
 </style>

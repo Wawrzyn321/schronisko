@@ -32,19 +32,25 @@
 
   function onUserAdded(u: UserViewModel) {
     users = insertInOrder(users, u, (u) => u.lastName);
-    notifySuccess({message: 'Dodano użytkownika'});
+    notifySuccess({ message: 'Dodano użytkownika.' });
   }
 
   function onUserDeleted(u: UserViewModel) {
     users = users.filter((e) => e.id !== u.id);
-    notifySuccess({message: `Usunięto użytkownika ${u.firstName} ${u.lastName}`});
+    notifySuccess({
+      message: `Usunięto użytkownika ${u.firstName} ${u.lastName}.`,
+    });
   }
 
-  function onUserEdited(u: UserViewModel) {
+  function onUserEdited(u: UserViewModel, notify: boolean) {
     const user = users.find((user) => user.id === u.id);
     const index = users.indexOf(user);
     users = [...users.slice(0, index), u, ...users.slice(index + 1)];
-    notifySuccess({message: `Zaktualizowano dane użytkownika ${u.firstName} ${u.lastName}`});
+    if (notify !== false) {
+      notifySuccess({
+        message: `Zaktualizowano dane użytkownika ${u.firstName} ${u.lastName}.`,
+      });
+    }
   }
 </script>
 

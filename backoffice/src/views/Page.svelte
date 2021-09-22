@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { querystring } from 'svelte-spa-router';
+  import { querystring, push } from 'svelte-spa-router';
   import { get } from 'svelte/store';
   import { Button } from 'svelma';
   import { pageService } from '../services/PageService';
@@ -10,9 +10,9 @@
   import Loader from '../components/shared/Loader.svelte';
 
   export let params: { id: string };
+  
   const id = params.id;
-  let modeIndex =
-    new URLSearchParams(get(querystring)).get('mode') === 'edit' ? 0 : 1;
+  const mode = new URLSearchParams(get(querystring)).get('mode');
 
   let page: Page;
   let editedContent = '';
@@ -24,6 +24,9 @@
       editedContent = page.content;
     } catch (e) {
       notifyError({ message: 'Nie można pobrać strony: ' + e.message });
+      if (e.status === 404) {
+        push('/pages');
+      }
     }
   });
 
@@ -38,27 +41,37 @@
   }
 </script>
 
-{#if page}
-  <header>
-    <h1>{page.title}</h1>
-    <Button
-      type="is-primary"
-      disabled={isSaving || page.content === editedContent}
-      loading={isSaving}
-      on:click={savePost}
-    >
-      Zapisz
-    </Button>
-  </header>
-  <EditorTabs bind:editedContent initialContent={page.content} />
-{:else}
-  <Loader />
-{/if}
+<main>
+  {#if page}
+    <header>
+      <h1>
+        <a href="/#/pages">Strony</a>
+        <span class="g-breadcrumb-separator">/ </span>{page.title}
+      </h1>
+      <Button
+        type="is-primary"
+        disabled={isSaving || page.content === editedContent}
+        loading={isSaving}
+        on:click={savePost}
+      >
+        Zapisz
+      </Button>
+    </header>
+    <EditorTabs
+      mapping={['edit', 'view']}
+      currentTab={mode}
+      bind:editedContent
+      initialContent={page.content}
+    />
+  {:else}
+    <Loader />
+  {/if}
+</main>
 
 <style lang="scss">
   header {
     display: flex;
     justify-content: space-between;
-    padding: 16px;
+    margin-bottom: 16px;
   }
 </style>

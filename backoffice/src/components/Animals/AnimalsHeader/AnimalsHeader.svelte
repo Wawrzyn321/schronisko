@@ -12,7 +12,7 @@
 <header class="animals-header">
   <div class="g-flex-between-100">
     <h1>Zwierzęta</h1>
-    <div style="display: flex">
+    <div class="animals-header-container">
       <input placeholder="Szukaj..." bind:value={searchPhrase} />
       <Button
         style="margin: 0 4px"
@@ -32,6 +32,11 @@
 <style lang="scss">
   header {
     margin-bottom: 32px;
+  }
+
+  .animals-header-container {
+    display: flex;
+    margin-bottom: 16px;
   }
 
   input {

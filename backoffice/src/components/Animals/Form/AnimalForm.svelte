@@ -1,6 +1,6 @@
 <script lang="ts">
   import Field from '../../shared/Field.svelte';
-  import { Input, Tab, Tabs, Tooltip, Button } from 'svelma';
+  import { Input, Tab, Tooltip, Button } from 'svelma';
   import type { AnimalData } from '../../../services/AnimalsService';
   import AnimalTypeSelect from './AnimalTypeSelect.svelte';
   import AnimalGenderSelect from './AnimalGenderSelect.svelte';
@@ -12,17 +12,20 @@
   import AnimalImagePreview from './AnimalImagePreview.svelte';
   import ResizableImageInput from '../../shared/ResizableImageInput.svelte';
   import type { AnimalImageParams } from '../../../services/AnimalImagesService';
-  import { onMount } from 'svelte';
   import { descriptionTemplates } from './descriptionTemplates';
   import { notifyInfo } from '../../../contexts/notification.context';
+  import { querystring } from 'svelte-spa-router';
+  import { get } from 'svelte/store';
+  import Tabs from '../../shared/Tabs.svelte';
 
   export let animal: AnimalData;
   export let images: AnimalImageParams[] = [];
   export let isUpdate = false;
   export let setFormValid: (valid: boolean) => any;
 
+  const mode = new URLSearchParams(get(querystring)).get('mode');
+
   let form: HTMLFormElement;
-  let tabs: any;
 
   function revertImage() {
     animal.imageData = null;
@@ -57,15 +60,13 @@
       notifyInfo({ message: 'Zmieniono rodzaj wirtualnego opiekuna.' });
     }
   }
-
-  onMount(() => tabs.setActive(0));
 </script>
 
 <form bind:this={form} on:input={revalidateForm} on:change={revalidateForm}>
-  <Tabs bind:this={tabs}>
+  <Tabs mapping={['data', 'photos']} currentTab={mode}>
     <Tab label="Dane">
-      <div id="name-and-id">
-        <section>
+      <div id="top-form">
+        <section id="top-left-form">
           <Field label="Imię" required>
             <Input
               required
@@ -73,6 +74,7 @@
               placeholder="Imię zwierzęcia"
             />
           </Field>
+          <AnimalTypeSelect bind:type={animal.type} />
           <Field label="Numer ewidencyjny" required>
             <Tooltip label="Musi być unikalny.">
               <Input
@@ -83,10 +85,13 @@
               />
             </Tooltip>
           </Field>
+          <AnimalLocationSelect
+            bind:location={animal.location}
+            type={animal.type}
+          />
         </section>
         <section>
-          <div id="first-row">
-            <AnimalTypeSelect bind:type={animal.type} />
+          <div id="top-right-form">
             <AnimalGenderSelect bind:gender={animal.gender} />
             <AnimalCategorySelect
               bind:category={animal.category}
@@ -94,11 +99,7 @@
               onChange={onCategoryChange}
             />
           </div>
-          <div id="second-row">
-            <AnimalLocationSelect
-              bind:location={animal.location}
-              type={animal.type}
-            />
+          <div>
             <Field label="Dodatkowy opis miejsca">
               <Input
                 bind:value={animal.locationDescription}
@@ -170,8 +171,8 @@
             />
           </div>
         </div>
-      </div></Tab
-    >
+      </div>
+    </Tab>
     <Tab label="Zdjęcia"><AnimalImages bind:images {revalidateForm} /></Tab>
   </Tabs>
 </form>
@@ -190,7 +191,7 @@
 
     @mixin grouped($cols) {
       display: grid;
-      grid-gap: 32px;
+      grid-column-gap: 32px;
       grid-template-columns: $cols;
 
       @media (max-width: 800px) {
@@ -198,16 +199,16 @@
         grid-gap: 0;
       }
     }
-    #name-and-id {
-      @include grouped(2fr 3fr);
+    #top-form {
+      @include grouped(3fr 2fr);
     }
 
-    #first-row {
-      @include grouped(1fr 1fr 1fr);
+    #top-left-form {
+      @include grouped(3fr 2fr);
     }
 
-    #second-row {
-      @include grouped(1fr 2fr);
+    #top-right-form {
+      @include grouped(1fr 1fr);
     }
 
     :global(.tooltip-wrapper) {

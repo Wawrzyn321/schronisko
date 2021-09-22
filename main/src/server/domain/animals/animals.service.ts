@@ -135,7 +135,16 @@ export class AnimalsService {
       throw new NotFoundException();
     }
     await this.prisma.animalImage.deleteMany({ where: { animalId: id } });
-    await deleteImage(animal.imageName);
+    try {
+      await deleteImage(animal.imageName);
+    } catch (e) {
+      console.warn(e);
+      await this.logsService.log({
+        message: `usunał zwierzę ${animal.name}, ale nie udało się usunąć jego zdjęcia.`,
+        permission: Permission.ANIMAL,
+        user,
+      })
+    }
 
     const deletedAnimal = await this.prisma.animal.delete({
       where: { id }

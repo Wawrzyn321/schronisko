@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button } from 'svelma';
+  import { Button, Tooltip } from 'svelma';
   import {
     ChevronUpIcon,
     ChevronDownIcon,
@@ -60,7 +60,7 @@
       disabled={images.length >= MAX_IMAGES}
       type="is-primary"
     >
-      <strong>+</strong>
+      <strong style="margin-right: 0.5em">+</strong> Dodaj
     </Button>
   </div>
   <ul class="animal-images-list">
@@ -81,16 +81,22 @@
           height={533}
         />
         <div>
-          <Button
-            type="is-primary"
-            on:click={() => (image.visible = !image.visible)}
-          >
-            {#if image.visible}
-              <EyeIcon size="1.0x" />
-            {:else}
-              <EyeOffIcon size="1.0x" />
-            {/if}
-          </Button>
+          <div class="eye-tooltip">
+            <Tooltip
+              label="Określa czy zdjęcie jest widoczne na stronie głównej."
+            >
+              <Button
+                type="is-primary"
+                on:click={() => (image.visible = !image.visible)}
+              >
+                {#if image.visible}
+                  <EyeIcon size="1.0x" />
+                {:else}
+                  <EyeOffIcon size="1.0x" />
+                {/if}
+              </Button>
+            </Tooltip>
+          </div>
 
           <Button
             type="is-primary"
@@ -120,6 +126,10 @@
     display: flex;
     justify-content: space-between;
     margin-top: 10px;
+  }
+
+  .eye-tooltip {
+    display: inline-block;
   }
 
   .image {

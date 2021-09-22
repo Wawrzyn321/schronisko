@@ -26,7 +26,7 @@
         imageData
       );
       push(`/news/${id}`);
-      notifySuccess({ message: 'Post został utworzony' });
+      notifySuccess({ message: 'Post został utworzony.' });
     } catch (e) {
       notifyError({ message: 'Nie można utworzyć posta: ' + e.message });
     }

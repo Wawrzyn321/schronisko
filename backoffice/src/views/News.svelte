@@ -38,7 +38,7 @@
 
   function onNewsDeleted(n: News) {
     news = news.filter((n) => n.id !== n.id);
-    notifySuccess({ message: `Usunięto newsa ${n.title}` });
+    notifySuccess({ message: `Usunięto newsa ${n.title}.` });
   }
 </script>
 
@@ -46,6 +46,10 @@
   <NewsHeader bind:searchPhrase />
   <NewsList news={paginatedNews} {loading} {onNewsDeleted} />
   {#if !loading && filteredNews.length}
-    <Pagination bind:pageSize itemsCount={filteredNews.length} bind:currentPage />
+    <Pagination
+      bind:pageSize
+      itemsCount={filteredNews.length}
+      bind:currentPage
+    />
   {/if}
 </main>

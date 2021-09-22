@@ -1,18 +1,16 @@
 <script lang="ts">
-  import { Tabs, Tab } from 'svelma';
-  import { onMount } from 'svelte';
+  import { Tab } from 'svelma';
   import Editor from './Editor.svelte';
   import PostPreview from './PostPreview.svelte';
+  import Tabs from './Tabs.svelte';
 
-  let tabs: any;
-
+  export let mapping: Array<string> | undefined = undefined;
+  export let currentTab: string | undefined = undefined;
   export let editedContent = '';
   export let initialContent = '';
-
-  onMount(() => tabs.setActive(0));
 </script>
 
-<Tabs bind:this={tabs}>
+<Tabs {mapping} {currentTab}>
   <slot />
   <Tab label="Zawartość">
     <Editor {initialContent} onChange={(c) => (editedContent = c)} />

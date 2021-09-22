@@ -31,7 +31,7 @@
   }
 </script>
 
-<Field {label} {message} required>
+<Field {label} {message} noStar={!label} required>
   <div style="display: flex">
     <Input type="file" accept="image/png, image/jpeg" on:input={onFileChange} />
     <Button on:click={openResizeModal} disabled={!file}>Przytnij</Button>

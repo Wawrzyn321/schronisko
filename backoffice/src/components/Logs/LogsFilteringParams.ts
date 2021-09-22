@@ -33,7 +33,7 @@ export function filterLogs(logs: Logs[], filteringParams: LogsFilteringParams, s
 
     return logs.filter(l => filteringParams.permissionFilter.includes(l.permission))
         .filter(l => l.login.toLowerCase().includes(loginFilter))
-        .filter(l => l.id.toLowerCase().includes(userIdFilter))
+        .filter(l => l.userId.toString().includes(userIdFilter))
         .filter(l => l.message.toLowerCase().includes(searchPhrase))
         .filter(l => timeFrom ? new Date(l.time) >= timeFrom : true)
         .filter(l => timeEnd ? new Date(l.time) <= timeEnd : true)

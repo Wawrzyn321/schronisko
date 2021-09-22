@@ -48,7 +48,7 @@
 
   function onAnimalDeleted(deletedAnimal: Animal) {
     animals = animals.filter((a) => a.id !== deletedAnimal.id);
-    notifySuccess({ message: `Usunięto zwierzę ${deletedAnimal.name}` });
+    notifySuccess({ message: `Usunięto zwierzę ${deletedAnimal.name}.` });
   }
 </script>
 

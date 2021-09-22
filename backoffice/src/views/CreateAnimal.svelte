@@ -35,7 +35,7 @@
     try {
       const { id } = await animalsService.create(animal, images);
       push(`/animals/${id}`);
-      notifySuccess({ message: 'Zwierzę zostało dodane' });
+      notifySuccess({ message: 'Zwierzę zostało dodane.' });
     } catch (e) {
       if (e.status === 409) {
         notifyError({

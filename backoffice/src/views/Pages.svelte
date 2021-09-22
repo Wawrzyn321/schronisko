@@ -57,10 +57,13 @@
     {#each paginatedPages as page}
       <tr>
         <td>
-          <a href={`/#/pages/${page.id}`}>{page.title}</a>
+          <a href={`/#/pages/${page.id}?mode=view`}>{page.title}</a>
         </td>
         <td class="g-text-align-right g-actions-header">
-          <Button type="is-primary" on:click={() => push(`/pages/${page.id}`)}>
+          <Button
+            type="is-primary"
+            on:click={() => push(`/pages/${page.id}?mode=edit`)}
+          >
             <Edit2Icon size="1.0x" />
           </Button>
         </td>
