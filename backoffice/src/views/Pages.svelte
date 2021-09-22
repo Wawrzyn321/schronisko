@@ -42,7 +42,7 @@
   <header>
     <div class="g-flex-between-100">
       <h1>Strony</h1>
-      <input placeholder="Szukaj..." bind:value={searchPhrase} />
+      <input placeholder="Szukaj..." type="search" bind:value={searchPhrase} />
     </div>
     <p class="g-description">
       Tutaj znajduje się spis statycznych stron, na stałe osadzonych na głównej

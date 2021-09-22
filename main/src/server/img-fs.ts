@@ -1,4 +1,4 @@
-import { STATIC_FILES_PATH } from './../../app.module';
+import { STATIC_FILES_PATH } from './app.module';
 import { promises as fsp } from "fs"
 const sharp: any = require('sharp');
 
@@ -20,6 +20,7 @@ const presetsMap: { [gender in ResizingPresets]: { width: number, height: number
 }
 
 function createPath(name: string) {
+    console.log(`${STATIC_FILES_PATH}/${name}`)
     return `${STATIC_FILES_PATH}/${name}`;
 }
 

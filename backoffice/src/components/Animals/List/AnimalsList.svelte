@@ -18,7 +18,7 @@
   import type { AnimalColumnParams } from './../AnimalsHeader/AnimalColumnParams';
   import type { AnimalFilteringParams } from './../AnimalsHeader/AnimalFilteringParams';
   import type { AnimalSortingParams } from './../AnimalsHeader/AnimalSortingParams';
-  import { API_URL } from '../../../services/config';
+  import { STATIC_URL } from '../../../services/config';
   import EmptyListMessage from '../../shared/EmptyListMessage.svelte';
 
   export let animals: Animal[];
@@ -48,7 +48,7 @@
         <td style="padding-bottom: 0">
           <a href={`/#/animals/${encodeURIComponent(animal.id)}`}>
             <img
-              src={`${API_URL}/${animal.imageName}`}
+              src={`${STATIC_URL}/${animal.imageName}`}
               alt={animal.name}
               class:is-grayscale={animal.category ===
                 AnimalCategory.ZaTeczowymMostem}

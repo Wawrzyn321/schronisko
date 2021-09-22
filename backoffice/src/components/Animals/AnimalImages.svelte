@@ -9,7 +9,7 @@
   import { Trash2Icon } from 'svelte-feather-icons';
 
   import type { AnimalImageParams } from '../../services/AnimalImagesService';
-  import { API_URL } from '../../services/config';
+  import { STATIC_URL } from '../../services/config';
   import ResizableImageInput from '../shared/ResizableImageInput.svelte';
 
   export let images: AnimalImageParams[];
@@ -69,7 +69,7 @@
         {#if image.data}
           <img class="image" src={image.data} alt="" />
         {:else if image.imageName}
-          <img class="image" src={`${API_URL}/${image.imageName}`} alt="" />
+          <img class="image" src={`${STATIC_URL}/${image.imageName}`} alt="" />
         {:else}
           <div class="image" />
         {/if}

@@ -3,38 +3,39 @@ import Head from 'next/head';
 import Link from 'next/link';
 
 export default function Home({ _data }) {
-  const [data, setData] = useState(_data);
+  return 'tu będzie strona główna, ale na razie idźcie testować backoffice';
+  // const [data, setData] = useState(_data);
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const response = await fetch('http://localhost:60045/api/settings');
-        setData(await response.json());
-      } catch (e) {
-        alert(e.message);
-      }
-    })();
-  }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       const response = await fetch('http://localhost:60045/api/settings');
+  //       setData(await response.json());
+  //     } catch (e) {
+  //       alert(e.message);
+  //     }
+  //   })();
+  // }, []);
 
-  return (
-    <div className="container">
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+  // return (
+  //   <div className="container">
+  //     <Head>
+  //       <title>Create Next App</title>
+  //       <link rel="icon" href="/favicon.ico" />
+  //     </Head>
 
-      <main>{!data ? 'loading?' : JSON.stringify(data)}</main>
+  //     <main>{!data ? 'loading?' : JSON.stringify(data)}</main>
 
-      <Link href="/posts">LINK</Link>
-      <style jsx>{`
-        * {
-          background-color: teal;
-        }
-      `}</style>
+  //     <Link href="/posts">LINK</Link>
+  //     <style jsx>{`
+  //       * {
+  //         background-color: teal;
+  //       }
+  //     `}</style>
 
-      <style jsx global>{``}</style>
-    </div>
-  );
+  //     <style jsx global>{``}</style>
+  //   </div>
+  // );
 }
 
 export async function getServerSideProps() {

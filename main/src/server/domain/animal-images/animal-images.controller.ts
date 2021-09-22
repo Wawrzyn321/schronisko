@@ -16,7 +16,9 @@ export class AnimalImagesController {
     constructor(private animalImagesService: AnimalImagesService) { }
 
     @Public()
+    @Get(':id')
     getImages(@Param("id") animalId: string) {
+        console.log(animalId)
         return this.animalImagesService.get(animalId);
     }
 

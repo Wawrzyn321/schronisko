@@ -3,6 +3,7 @@ import { throwingFetch } from "./throwingFetch";
 import { API_URL } from './config';
 import type { Animal, AnimalCategory, AnimalGender, AnimalLocation, AnimalType, VirtualCaretakerType } from '.prisma/client';
 import { animalImagesService } from "./AnimalImagesService";
+import { v4 as uuid } from 'uuid';
 
 const baseUrl = `${API_URL}/api/animals`
 
@@ -25,7 +26,7 @@ export interface AnimalData {
 
 export class AnimalsService {
     async getInitial(): Promise<Animal[]> {
-        return await throwingFetch(baseUrl+"?takeTop=10");
+        return await throwingFetch(baseUrl + "?takeTop=10");
     }
 
     async getAll(): Promise<Animal[]> {
@@ -60,8 +61,9 @@ export class AnimalsService {
         try {
             await animalImagesService.delete(id);
         } catch (e) {
-            console.warn(e);
-            throw Error("Nie można usunąć zdjęć zwierzęcia.");
+            const errorId = uuid();
+            console.warn(errorId + ": " + e.message);
+            throw Error(`Wystąpił błąd na serwerze (${errorId}).`);
         }
         return await throwingFetch(`${baseUrl}/${(encodeURIComponent(id))}`, {
             method: 'DELETE',

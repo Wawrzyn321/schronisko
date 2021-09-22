@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { API_URL } from '../../services/config';
+  import { STATIC_URL } from '../../services/config';
   import { RotateCcwIcon } from 'svelte-feather-icons';
 
   export let width: number;
@@ -13,7 +13,7 @@
   {#if imageData}
     <img src={imageData} alt="Podgląd" />
   {:else if imageName}
-    <img src={`${API_URL}/${imageName}`} alt="Podgląd" />
+    <img src={`${STATIC_URL}/${imageName}`} alt="Podgląd" />
   {/if}
   {#if imageData && imageName}
     <div class="image-preview__overlay">

@@ -330,3 +330,7 @@ nav.tabs {
 *::file-selector-button {
   display: none;
 }
+
+input[type=search] {
+  padding-left: 12px;
+}

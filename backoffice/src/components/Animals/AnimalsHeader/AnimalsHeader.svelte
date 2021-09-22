@@ -13,7 +13,7 @@
   <div class="g-flex-between-100">
     <h1>Zwierzęta</h1>
     <div class="animals-header-container">
-      <input placeholder="Szukaj..." bind:value={searchPhrase} />
+      <input placeholder="Szukaj..." type="search" bind:value={searchPhrase} />
       <Button
         style="margin: 0 4px"
         type="is-primary"

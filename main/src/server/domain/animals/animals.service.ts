@@ -3,7 +3,7 @@ import { PrismaService } from '../../prisma-connect/prisma.service';
 import type { Animal, AnimalCategory, AnimalGender, AnimalLocation, AnimalType } from '.prisma/client';
 import { VirtualCaretakerType, Permission } from '@prisma/client';
 import { v4 as uuid } from 'uuid';
-import { deleteImage, saveImage } from '../news/img-fs';
+import { deleteImage, saveImage } from '../../img-fs';
 import { LogsService } from './../logs/logs.service';
 import { LoggedInUser } from '../auth/types';
 import { formattedDiff } from '../logs/diff';

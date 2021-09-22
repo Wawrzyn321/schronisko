@@ -10,6 +10,7 @@
     <div style="display: flex">
       <input
         placeholder="Szukaj..."
+        type="search"
         bind:value={searchPhrase}
         style="margin-right: 10px"
       />

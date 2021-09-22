@@ -16,14 +16,14 @@ import { LogsModule } from './domain/logs/logs.module';
 import { SettingsModule } from './domain/settings/settings.module';
 import { ViewModule } from './domain/view/view.module'
 
-export const STATIC_FILES_PATH = 'static';
+export const STATIC_FILES_PATH = 'src/client/public/img';
 
 const domainModules = [AuthModule, UsersModule, PagesModule, NewsModule, AnimalsModule, AnimalImagesModule, LogsModule, SettingsModule];
 const ServeStatic = ServeStaticModule.forRoot({
   rootPath: join(__dirname, '..', STATIC_FILES_PATH),
   serveStaticOptions: {
     index: false,
-    extensions: ['.png'],
+    extensions: ['.png'], //todo
   },
   //exclude: ['/api*'],
 });
