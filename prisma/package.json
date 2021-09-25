@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "seed": "ts-node seed.ts",
     "ts-node": "ts-node --compiler-options '{\"module\":\"CommonJS\"}'",
-    "seed": "npx prisma db seed --preview-feature",
     "push": "npx prisma@2.19.0 generate && npx prisma@2.19.0 db push --preview-feature"
   },
   "keywords": [],

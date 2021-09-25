@@ -4,18 +4,9 @@
 
   export let animal: AnimalData;
   export let revertImage: () => any;
-
-  let showOverlay = false;
+  export let showOverlay: boolean = false;
 </script>
 
-<label>
-  <input
-    checked={showOverlay}
-    type="checkbox"
-    on:change={() => (showOverlay = !showOverlay)}
-  />
-  Podgląd nakładki
-</label>
 <div class="preview-wrapper">
   <ImagePreview
     imageData={animal.imageData}

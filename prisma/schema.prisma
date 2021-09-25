@@ -78,7 +78,8 @@ model News {
 }
 
 model Animal {
-  id                   String               @id
+  id                   String               @id @default(uuid())
+  refNo                String               @unique
   name                 String
   type                 AnimalType
   gender               AnimalGender
@@ -93,6 +94,7 @@ model Animal {
   addedDate            DateTime             @default(now())
   imageName            String
   note                 String?
+  contactInfo          String
 }
 
 model AnimalImage {

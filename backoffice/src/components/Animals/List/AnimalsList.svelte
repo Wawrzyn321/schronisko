@@ -31,7 +31,7 @@
   let deleteModalVisible = false;
   let selectedAnimal: Animal = null;
 
-  function restrictChars(str: string, chars = 40): string {
+  function restrictStringLength(str: string, chars = 40): string {
     if (str.length <= chars) {
       return str;
     } else {
@@ -63,7 +63,7 @@
       </td>
       {#if columnParams.showDescription}
         <td class="g-table-ellipsis">
-          {restrictChars(animal.description)}
+          {restrictStringLength(animal.description)}
         </td>
       {/if}
       <td>
@@ -87,6 +87,11 @@
           {animalCategoriesMap[animal.category]}
         </td>
       {/if}
+      {#if columnParams.showContactInfo}
+        <td class="g-table-ellipsis">
+          {restrictStringLength(animal.contactInfo)}
+        </td>
+      {/if}
       {#if columnParams.showVirtualCaretaker}
         <td>
           {virtualCaretakerTypesMap[animal.virtualCaretakerType]}
@@ -97,7 +102,7 @@
       {/if}
       {#if columnParams.showNote}
         <td class="g-table-ellipsis">
-          {restrictChars(animal.note || '-')}
+          {restrictStringLength(animal.note || '-')}
         </td>
       {/if}
       {#if columnParams.showAddedDate}

@@ -10,6 +10,7 @@ import { formattedDiff } from '../logs/diff';
 
 export interface AnimalData {
   id: string
+  refNo: string
   name: string
   type: AnimalType
   gender: AnimalGender
@@ -22,6 +23,7 @@ export interface AnimalData {
   isPublic: boolean
   imageData?: string
   imageName?: string
+  contactInfo: string
 }
 
 function validateAnimalCreate(animal: AnimalData): boolean {
@@ -29,7 +31,7 @@ function validateAnimalCreate(animal: AnimalData): boolean {
 }
 
 function validateAnimalUpdate(animal: AnimalData): boolean {
-  return !!animal.name && !!animal.id;
+  return !!animal.name && !!animal.refNo;
 }
 
 @Injectable()
@@ -55,17 +57,19 @@ export class AnimalsService {
     if (!animal.virtualCaretakerName && animal.virtualCaretakerType === VirtualCaretakerType.Znalazl) {
       throw new BadRequestException(null, "Brak nazwy wirtualnego opiekuna.");
     }
-    const existingAnimal = await this.prisma.animal.findUnique({ where: { id: animal.id } });
+    const existingAnimal = await this.prisma.animal.findUnique({ where: { refNo: animal.refNo } });
     if (!!existingAnimal) {
       throw new ConflictException(animal, "Zwierzę o podanym numerze już istnieje.");
     }
 
-    const imageName = `${uuid()}.png`;
+    const id = uuid();
+
+    const imageName = `${id}.png`;
     await saveImage(imageName, animal.imageData, 'Animal Miniature');
 
     const { imageData, ...animalData } = animal;
     const createdAnimal = await this.prisma.animal.create({
-      data: { ...animalData, imageName }
+      data: { ...animalData, imageName, id }
     });
 
     await this.logsService.log({
@@ -109,6 +113,7 @@ export class AnimalsService {
     }
     const diff = formattedDiff(prevAnimal, animalToDiff, [
       { name: 'Imię', selector: (n: Animal) => n.name },
+      { name: 'Numer referencyjny', selector: (n: Animal) => n.refNo },
       { name: 'Opis', selector: (n: Animal) => n.description },
       { name: 'Notatka', selector: (n: Animal) => n.note },
       { name: 'Kategoria', selector: (n: Animal) => n.category },
@@ -119,10 +124,11 @@ export class AnimalsService {
       { name: 'Opiekun wirtualny', selector: (n: Animal) => n.virtualCaretakerType },
       { name: 'Nazwa opiekuna wirtualnego', selector: (n: Animal) => n.virtualCaretakerName },
       { name: 'Opis miejsca przebywania', selector: (n: Animal) => n.locationDescription },
+      { name: 'Dane kontakowe', selector: (n: Animal) => n.contactInfo },
     ], animal.imageData ? [{ name: 'Miniaturka' }] : []);
 
     await this.logsService.log({
-      message: `zaktualizował zwierzę ${prevAnimal.name} (id ${prevAnimal.id}) ${diff}`,
+      message: `zaktualizował zwierzę ${prevAnimal.name} (id ${prevAnimal.id}, nr ${prevAnimal.refNo}) ${diff}`,
       permission: Permission.ANIMAL,
       user,
     })

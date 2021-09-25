@@ -6,12 +6,13 @@
 
   export let params: AnimalColumnParams;
 
-  const dataRows = [
+  const dataRows: { caption: string; property: string }[] = [
     { caption: 'Miniaturka', property: 'showImage' },
     { caption: 'Opis', property: 'showDescription' },
     { caption: 'Płeć', property: 'showGender' },
     { caption: 'Miejsce', property: 'showLocation' },
     { caption: 'Kategoria', property: 'showCategory' },
+    { caption: 'Dane kontaktowe', property: 'showContactInfo' },
     { caption: 'Opiekun wirtualny', property: 'showVirtualCaretaker' },
     { caption: 'Data dodania', property: 'showAddedDate' },
     { caption: 'Notatka', property: 'showNote' },

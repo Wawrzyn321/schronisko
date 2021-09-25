@@ -20,7 +20,6 @@ const presetsMap: { [gender in ResizingPresets]: { width: number, height: number
 }
 
 function createPath(name: string) {
-    console.log(`${STATIC_FILES_PATH}/${name}`)
     return `${STATIC_FILES_PATH}/${name}`;
 }
 

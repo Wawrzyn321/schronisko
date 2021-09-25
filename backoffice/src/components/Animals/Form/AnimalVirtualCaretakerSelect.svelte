@@ -1,0 +1,21 @@
+<script lang="ts">
+  import { Select } from 'svelma';
+  import type { VirtualCaretakerType } from '@prisma/client';
+  import {
+    virtualCaretakerTypes,
+    virtualCaretakerTypesMap,
+  } from './../animalMetadata';
+  import Field from '../../shared/Field.svelte';
+
+  export let virtualCaretakerType: VirtualCaretakerType;
+</script>
+
+<Field label="Wirtualny opiekun">
+  <Select required expanded nativeSize={1} bind:selected={virtualCaretakerType}>
+    {#each virtualCaretakerTypes as virtualCaretakerType}
+      <option value={virtualCaretakerType}
+        >{virtualCaretakerTypesMap[virtualCaretakerType]}</option
+      >
+    {/each}
+  </Select>
+</Field>

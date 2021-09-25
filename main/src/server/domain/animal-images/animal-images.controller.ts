@@ -18,7 +18,6 @@ export class AnimalImagesController {
     @Public()
     @Get(':id')
     getImages(@Param("id") animalId: string) {
-        console.log(animalId)
         return this.animalImagesService.get(animalId);
     }
 

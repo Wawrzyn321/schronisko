@@ -29,6 +29,7 @@
     width: var(--width);
     height: var(--height);
     margin-left: 32px;
+    border: 1px solid black;
 
     & > * {
       width: var(--width);
@@ -39,6 +40,7 @@
   img {
     max-width: unset;
     display: block;
+    border: 1px solid black;
   }
 
   @media (max-width: 800px) {

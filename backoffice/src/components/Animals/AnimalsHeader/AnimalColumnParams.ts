@@ -7,6 +7,7 @@ export type AnimalColumnParams = {
     showAddedDate: boolean;
     showVirtualCaretaker: boolean;
     showNote: boolean;
+    showContactInfo: boolean;
 }
 
 export function createDefaultColumnParams(): AnimalColumnParams {
@@ -19,5 +20,6 @@ export function createDefaultColumnParams(): AnimalColumnParams {
         showAddedDate: false,
         showVirtualCaretaker: false,
         showNote: false,
+        showContactInfo: false,
     };
 }

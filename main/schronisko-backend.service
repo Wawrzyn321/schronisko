@@ -3,7 +3,7 @@ Description=Schronisko Backend Service
 After=network.target
 
 [Service]
-WorkingDirectory=/var/www/schronisko/backend
+WorkingDirectory=/var/www/schronisko/main
 ProtectHome=true
 PrivateTmp=true
 ExecStart=/usr/local/bin/npm run start:nest

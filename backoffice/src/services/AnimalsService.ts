@@ -22,6 +22,8 @@ export interface AnimalData {
     imageData?: string
     imageName?: string
     note?: string;
+    contactInfo: string;
+    refNo: string;
 }
 
 export class AnimalsService {

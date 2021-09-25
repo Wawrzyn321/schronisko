@@ -65,7 +65,6 @@
     <AnimalForm
       bind:animal={animalData}
       bind:images
-      isUpdate={true}
       setFormValid={(valid) => (isValid = valid)}
     />
   {:else}

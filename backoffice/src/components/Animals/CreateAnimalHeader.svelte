@@ -7,7 +7,10 @@
 </script>
 
 <header class="g-flex-between-100">
-  <h1>Dodaj zwierzę</h1>
+  <h1>
+    <a href="/#/animals">Zwierzęta</a>
+    <span class="g-breadcrumb-separator">/ </span>Dodaj
+  </h1>
   <div class="g-header-actions">
     <label>
       <input

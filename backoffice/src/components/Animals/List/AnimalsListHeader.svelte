@@ -85,6 +85,9 @@
       </div>
     </th>
   {/if}
+  {#if columnParams.showContactInfo}
+    <th>Dane kontaktowe</th>
+  {/if}
   {#if columnParams.showVirtualCaretaker}
     <th>Opiekun wirtualny</th>
   {/if}
