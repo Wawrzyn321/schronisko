@@ -13,4 +13,4 @@ preload:
 - static site generation with data - generuje przy budowaniu apki, wykonując wybrane żądania => getStaticProps
 - Client-side Rendering - statycznie część generujemy przy buildzie, dynamiczne dane są pobierane u klienta - dobre do stronek niewymagających SEO
 
-
+używanie styled-jsx jest kiepskie, bo a) nie umożliwia nestowania b) psuje się jak zmieniam coś na stronie w inspektorze

@@ -1,0 +1,8 @@
+.media-icons {
+  align-self: flex-end;
+
+  :global(a > *) {
+    width: 50px;
+    margin-left: 16px !important;
+  }
+}

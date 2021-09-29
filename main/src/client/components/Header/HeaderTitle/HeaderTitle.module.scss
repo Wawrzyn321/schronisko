@@ -1,0 +1,17 @@
+.header-title {
+  display: flex;
+  
+  :global(img) {
+    width: 120px;
+  }
+}
+
+.title {
+  align-self: center;
+  text-transform: uppercase;
+  margin-left: 8px;
+}
+
+.title * {
+  margin: 0;
+}

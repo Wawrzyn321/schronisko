@@ -1,0 +1,14 @@
+.lead-by {
+  display: flex;
+  justify-content: space-between;
+
+  span {
+    align-self: flex-end;
+    margin-bottom: 19px;
+    font-size: small;
+  }
+
+  :global(a > *) {
+    width: 150px;
+  }
+}

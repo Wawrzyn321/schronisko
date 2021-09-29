@@ -1,0 +1,11 @@
+.address-info {
+  margin-right: 28px;
+  margin-bottom: 12px;
+  align-self: flex-end;
+
+  & > * {
+    margin: 0;
+    font-weight: 100;
+    font-size: smaller;
+  }
+}

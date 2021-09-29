@@ -153,7 +153,7 @@
     .is-required::after {
       content: '*';
       margin-left: 4px;
-      color: red;
+      color: #ff6640;
     }
 
     .is-required.no-star::after {
