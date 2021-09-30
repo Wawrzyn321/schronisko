@@ -1,4 +1,3 @@
 export default function HowTo({}) {
-    return 'v how-to';
-  }
-  
+  return 'v how-to';
+}

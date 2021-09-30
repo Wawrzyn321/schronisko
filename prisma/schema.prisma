@@ -62,7 +62,7 @@ model User {
 }
 
 model Page {
-  id      String @id @default(uuid())
+  id      String @id
   title   String @unique
   content String
 }

@@ -54,24 +54,15 @@ async function main() {
         },
     });
     console.info(admin);
-    const pagesTitles = [
-        'Główna',
-        'O schronisku',
-        'Nasze potrzeby',
-        'Pomagają nam - dziękujemy',
-        'Wolontariat',
-        'Linki',
-        'Zbiórka publiczna',
-        'Finanse i Sprawozdania',
-        'Adopcje wirtualne',
-        'Ręka w łapę',
-        'Psy i koty do adopcji',
+    const pages = [
+        // {title: 'Główna', id: 'glowna'},
+        { title: 'O nas', id: 'o-nas' },
     ];
-    for (const title of pagesTitles) {
+    for (const { title, id } of pages) {
         await prisma.page.upsert({
-            where: { title },
+            where: { id },
             update: {},
-            create: { title, content: '' }
+            create: { title, id, content: '' }
         });
     }
 }

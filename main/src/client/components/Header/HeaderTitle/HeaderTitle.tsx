@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import logo from 'public/site/logo.png';
+import logo from 'public/site/logo-mini.png';
 import styles from './HeaderTitle.module.scss';
 
 export function HeaderTitle() {

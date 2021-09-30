@@ -32,7 +32,8 @@
   $: filteredPages = pages.filter(
     (p: PageListElement) =>
       !searchPhrase ||
-      p.title.toLowerCase().includes(searchPhrase.toLowerCase())
+      p.title.toLowerCase().includes(searchPhrase.toLowerCase()) ||
+      p.id.toLowerCase().includes(searchPhrase.toLowerCase())
   );
 
   $: paginatedPages = paginate(filteredPages, pageSize, currentPage);
@@ -52,12 +53,16 @@
   <table class="table is-fullwidth">
     <tr>
       <th>Tytuł</th>
+      <th>Id</th>
       <th class="g-actions-header" />
     </tr>
     {#each paginatedPages as page}
       <tr>
         <td>
           <a href={`/#/pages/${page.id}?mode=view`}>{page.title}</a>
+        </td>
+        <td>
+          {page.id}
         </td>
         <td class="g-text-align-right g-actions-header">
           <Button

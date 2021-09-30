@@ -1,8 +1,8 @@
 <script lang="ts">
   import Quill from 'quill';
+  import ImageUploader from 'quill-image-uploader';
   import { Notification } from 'svelma';
 
-  //https://quilljs.com/docs/modules/toolbar/
   const toolbarOptions = [
     [{ header: [1, 2, 3, 4, 5, 6, false] }],
     ['blockquote', 'link', 'image'],
@@ -11,8 +11,6 @@
     [{ align: [] }],
     ['clean'],
   ];
-  // Quill.register('modules/counter', function (quill, options) {
-  // });
 
   let quill: Quill;
   let content: string;
@@ -28,10 +26,23 @@
   }
 
   function makeQuill(node: HTMLElement) {
+    Quill.register('modules/imageUploader', ImageUploader);
+
     const options = {
       modules: {
         toolbar: toolbarOptions,
-        // counter: {},
+        imageUploader: {
+          upload: (file) => {
+            return new Promise((resolve, reject) => {
+              console.log(file);
+              setTimeout(() => {
+                resolve(
+                  'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/JavaScript-logo.png/480px-JavaScript-logo.png'
+                );
+              }, 3500);
+            });
+          },
+        },
       },
       theme: 'snow',
     };
@@ -77,5 +88,9 @@
 <style lang="scss">
   .warning-container > :global(*) {
     margin: 0 16px 22px;
+  }
+
+  .editor {
+    margin-bottom: 64px;
   }
 </style>

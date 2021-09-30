@@ -1,4 +1,3 @@
 export default function ToAdopt({}) {
-    return 'v to-adopt';
-  }
-  
+  return 'v to-adopt';
+}

@@ -1,3 +1,3 @@
-export default function HowTo({ }) {
+export default function HowTo({}) {
   return 'how-to';
 }
