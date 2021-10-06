@@ -6,6 +6,7 @@ import { PageListElement } from './Page';
 import { LoggedInUser } from '../auth/types';
 import { LogsService } from './../logs/logs.service';
 import { formattedDiff } from '../logs/diff';
+import { deleteImagesInContent, ImageData, saveImagesFromContentModyfyingIt } from '../../img-fs';
 
 @Injectable()
 export class PagesService {
@@ -23,11 +24,15 @@ export class PagesService {
     return page;
   }
 
-  async update(user: LoggedInUser, id: string, page: Page): Promise<Page> {
+  async update(user: LoggedInUser, id: string, page: Page, images: ImageData[]): Promise<Page> {
     const prevPage = await this.get(id);
     if (prevPage.id !== id) {
       throw new BadRequestException(id, "id musi się zgadzać");
     }
+
+    await deleteImagesInContent(prevPage.content, page.content);
+
+    page.content = await saveImagesFromContentModyfyingIt(page.content, images);
 
     const updatedPage = await this.prisma.page.update({
       where: { id }, data: page

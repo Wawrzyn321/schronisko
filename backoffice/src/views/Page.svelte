@@ -8,14 +8,16 @@
   import type { Page } from '.prisma/client';
   import { notifyError, notifySuccess } from '../contexts/notification.context';
   import Loader from '../components/shared/Loader.svelte';
+  import type { FileMap } from '../components/shared/Editor/FileMap';
 
   export let params: { id: string };
-  
+
   const id = params.id;
   const mode = new URLSearchParams(get(querystring)).get('mode');
 
   let page: Page;
   let editedContent = '';
+  let fileMap: FileMap = [];
   let isSaving: boolean;
 
   onMount(async () => {
@@ -30,13 +32,16 @@
     }
   });
 
-  async function savePost() {
+  async function savePage() {
     try {
-      await pageService.save({ ...page, content: editedContent });
+      isSaving = true;
+      await pageService.save({ ...page, content: editedContent }, fileMap);
       notifySuccess({ message: 'Zmiany zostały zapisane' });
       page.content = editedContent;
     } catch (e) {
       notifyError({ message: 'Nie można zapisać strony: ' + e.message });
+    } finally {
+      isSaving = false;
     }
   }
 </script>
@@ -52,15 +57,19 @@
         type="is-primary"
         disabled={isSaving || page.content === editedContent}
         loading={isSaving}
-        on:click={savePost}
+        on:click={savePage}
       >
         Zapisz
       </Button>
     </header>
     <EditorTabs
+      contentForPreview={editedContent}
       mapping={['edit', 'view']}
       currentTab={mode}
-      bind:editedContent
+      onChange={(content, _fileMap) => {
+        editedContent = content;
+        fileMap = _fileMap;
+      }}
       initialContent={page.content}
     />
   {:else}

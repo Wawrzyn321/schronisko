@@ -5,7 +5,7 @@ import type { News } from '.prisma/client';
 import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../../prisma-connect/prisma.service';
 import { v4 as uuid } from 'uuid';
-import { saveImage, deleteImage } from '../../img-fs';
+import { saveImage, deleteImage, saveImagesFromContentModyfyingIt, deleteImagesInContent } from '../../img-fs';
 import { validateNewsCreate, validateNewsUpdate } from './helpers';
 import { LogsService } from '../logs/logs.service';
 import { formattedDiff } from '../logs/diff';
@@ -37,6 +37,8 @@ export class NewsService {
       throw new BadRequestException(null, "Brak tytułu lub zdjęcia");
     }
 
+    params.news.content = await saveImagesFromContentModyfyingIt(params.news.content, params.images);
+
     params.news.imageName = `${uuid()}.png`;
     await saveImage(params.news.imageName, params.imageData, 'News');
     const createdNews = await this.prisma.news.create({ data: params.news });
@@ -60,6 +62,10 @@ export class NewsService {
     if (params.imageData) {
       await saveImage(params.news.imageName, params.imageData, 'News');
     }
+
+    await deleteImagesInContent(prevNews.content, params.news.content);
+
+    params.news.content = await saveImagesFromContentModyfyingIt(params.news.content, params.images);
 
     const updatedNews = await this.prisma.news.update({
       where: { id }, data: params.news
@@ -88,6 +94,9 @@ export class NewsService {
     } catch (e: unknown) {
       console.warn(e);
     }
+
+    await deleteImagesInContent(post.content);
+
     const deletedNews = await this.prisma.news.delete({
       where: { id }
     });

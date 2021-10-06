@@ -1,6 +1,8 @@
+import type { FileMap } from './../components/shared/Editor/FileMap';
 import { throwingFetch } from "./throwingFetch";
 import { API_URL } from './config';
 import type { News } from '.prisma/client';
+import { replaceContent } from "../components/shared/Editor/FileMap";
 
 const baseUrl = `${API_URL}/api/news`
 
@@ -36,9 +38,12 @@ export class NewsService {
         return await throwingFetch(`${baseUrl}/${id}`);
     }
 
-    async create(news: NewsCreateParams, imageData: string): Promise<NewsListElement> {
+    async create(news: NewsCreateParams, imagesMap: FileMap, imageData: string): Promise<NewsListElement> {
+        const [content, images] = replaceContent(news.content, imagesMap);
+
         const input = {
-            news,
+            news: { ...news, content },
+            images,
             imageData
         };
         return await throwingFetch(baseUrl, {
@@ -48,9 +53,12 @@ export class NewsService {
         });
     }
 
-    async update(news: NewsUpdateParams, imageData: string): Promise<NewsListElement> {
+    async update(news: NewsUpdateParams, imagesMap: FileMap, imageData: string): Promise<NewsListElement> {
+        const [content, images] = replaceContent(news.content, imagesMap);
+
         const input = {
-            news,
+            news: { ...news, content },
+            images,
             imageData
         };
         return await throwingFetch(`${baseUrl}/${news.id}`, {

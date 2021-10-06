@@ -16,11 +16,13 @@ import { LogsModule } from './domain/logs/logs.module';
 import { SettingsModule } from './domain/settings/settings.module';
 import { ViewModule } from './domain/view/view.module'
 
-export const STATIC_FILES_PATH = 'src/client/public/img';
+const STATIC_FILES_PATH = '/img/';
+export const LOCAL_STATIC_FILES_PATH = 'src/client/public' + STATIC_FILES_PATH;
+export const WEB_STATIC_FILES_PATH = 'http://localhost:60045' + STATIC_FILES_PATH;
 
 const domainModules = [AuthModule, UsersModule, PagesModule, NewsModule, AnimalsModule, AnimalImagesModule, LogsModule, SettingsModule];
 const ServeStatic = ServeStaticModule.forRoot({
-  rootPath: join(__dirname, '..', STATIC_FILES_PATH),
+  rootPath: join(__dirname, '..', LOCAL_STATIC_FILES_PATH),
   serveStaticOptions: {
     index: false,
     extensions: ['.png'], //todo

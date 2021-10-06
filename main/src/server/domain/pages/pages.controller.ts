@@ -7,10 +7,11 @@ import { Controller, Get, UseGuards, Param, Patch, Body, Request } from '@nestjs
 import { Permission } from '@prisma/client';
 import { PermissionsGuard } from '../auth/Permissions.guard';
 import { Query } from '@nestjs/common';
+import { ImageData } from '../../img-fs';
 
 @Controller('api/pages')
 export class PagesController {
-    constructor(private pagesService: PagesService) {}
+    constructor(private pagesService: PagesService) { }
 
     @Public()
     @Get()
@@ -28,7 +29,7 @@ export class PagesController {
     @RequirePermission(Permission.PAGE)
     @Patch(':id')
     @UseGuards(PermissionsGuard)
-    updatePage(@Param("id") pageId: string, @Body() body: Page, @Request() req: { user: LoggedInUser }) {
-        return this.pagesService.update(req.user, pageId, body);
+    updatePage(@Param("id") pageId: string, @Body() body: { page: Page, images: ImageData[] }, @Request() req: { user: LoggedInUser }) {
+        return this.pagesService.update(req.user, pageId, body.page, body.images);
     }
 }

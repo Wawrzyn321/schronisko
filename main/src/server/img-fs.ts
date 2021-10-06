@@ -1,6 +1,8 @@
-import { STATIC_FILES_PATH } from './app.module';
+import { LOCAL_STATIC_FILES_PATH, WEB_STATIC_FILES_PATH } from './app.module';
 import { promises as fsp } from "fs"
 const sharp: any = require('sharp');
+
+export type ImageData = { name: string, base64: string };
 
 type ResizingPresets = 'News' | 'Animal Gallery' | 'Animal Miniature';
 
@@ -20,17 +22,52 @@ const presetsMap: { [gender in ResizingPresets]: { width: number, height: number
 }
 
 function createPath(name: string) {
-    return `${STATIC_FILES_PATH}/${name}`;
+    return LOCAL_STATIC_FILES_PATH + name;
 }
 
 export async function saveImage(name: string, base64Data: string, resizingPreset: ResizingPresets) {
     base64Data = base64Data.replace(/^data:image\/png;base64,/, "");
     const buf = Buffer.from(base64Data, 'base64');
     const preset = presetsMap[resizingPreset];
-    const resized = await sharp(buf).resize(preset.width, preset.height).toBuffer();
-    return await fsp.writeFile(createPath(name), resized);
+    if (preset) {
+        const resized = await sharp(buf).resize(preset.width, preset.height).toBuffer();
+        return await fsp.writeFile(createPath(name), resized);
+    } else {
+        return await fsp.writeFile(createPath(name), buf);
+    }
 }
 
 export async function deleteImage(name: string) {
     return await fsp.unlink(createPath(name));
+}
+
+function getLocalPath(name: string) {
+    if (name.startsWith(WEB_STATIC_FILES_PATH)) {
+        name = name.replace(WEB_STATIC_FILES_PATH, '');
+    }
+    return name;
+}
+
+export async function deleteImagesInContent(prevContent: string, newContent: string = '') {
+    try {
+        // @ts-ignore
+        const prevFileNames = [...prevContent.matchAll(/<img src="(.*?)">/g)].map((t) => t[1]);
+        // @ts-ignore
+        const newFileNames = [...newContent.matchAll(/<img src="(.*?)">/g)].map((t) => t[1]).filter(name => name.startsWith(WEB_STATIC_FILES_PATH));
+        for (const fileName of prevFileNames) {
+            if (!newFileNames.includes(fileName)) {
+                await deleteImage(getLocalPath(fileName));
+            }
+        }
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+export async function saveImagesFromContentModyfyingIt(content: string, images: ImageData[]) {
+    for (let { name, base64 } of images) {
+        await saveImage(getLocalPath(name), base64, null);
+        content = content.replace(name, WEB_STATIC_FILES_PATH + name)
+    }
+    return content;
 }

@@ -1,5 +1,7 @@
+import type { FileMap } from '../components/shared/Editor/FileMap';
 import { throwingFetch } from "./throwingFetch";
 import { API_URL } from './config';
+import { replaceContent } from "../components/shared/Editor/FileMap";
 export interface PageListElement {
     id: string;
     title: string;
@@ -8,7 +10,6 @@ export interface PageListElement {
 export interface Page extends PageListElement {
     content: string;
 }
-
 
 const baseUrl = `${API_URL}/api/pages`
 
@@ -25,11 +26,18 @@ export class PageService {
         return await throwingFetch(`${baseUrl}/${id}`);
     }
 
-    async save(post: Page): Promise<Page> {
-        return await throwingFetch(`${baseUrl}/${post.id}`, {
+    async save(page: Page, imagesMap: FileMap): Promise<Page> {
+        const [content, images] = replaceContent(page.content, imagesMap);
+
+        const data = {
+            page: { ...page, content },
+            images
+        };
+
+        return await throwingFetch(`${baseUrl}/${page.id}`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(post),
+            body: JSON.stringify(data),
         });
     }
 }

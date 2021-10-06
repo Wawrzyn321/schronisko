@@ -10,7 +10,8 @@
     "sourceMap": true,
     "outDir": "./dist",
     "incremental": true,
-    "jsx": "preserve" 
+    "jsx": "preserve",
+    "lib": ["es2020"]
   },
-  "include": ["src/server/**/*.ts","src/main/**/*.ts"],
+  "include": ["src/server/**/*.ts", "src/main/**/*.ts"]
 }

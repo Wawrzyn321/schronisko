@@ -18,7 +18,7 @@ function Page({ id, ssrPage }: { id: string; ssrPage: PageModel }) {
         setPage(await fetchPage(id));
       } catch (e) {
         console.log('error', e);
-        alert('gunwo');
+        alert('gunwo TODO');
       }
     };
 

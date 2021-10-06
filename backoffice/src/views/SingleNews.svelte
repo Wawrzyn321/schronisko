@@ -10,6 +10,7 @@
   import { notifyError, notifySuccess } from '../contexts/notification.context';
   import { newsService } from '../services/NewsService';
   import { get } from 'svelte/store';
+  import type { FileMap } from '../components/shared/Editor/FileMap';
 
   export let params: { id: string };
 
@@ -18,6 +19,7 @@
   let news: News;
   let editedContent: string;
   let isValid: boolean = true;
+  let fileMap: FileMap = [];
   let imageData = '';
 
   onMount(async () => {
@@ -34,7 +36,11 @@
 
   async function updateNews() {
     try {
-      await newsService.update({ ...news, content: editedContent }, imageData);
+      await newsService.update(
+        { ...news, content: editedContent },
+        fileMap,
+        imageData
+      );
       notifySuccess({ message: 'News został zapisany.' });
     } catch (e) {
       notifyError({ message: 'Nie możnac zapisać newsa: ' + e.message });
@@ -52,10 +58,14 @@
       bind:isPublished={news.isPublished}
     />
     <EditorTabs
-      bind:editedContent
-      initialContent={news.content}
-      mapping={['data', 'edit', 'view']}
+      contentForPreview={editedContent}
       currentTab={mode}
+      onChange={(content, _fileMap) => {
+        editedContent = content;
+        fileMap = _fileMap;
+      }}
+      mapping={['data', 'edit', 'view']}
+      initialContent={news.content}
     >
       <Tab label="Dane">
         <NewsForm

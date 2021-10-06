@@ -1,3 +1,4 @@
+import { ImageData } from './../../img-fs';
 export interface NewsCreateInput {
     title: string;
     description: string;
@@ -13,6 +14,7 @@ export interface NewsUpdateInput extends NewsCreateInput {
 
 export interface NewsModifyParams<TNewsInput> {
     news: TNewsInput;
+    images: ImageData[];
     imageData: string;
 }
 

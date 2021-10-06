@@ -6,7 +6,7 @@
     AnimalType,
     VirtualCaretakerType,
   } from '.prisma/client';
-  import { push } from 'svelte-spa-router';
+  import { location, push } from 'svelte-spa-router';
   import CreateAnimalHeader from '../components/Animals/CreateAnimalHeader.svelte';
   import AnimalForm from '../components/Animals/Form/AnimalForm.svelte';
   import { animalsService } from '../services/AnimalsService';
@@ -28,6 +28,9 @@
     virtualCaretakerName: null,
     virtualCaretakerType: VirtualCaretakerType.Szuka,
     imageData: '',
+    contactInfo: '',
+    locationDescription: null,
+    refNo: '',
   };
   let images: AnimalImageParams[] = [];
 
