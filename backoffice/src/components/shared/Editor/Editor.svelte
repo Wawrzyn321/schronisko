@@ -40,7 +40,7 @@
                 fileMap.push([file, base64]);
                 onChange(content, fileMap);
                 resolve(base64);
-              }, 1000);
+              }, 500);
             });
           },
         },

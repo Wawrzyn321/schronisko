@@ -1,3 +1,3 @@
-export default function ToAdoptCats({}) {
+export default function ToAdoptCats() {
   return 'adopt cats';
 }

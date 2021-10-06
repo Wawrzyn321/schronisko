@@ -55,9 +55,21 @@ async function main() {
     });
     console.info(admin);
     const pages = [
-        // {title: 'Główna', id: 'glowna'},
         { title: 'O nas', id: 'o-nas' },
+        { title: 'Psy do adopcji', id: 'psy-do-adopcji' },
+        { title: 'Koty do adopcji', id: 'koty-do-adopcji' },
+        { title: 'Zwierzęta znalezione', id: 'zwierzeta-znalezione' },
+        { title: 'Odnalazły dom', id: 'odnalazly-dom' },
+        { title: 'Odeszly', id: 'odeszly' },
+        { title: 'Jak adoptować wirtualnie', id: 'jak-adoptowac-wirtualnie' },
+        { title: 'Szukają opiekunów', id: 'szukaja-opiekunow' },
+        { title: 'Znalazły opiekunów', id: 'znalazly-opiekunow' },
+        { title: 'Wolontariat (pies)', id: 'wolontariat-pies' },
+        { title: 'Wolontariat (kot)', id: 'wolontariat-kot' },
+        { title: 'Jak pomóc', id: 'jak-pomoc' },
+        { title: 'Kontakt', id: 'kontakt' },
     ];
+    console.info(pages);
     for (const { title, id } of pages) {
         await prisma.page.upsert({
             where: { id },

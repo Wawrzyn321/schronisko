@@ -1,3 +1,3 @@
-export default function JustFound({}) {
+export default function JustFound() {
   return 'just-found';
 }

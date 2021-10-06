@@ -24,7 +24,7 @@ module.exports = {
         permanent: true,
       },
       {
-        source: '/volunteering/',
+        source: '/volunteering',
         destination: '/',
         permanent: true,
       },
