@@ -17,6 +17,7 @@
   let fileMap: FileMap = [];
 
   export let onChange: (c: string, fileMap: FileMap) => any;
+  export let requestSave: () => any = null;
   export let initialContent: string;
 
   $: {
@@ -90,6 +91,14 @@
       };
     });
   };
+
+  async function keydown(e) {
+    const { metaKey, ctrlKey, key } = e;
+    if (key === 's' && (metaKey || ctrlKey)) {
+      requestSave && requestSave();
+      e.preventDefault();
+    }
+  }
 </script>
 
 <svelte:head>
@@ -102,6 +111,7 @@
     </Notification>
   </div>
 {/if} -->
+<svelte:window on:keydown={keydown} />
 <div class="editor" use:makeQuill on:text-change={onEditorChange} />
 
 <style lang="scss">

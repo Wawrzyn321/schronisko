@@ -10,14 +10,16 @@
   export let onChange: (content: string, fileMap: FileMap) => any;
   export let contentForPreview: string;
   export let initialContent = '';
+  export let title: string;
+  export let requestSave: () => any = null;
 </script>
 
 <Tabs {mapping} {currentTab}>
   <slot />
   <Tab label="Zawartość">
-    <Editor {initialContent} {onChange} />
+    <Editor {initialContent} {onChange} {requestSave}/>
   </Tab>
   <Tab label="Podgląd">
-    <PostPreview source={contentForPreview} />
+    <PostPreview title={title} source={contentForPreview} />
   </Tab>
 </Tabs>

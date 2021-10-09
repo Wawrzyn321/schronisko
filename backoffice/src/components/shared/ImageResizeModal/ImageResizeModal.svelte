@@ -179,7 +179,7 @@
     right: 0;
   }
 
-  :global(#resize-modal-wrapper dialog) {
+  :global(#resize-modal-wrapper div.dialog) {
     width: 80vw;
     height: 60vh;
   }

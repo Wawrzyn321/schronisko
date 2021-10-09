@@ -1,3 +1,9 @@
+import { Breadcrumbs } from "components/Breadcrumbs/Breadcrumbs";
+
 export default function ToAdoptDogs() {
-  return 'adopt dogs';
+  return (
+    <>
+      <Breadcrumbs items={['Zwierzęta', 'Psy do adopcji']} />
+    </>
+  );
 }

@@ -231,14 +231,18 @@ header h1 {
 }
 
 .preview blockquote {
-  border-left: 4px solid #ccc;
   margin-bottom: 5px;
   margin-top: 5px;
   padding-left: 16px;
+  font-style: italic;
 }
 
 .preview img {
   max-width: 100%;
+}
+
+.preview {
+  font-family: 'Roboto';
 }
 
 .preview * {
@@ -250,16 +254,20 @@ header h1 {
   font-weight: unset;
 }
 
+.preview em {
+  font-style: italic;
+}
+
 .preview .ql-align-center {
   text-align: center;
 }
 
-.preview .ql-align-right {
+.preview .ql-align-left {
   text-align: left;
 }
 
 .preview .ql-align-right {
-  text-align: left;
+  text-align: right;
 }
 
 .preview .ql-align-justify {
@@ -333,4 +341,76 @@ nav.tabs {
 
 input[type=search] {
   padding-left: 12px;
+}
+
+
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('./font/Roboto-Black.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('./font/Roboto-Italic.ttf') format('truetype');
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('./font/Roboto-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('./font/Roboto-BoldItalic.ttf') format('truetype');
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('./font/Roboto-Thin.ttf') format('truetype');
+  font-weight: 200;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('./font/Roboto-ThinItalic.ttf') format('truetype');
+  font-weight: 200;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('./font/Roboto-Light.ttf') format('truetype');
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('./font/Roboto-LightItalic.ttf') format('truetype');
+  font-weight: 100;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('./font/Roboto-Medium.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('./font/Roboto-MediumItalic.ttf') format('woff');
+  font-weight: 300;
+  font-style: italic;
 }

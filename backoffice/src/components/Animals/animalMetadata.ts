@@ -34,7 +34,7 @@ export const animalLocationsMap: { [location in AnimalLocation]: string } = {
 
 export const virtualCaretakerTypes = Object.values(VirtualCaretakerType);
 export const virtualCaretakerTypesMap: { [vCaretaker in VirtualCaretakerType]: string } = {
-  [VirtualCaretakerType.NiePrzypisany]: "Nie przypisany",
+  [VirtualCaretakerType.NiePrzypisany]: "Nieprzypisany",
   [VirtualCaretakerType.Szuka]: "Szuka",
   [VirtualCaretakerType.Znalazl]: "Znalazł"
 }

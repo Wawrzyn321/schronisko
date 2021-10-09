@@ -1,3 +1,9 @@
+import { Breadcrumbs } from "components/Breadcrumbs/Breadcrumbs";
+
 export default function JustFound() {
-  return 'just-found';
+  return (
+    <>
+      <Breadcrumbs items={['Zwierzęta', 'Zwierzęta znalezione']} />
+    </>
+  );
 }

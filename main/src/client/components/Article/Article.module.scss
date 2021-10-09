@@ -13,6 +13,26 @@
   p {
     margin: 0;
   }
+
+  h5 {
+    margin: 8px 0;
+  }
+
+  :global(.ql-align-center) {
+    text-align: center;
+  }
+
+  :global(.ql-align-left) {
+    text-align: left;
+  }
+
+  :global(.ql-align-right) {
+    text-align: right;
+  }
+
+  :global(.ql-align-justify) {
+    text-align: justify;
+  }
 }
 
 .title {

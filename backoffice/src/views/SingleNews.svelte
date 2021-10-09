@@ -21,6 +21,7 @@
   let isValid: boolean = true;
   let fileMap: FileMap = [];
   let imageData = '';
+  let isSaving: boolean = false;
 
   onMount(async () => {
     try {
@@ -35,7 +36,10 @@
   });
 
   async function updateNews() {
+    if (isSaving || !isValid) return;
+    
     try {
+      isSaving = true;
       await newsService.update(
         { ...news, content: editedContent },
         fileMap,
@@ -44,6 +48,8 @@
       notifySuccess({ message: 'News został zapisany.' });
     } catch (e) {
       notifyError({ message: 'Nie możnac zapisać newsa: ' + e.message });
+    } finally {
+      isSaving = false;
     }
   }
 </script>
@@ -55,9 +61,11 @@
       {updateNews}
       {isValid}
       {news}
+      {isSaving}
       bind:isPublished={news.isPublished}
     />
     <EditorTabs
+      title={news.title}
       contentForPreview={editedContent}
       currentTab={mode}
       onChange={(content, _fileMap) => {
@@ -66,6 +74,7 @@
       }}
       mapping={['data', 'edit', 'view']}
       initialContent={news.content}
+      requestSave={updateNews}
     >
       <Tab label="Dane">
         <NewsForm

@@ -46,6 +46,7 @@
     bind:isPublished={news.isPublished}
   />
   <EditorTabs
+    title={news.title}
     contentForPreview={content}
     currentTab={mode}
     mapping={['data', 'edit', 'view']}

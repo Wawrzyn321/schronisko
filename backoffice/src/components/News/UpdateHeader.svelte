@@ -12,6 +12,7 @@
   export let isValid: boolean;
   export let news: News;
   export let updateNews: () => any;
+  export let isSaving: boolean;
 
   let deleteModalVisible = false;
 
@@ -39,7 +40,7 @@
       />
       Publiczny
     </label>
-    <Button type="is-primary" on:click={updateNews} disabled={!isValid}>
+    <Button type="is-primary" on:click={updateNews} disabled={!isValid || isSaving}>
       Zapisz
     </Button>
     <Button

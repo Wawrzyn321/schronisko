@@ -33,6 +33,8 @@
   });
 
   async function savePage() {
+    if (isSaving || page.content === editedContent) return;
+
     try {
       isSaving = true;
       await pageService.save({ ...page, content: editedContent }, fileMap);
@@ -63,6 +65,7 @@
       </Button>
     </header>
     <EditorTabs
+      title={page.title}
       contentForPreview={editedContent}
       mapping={['edit', 'view']}
       currentTab={mode}
@@ -71,6 +74,7 @@
         fileMap = _fileMap;
       }}
       initialContent={page.content}
+      requestSave={savePage}
     />
   {:else}
     <Loader />

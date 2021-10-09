@@ -29,10 +29,8 @@
 <svelte:window on:keydown={closeOnEsc} />
 {#if isOpen}
   <div {id}>
-    <!-- <div class="bg" style={`display: ${isOpen ? 'flex' : 'none'}`}>
-    <dialog open={isOpen}> -->
     <div class="bg">
-      <dialog open>
+      <div class="dialog">
         <header>
           <h2>{title}</h2>
           <Button type="is-light" on:click={close}>&times;</Button>
@@ -59,15 +57,16 @@
             {/if}
           </footer>
         {/if}
-      </dialog>
+      </div>
     </div>
   </div>
 {/if}
 
 <style lang="scss">
-  dialog {
+  div.dialog {
     border: none;
     padding: 0;
+    margin: 0 auto;
   }
 
   .bg {
