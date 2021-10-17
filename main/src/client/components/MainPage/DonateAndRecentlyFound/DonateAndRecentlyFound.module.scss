@@ -1,0 +1,10 @@
+.donate-and-just-found {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+
+  margin-bottom: 64px;
+
+  & > :global(:first-child) {
+    margin-right: 24px !important;
+  }
+}

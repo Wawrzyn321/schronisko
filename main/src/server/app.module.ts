@@ -18,7 +18,12 @@ import { ViewModule } from './domain/view/view.module'
 
 const STATIC_FILES_PATH = '/img/';
 export const LOCAL_STATIC_FILES_PATH = 'src/client/public' + STATIC_FILES_PATH;
-export const WEB_STATIC_FILES_PATH = 'http://localhost:60045' + STATIC_FILES_PATH;
+
+
+const DEV = 1;
+export const WEB_STATIC_FILES_PATH = DEV ?
+  'http://localhost:60045' + STATIC_FILES_PATH :
+  'https://schronisko-backend.oto-jest-wawrzyn.pl' + STATIC_FILES_PATH;
 
 const domainModules = [AuthModule, UsersModule, PagesModule, NewsModule, AnimalsModule, AnimalImagesModule, LogsModule, SettingsModule];
 const ServeStatic = ServeStaticModule.forRoot({
@@ -35,7 +40,9 @@ const JwtGuard = {
   useClass: JwtAuthGuard,
 };
 @Module({
-  imports: [...domainModules, ViewModule, ServeStatic],
+  imports: [...domainModules,
+    ViewModule,
+    ServeStatic],
   controllers: [AppController],
   providers: [PrismaService, JwtGuard]
 })

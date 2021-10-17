@@ -56,6 +56,8 @@ async function main() {
     console.info(admin);
     const pages = [
         { title: 'O nas', id: 'o-nas' },
+        { title: 'Najczęściej zadawane pytania', id: 'faq' },
+        { title: 'Główna: adopcje', id: 'glowna-adopcje' },
         { title: 'Psy do adopcji', id: 'psy-do-adopcji' },
         { title: 'Koty do adopcji', id: 'koty-do-adopcji' },
         { title: 'Zwierzęta znalezione', id: 'zwierzeta-znalezione' },

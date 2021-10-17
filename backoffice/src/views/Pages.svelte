@@ -54,7 +54,7 @@
     <tr>
       <th>Tytuł</th>
       <th>Id</th>
-      <th class="g-actions-header" />
+      <th class="g-table-actions" />
     </tr>
     {#each paginatedPages as page}
       <tr>
@@ -64,7 +64,7 @@
         <td>
           {page.id}
         </td>
-        <td class="g-text-align-right g-actions-header">
+        <td class="g-text-align-right g-table-actions">
           <Button
             type="is-primary"
             on:click={() => push(`/pages/${page.id}?mode=edit`)}

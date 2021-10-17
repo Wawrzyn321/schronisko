@@ -1,5 +1,6 @@
 :root {
   --text-color: #00491e;
+  --text-secondary-color: #034064;
   --color-secondary: #729d88;
 }
 
@@ -12,7 +13,8 @@ body {
 }
 
 body {
-  padding: 3vh 13vw 1vh;
+  margin: 0 auto;
+  width: 1200px;
 }
 
 * {

@@ -107,5 +107,5 @@
     <input type="checkbox" bind:checked={filteringParams.showOnlyPublic} />
     Widoczny na stronie
   </th>
-  <th class="g-text-align-right g-actions-header" />
+  <th class="g-text-align-right g-table-actions" />
 </tr>

@@ -4,6 +4,7 @@
   import Field from '../../shared/Field.svelte';
   import { descriptionTemplates } from './descriptionTemplates';
 
+  export let revalidateForm: Function;
   export let animal: AnimalData;
 
   const descriptionTemplate =
@@ -16,7 +17,10 @@
     {#if descriptionTemplate}
       <Button
         type="is-primary"
-        on:click={() => (animal.description = descriptionTemplate)}
+        on:click={() => {
+          animal.description = descriptionTemplate;
+          revalidateForm();
+        }}
       >
         Użyj szablonu
       </Button>

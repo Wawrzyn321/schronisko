@@ -48,6 +48,8 @@
         <td style="padding-bottom: 0">
           <a href={`/#/animals/${encodeURIComponent(animal.id)}`}>
             <img
+              width={152}
+              height={112}
               src={`${STATIC_URL}/${animal.imageName}`}
               alt={animal.name}
               class:is-grayscale={animal.category ===
@@ -113,7 +115,7 @@
       <td class="is-public-column">
         {animal.isPublic ? 'TAK' : 'NIE'}
       </td>
-      <td class="g-text-align-right g-actions-header">
+      <td class="g-text-align-right g-table-actions">
         <Button
           type="is-primary"
           on:click={() => push(`/animals/${animal.id}`)}

@@ -28,6 +28,14 @@ module.exports = {
         destination: '/',
         permanent: true,
       },
+      {
+        source: '/news',
+        destination: '/',
+        permanent: true,
+      },
     ];
+  },
+  images: {
+    domains: ['localhost', 'http://schronisko-backend.oto-jest-wawrzyn.pl'],
   },
 };

@@ -37,7 +37,7 @@
       <input type="checkbox" bind:checked={showActive} />
       Aktywny
     </th>
-    <th class="g-actions-header" />
+    <th class="g-table-actions" />
   </tr>
   {#each filteredUsers as user}
     <tr>
@@ -45,7 +45,7 @@
       <td>{user.lastName}</td>
       <td>{user.login}</td>
       <td class="g-text-align-center">{user.isActive ? 'TAK' : 'NIE'}</td>
-      <td class="g-text-align-right g-actions-header">
+      <td class="g-text-align-right g-table-actions">
         <Button
           type="is-primary"
           on:click={() => {

@@ -1,15 +1,67 @@
 import { Page as PageModel } from '.prisma/client';
 import { fetchPage, Page } from 'components/Page';
+import { BigSection } from 'components/MainPage/BigSection/BigSection';
+import { AfterAdoption } from 'components/MainPage/AfterAdoption/AfterAdoption';
+import { Faq } from 'components/MainPage/Faq';
+import { DonateAndRecentlyFound } from 'components/MainPage/DonateAndRecentlyFound/DonateAndRecentlyFound';
 
-const ID = 'glowna';
+import { SSR_BACKEND_URL, BACKEND_URL, throwingFetch } from 'api';
+import { AfterAdoptionAnimal, NewsListElement } from 'types';
 
-export default function Home({ ssrPage }) {
-  return <Page id={ID} ssrPage={ssrPage} />;
+const ID = 'glowna-adopcje';
+interface HomeProps {
+  ssrData: {
+    afterAdoptionAnimals: AfterAdoptionAnimal[];
+    recentNews: NewsListElement[];
+    mainPage: PageModel,
+  };
+}
+
+export default function Home({ ssrData }: HomeProps) {
+  // return <Page id={ID} ssrPage={ssrPage} Renderer={}/>;
+
+  return (
+    <>
+      <BigSection mainPage={ssrData.mainPage} recentNews={ssrData.recentNews} />
+      <AfterAdoption afterAdoptionAnimals={ssrData.afterAdoptionAnimals} />
+      <Faq />
+      <DonateAndRecentlyFound />
+    </>
+  );
 }
 
 export async function getServerSideProps(): Promise<{
-  props: { ssrPage: PageModel };
+  props: HomeProps;
 }> {
-  const page = await fetchPage(ID);
-  return { props: { ssrPage: page } };
+  const afterAdoptionAnimals = await fetchAfterAdoptionAnimals();
+  const recentNews = await fetchRecentNews();
+  const mainPage = await fetchPage(ID);
+  return { props: { ssrData: { afterAdoptionAnimals, recentNews, mainPage } } };
+}
+
+export async function fetchAfterAdoptionAnimals(
+  isSSR = true,
+): Promise<AfterAdoptionAnimal[]> {
+  try {
+    return await throwingFetch(
+      (isSSR ? SSR_BACKEND_URL : BACKEND_URL) +
+        '/api/animals/after-adoption?count=3',
+    );
+  } catch (e) {
+    console.warn('error', e);
+    return [];
+  }
+}
+
+export async function fetchRecentNews(
+  isSSR = true,
+): Promise<NewsListElement[]> {
+  try {
+    return await throwingFetch(
+      (isSSR ? SSR_BACKEND_URL : BACKEND_URL) + '/api/news/recent?count=5',
+    );
+  } catch (e) {
+    console.warn('error', e);
+    return [];
+  }
 }

@@ -24,4 +24,5 @@ export interface NewsListElement {
     title: string;
     createdAt: Date;
     isPublished: boolean;
+    imageName: string;
 }

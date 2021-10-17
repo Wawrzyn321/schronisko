@@ -39,7 +39,7 @@
 <form bind:this={form} on:input={revalidateForm} on:change={revalidateForm}>
   <Tabs mapping={['data', 'description', 'photos']} currentTab={mode}>
     <DataTab bind:animal {revalidateForm} />
-    <DescriptionTab bind:animal />
+    <DescriptionTab bind:animal {revalidateForm} />
     <Tab label="Zdjęcia"><AnimalImages bind:images {revalidateForm} /></Tab>
   </Tabs>
 </form>

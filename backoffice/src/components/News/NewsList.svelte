@@ -6,7 +6,8 @@
   import DeleteNewsModal from './DeleteNewsModal.svelte';
   import DateFromTimestamp from '../shared/DateFromTimestamp.svelte';
   import Loader from '../shared/Loader.svelte';
-import EmptyListMessage from '../shared/EmptyListMessage.svelte';
+  import EmptyListMessage from '../shared/EmptyListMessage.svelte';
+  import { STATIC_URL } from '../../services/config';
 
   export let news: NewsListElement[];
   export let onNewsDeleted: (news: NewsListElement) => any;
@@ -18,14 +19,25 @@ import EmptyListMessage from '../shared/EmptyListMessage.svelte';
 
 <table class="table is-fullwidth">
   <tr>
+    <th>Miniaturka</th>
     <th>Nazwa</th>
     <th>Opis</th>
     <th>Data utworzenia</th>
     <th>Opublikowany?</th>
-    <th class="g-text-align-right g-actions-header" />
+    <th class="g-text-align-right g-table-actions" />
   </tr>
   {#each news as singleNews}
     <tr>
+      <td>
+        <a href={`/#/news/${singleNews.id}`}>
+          <img
+            width={152}
+            height={112}
+            src={`${STATIC_URL}/${singleNews.imageName}`}
+            alt={singleNews.title}
+          />
+        </a>
+      </td>
       <td>
         <a href={`/#/news/${singleNews.id}`}>
           {singleNews.title}
@@ -40,7 +52,7 @@ import EmptyListMessage from '../shared/EmptyListMessage.svelte';
       <td>
         {singleNews.isPublished ? 'TAK' : 'NIE'}
       </td>
-      <td class="g-text-align-right g-actions-header">
+      <td class="g-text-align-right g-table-actions">
         <Button
           type="is-primary"
           on:click={() => push(`/news/${singleNews.id}`)}

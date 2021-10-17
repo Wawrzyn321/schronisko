@@ -10,6 +10,8 @@ import { validateNewsCreate, validateNewsUpdate } from './helpers';
 import { LogsService } from '../logs/logs.service';
 import { formattedDiff } from '../logs/diff';
 
+const imageListElementFields = { title: true, description: true, id: true, isPublished: true, createdAt: true, imageName: true };
+
 @Injectable()
 export class NewsService {
   constructor(private prisma: PrismaService, private logsService: LogsService) { }
@@ -20,8 +22,11 @@ export class NewsService {
   }
 
   async getAll(takeTop?: number): Promise<NewsListElement[]> {
-    const fields = { title: true, description: true, id: true, isPublished: true, createdAt: true };
-    return await this.prisma.news.findMany({ select: fields, take: takeTop, orderBy: [{ title: 'asc' }] });
+    return await this.prisma.news.findMany({ select: imageListElementFields, take: takeTop, orderBy: [{ title: 'asc' }] });
+  }
+
+  async getRecent(count: number): Promise<NewsListElement[]> {
+    return await this.prisma.news.findMany({ take: count, where: { isPublished: true }, select: imageListElementFields, orderBy: [{ createdAt: 'desc' }] });
   }
 
   async get(id: string): Promise<News> {

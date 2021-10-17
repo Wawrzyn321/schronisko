@@ -12,8 +12,8 @@
     imageData={animal.imageData}
     {revertImage}
     imageName={animal.imageName}
-    width={152}
-    height={112}
+    width={576}
+    height={432}
   />
   {#if showOverlay}
     <img
@@ -29,8 +29,8 @@
   .preview-wrapper {
     --padding: 32px;
     position: relative;
-    height: 115px;
-    width: calc(152px + var(--padding));
+    height: 432px;
+    width: calc(576px + var(--padding));
 
     & > :global(*) {
       position: absolute;

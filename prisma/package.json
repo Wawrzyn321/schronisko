@@ -6,7 +6,7 @@
   "scripts": {
     "seed": "ts-node seed.ts",
     "ts-node": "ts-node --compiler-options '{\"module\":\"CommonJS\"}'",
-    "push": "npx prisma@2.19.0 generate && npx prisma@2.19.0 db push --preview-feature"
+    "push": "../node_modules/.bin/prisma generate && ../node_modules/.bin/prisma db push --preview-feature"
   },
   "keywords": [],
   "author": "",

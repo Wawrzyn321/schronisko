@@ -1,6 +1,6 @@
 import { Page as PageModel } from '.prisma/client';
 import { fetchPage, Page } from 'components/Page';
-import { Breadcrumbs } from '../../components/Breadcrumbs/Breadcrumbs';
+import { Breadcrumbs } from 'components/Breadcrumbs/Breadcrumbs';
 
 const ID = 'jak-adoptowac-wirtualnie';
 

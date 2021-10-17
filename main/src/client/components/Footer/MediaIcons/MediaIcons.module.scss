@@ -1,5 +1,6 @@
 .media-icons {
   align-self: flex-end;
+  white-space: nowrap;
 
   :global(a > *) {
     width: 50px;

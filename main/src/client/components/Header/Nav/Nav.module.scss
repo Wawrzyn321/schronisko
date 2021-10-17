@@ -1,5 +1,5 @@
 .border {
-  height: 3px;
+  height: 6px;
   border-radius: 30px;
   margin-bottom: 0;
 
@@ -12,6 +12,8 @@
   & > ul {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
+
     border: 1px solid var(--text-color);
     border-radius: 24px;
     padding: 0 24px;
@@ -26,8 +28,9 @@
     li > a {
       display: inline-block;
       margin-bottom: 9px;
-      font-size: 1.2rem;
+      font-size: 160%;
       cursor: pointer;
+      white-space: nowrap;
     }
   }
 }
@@ -39,9 +42,11 @@
     position: absolute;
     padding-left: 10px;
     display: none;
-    background: #ffffff88;
-    margin-top: 4px;
+    background: rgba(255, 255, 255, 0.9);
+    margin-top: 7px;
     border-radius: 0 0 20px 20px;
+    padding-left: 0;
+    z-index: 1000;
   }
 
   &:hover ul,
@@ -57,6 +62,7 @@
 
     & > a {
       width: 100%;
+      font-size: unset !important;
     }
   }
 }

@@ -1,0 +1,33 @@
+.animal-category-legend {
+  margin: 32px 0;
+
+  dt {
+    font-style: italic;
+    text-transform: uppercase;
+  }
+
+  dd {
+    font-weight: 100;
+    margin-left: 4px;
+  }
+
+  dt,
+  dd {
+    display: inline-block;
+    margin-bottom: 8px;
+  }
+}
+
+.color-coder {
+  width: 42px;
+  height: 1em;
+  display: inline-block;
+  margin-right: 10px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.color-coder--inactive {
+  filter: grayscale(1);
+}

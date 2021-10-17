@@ -1,12 +1,14 @@
 import { Injectable, NotFoundException, BadRequestException, ConflictException } from '@nestjs/common';
 import { PrismaService } from '../../prisma-connect/prisma.service';
-import type { Animal, AnimalCategory, AnimalGender, AnimalLocation, AnimalType } from '.prisma/client';
+import type { Animal, AnimalGender, AnimalLocation, AnimalType } from '.prisma/client';
+import { AnimalCategory } from '.prisma/client';
 import { VirtualCaretakerType, Permission } from '@prisma/client';
 import { v4 as uuid } from 'uuid';
 import { deleteImage, saveImage } from '../../img-fs';
 import { LogsService } from './../logs/logs.service';
 import { LoggedInUser } from '../auth/types';
 import { formattedDiff } from '../logs/diff';
+import gen from 'random-seed';
 
 export interface AnimalData {
   id: string
@@ -34,12 +36,42 @@ function validateAnimalUpdate(animal: AnimalData): boolean {
   return !!animal.name && !!animal.refNo;
 }
 
+type AfterAdoptionAnimal = Pick<Animal, "id" | "imageName" | "name" | "type">;
+
+function getDailyRandom<T>(items: T[], count: number): T[] {
+  if (count >= items.length) {
+    return items;
+  }
+
+  const d = new Date();
+  const rand = gen.create(d.getDay() * d.getMonth());
+
+  const indices: number[] = [];
+
+  for (let i = 0; i < count; i++) {
+    let index: number;
+    do {
+      index = rand.range(0, items.length);
+    } while (indices.includes(index));
+    indices.push(index);
+  }
+  return indices.map(i => items[i]);
+}
+
 @Injectable()
 export class AnimalsService {
   constructor(private prisma: PrismaService, private logsService: LogsService) { }
 
-  async getAll(takeTop?: number): Promise<Animal[]> {
-    return await this.prisma.animal.findMany({ take: takeTop });
+  async getAll(takeTop?: number, category?: AnimalCategory, gender?: AnimalGender): Promise<Animal[]> {
+    return await this.prisma.animal.findMany({ take: takeTop, where: { category, gender } });
+  }
+
+  async getAfterAdoption(count: number): Promise<AfterAdoptionAnimal[]> {
+    const fields = { id: true, imageName: true, name: true, type: true };
+    const results = await this.prisma.animal.findMany(
+      { where: { category: AnimalCategory.ZnalazlyDom }, select: fields }
+    );
+    return getDailyRandom(results, count);
   }
 
   async get(id: string): Promise<Animal> {

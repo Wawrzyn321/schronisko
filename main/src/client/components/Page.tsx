@@ -1,6 +1,6 @@
 import { Page as PageModel } from '.prisma/client';
-import { BACKEND_URL, throwingFetch } from 'api';
-import { useEffect, useState } from 'react';
+import { SSR_BACKEND_URL, BACKEND_URL, throwingFetch } from 'api';
+import { FunctionComponent, useEffect, useState } from 'react';
 import { Article } from './Article/Article';
 
 const ERROR_PAGE: PageModel = {
@@ -9,23 +9,37 @@ const ERROR_PAGE: PageModel = {
   title: 'Błąd ładowania strony',
 };
 
-export async function fetchPage(id: string): Promise<PageModel> {
+export async function fetchPage(id: string, isSSR = true): Promise<PageModel> {
   try {
-    return await throwingFetch(BACKEND_URL + '/api/pages/' + id);
+    return await throwingFetch(
+      (isSSR ? SSR_BACKEND_URL : BACKEND_URL) + '/api/pages/' + id,
+    );
   } catch (e) {
     console.warn('error', e);
     return ERROR_PAGE;
   }
 }
 
-export function Page({ id, ssrPage }: { id: string; ssrPage: PageModel }) {
+export function Page({
+  id,
+  ssrPage,
+  Renderer = Article,
+}: {
+  id: string;
+  ssrPage: PageModel;
+  Renderer?: FunctionComponent<{ title: string; content: string }>;
+}) {
   const [page, setPage] = useState<PageModel>(ssrPage);
 
   useEffect(() => {
-    const loadPage = async () => setPage(await fetchPage(id));
+    const loadPage = async () => setPage(await fetchPage(id, false));
 
     loadPage();
   }, []);
 
-  return <Article title={page.title} content={page.content} />;
+  if (!ssrPage) {
+    return null;
+  }
+
+  return <Renderer title={page.title} content={page.content} />;
 }

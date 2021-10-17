@@ -16,8 +16,8 @@ const presetsMap: { [gender in ResizingPresets]: { width: number, height: number
         height: 533,
     },
     "Animal Miniature": {
-        width: 152,
-        height: 112,
+        width: 576,
+        height: 432,
     }
 }
 
@@ -60,7 +60,7 @@ export async function deleteImagesInContent(prevContent: string, newContent: str
             }
         }
     } catch (e) {
-        console.log(e);
+        console.warn(e);
     }
 }
 

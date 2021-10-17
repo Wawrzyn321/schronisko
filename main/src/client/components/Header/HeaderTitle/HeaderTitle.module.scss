@@ -1,8 +1,8 @@
 .header-title {
   display: flex;
   
-  :global(img) {
-    width: 120px;
+  & > :global(*), :global(img) {
+    width: 130px;
   }
 }
 
@@ -10,6 +10,11 @@
   align-self: center;
   text-transform: uppercase;
   margin-left: 8px;
+
+  p {
+    white-space: nowrap;
+    font-size: 110%;
+  }
 }
 
 .title * {

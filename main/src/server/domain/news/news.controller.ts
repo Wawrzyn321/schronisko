@@ -19,6 +19,13 @@ export class NewsController {
     }
 
     @Public()
+    @Get('recent')
+    getRecentNews(@Query() query) {
+        const count = parseInt(query.count) || 5;
+        return this.newsService.getRecent(count);
+    }
+
+    @Public()
     @Get(':id')
     getSingleNews(@Param("id") newsId: string) {
         return this.newsService.get(newsId);

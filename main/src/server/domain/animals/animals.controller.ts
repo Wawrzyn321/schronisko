@@ -1,6 +1,6 @@
+import { AnimalCategory, AnimalGender } from '.prisma/client';
 import { Public } from './../auth/public.decorator';
 import { LoggedInUser } from './../auth/types';
-import { Animal } from '.prisma/client';
 import { AnimalsService, AnimalData } from './animals.service';
 import { RequirePermission } from '../auth/Permissions.decorator';
 import { Controller, Get, UseGuards, Param, Patch, Body, Post, Delete, Request, Query } from '@nestjs/common';
@@ -15,7 +15,19 @@ export class AnimalsController {
     @Get()
     getAnimals(@Query() query) {
         const takeTop = parseInt(query.takeTop) || undefined;
-        return this.animalsService.getAll(takeTop);
+        const category: AnimalCategory | undefined =
+            Object.keys(AnimalCategory).includes(query.category) ? query.category : undefined;
+        const gender: AnimalGender | undefined =
+            Object.keys(AnimalGender).includes(query.gender) ? query.gender : undefined;
+
+        return this.animalsService.getAll(takeTop, category, gender);
+    }
+
+    @Public()
+    @Get('after-adoption')
+    getAfterAdoptionAnimals(@Query() query) {
+        const count = parseInt(query.count) || 3;
+        return this.animalsService.getAfterAdoption(count);
     }
 
     @Public()

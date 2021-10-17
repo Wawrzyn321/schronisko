@@ -220,6 +220,7 @@ header h1 {
 .preview {
   padding-left: 16px;
   padding-right: 16px;
+  max-width: 60em;
 }
 
 .preview h1 {
@@ -228,6 +229,11 @@ header h1 {
 
 .preview h2 {
   font-size: 1.5em;
+}
+
+.preview h3 {
+  margin-block-start: 1em;
+  margin-block-end: 1em;
 }
 
 .preview blockquote {
@@ -251,7 +257,7 @@ header h1 {
 }
 
 .preview :not(strong) {
-  font-weight: unset;
+  font-weight: 100;
 }
 
 .preview em {
@@ -309,7 +315,11 @@ nav.tabs {
   align-items: center;
 }
 
-.g-actions-header button {
+.g-table-actions {
+  white-space: nowrap;
+}
+
+.g-table-actions button {
  padding: 12px;
 }
 
