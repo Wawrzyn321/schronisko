@@ -7,30 +7,47 @@ import { Controller, Get, UseGuards, Param, Patch, Body, Post, Delete, Request, 
 import { Permission } from '@prisma/client';
 import { PermissionsGuard } from '../auth/Permissions.guard';
 
-@Controller('api/animals')
-export class AnimalsController {
+@Public()
+@Controller('api/c/animals')
+export class AnimalsPublicController {
     constructor(private animalsService: AnimalsService) { }
 
-    @Public()
-    @Get()
-    getAnimals(@Query() query) {
-        const takeTop = parseInt(query.takeTop) || undefined;
-        const category: AnimalCategory | undefined =
-            Object.keys(AnimalCategory).includes(query.category) ? query.category : undefined;
-        const type: AnimalType | undefined =
-            Object.keys(AnimalType).includes(query.type) ? query.type : undefined;
-
-        return this.animalsService.getAll(takeTop, category, type);
-    }
-
-    @Public()
     @Get('after-adoption')
     getAfterAdoptionAnimals(@Query() query) {
         const count = parseInt(query.count) || 3;
         return this.animalsService.getAfterAdoption(count);
     }
 
-    @Public()
+    @Get()
+    getAnimalsPublic(@Query() query) {
+        const takeTop = parseInt(query.takeTop) || undefined;
+        const category: AnimalCategory | undefined =
+            Object.keys(AnimalCategory).includes(query.category) ? query.category : undefined;
+        const type: AnimalType | undefined =
+            Object.keys(AnimalType).includes(query.type) ? query.type : undefined;
+
+        return this.animalsService.getAll(takeTop, category, type, true);
+    }
+
+    @Get(':id')
+    getAnimal(@Param("id") animalId: string) {
+        return this.animalsService.get(animalId, true);
+    }
+}
+
+
+@Controller('api/animals')
+export class AnimalsController {
+    constructor(private animalsService: AnimalsService) { }
+
+    @RequirePermission(Permission.ANIMAL)
+    @Get()
+    getAnimals(@Query() query) {
+        const takeTop = parseInt(query.takeTop) || undefined;
+        return this.animalsService.getAll(takeTop);
+    }
+
+    @RequirePermission(Permission.ANIMAL)
     @Get(':id')
     getAnimal(@Param("id") animalId: string) {
         return this.animalsService.get(animalId);

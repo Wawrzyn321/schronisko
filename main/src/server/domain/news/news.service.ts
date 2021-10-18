@@ -21,16 +21,17 @@ export class NewsService {
     return listElement;
   }
 
-  async getAll(takeTop?: number): Promise<NewsListElement[]> {
-    return await this.prisma.news.findMany({ select: imageListElementFields, take: takeTop, orderBy: [{ title: 'asc' }] });
+  async getAll(takeTop?: number, filterPublic?: boolean): Promise<NewsListElement[]> {
+    return await this.prisma.news.findMany({ where: { isPublished: filterPublic ? true : undefined }, select: imageListElementFields, take: takeTop, orderBy: [{ title: 'asc' }] });
   }
 
   async getRecent(count: number): Promise<NewsListElement[]> {
     return await this.prisma.news.findMany({ take: count, where: { isPublished: true }, select: imageListElementFields, orderBy: [{ createdAt: 'desc' }] });
   }
 
-  async get(id: string): Promise<News> {
-    const news = await this.prisma.news.findUnique({ where: { id } });
+  async get(id: string, filterPublic?: boolean): Promise<News> {
+    // better findUnique instead of findFirst
+    const news = await this.prisma.news.findFirst({ where: { id, isPublished: filterPublic ? true : undefined } });
     if (!news) {
       throw new NotFoundException();
     }

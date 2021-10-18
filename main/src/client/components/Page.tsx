@@ -1,7 +1,7 @@
 import { Page as PageModel } from '.prisma/client';
 import { SSR_BACKEND_URL, BACKEND_URL, throwingFetch } from 'api';
 import { FunctionComponent, useEffect, useState } from 'react';
-import { Article } from './Article/Article';
+import { Article, ArticleProps } from './Article/Article';
 
 const ERROR_PAGE: PageModel = {
   id: '-1',
@@ -20,15 +20,19 @@ export async function fetchPage(id: string, isSSR = true): Promise<PageModel> {
   }
 }
 
+interface PageProps {
+  id: string;
+  ssrPage: PageModel;
+  Renderer?: FunctionComponent<ArticleProps>;
+  showTitle?: boolean;
+}
+
 export function Page({
   id,
   ssrPage,
+  showTitle = true,
   Renderer = Article,
-}: {
-  id: string;
-  ssrPage: PageModel;
-  Renderer?: FunctionComponent<{ title: string; content: string }>;
-}) {
+}: PageProps) {
   const [page, setPage] = useState<PageModel>(ssrPage);
 
   useEffect(() => {
@@ -41,5 +45,7 @@ export function Page({
     return null;
   }
 
-  return <Renderer title={page.title} content={page.content} />;
+  return (
+    <Renderer title={page.title} content={page.content} showTitle={showTitle} />
+  );
 }

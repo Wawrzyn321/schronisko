@@ -5,18 +5,19 @@ import { AnimalImageParams } from './animal-images.controller';
 import { v4 as uuid } from 'uuid';
 import { AnimalImage } from '@prisma/client';
 
-export interface UpsertParams extends AnimalImageParams, AnimalImage {}
+export interface UpsertParams extends AnimalImageParams, AnimalImage { }
 
 @Injectable()
 export class AnimalImagesService {
   constructor(private prisma: PrismaService) { }
 
-  async get(animalId: string): Promise<AnimalImage[]> {
-    if (!this.prisma.animal.findUnique({ where: { id: animalId } })) {
+  async get(animalId: string, filterPublic?: boolean): Promise<AnimalImage[]> {
+    // better findUnique instead of findFirst
+    if (!this.prisma.animal.findFirst({ where: { id: animalId, isPublic: filterPublic ? true : undefined } })) {
       throw new NotFoundException();
     }
 
-    return await this.prisma.animalImage.findMany({ where: { animalId } });
+    return await this.prisma.animalImage.findMany({ where: { animalId, visible: filterPublic ? true : undefined } });
   }
 
   async upsert(animalId: string, images: UpsertParams[]): Promise<AnimalImageParams[]> {

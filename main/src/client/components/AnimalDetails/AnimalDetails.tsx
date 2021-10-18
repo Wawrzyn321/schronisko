@@ -13,7 +13,7 @@ import { useEffect, useState } from 'react';
 export async function fetchAnimal(id: string, isSSR = true): Promise<Animal> {
   try {
     return await throwingFetch(
-      (isSSR ? SSR_BACKEND_URL : BACKEND_URL) + '/api/animals/' + id,
+      (isSSR ? SSR_BACKEND_URL : BACKEND_URL) + '/api/c/animals/' + id,
     );
   } catch (e) {
     console.warn('error', e);
@@ -24,7 +24,7 @@ export async function fetchAnimal(id: string, isSSR = true): Promise<Animal> {
 
 async function fetchAnimalImages(id: string): Promise<AnimalImage[]> {
   try {
-    return await throwingFetch(BACKEND_URL + '/api/animal-images/' + id);
+    return await throwingFetch(BACKEND_URL + '/api/c/animal-images/' + id);
   } catch (e) {
     console.warn('error', e);
     //todo
@@ -70,17 +70,20 @@ export function AnimalDetails({ id, ssrAnimal }) {
       </div>
 
       <dl className={styles['animal-metadata']}>
-        <dt>
-          <MiniIcon name="opiekun" />
-          Opiekun wirtualny:
-        </dt>
-        <dd>{animal.virtualCaretakerName || 'brak'}</dd>
-        <br />
-        <dt>
-          <MiniIcon name="kontakt" />
-          Kontakt:
-        </dt>
-        <dd>{animal.contactInfo}</dd>
+        <div>
+          <dt>
+            <MiniIcon name="opiekun" />
+            Opiekun wirtualny:
+          </dt>
+          <dd>{animal.virtualCaretakerName || 'brak'}</dd>
+        </div>
+        <div>
+          <dt>
+            <MiniIcon name="kontakt" />
+            Kontakt:
+          </dt>
+          <dd>{animal.contactInfo}</dd>
+        </div>
       </dl>
 
       <ul className={styles['animal-images']}>

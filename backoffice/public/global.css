@@ -245,6 +245,11 @@ header h1 {
 
 .preview img {
   max-width: 100%;
+  border-radius: 50px;
+}
+
+.preview p > img {
+  background: red;
 }
 
 .preview {

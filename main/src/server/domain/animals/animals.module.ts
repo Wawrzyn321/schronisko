@@ -1,12 +1,12 @@
 import { PrismaService } from '../../prisma-connect/prisma.service';
 import { Module } from '@nestjs/common';
 import { AnimalsService } from './animals.service';
-import { AnimalsController } from './animals.controller';
+import { AnimalsController, AnimalsPublicController } from './animals.controller';
 import { LogsService } from '../logs/logs.service';
 
 @Module({
   providers: [AnimalsService, PrismaService, LogsService],
   exports: [AnimalsService],
-  controllers: [AnimalsController],
+  controllers: [AnimalsController, AnimalsPublicController],
 })
-export class AnimalsModule {}
+export class AnimalsModule { }

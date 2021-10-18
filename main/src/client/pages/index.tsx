@@ -13,7 +13,7 @@ interface HomeProps {
   ssrData: {
     afterAdoptionAnimals: AfterAdoptionAnimal[];
     recentNews: NewsListElement[];
-    mainPage: PageModel,
+    mainPage: PageModel;
   };
 }
 
@@ -43,7 +43,7 @@ export async function fetchAfterAdoptionAnimals(
   try {
     return await throwingFetch(
       (isSSR ? SSR_BACKEND_URL : BACKEND_URL) +
-        '/api/animals/after-adoption?count=3',
+        '/api/c/animals/after-adoption?count=3',
     );
   } catch (e) {
     console.warn('error', e);
@@ -56,7 +56,7 @@ export async function fetchRecentNews(
 ): Promise<NewsListElement[]> {
   try {
     return await throwingFetch(
-      (isSSR ? SSR_BACKEND_URL : BACKEND_URL) + '/api/news/recent?count=5',
+      (isSSR ? SSR_BACKEND_URL : BACKEND_URL) + '/api/c/news/recent?count=5',
     );
   } catch (e) {
     console.warn('error', e);

@@ -11,11 +11,22 @@ export interface AnimalImageParams {
     visible: boolean;
 }
 
+@Public()
+@Controller('api/c/animal-images')
+export class AnimalImagesPublicController {
+    constructor(private animalImagesService: AnimalImagesService) { }
+
+    @Get(':id')
+    getImages(@Param("id") animalId: string) {
+        return this.animalImagesService.get(animalId, true);
+    }
+}
+
 @Controller('api/animal-images')
 export class AnimalImagesController {
     constructor(private animalImagesService: AnimalImagesService) { }
 
-    @Public()
+    @RequirePermission(Permission.ANIMAL)
     @Get(':id')
     getImages(@Param("id") animalId: string) {
         return this.animalImagesService.get(animalId);

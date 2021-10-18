@@ -1,4 +1,5 @@
-import { Page as PageModel } from '.prisma/client';
+import { AnimalCategory, Page as PageModel } from '.prisma/client';
+import { AnimalList } from 'components/AnimalList/AnimalList';
 import { Breadcrumbs } from 'components/Breadcrumbs/Breadcrumbs';
 import { fetchPage, Page } from 'components/Page';
 
@@ -9,6 +10,7 @@ export default function Adopted({ ssrPage }) {
     <>
       <Breadcrumbs items={['Zwierzęta', 'Znalazły dom']} />
       <Page id={ID} ssrPage={ssrPage} />
+      <AnimalList category={AnimalCategory.ZnalazlyDom} />
     </>
   );
 }

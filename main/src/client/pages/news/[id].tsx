@@ -33,7 +33,7 @@ function ActualNews({ id, ssrNews }: { id: string; ssrNews: NewsModel }) {
 export async function fetchNews(id: string, isSSR = true): Promise<NewsModel> {
   try {
     return await throwingFetch(
-      (isSSR ? SSR_BACKEND_URL : BACKEND_URL) + '/api/news/' + id,
+      (isSSR ? SSR_BACKEND_URL : BACKEND_URL) + '/api/c/news/' + id,
     );
   } catch (e) {
     console.warn('error', e);

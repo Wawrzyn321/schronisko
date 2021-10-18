@@ -7,25 +7,40 @@ import { Controller, Get, UseGuards, Patch, Param, Body, Delete, Post, BadReques
 import { Permission } from '@prisma/client';
 import { PermissionsGuard } from '../auth/Permissions.guard';
 
-@Controller('api/news')
-export class NewsController {
-    constructor(private newsService: NewsService) {}
+@Public() @Controller('api/c/news')
+export class NewsPublicController {
+    constructor(private newsService: NewsService) { }
 
-    @Public()
     @Get()
     getNews(@Query() query) {
         const takeTop = parseInt(query.takeTop) || undefined;
-        return this.newsService.getAll(takeTop);
+        return this.newsService.getAll(takeTop, true);
     }
 
-    @Public()
     @Get('recent')
     getRecentNews(@Query() query) {
         const count = parseInt(query.count) || 5;
         return this.newsService.getRecent(count);
     }
 
-    @Public()
+    @Get(':id')
+    getSingleNews(@Param("id") newsId: string) {
+        return this.newsService.get(newsId, true);
+    }
+}
+
+@Controller('api/news')
+export class NewsController {
+    constructor(private newsService: NewsService) { }
+
+    @RequirePermission(Permission.NEWS)
+    @Get()
+    getNews(@Query() query) {
+        const takeTop = parseInt(query.takeTop) || undefined;
+        return this.newsService.getAll(takeTop);
+    }
+
+    @RequirePermission(Permission.NEWS)
     @Get(':id')
     getSingleNews(@Param("id") newsId: string) {
         return this.newsService.get(newsId);

@@ -1,0 +1,23 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 32px;
+
+  button {
+    cursor: pointer;
+    background: none;
+    border: none;
+  }
+
+  * {
+    font-size: 110%;
+  }
+}
+
+.pagination-current-item {
+  font-weight: bolder;
+}
+
+.prev-button {
+  transform: rotate(180deg);
+}

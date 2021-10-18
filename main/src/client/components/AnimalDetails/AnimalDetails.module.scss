@@ -18,5 +18,22 @@
 }
 
 .animal-metadata {
-    
+  & > div {
+    display: flex;
+    line-height: 3em;
+  }
+
+  dt {
+    display: inline-flex;
+    font-weight: 100;
+
+    & > :global(div) {
+      margin-right: 28px !important;
+    }
+  }
+
+  dd {
+    margin-left: 8px;
+    display: inline-block;
+  }
 }

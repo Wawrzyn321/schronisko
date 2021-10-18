@@ -55,14 +55,17 @@
         <a href="/#/pages">Strony</a>
         <span class="g-breadcrumb-separator">/ </span>{page.title}
       </h1>
-      <Button
-        type="is-primary"
-        disabled={isSaving || page.content === editedContent}
-        loading={isSaving}
-        on:click={savePage}
-      >
-        Zapisz
-      </Button>
+      <div class="page__header-right">
+        <span>ID: <em>{page.id}</em></span>
+        <Button
+          type="is-primary"
+          disabled={isSaving || page.content === editedContent}
+          loading={isSaving}
+          on:click={savePage}
+        >
+          Zapisz
+        </Button>
+      </div>
     </header>
     <EditorTabs
       title={page.title}
@@ -86,5 +89,19 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 16px;
+  }
+
+  .page__header-right {
+    display: flex;
+    place-items: center;
+
+    span {
+      display: inline-block;
+      margin-right: 12px;
+    }
+  }
+
+  em {
+    font-style: italic;
   }
 </style>

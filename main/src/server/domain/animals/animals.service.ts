@@ -62,8 +62,8 @@ function getDailyRandom<T>(items: T[], count: number): T[] {
 export class AnimalsService {
   constructor(private prisma: PrismaService, private logsService: LogsService) { }
 
-  async getAll(takeTop?: number, category?: AnimalCategory, type?: AnimalType): Promise<Animal[]> {
-    return await this.prisma.animal.findMany({ take: takeTop, where: { category, type } });
+  async getAll(takeTop?: number, category?: AnimalCategory, type?: AnimalType, filterPublic?: boolean): Promise<Animal[]> {
+    return await this.prisma.animal.findMany({ take: takeTop, where: { category, type, isPublic: filterPublic ? true : undefined } });
   }
 
   async getAfterAdoption(count: number): Promise<AfterAdoptionAnimal[]> {
@@ -74,8 +74,9 @@ export class AnimalsService {
     return getDailyRandom(results, count);
   }
 
-  async get(id: string): Promise<Animal> {
-    const animal = await this.prisma.animal.findUnique({ where: { id } });
+  async get(id: string, filterPublic?: boolean): Promise<Animal> {
+    // better findUnique instead of findFirst
+    const animal = await this.prisma.animal.findFirst({ where: { id, isPublic: filterPublic ? true : undefined } });
     if (!animal) {
       throw new NotFoundException();
     }

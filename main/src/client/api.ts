@@ -18,6 +18,6 @@ export async function throwingFetch(input: RequestInfo, init?: RequestInit): Pro
             return await response.text();
         }
     }
-    console.warn(response.status, response.statusText);
+    console.warn(response.status, response.statusText, input);
     throw Error("Serwer jest nieosiągalny.");
 }

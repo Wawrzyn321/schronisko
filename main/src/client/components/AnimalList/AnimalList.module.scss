@@ -8,3 +8,10 @@
     filter: grayscale(1);
   }
 }
+
+.not-found-message {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 48px 0;
+}

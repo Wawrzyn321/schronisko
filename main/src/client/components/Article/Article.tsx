@@ -1,13 +1,5 @@
 import styles from './Article.module.scss';
 
-type ArticleProps = {
-  title: string;
-  content: string;
-  date?: Date;
-  showTitle?: boolean;
-  justify?: boolean;
-};
-
 function DateDisplay({ date }: { date: any }) {
   const d = new Date(Date.parse(date));
 
@@ -19,6 +11,14 @@ function DateDisplay({ date }: { date: any }) {
 
   return <em>{d.toLocaleDateString('pl-PL', dateFormatOptions)}</em>;
 }
+
+export type ArticleProps = {
+  title: string;
+  content: string;
+  date?: Date;
+  showTitle?: boolean;
+  justify?: boolean;
+};
 
 export function Article({
   title,

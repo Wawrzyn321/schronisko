@@ -1,4 +1,5 @@
 import styles from './AnimalCard.module.scss';
+import Link from 'next/link';
 import Image from 'next/image';
 import { Animal, AnimalCategory } from '.prisma/client';
 import { IMAGES_URL, OVERLAYS_URL } from 'api';
@@ -27,14 +28,16 @@ export function AnimalCard({
 }) {
   return (
     <li className={styles['animal-card']}>
-      <a href={buildAnimalUrl(animal)}>
-        <Image
-          src={IMAGES_URL + '/' + animal.imageName}
-          alt={animal.name}
-          width="340px"
-          height="340px"
-        />
-      </a>
+      <Link href={buildAnimalUrl(animal)}>
+        <a>
+          <Image
+            src={IMAGES_URL + '/' + animal.imageName}
+            alt={animal.name}
+            width="340px"
+            height="340px"
+          />
+        </a>
+      </Link>
       {showOverlay && <Overlay category={animal.category} />}
       <div className={styles['animal-ids']}>
         <span className={styles['animal-name']}>{animal.name}</span>
