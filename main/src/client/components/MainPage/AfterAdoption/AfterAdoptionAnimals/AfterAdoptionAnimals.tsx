@@ -2,10 +2,7 @@ import Link from 'next/link';
 import styles from './AfterAdoptionAnimals.module.scss';
 import { AfterAdoptionAnimal } from 'types';
 import { IMAGES_URL, MAIN_PAGE_IMAGES_URL } from 'api';
-
-const buildAnimalUrl = (animal: AfterAdoptionAnimal) => {
-  return `/animals/${animal.type.toLocaleLowerCase()}/${animal.id}`;
-};
+import { buildAnimalUrl } from '_util';
 
 function AnimalImage({ animal }: { animal: AfterAdoptionAnimal }) {
   return (

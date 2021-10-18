@@ -18,8 +18,6 @@ interface HomeProps {
 }
 
 export default function Home({ ssrData }: HomeProps) {
-  // return <Page id={ID} ssrPage={ssrPage} Renderer={}/>;
-
   return (
     <>
       <BigSection mainPage={ssrData.mainPage} recentNews={ssrData.recentNews} />

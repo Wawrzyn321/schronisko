@@ -62,14 +62,14 @@ function getDailyRandom<T>(items: T[], count: number): T[] {
 export class AnimalsService {
   constructor(private prisma: PrismaService, private logsService: LogsService) { }
 
-  async getAll(takeTop?: number, category?: AnimalCategory, gender?: AnimalGender): Promise<Animal[]> {
-    return await this.prisma.animal.findMany({ take: takeTop, where: { category, gender } });
+  async getAll(takeTop?: number, category?: AnimalCategory, type?: AnimalType): Promise<Animal[]> {
+    return await this.prisma.animal.findMany({ take: takeTop, where: { category, type } });
   }
 
   async getAfterAdoption(count: number): Promise<AfterAdoptionAnimal[]> {
     const fields = { id: true, imageName: true, name: true, type: true };
     const results = await this.prisma.animal.findMany(
-      { where: { category: AnimalCategory.ZnalazlyDom }, select: fields }
+      { where: { category: AnimalCategory.ZnalazlyDom, isPublic: true }, select: fields }
     );
     return getDailyRandom(results, count);
   }

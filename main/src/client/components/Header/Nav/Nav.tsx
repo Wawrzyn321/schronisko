@@ -64,7 +64,7 @@ export function Nav() {
   const animalsLinks: SubListItem[] = [
     { name: 'Psy do adopcji', path: '/to-adopt/dogs' },
     { name: 'Koty do adopcji', path: '/to-adopt/cats' },
-    { name: 'Zwierzęta znalezione', path: '/just-found' },
+    { name: 'Zwierzęta znalezione', path: '/recently-found' },
     { name: 'Znalazły dom', path: '/adopted' },
     { name: 'Odeszły', path: '/gone' },
   ];

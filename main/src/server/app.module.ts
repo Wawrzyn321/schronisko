@@ -1,6 +1,6 @@
 import { PrismaService } from './prisma-connect/prisma.service';
 import { Module } from '@nestjs/common';
-import { APP_GUARD } from '@nestjs/core';
+import { APP_GUARD, Reflector } from '@nestjs/core';
 import { AppController } from './app.controller';
 import { JwtAuthGuard } from './domain/auth/jwt-auth.guard';
 import { ServeStaticModule } from '@nestjs/serve-static';
@@ -38,12 +38,15 @@ const ServeStatic = ServeStaticModule.forRoot({
 const JwtGuard = {
   provide: APP_GUARD,
   useClass: JwtAuthGuard,
+  useFactory: ref => new JwtAuthGuard(ref),
+  inject: [Reflector],
 };
+
 @Module({
   imports: [...domainModules,
     ViewModule,
     ServeStatic],
-  controllers: [AppController],
+  controllers: [AppController,],
   providers: [PrismaService, JwtGuard]
 })
 export class AppModule { }

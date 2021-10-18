@@ -1,86 +1,66 @@
-import Image from 'next/image';
 import styles from './AnimalList.module.scss';
-import { Animal, AnimalCategory } from '.prisma/client';
-import { IMAGES_URL, OVERLAYS_URL } from 'api';
+import { Animal, AnimalCategory, AnimalType } from '.prisma/client';
 import { useEffect, useState } from 'react';
 import { BACKEND_URL, throwingFetch } from 'api';
-
-function Overlay({ category }: { category: AnimalCategory }) {
-  const Img = ({ name }: { name: string }) => (
-    <img src={OVERLAYS_URL + '/' + name} alt="" className={styles['overlay']} />
-  );
-
-  if (category === AnimalCategory.Weterani) {
-    return <Img name="najdluzej czekam.svg" />;
-  } else if (category === AnimalCategory.PilniePotrzebuja) {
-    return <Img name="pilnie szukam domu.svg" />;
-  } else {
-    return null;
-  }
-}
-
-function AnimalCard({
-  animal,
-  showOverlay = false,
-}: {
-  animal: Animal;
-  showOverlay: boolean;
-}) {
-  return (
-    <li className={styles['animal-card']}>
-      <Image
-        src={IMAGES_URL + '/' + animal.imageName}
-        alt={animal.name}
-        width="340px"
-        height="340px"
-      />
-      {showOverlay && <Overlay category={animal.category} />}
-      <div className={styles['animal-ids']}>
-        <span className={styles['animal-name']}>{animal.name}</span>
-        <span>{animal.refNo}</span>
-      </div>
-      <dl className={styles['animal-data']}>
-        <dt>Miejsce pobytu:</dt>
-        <dd>{animal.location}</dd>
-        <dt>Opiekun wirtualny:</dt>
-        <dd>{animal.virtualCaretakerName || 'Brak'}</dd>
-      </dl>
-    </li>
-  );
-}
+import { AnimalCategoryLegend } from './AnimalCategoryLegend/AnimalCategoryLegend';
+import { AnimalCard } from './AnimalCard/AnimalCard';
 
 export function AnimalList({
   bw = false,
   category = null,
+  type = null,
   filter = () => true,
-  showOverlay = false,
+  withCategoryOverlay = false,
 }: {
   category?: AnimalCategory;
+  type?: AnimalType;
   bw?: boolean;
-  filter: (animal: Animal) => boolean;
-  showOverlay?: boolean;
+  filter?: (animal: Animal) => boolean;
+  withCategoryOverlay?: boolean;
 }) {
   const [animals, setAnimals] = useState<Animal[]>([]);
+  const [filterCategory, setFilterCategory] = useState<
+    AnimalCategory | undefined
+  >();
 
   useEffect(() => {
-    const loadPage = async () => setAnimals(await fetchAnimals(category));
+    const loadPage = async () => setAnimals(await fetchAnimals(category, type));
 
     loadPage();
   }, []);
+  
+  const filterWithCategory = (animal: Animal) => {
+    if (!filterCategory) return true;
+    return animal.category === filterCategory;
+  };
 
   const className = `${styles['animals-list']} ${bw ? styles['bw'] : ''}`;
 
   return (
-    <ul className={className}>
-      {animals.filter(filter).map((animal) => (
-        <AnimalCard animal={animal} key={animal.id} showOverlay={showOverlay} />
-      ))}
-    </ul>
+    <>
+      {withCategoryOverlay && (
+        <AnimalCategoryLegend
+          category={filterCategory}
+          setCategory={setFilterCategory}
+        />
+      )}
+      <ul className={className}>
+        {animals
+          .filter((a) => filter(a) && filterWithCategory(a))
+          .map((animal) => (
+            <AnimalCard
+              animal={animal}
+              key={animal.id}
+              showOverlay={withCategoryOverlay}
+            />
+          ))}
+      </ul>
+    </>
   );
 }
 
-async function fetchAnimals(category: string) {
-  const url = BACKEND_URL + '/api/animals?category=' + category;
+async function fetchAnimals(category: AnimalCategory, type: AnimalType) {
+  const url = `${BACKEND_URL}/api/animals?category=${category}&type=${type}`;
   try {
     return await throwingFetch(url);
   } catch (e) {

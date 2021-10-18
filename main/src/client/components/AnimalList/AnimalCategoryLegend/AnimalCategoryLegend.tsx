@@ -1,32 +1,35 @@
 import { AnimalCategory } from '.prisma/client';
 import styles from './AnimalCategoryLegend.module.scss';
 
+interface AnimalCategoryLegendProps {
+  category: AnimalCategory;
+  setCategory: (category: AnimalCategory) => any;
+}
+
+interface ColorCoderProps {
+  color: string;
+  category: AnimalCategory;
+}
+
 export function AnimalCategoryLegend({
   category: currentCategory,
   setCategory,
-}: {
-  category: AnimalCategory;
-  setCategory: (category: AnimalCategory) => any;
-}) {
-  const ColorCoder = ({
-    color,
-    category,
-  }: {
-    color: string;
-    category: AnimalCategory;
-  }) => {
+}: AnimalCategoryLegendProps) {
+  const ColorCoder = ({ color, category }: ColorCoderProps) => {
     const switchCategory = (category: AnimalCategory) =>
       setCategory(category !== currentCategory ? category : undefined);
+
+    const className = `${styles['color-coder']} ${
+      currentCategory && category !== currentCategory
+        ? styles['color-coder--inactive']
+        : ''
+    }`;
 
     return (
       <button
         onClick={() => switchCategory(category)}
         style={{ backgroundColor: color }}
-        className={`${styles['color-coder']} ${
-          currentCategory && category !== currentCategory
-            ? styles['color-coder--inactive']
-            : ''
-        }`}
+        className={className}
       ></button>
     );
   };

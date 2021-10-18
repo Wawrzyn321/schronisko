@@ -5,6 +5,7 @@ type ArticleProps = {
   content: string;
   date?: Date;
   showTitle?: boolean;
+  justify?: boolean;
 };
 
 function DateDisplay({ date }: { date: any }) {
