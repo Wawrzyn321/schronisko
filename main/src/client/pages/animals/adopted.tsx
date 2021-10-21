@@ -1,15 +1,20 @@
 import { AnimalCategory, Page as PageModel } from '.prisma/client';
+import { fetchPage } from 'api';
 import { AnimalList } from 'components/AnimalList/AnimalList';
 import { Breadcrumbs } from 'components/Breadcrumbs/Breadcrumbs';
-import { fetchPage, Page } from 'components/Page';
+import { LayoutWrapper } from 'components/LayoutWrapper';
+import { Page } from 'components/Page';
+import React from 'react';
 
 const ID = 'odnalazly-dom';
 
-export default function Adopted({ ssrPage }) {
+export default function Adopted({ ssrPage }: { ssrPage: PageModel }) {
   return (
     <>
-      <Breadcrumbs items={['Zwierzęta', 'Znalazły dom']} />
-      <Page id={ID} ssrPage={ssrPage} />
+      <LayoutWrapper>
+        <Breadcrumbs items={['Zwierzęta', 'Znalazły dom']} />
+        <Page id={ID} ssrPage={ssrPage} />
+      </LayoutWrapper>
       <AnimalList category={AnimalCategory.ZnalazlyDom} />
     </>
   );
@@ -18,6 +23,5 @@ export default function Adopted({ ssrPage }) {
 export async function getServerSideProps(): Promise<{
   props: { ssrPage: PageModel };
 }> {
-  const page = await fetchPage(ID);
-  return { props: { ssrPage: page } };
+  return { props: { ssrPage: (await fetchPage(ID)).data } };
 }

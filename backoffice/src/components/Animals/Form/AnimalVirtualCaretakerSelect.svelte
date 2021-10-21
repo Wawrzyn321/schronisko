@@ -10,7 +10,7 @@
   export let virtualCaretakerType: VirtualCaretakerType;
 </script>
 
-<Field label="Wirtualny opiekun">
+<Field label="Wirtualny opiekun" style="grid-area: v-c-type">
   <Select required expanded nativeSize={1} bind:selected={virtualCaretakerType}>
     {#each virtualCaretakerTypes as virtualCaretakerType}
       <option value={virtualCaretakerType}

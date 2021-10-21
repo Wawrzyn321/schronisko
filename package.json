@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "concurrently \"npm run dev --prefix=backend\" \"npm run dev --prefix=backoffice\"",
-    "ts-coverage": "npx typescript-coverage-report && open coverage-ts/index.html"
+    "ts-coverage": "npx typescript-coverage-report --ignore-files prisma/db-import/*.ts && open coverage-ts/index.html"
   },
   "keywords": [],
   "author": "",

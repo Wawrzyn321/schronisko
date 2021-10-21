@@ -38,8 +38,6 @@ const ServeStatic = ServeStaticModule.forRoot({
 const JwtGuard = {
   provide: APP_GUARD,
   useClass: JwtAuthGuard,
-  useFactory: ref => new JwtAuthGuard(ref),
-  inject: [Reflector],
 };
 
 @Module({

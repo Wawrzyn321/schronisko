@@ -22,22 +22,32 @@ function Overlay({ category }: { category: AnimalCategory }) {
 export function AnimalCard({
   animal,
   showOverlay = false,
+  bwMode = false,
 }: {
   animal: Animal;
   showOverlay: boolean;
+  bwMode: boolean;
 }) {
+  let image = (
+    <Image
+      src={IMAGES_URL + '/' + animal.imageName}
+      alt={animal.name}
+      width="340px"
+      height="340px"
+    />
+  );
+
+  if (bwMode) {
+    image = (
+      <Link href={buildAnimalUrl(animal)}>
+        <a>{image}</a>
+      </Link>
+    );
+  }
+
   return (
     <li className={styles['animal-card']}>
-      <Link href={buildAnimalUrl(animal)}>
-        <a>
-          <Image
-            src={IMAGES_URL + '/' + animal.imageName}
-            alt={animal.name}
-            width="340px"
-            height="340px"
-          />
-        </a>
-      </Link>
+      {image}
       {showOverlay && <Overlay category={animal.category} />}
       <div className={styles['animal-ids']}>
         <span className={styles['animal-name']}>{animal.name}</span>

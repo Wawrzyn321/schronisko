@@ -1,0 +1,14 @@
+adminCategoryMenu           X
+adminGallery                jezu 9k rekordów -> Animals
+adminGalleryHeader          X
+adminUsers                  DONE
+leftmenu                    X
+media                       przejrzyj pliki po nazwach
+messages                    X
+news                        trza eksportować
+pictures                    przejrzyj pliki po nazwach - to chyba zdjęcia z galerii
+requests                    zwierzęta?
+sites                       przejrzyj -> Pages
+sizes                       X
+species                     X
+userRights                  X

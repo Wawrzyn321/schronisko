@@ -1,15 +1,20 @@
 import { Page as PageModel } from '.prisma/client';
-import { fetchPage, Page } from 'components/Page';
+import { fetchPage } from 'api';
+import { LayoutWrapper } from 'components/LayoutWrapper';
+import { Page } from 'components/Page';
 
 const ID = 'jak-pomoc';
 
-export default function HowTo({ ssrPage }) {
-  return <Page id={ID} ssrPage={ssrPage} />;
+export default function HowTo({ ssrPage }: { ssrPage: PageModel }) {
+  return (
+    <LayoutWrapper>
+      <Page id={ID} ssrPage={ssrPage} />
+    </LayoutWrapper>
+  );
 }
 
 export async function getServerSideProps(): Promise<{
   props: { ssrPage: PageModel };
 }> {
-  const page = await fetchPage(ID);
-  return { props: { ssrPage: page } };
+  return { props: { ssrPage: (await fetchPage(ID)).data } };
 }

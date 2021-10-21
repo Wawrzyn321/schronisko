@@ -5,7 +5,6 @@ import recentlyFound from 'public/site/main/recently-found.png';
 import styles from './DonateAndRecentlyFound.module.scss';
 
 export function DonateAndRecentlyFound() {
-  console.log('wtf');
   return (
     <div className={styles['donate-and-recently-found']}>
       <Image src={donate} alt="przekaż darowiznę" />

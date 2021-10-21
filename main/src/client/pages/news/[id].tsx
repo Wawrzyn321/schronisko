@@ -1,8 +1,11 @@
 import { IdWrapper } from 'components/IdWrapper';
-import { SSR_BACKEND_URL, BACKEND_URL, throwingFetch } from 'api';
+import { FetchError, fetchNews } from 'api';
 import { useEffect, useState } from 'react';
 import { News as NewsModel } from '.prisma/client';
 import { Article } from 'components/Article/Article';
+import { ERROR_GENERIC, ERROR_NEWS_NOT_FOUND } from 'errors';
+import { SSRContext } from 'types';
+import { LayoutWrapper } from 'components/LayoutWrapper';
 
 export default function News() {
   return <IdWrapper Component={ActualNews} />;
@@ -10,41 +13,42 @@ export default function News() {
 
 function ActualNews({ id, ssrNews }: { id: string; ssrNews: NewsModel }) {
   const [news, setNews] = useState<NewsModel>(ssrNews);
+  const [error, setError] = useState<FetchError>(null);
 
   useEffect(() => {
-    const loadPage = async () => setNews(await fetchNews(id, false));
+    const loadPage = async () => {
+      const { data, error } = await fetchNews(id, false);
+      setNews(data);
+      setError(error);
+    };
 
     loadPage();
   }, []);
 
-  if (!news) return null;
-
-  return (
-    <Article title={news.title} content={news.content} date={news.createdAt} />
-  );
-}
-
-// const ERROR_PAGE: News = {
-//   id: '-1',
-//   content: 'Tak że tego, coś poszło nie tak.',
-//   title: 'Błąd ładowania strony',
-// };
-
-export async function fetchNews(id: string, isSSR = true): Promise<NewsModel> {
-  try {
-    return await throwingFetch(
-      (isSSR ? SSR_BACKEND_URL : BACKEND_URL) + '/api/c/news/' + id,
+  if (news) {
+    return (
+      <LayoutWrapper>
+        <Article
+          title={news.title}
+          content={news.content}
+          date={news.createdAt}
+        />
+      </LayoutWrapper>
     );
-  } catch (e) {
-    console.warn('error', e);
-    return null;
+  } else if (error) {
+    if (error.statusCode === 404) {
+      return <Article {...ERROR_NEWS_NOT_FOUND} />;
+    }
+    return <Article {...ERROR_GENERIC} />;
+  } else {
+    return 'Ładowanie...';
   }
 }
 
-export async function getServerSideProps(context: any): Promise<{
+export async function getServerSideProps(context: SSRContext): Promise<{
   props: { ssrNews: NewsModel };
 }> {
   const { id } = context.query;
   const news = await fetchNews(id, true);
-  return { props: { ssrNews: news } };
+  return { props: { ssrNews: news.data } };
 }

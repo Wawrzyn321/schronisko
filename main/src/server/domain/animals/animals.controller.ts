@@ -13,18 +13,18 @@ export class AnimalsPublicController {
     constructor(private animalsService: AnimalsService) { }
 
     @Get('after-adoption')
-    getAfterAdoptionAnimals(@Query() query) {
-        const count = parseInt(query.count) || 3;
+    getAfterAdoptionAnimals(@Query('count') countStr: string) {
+        const count = parseInt(countStr) || 3;
         return this.animalsService.getAfterAdoption(count);
     }
 
     @Get()
-    getAnimalsPublic(@Query() query) {
-        const takeTop = parseInt(query.takeTop) || undefined;
+    getAnimalsPublic(@Query('count') takeTopStr: string, @Query('category') possibleCategory: string, @Query('type') possibleType: string) {
+        const takeTop = parseInt(takeTopStr) || undefined;
         const category: AnimalCategory | undefined =
-            Object.keys(AnimalCategory).includes(query.category) ? query.category : undefined;
+            Object.keys(AnimalCategory).includes(possibleCategory) ? possibleCategory as AnimalCategory : undefined;
         const type: AnimalType | undefined =
-            Object.keys(AnimalType).includes(query.type) ? query.type : undefined;
+            Object.keys(AnimalType).includes(possibleType) ? possibleType as AnimalType : undefined;
 
         return this.animalsService.getAll(takeTop, category, type, true);
     }
@@ -42,8 +42,8 @@ export class AnimalsController {
 
     @RequirePermission(Permission.ANIMAL)
     @Get()
-    getAnimals(@Query() query) {
-        const takeTop = parseInt(query.takeTop) || undefined;
+    getAnimals(@Query('takeTop') takeTopStr: string) {
+        const takeTop = parseInt(takeTopStr) || undefined;
         return this.animalsService.getAll(takeTop);
     }
 

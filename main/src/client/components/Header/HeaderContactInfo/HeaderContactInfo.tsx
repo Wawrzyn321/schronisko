@@ -1,6 +1,6 @@
 import styles from './HeaderContactInfo.module.scss';
 
-function Tel({ tel }) {
+function Tel({ tel }: { tel: string }) {
   return (
     <strong>
       <a href={`tel:${tel}`}>{tel}</a>

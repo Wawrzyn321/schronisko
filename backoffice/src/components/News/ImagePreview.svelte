@@ -9,7 +9,10 @@
   export let revertImage: () => any;
 </script>
 
-<div class="image-preview" style={`--width: ${width}px; --height: ${height}px;`}>
+<div
+  class="image-preview"
+  style={`--width: ${width}px; --height: ${height}px;`}
+>
   {#if imageData}
     <img src={imageData} alt="Podgląd" />
   {:else if imageName}
@@ -18,7 +21,7 @@
   {#if imageData && imageName}
     <div class="image-preview__overlay">
       <button class="overlay-button" on:click|preventDefault={revertImage}>
-          <RotateCcwIcon size="2.0x" />
+        <RotateCcwIcon size="2.0x" />
       </button>
     </div>
   {/if}
@@ -55,13 +58,4 @@
     align-items: flex-end;
     padding: 10px;
   }
-
-  // .overlay_button {
-  //   border: none;
-  //   background: rgba(255, 255, 255, 0.5);
-
-  //   &:first-of-type {
-  //       margin-right: 10px;
-  //   }
-  // }
 </style>

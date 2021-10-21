@@ -13,7 +13,7 @@ function CarouselControl({
 }: {
   index: number;
   total: number;
-  setIndex: (number) => any;
+  setIndex: (i: number) => any;
 }) {
   const inc = () => setIndex((index + 1) % total);
 
@@ -26,7 +26,7 @@ function CarouselControl({
         <Image src={whiteArrow} alt="prawo" onClick={inc} />
       </div>
       <ul className={styles['carousel__bottom']}>
-        {new Array(total).fill(null).map((_, i) => (
+        {new Array(total).fill(null).map((_: null, i) => (
           <li
             className={index === i ? styles['carousel--current'] : ''}
             key={i}
@@ -47,24 +47,19 @@ export function NewsCarousel({
 
   const currentNews = recentNews[index];
 
-  const currentItem = (
-    <img
-      src={IMAGES_URL + '/' + currentNews?.imageName}
-      alt={currentNews?.id}
-    />
+  const currentItem = currentNews && (
+    <img src={IMAGES_URL + '/' + currentNews.imageName} alt={currentNews.id} />
   );
 
-  const title = (
+  const title = currentNews && (
     <div className={styles['carousel__title']}>
-      <PageLink href={'/news/' + currentNews?.id}>
-        {currentNews?.title}
-      </PageLink>
+      <PageLink href={'/news/' + currentNews.id}>{currentNews.title}</PageLink>
     </div>
   );
 
-  const description = (
+  const description = currentNews && (
     <div className={styles['carousel__description']}>
-      <p>{currentNews?.description}</p>
+      <p>{currentNews.description}</p>
     </div>
   );
 

@@ -3,8 +3,10 @@ import { Animal, AnimalCategory, AnimalType } from '.prisma/client';
 import { useEffect, useState } from 'react';
 import { AnimalCategoryLegend } from './AnimalCategoryLegend/AnimalCategoryLegend';
 import { AnimalCard } from './AnimalCard/AnimalCard';
-import { fetchAnimals } from './fetchAnimals';
 import { paginate, Pagination } from './Pagination/Pagination';
+import { fetchAnimals, FetchError } from 'api';
+import { Article } from 'components/Article/Article';
+import { ERROR_ANIMAL_LIST } from 'errors';
 
 function NotFoundMessage() {
   return (
@@ -15,7 +17,7 @@ function NotFoundMessage() {
 }
 
 export function AnimalList({
-  bw = false,
+  bwMode = false,
   category = null,
   type = null,
   filter = () => true,
@@ -23,16 +25,15 @@ export function AnimalList({
 }: {
   category?: AnimalCategory;
   type?: AnimalType;
-  bw?: boolean;
+  bwMode?: boolean;
   filter?: (animal: Animal) => boolean;
   withCategoryOverlay?: boolean;
 }) {
   const pageSize = 9;
   const [animals, setAnimals] = useState<Animal[]>([]);
-  const [filterCategory, setFilterCategory] = useState<
-    AnimalCategory | undefined
-  >();
+  const [error, setError] = useState<FetchError>(null);
   const [currentPage, setCurrentPage] = useState(0);
+  const [filterCategory, setFilterCategory] = useState<AnimalCategory>();
 
   const filterWithCategory = (animal: Animal) => {
     if (!filterCategory) return true;
@@ -50,41 +51,54 @@ export function AnimalList({
   }, [currentPage, filteredAnimals]);
 
   useEffect(() => {
-    const loadPage = async () => setAnimals(await fetchAnimals(category, type));
+    const loadPage = async () => {
+      const { data, error } = await fetchAnimals(category, type);
+      setAnimals(data);
+      setError(error);
+    };
 
     loadPage();
   }, []);
 
-  const className = `${styles['animals-list']} ${bw ? styles['bw'] : ''}`;
+  const className = `${styles['animals-list']} ${bwMode ? styles['bw'] : ''}`;
 
-  return (
-    <>
-      {withCategoryOverlay && (
-        <AnimalCategoryLegend
-          category={filterCategory}
-          setCategory={setFilterCategory}
-        />
-      )}
-      {filteredAnimals.length ? (
-        <>
-          <ul className={className}>
-            {paginate(filteredAnimals, pageSize, currentPage).map((animal) => (
-              <AnimalCard
-                animal={animal}
-                key={animal.id}
-                showOverlay={withCategoryOverlay}
-              />
-            ))}
-          </ul>
-          <Pagination
-            pagesCount={pagesCount}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
+  if (animals) {
+    return (
+      <>
+        {withCategoryOverlay && (
+          <AnimalCategoryLegend
+            category={filterCategory}
+            setCategory={setFilterCategory}
           />
-        </>
-      ) : (
-        <NotFoundMessage />
-      )}
-    </>
-  );
+        )}
+        {filteredAnimals.length ? (
+          <>
+            <ul className={className}>
+              {paginate(filteredAnimals, pageSize, currentPage).map(
+                (animal: Animal) => (
+                  <AnimalCard
+                    animal={animal}
+                    key={animal.id}
+                    showOverlay={withCategoryOverlay}
+                    bwMode={bwMode}
+                  />
+                ),
+              )}
+            </ul>
+            <Pagination
+              pagesCount={pagesCount}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+            />
+          </>
+        ) : (
+          <NotFoundMessage />
+        )}
+      </>
+    );
+  } else if (error) {
+    return <Article {...ERROR_ANIMAL_LIST} />;
+  } else {
+    return <p>Ładowanie...</p>;
+  }
 }

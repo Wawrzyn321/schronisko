@@ -12,14 +12,14 @@ export class NewsPublicController {
     constructor(private newsService: NewsService) { }
 
     @Get()
-    getNews(@Query() query) {
-        const takeTop = parseInt(query.takeTop) || undefined;
+    getNews(@Query('takeTop') takeTopStr: string) {
+        const takeTop = parseInt(takeTopStr) || undefined;
         return this.newsService.getAll(takeTop, true);
     }
 
     @Get('recent')
-    getRecentNews(@Query() query) {
-        const count = parseInt(query.count) || 5;
+    getRecentNews(@Query('count') countStr: string) {
+        const count = parseInt(countStr) || 5;
         return this.newsService.getRecent(count);
     }
 
@@ -35,8 +35,8 @@ export class NewsController {
 
     @RequirePermission(Permission.NEWS)
     @Get()
-    getNews(@Query() query) {
-        const takeTop = parseInt(query.takeTop) || undefined;
+    getNews(@Query('takeTop') takeTopStr: string) {
+        const takeTop = parseInt(takeTopStr) || undefined;
         return this.newsService.getAll(takeTop);
     }
 

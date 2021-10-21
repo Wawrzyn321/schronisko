@@ -62,7 +62,7 @@ export class AnimalsService {
     async delete(id: string): Promise<Animal> {
         try {
             await animalImagesService.delete(id);
-        } catch (e) {
+        } catch (e: unknown) {
             const errorId = uuid();
             console.warn(errorId + ": " + e.message);
             throw Error(`Wystąpił błąd na serwerze (${errorId}).`);

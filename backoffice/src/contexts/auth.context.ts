@@ -42,7 +42,7 @@ try {
     if (getAuthRemainingTime(savedValue.token) < 0) {
         logout({ type: 'is-info', message: 'Wylogowano z powodu zakończenia sesji.' }, false);
     }
-} catch (_) { }
+} catch (_: unknown) { }
 
 const value = writable<Auth>(savedValue);
 

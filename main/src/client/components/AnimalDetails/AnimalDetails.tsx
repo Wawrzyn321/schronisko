@@ -1,55 +1,31 @@
 import Image from 'next/image';
-import { Animal, AnimalImage } from '.prisma/client';
-import {
-  ANIMAL_DETAILS_URL,
-  BACKEND_URL,
-  IMAGES_URL,
-  SSR_BACKEND_URL,
-  throwingFetch,
-} from 'api';
+import { Animal } from '.prisma/client';
+import { ANIMAL_DETAILS_URL, fetchAnimal, FetchError } from 'api';
 import styles from './AnimalDetails.module.scss';
 import { useEffect, useState } from 'react';
+import { AnimalImages } from './AnimalImages';
+import { ERROR_ANIMAL_NOT_FOUND, ERROR_GENERIC } from 'errors';
+import { Article } from 'components/Article/Article';
 
-export async function fetchAnimal(id: string, isSSR = true): Promise<Animal> {
-  try {
-    return await throwingFetch(
-      (isSSR ? SSR_BACKEND_URL : BACKEND_URL) + '/api/c/animals/' + id,
-    );
-  } catch (e) {
-    console.warn('error', e);
-    //todo
-    return null;
-  }
-}
-
-async function fetchAnimalImages(id: string): Promise<AnimalImage[]> {
-  try {
-    return await throwingFetch(BACKEND_URL + '/api/c/animal-images/' + id);
-  } catch (e) {
-    console.warn('error', e);
-    //todo
-    return null;
-  }
-}
-
-export function AnimalDetails({ id, ssrAnimal }) {
+export function AnimalDetails({
+  id,
+  ssrAnimal,
+}: {
+  id: string;
+  ssrAnimal: Animal;
+}) {
   const [animal, setAnimal] = useState<Animal>(ssrAnimal);
-  const [images, setImages] = useState<AnimalImage[]>([]);
+  const [error, setError] = useState<FetchError>(null);
 
   useEffect(() => {
     const loadAnimal = async () => {
-      setAnimal(await fetchAnimal(id, false));
-      setImages(await fetchAnimalImages(id));
+      const { data, error } = await fetchAnimal(id, false);
+      setAnimal(data);
+      setError(error);
     };
 
     loadAnimal();
   }, []);
-
-  if (!animal) {
-    return null;
-  }
-
-  const filterVisible = (i: AnimalImage) => i.visible;
 
   const MiniIcon = ({ name }: { name: string }) => (
     <Image
@@ -60,39 +36,43 @@ export function AnimalDetails({ id, ssrAnimal }) {
     />
   );
 
-  return (
-    <div>
-      <h1>{animal.name}</h1>
-      <div className={styles['animal-details--description']}>
-        {animal.description.split('\n').map((str, i) => (
-          <p key={i}>{str}</p>
-        ))}
+  if (animal) {
+    return (
+      <div>
+        <h1>{animal.name}</h1>
+        <div className={styles['animal-details--description']}>
+          {animal.description.split('\n').map((str, i) => (
+            <p key={i}>{str}</p>
+          ))}
+        </div>
+
+        <dl className={styles['animal-metadata']}>
+          <div>
+            <dt>
+              <MiniIcon name="opiekun" />
+              Opiekun wirtualny:
+            </dt>
+            <dd>{animal.virtualCaretakerName || 'brak'}</dd>
+          </div>
+          <div>
+            <dt>
+              <MiniIcon name="kontakt" />
+              Kontakt:
+            </dt>
+            <dd>{animal.contactInfo}</dd>
+          </div>
+        </dl>
+
+        <AnimalImages id={id} />
       </div>
-
-      <dl className={styles['animal-metadata']}>
-        <div>
-          <dt>
-            <MiniIcon name="opiekun" />
-            Opiekun wirtualny:
-          </dt>
-          <dd>{animal.virtualCaretakerName || 'brak'}</dd>
-        </div>
-        <div>
-          <dt>
-            <MiniIcon name="kontakt" />
-            Kontakt:
-          </dt>
-          <dd>{animal.contactInfo}</dd>
-        </div>
-      </dl>
-
-      <ul className={styles['animal-images']}>
-        {images.filter(filterVisible).map((i) => (
-          <li key={i.id}>
-            <img src={IMAGES_URL + '/' + i.imageName} />
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+    );
+  } else if (error) {
+    if (error.statusCode === 404) {
+      <Article {...ERROR_ANIMAL_NOT_FOUND} />;
+    } else {
+      <Article {...ERROR_GENERIC} />;
+    }
+  } else {
+    return <p>Ładowanie...</p>;
+  }
 }

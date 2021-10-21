@@ -1,0 +1,215 @@
+[
+  {
+    "type": "header",
+    "version": "5.0.1",
+    "comment": "Export to JSON plugin for PHPMyAdmin"
+  },
+  { "type": "database", "name": "marcinkrawiec_schronisko" },
+  {
+    "type": "table",
+    "name": "adminUsers",
+    "database": "marcinkrawiec_schronisko",
+    "data": [
+      {
+        "id": "22",
+        "login": "nieaktywny_heniek",
+        "password": "f8633088990ac36f22a4c274cebdb4af",
+        "name": "[nieaktywny] Henryk",
+        "surname": "Trzeciakiewicz",
+        "startModule": "7",
+        "status": "1",
+        "deleted": "0"
+      },
+      {
+        "id": "23",
+        "login": "admin",
+        "password": "d854b9f98cd7d61d98fc76faa9417f88",
+        "name": "Ewa ",
+        "surname": "Wesoły ",
+        "startModule": "7",
+        "status": "1",
+        "deleted": "0"
+      },
+      {
+        "id": "26",
+        "login": "nieaktywna_epos",
+        "password": "f8633088990ac36f22a4c274cebdb4af",
+        "name": "[nieaktywna] Dorota",
+        "surname": "Strzebońska",
+        "startModule": "42",
+        "status": "1",
+        "deleted": "0"
+      },
+      {
+        "id": "27",
+        "login": "nieaktywne_admin2",
+        "password": "f8633088990ac36f22a4c274cebdb4af",
+        "name": "[nieaktywne] admin2",
+        "surname": "admin2",
+        "startModule": "7",
+        "status": "1",
+        "deleted": "0"
+      },
+      {
+        "id": "28",
+        "login": "crms",
+        "password": "b72df2ee78f129aee1c4a1d6b394a52b",
+        "name": "Piotr",
+        "surname": "Głodzik (EPOS)",
+        "startModule": "18",
+        "status": "1",
+        "deleted": "0"
+      },
+      {
+        "id": "31",
+        "login": "dora",
+        "password": "4580a9534f3ad45fb0adfd14e853722a",
+        "name": "Dorota",
+        "surname": "Rybacka",
+        "startModule": "51",
+        "status": "1",
+        "deleted": "0"
+      },
+      {
+        "id": "33",
+        "login": "mkrawiec",
+        "password": "5708ece7c8abad9eee5235ab10a33cce",
+        "name": "Marcin",
+        "surname": "Krawiec",
+        "startModule": "7",
+        "status": "1",
+        "deleted": "0"
+      },
+      {
+        "id": "37",
+        "login": "aszczesniak",
+        "password": "bad211ab1a783e8b81c6ac1730ec0cc9",
+        "name": "Aleksandra",
+        "surname": "Szczęśniak",
+        "startModule": "43",
+        "status": "1",
+        "deleted": "0"
+      },
+      {
+        "id": "38",
+        "login": "kfulas",
+        "password": "e70948cb1a608a4d7b779e7883bfe0c3",
+        "name": "Kasia",
+        "surname": "Fulas",
+        "startModule": "7",
+        "status": "1",
+        "deleted": "0"
+      },
+      {
+        "id": "39",
+        "login": "kdrzymont",
+        "password": "f422025f36dab5e0c9813c7532483b80",
+        "name": "Katarzyna",
+        "surname": "Drzymont",
+        "startModule": "7",
+        "status": "1",
+        "deleted": "0"
+      },
+      {
+        "id": "40",
+        "login": "pcalka",
+        "password": "b8cfe2fb2a7eb4aa28faf5faeaa5f084",
+        "name": "Patrycja",
+        "surname": "Całka",
+        "startModule": "7",
+        "status": "1",
+        "deleted": "0"
+      },
+      {
+        "id": "41",
+        "login": "jpietrzak",
+        "password": "37b73aa43f495bfa0c4abb3f83c2a869",
+        "name": "Justyna",
+        "surname": "Pietrzak",
+        "startModule": "7",
+        "status": "1",
+        "deleted": "0"
+      },
+      {
+        "id": "42",
+        "login": "awozniak",
+        "password": "376e99dfa8c4bcd4e379634537952a95",
+        "name": "Agata",
+        "surname": "Woźniak",
+        "startModule": "7",
+        "status": "1",
+        "deleted": "0"
+      },
+      {
+        "id": "43",
+        "login": "mniwinska",
+        "password": "c2a1952b7a829553c324d0cc2dec13a0",
+        "name": "Magdalena",
+        "surname": "Niwińska",
+        "startModule": "7",
+        "status": "1",
+        "deleted": "0"
+      },
+      {
+        "id": "44",
+        "login": "krostkowska",
+        "password": "0fb4972ca75a4def222a5e276f4d607e",
+        "name": "Karolina",
+        "surname": "Rostkowska",
+        "startModule": "7",
+        "status": "1",
+        "deleted": "0"
+      },
+      {
+        "id": "45",
+        "login": "pulbrich",
+        "password": "de044cd36f64fc35385d83ce0c757604",
+        "name": "Patrycja",
+        "surname": "Ulbrich",
+        "startModule": "7",
+        "status": "1",
+        "deleted": "0"
+      },
+      {
+        "id": "46",
+        "login": "pmilczanowska",
+        "password": "873566529f69a50f563984a3f1667706",
+        "name": "Paulina",
+        "surname": "Milczanowska",
+        "startModule": "9",
+        "status": "1",
+        "deleted": "0"
+      },
+      {
+        "id": "47",
+        "login": "mcichon",
+        "password": "60539855a481f5455e8013b06987a9a6",
+        "name": "Małgorzata",
+        "surname": "Cichoń",
+        "startModule": "9",
+        "status": "1",
+        "deleted": "0"
+      },
+      {
+        "id": "48",
+        "login": "pwawrzynczyk",
+        "password": "6bbad7147242575b620140230144d591",
+        "name": "Piotr",
+        "surname": "Wawrzyńczyk",
+        "startModule": "50",
+        "status": "1",
+        "deleted": "0"
+      },
+      {
+        "id": "49",
+        "login": "jrup",
+        "password": "481d6b98b3d2481fccb39b8863629872",
+        "name": "Justyna",
+        "surname": "Rup",
+        "startModule": "39",
+        "status": "1",
+        "deleted": "0"
+      }
+    ]
+  }
+]

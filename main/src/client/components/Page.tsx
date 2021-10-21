@@ -1,51 +1,44 @@
 import { Page as PageModel } from '.prisma/client';
-import { SSR_BACKEND_URL, BACKEND_URL, throwingFetch } from 'api';
-import { FunctionComponent, useEffect, useState } from 'react';
-import { Article, ArticleProps } from './Article/Article';
-
-const ERROR_PAGE: PageModel = {
-  id: '-1',
-  content: 'Tak że tego, coś poszło nie tak.',
-  title: 'Błąd ładowania strony',
-};
-
-export async function fetchPage(id: string, isSSR = true): Promise<PageModel> {
-  try {
-    return await throwingFetch(
-      (isSSR ? SSR_BACKEND_URL : BACKEND_URL) + '/api/pages/' + id,
-    );
-  } catch (e) {
-    console.warn('error', e);
-    return ERROR_PAGE;
-  }
-}
+import { FetchError, fetchPage } from 'api';
+import { ERROR_PAGE, ERROR_PAGE_NOT_FOUND } from 'errors';
+import { useEffect, useState } from 'react';
+import { Article } from './Article/Article';
 
 interface PageProps {
   id: string;
   ssrPage: PageModel;
-  Renderer?: FunctionComponent<ArticleProps>;
   showTitle?: boolean;
 }
 
-export function Page({
-  id,
-  ssrPage,
-  showTitle = true,
-  Renderer = Article,
-}: PageProps) {
+export function Page({ id, ssrPage, showTitle = true }: PageProps) {
   const [page, setPage] = useState<PageModel>(ssrPage);
+  const [error, setError] = useState<FetchError>();
 
   useEffect(() => {
-    const loadPage = async () => setPage(await fetchPage(id, false));
+    const loadPage = async () => {
+      const { data, error } = await fetchPage(id, false);
+      setPage(data);
+      setError(error);
+    };
 
     loadPage();
   }, []);
 
-  if (!ssrPage) {
-    return null;
+  if (page) {
+    return (
+      <Article
+        title={page.title}
+        content={page.content}
+        showTitle={showTitle}
+      />
+    );
+  } else if (error) {
+    if (error.statusCode === 404) {
+      <Article {...ERROR_PAGE_NOT_FOUND} showTitle={showTitle} />;
+    } else {
+      <Article {...ERROR_PAGE} showTitle={showTitle} />;
+    }
+  } else {
+    return <p>'Ładowanie...'</p>;
   }
-
-  return (
-    <Renderer title={page.title} content={page.content} showTitle={showTitle} />
-  );
 }

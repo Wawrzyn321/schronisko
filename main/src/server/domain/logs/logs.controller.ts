@@ -12,8 +12,8 @@ export class LogsController {
     @RequirePermission(Permission.USER)
     @Get()
     @UseGuards(PermissionsGuard)
-    getLogs(@Query() query) {
-        const takeTop = parseInt(query.takeTop) || undefined;
+    getLogs(@Query('takeTop') takeTopStr: string) {
+        const takeTop = parseInt(takeTopStr) || undefined;
         return this.logsService.get(takeTop);
     }
 

@@ -1,15 +1,19 @@
 import { AnimalCategory, Page as PageModel } from '.prisma/client';
+import { fetchPage } from 'api';
 import { AnimalList } from 'components/AnimalList/AnimalList';
 import { Breadcrumbs } from 'components/Breadcrumbs/Breadcrumbs';
-import { fetchPage, Page } from 'components/Page';
+import { LayoutWrapper } from 'components/LayoutWrapper';
+import { Page } from 'components/Page';
 
 const ID = 'zwierzeta-znalezione';
 
-export default function RecentlyFound({ ssrPage }) {
+export default function RecentlyFound({ ssrPage }: { ssrPage: PageModel }) {
   return (
     <>
-      <Breadcrumbs items={['Zwierzęta', 'Zwierzęta znalezione']} />
-      <Page id={ID} ssrPage={ssrPage} />
+      <LayoutWrapper>
+        <Breadcrumbs items={['Zwierzęta', 'Zwierzęta znalezione']} />
+        <Page id={ID} ssrPage={ssrPage} />
+      </LayoutWrapper>
       <AnimalList category={AnimalCategory.NiedawnoZnalezione} />
     </>
   );
@@ -18,6 +22,5 @@ export default function RecentlyFound({ ssrPage }) {
 export async function getServerSideProps(): Promise<{
   props: { ssrPage: PageModel };
 }> {
-  const page = await fetchPage(ID);
-  return { props: { ssrPage: page } };
+  return { props: { ssrPage: (await fetchPage(ID)).data } };
 }

@@ -176,7 +176,7 @@ export class AnimalsService {
     await this.prisma.animalImage.deleteMany({ where: { animalId: id } });
     try {
       await deleteImage(animal.imageName);
-    } catch (e) {
+    } catch (e: unknown) {
       console.warn(e);
       await this.logsService.log({
         message: `usunał zwierzę ${animal.name}, ale nie udało się usunąć jego zdjęcia.`,

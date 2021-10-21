@@ -5,7 +5,7 @@ import styles from './HeaderTitle.module.scss';
 
 export function HeaderTitle() {
   return (
-    <Link href="/">
+    <Link href="/" passHref>
       <a className={styles['header-title']}>
         <Image src={logo} alt="logo" />
         <div className={styles['title']}>

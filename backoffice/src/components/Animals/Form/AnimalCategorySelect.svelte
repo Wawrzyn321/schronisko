@@ -43,6 +43,7 @@
 <Field
   label="Kategoria"
   message={hasWarning ? 'Czy to na pewno właściwa kategoria?' : ''}
+  style="grid-area: category"
 >
   <Select
     placeholder="Wybierz kategorię..."

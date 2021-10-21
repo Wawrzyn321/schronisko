@@ -2,7 +2,11 @@ import Image from 'next/image';
 import styles from './Pagination.module.scss';
 import arrow from 'public/site/green arrow.svg';
 
-export function paginate<T>(items: T[], pageSize: number, currentPage: number) {
+export function paginate<T>(
+  items: T[],
+  pageSize: number,
+  currentPage: number,
+): T[] {
   const res: T[] = [];
   for (
     let i = pageSize * currentPage;
@@ -39,7 +43,7 @@ export function Pagination({
       >
         <Arrow />
       </button>
-      {new Array(pagesCount).fill(null).map((_, i) => (
+      {new Array(pagesCount).fill(null).map((_: null, i) => (
         <li key={i}>
           <button
             className={

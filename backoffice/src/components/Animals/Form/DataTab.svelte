@@ -30,95 +30,65 @@
 
 <Tab label="Dane">
   <div id="animal-data-form">
-    <section class="top-left-form">
-      <Field label="Imię" required>
+    <Field label="Imię" required style="grid-area: name">
+      <Input required bind:value={animal.name} placeholder="Imię zwierzęcia" />
+    </Field>
+    <AnimalTypeSelect bind:type={animal.type} />
+    <Field label="Numer ewidencyjny" required style="grid-area: ref">
+      <Tooltip label="Musi być unikalny.">
         <Input
           required
-          bind:value={animal.name}
-          placeholder="Imię zwierzęcia"
+          bind:value={animal.refNo}
+          placeholder="Numer ewidencyjny"
         />
-      </Field>
-      <AnimalTypeSelect bind:type={animal.type} />
-      <Field label="Numer ewidencyjny" required>
-        <Tooltip label="Musi być unikalny.">
-          <Input
-            required
-            bind:value={animal.refNo}
-            placeholder="Numer ewidencyjny"
-          />
-        </Tooltip>
-      </Field>
-      <AnimalLocationSelect
-        bind:location={animal.location}
-        type={animal.type}
+      </Tooltip>
+    </Field>
+    <AnimalLocationSelect bind:location={animal.location} type={animal.type} />
+    <Field required label="Dane kontaktowe" style="grid-area: contact">
+      <Input
+        bind:value={animal.contactInfo}
+        placeholder="Np. osoba, numer telefonu, e-mail"
       />
-      <Field required label="Dane kontaktowe">
-        <Input
-          bind:value={animal.contactInfo}
-          placeholder="Np. osoba, numer telefonu, e-mail"
-        />
-      </Field>
-      <AnimalVirtualCaretakerSelect
-        bind:virtualCaretakerType={animal.virtualCaretakerType}
+    </Field>
+    <AnimalVirtualCaretakerSelect
+      bind:virtualCaretakerType={animal.virtualCaretakerType}
+    />
+    <AnimalGenderSelect bind:gender={animal.gender} />
+    <AnimalCategorySelect
+      bind:category={animal.category}
+      virtualCaretakerType={animal.virtualCaretakerType}
+      onChange={onCategoryChange}
+    />
+    <Field label="Dodatkowy opis miejsca" style="grid-area: location-desc">
+      <Input
+        bind:value={animal.locationDescription}
+        placeholder="Informacja gdzie przebywa zwierzę"
       />
-    </section>
-    <section>
-      <div class="top-right-form">
-        <AnimalGenderSelect bind:gender={animal.gender} />
-        <AnimalCategorySelect
-          bind:category={animal.category}
-          virtualCaretakerType={animal.virtualCaretakerType}
-          onChange={onCategoryChange}
-        />
-      </div>
-      <div>
-        <Field label="Dodatkowy opis miejsca">
-          <Input
-            bind:value={animal.locationDescription}
-            placeholder="Informacja gdzie przebywa zwierzę"
-          />
-        </Field>
-      </div>
-      <div id="v-caretaker-name">
-        {#if animal.virtualCaretakerType === VirtualCaretakerType.Znalazl}
-          <Field required label="Moim wirtualnym opiekunem jest">
-            <Input required bind:value={animal.virtualCaretakerName} />
-          </Field>
-        {/if}
-      </div>
-    </section>
+    </Field>
+    {#if animal.virtualCaretakerType === VirtualCaretakerType.Znalazl}
+      <Field
+        required
+        label="Moim wirtualnym opiekunem jest"
+        style="grid-area: v-c-name"
+      >
+        <Input required bind:value={animal.virtualCaretakerName} />
+      </Field>
+    {/if}
   </div>
   <AnimalMiniatureForm {revalidateForm} bind:animal />
 </Tab>
 
 <style lang="scss">
-  @mixin grouped($cols) {
-    display: grid;
-    grid-column-gap: 32px;
-    grid-template-columns: $cols;
-
-    @media (max-width: 800px) {
-      grid-template-columns: 1fr;
-      grid-gap: 0;
-    }
-  }
   #animal-data-form {
-    @include grouped(3fr 2fr);
-  }
-
-  .top-left-form {
-    @include grouped(3fr 2fr);
-  }
-
-  .top-right-form {
-    @include grouped(1fr 1fr);
+    display: grid;
+    column-gap: 32px;
+    grid-template-areas:
+      'name type gender category'
+      'ref 	location location-desc location-desc'
+      'contact v-c-type	v-c-name v-c-name';
   }
 
   :global(.tooltip-wrapper) {
     display: block !important;
-  }
-
-  #v-caretaker-name {
-    margin-top: 12px;
   }
 </style>

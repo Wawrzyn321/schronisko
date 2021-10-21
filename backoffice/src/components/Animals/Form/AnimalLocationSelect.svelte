@@ -12,6 +12,7 @@
   message={type === AnimalType.DOG && location === AnimalLocation.KociaChatka
     ? 'Pies w Kociej Chatce?'
     : ''}
+  style="grid-area: location"
 >
   <Select
     placeholder="Wybierz miejsce..."

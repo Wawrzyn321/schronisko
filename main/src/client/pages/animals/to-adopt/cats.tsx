@@ -1,22 +1,30 @@
 import {
+  Animal,
   AnimalType,
   Page as PageModel,
   VirtualCaretakerType,
 } from '.prisma/client';
+import { fetchPage } from 'api';
 import { AnimalList } from 'components/AnimalList/AnimalList';
 import { Breadcrumbs } from 'components/Breadcrumbs/Breadcrumbs';
-import { fetchPage, Page } from 'components/Page';
+import { LayoutWrapper } from 'components/LayoutWrapper';
+import { Page } from 'components/Page';
+import React from 'react';
 
 const ID = 'koty-do-adopcji';
 
-export default function CatsToAdopt({ ssrPage }) {
+export default function CatsToAdopt({ ssrPage }: { ssrPage: PageModel }) {
   return (
     <>
-      <Breadcrumbs items={['Zwierzęta', 'Koty do adopcji']} />
-      <Page id={ID} ssrPage={ssrPage} />
+      <LayoutWrapper>
+        <Breadcrumbs items={['Zwierzęta', 'Koty do adopcji']} />
+        <Page id={ID} ssrPage={ssrPage} />
+      </LayoutWrapper>
       <AnimalList
         type={AnimalType.CAT}
-        filter={(a) => a.virtualCaretakerType === VirtualCaretakerType.Znalazl}
+        filter={(a: Animal) =>
+          a.virtualCaretakerType === VirtualCaretakerType.Znalazl
+        }
         withCategoryOverlay
       />
     </>
@@ -26,6 +34,5 @@ export default function CatsToAdopt({ ssrPage }) {
 export async function getServerSideProps(): Promise<{
   props: { ssrPage: PageModel };
 }> {
-  const page = await fetchPage(ID);
-  return { props: { ssrPage: page } };
+  return { props: { ssrPage: (await fetchPage(ID)).data } };
 }

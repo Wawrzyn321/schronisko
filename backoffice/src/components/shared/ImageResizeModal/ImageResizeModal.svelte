@@ -1,5 +1,6 @@
 <script lang="ts">
   import { scaleToFit, restrictPosition } from './helpers';
+  import { Button } from 'svelma';
   import Modal from '../Modal.svelte';
 
   export let defaultWidth: number;
@@ -65,15 +66,19 @@
     }
   }
 
-  function zoom(e: WheelEvent) {
-    const newScale = scale + Math.sign(e.deltaY) * 0.01;
+  function onMouseZoom(e: WheelEvent) {
+    zoom(Math.sign(e.deltaY) * 0.01);
+  }
+
+  function zoom(delta: number) {
+    const newScale = scale + delta;
     const newTargetWidth = targetWidth * newScale;
     const newTargetHeight = targetHeight * newScale;
     if (
-      (e.deltaY < 0 &&
+      (delta < 0 &&
         newTargetWidth > minTargetX &&
         newTargetHeight > minTargetY) ||
-      (e.deltaY > 0 &&
+      (delta > 0 &&
         newTargetWidth < frameCanvas.width &&
         newTargetHeight < frameCanvas.height &&
         x + newTargetWidth < frameCanvas.width &&
@@ -160,11 +165,13 @@
     on:mouseup={() => (isMouseDown = false)}
     on:mouseleave={() => (isMouseDown = false)}
     on:mousemove={onMouseMove}
-    on:wheel={zoom}
+    on:wheel={onMouseZoom}
   />
   <div slot="footer" class="modal-footer">
     Użyj scrolla, by zmieniać rozmiar obszaru docelowego. Przeciągnij po
     obrazie, by zmienić jego pozycję.
+    <Button type="is-primary" on:click={() => zoom(0.05)}>+</Button>
+    <Button type="is-primary" on:click={() => zoom(-0.05)}>-</Button>
   </div>
 </Modal>
 

@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 export function IdWrapper({ Component, ...props }) {
   const router = useRouter();
 
-  const { id } = router.query;
+  const id = router.query.id as string | undefined;
 
-  return id === undefined ? null : <Component id={id} {...props}/>;
+  return id === undefined ? null : <Component id={id} {...props} />;
 }

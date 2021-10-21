@@ -2,7 +2,7 @@ strony w pages muszą mieć default export
 
 Next.js supports pages with dynamic routes. For example, if you create a file called pages/posts/[id].js, then it will be accessible at posts/1, posts/2, etc.
 
-next/image z automatu optymalizuje i wczytuje odpowiednie wersje obrazków na odpowiednie widoki, co więcej - nie wczytuje wszystkiego od zwierzętami
+next/image z automatu optymalizuje i wczytuje odpowiednie wersje obrazków na odpowiednie widoki, co więcej - nie wczytuje wszystkiego od razu
 
 komponent pages/_app umożliwia załadowanie globalnych cssów - nie jest to możliwe nigdzie indziej!
 jest on wspólny dla wszystkich stron.
@@ -14,3 +14,10 @@ preload:
 - Client-side Rendering - statycznie część generujemy przy buildzie, dynamiczne dane są pobierane u klienta - dobre do stronek niewymagających SEO
 
 używanie styled-jsx jest kiepskie, bo a) nie umożliwia nestowania b) psuje się jak zmieniam coś na stronie w inspektorze
+
+Link vs router.push() vs a
+- wykrywane przez crawlery:
+    - a - TAK, ale tracimy korzyści ze SPA
+    - router.push() - NIE, bo to JS, tracimy korzyści SEO
+    - Link - zależy, jak w środku jest tekst to TAK (bo jest tworzony element a), jak w środku jest coś innego to działa jak router.push()
+- Link posiada prefetcha, a klikający nań użytkownicy mogą nawigować bez odświeżania całej strony

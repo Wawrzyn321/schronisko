@@ -6,7 +6,7 @@
   export let gender: AnimalGender;
 </script>
 
-<Field label="Płeć">
+<Field label="Płeć" style="grid-area: gender">
   <Select
     placeholder="Wybierz płeć"
     required

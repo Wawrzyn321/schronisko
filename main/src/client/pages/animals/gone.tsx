@@ -1,7 +1,10 @@
 import { AnimalCategory, Page as PageModel } from '.prisma/client';
-import { fetchPage, Page } from 'components/Page';
+import { Page } from 'components/Page';
 import { Breadcrumbs } from 'components/Breadcrumbs/Breadcrumbs';
 import { AnimalList } from 'components/AnimalList/AnimalList';
+import { fetchPage } from 'api';
+import React from 'react';
+import { LayoutWrapper } from 'components/LayoutWrapper';
 
 const ID_main = 'odeszly';
 const ID_poem = 'odeszly-wiersz';
@@ -11,25 +14,28 @@ interface GoneProps {
   ssrPoem: PageModel;
 }
 
-export default function Gone({ ssrDescription, ssrPoem }: GoneProps) {
+export default function Gone(props: GoneProps) {
   return (
-    //todo wcięcia z lewej i prawej dla artykułów i stron!
     <>
-      <Breadcrumbs items={['Zwierzęta', 'Odeszły']} />
-      <Page id={ID_main} ssrPage={ssrDescription} />
-      <div style={{ maxWidth: '30em' }}>
-        <Page id={ID_poem} ssrPage={ssrPoem} showTitle={false} />
-      </div>
-      <AnimalList category={AnimalCategory.ZaTeczowymMostem} bw />
+      <LayoutWrapper>
+        <Breadcrumbs items={['Zwierzęta', 'Odeszły']} />
+        <Page id={ID_main} ssrPage={props.ssrDescription} />
+        <div style={{ maxWidth: '30em' }}>
+          <Page id={ID_poem} ssrPage={props.ssrPoem} showTitle={false} />
+        </div>
+      </LayoutWrapper>
+      <AnimalList category={AnimalCategory.ZaTeczowymMostem} bwMode />
     </>
   );
 }
 
-export async function getServerSideProps(): Promise<{ props: GoneProps }> {
+export async function getServerSideProps(): Promise<{
+  props: GoneProps;
+}> {
   return {
     props: {
-      ssrDescription: await fetchPage(ID_main),
-      ssrPoem: await fetchPage(ID_poem),
+      ssrDescription: (await fetchPage(ID_main)).data,
+      ssrPoem: (await fetchPage(ID_poem)).data,
     },
   };
 }
