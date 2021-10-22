@@ -23,6 +23,7 @@ export function AfterAdoptionAnimals({
 }: {
   afterAdoptionAnimals: AfterAdoptionAnimal[];
 }) {
+  if (!afterAdoptionAnimals) return null;
   const placeholders = new Array(3 - afterAdoptionAnimals.length).fill(null);
 
   return (

@@ -1,6 +1,5 @@
 import styles from './AnimalCard.module.scss';
 import Link from 'next/link';
-import Image from 'next/image';
 import { Animal, AnimalCategory } from '.prisma/client';
 import { IMAGES_URL, OVERLAYS_URL } from 'api';
 import { buildAnimalUrl } from '_util';
@@ -29,7 +28,7 @@ export function AnimalCard({
   bwMode: boolean;
 }) {
   let image = (
-    <Image
+    <img
       src={IMAGES_URL + '/' + animal.imageName}
       alt={animal.name}
       width="340px"
@@ -37,7 +36,7 @@ export function AnimalCard({
     />
   );
 
-  if (bwMode) {
+  if (!bwMode) {
     image = (
       <Link href={buildAnimalUrl(animal)}>
         <a>{image}</a>

@@ -1,4 +1,4 @@
-import { NewsListElement } from './../../../backoffice/src/services/NewsService';
+import { NewsListElement } from 'types';
 import { AnimalCategory, AnimalType, News } from '.prisma/client';
 import { AnimalImage, Page as PageModel, Animal } from '@prisma/client';
 
@@ -9,7 +9,7 @@ const SSR_BACKEND_URL = 'http://localhost:60045';
 
 export const SITE_IMAGES_URL = BACKEND_URL + '/site';
 export const OVERLAYS_URL = SITE_IMAGES_URL + '/overlays';
-export const ANIMAL_DETAILS_URL = SITE_IMAGES_URL + '/animal-details';
+export const ANIMAL_DETAILS_URL = SITE_IMAGES_URL + '/animal-details'; // todo niepotrzebne?
 export const MAIN_PAGE_IMAGES_URL = SITE_IMAGES_URL + '/main';
 export const IMAGES_URL = BACKEND_URL + '/img';
 
@@ -47,6 +47,7 @@ async function genericFetch<T>(url: string): Promise<FetchResult<T>> {
             error: null,
         };
     } catch (e) {
+        console.warn(e);
         return {
             data: null,
             error: e,

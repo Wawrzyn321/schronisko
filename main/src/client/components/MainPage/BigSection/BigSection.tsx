@@ -15,20 +15,24 @@ export function BigSection({ recentNews, mainPage }: BigSectionProps) {
         <img src={MAIN_PAGE_IMAGES_URL + '/yellow.svg'} alt="" />
       </div>
       <div className={styles['flex-end']}>
-        <div id={styles['carousel']}>
-          <NewsCarousel recentNews={recentNews} />
-        </div>
+        {recentNews && (
+          <div id={styles['carousel']}>
+            <NewsCarousel recentNews={recentNews} />
+          </div>
+        )}
       </div>
       <div className={styles['img-wrapper']} id={styles['green']}>
         <img src={MAIN_PAGE_IMAGES_URL + '/green.svg'} alt="" />
-        <div className={styles['article']}>
-          <h1>Adopcje</h1>
-          <Article
-            title={mainPage.title}
-            content={mainPage.content}
-            showTitle={false}
-          />
-        </div>
+        {mainPage && (
+          <div className={styles['article']}>
+            <h1>Adopcje</h1>
+            <Article
+              title={mainPage.title}
+              content={mainPage.content}
+              showTitle={false}
+            />
+          </div>
+        )}
       </div>
       <div id={styles['links']}>
         <div className={styles['flex-end']}>

@@ -26,6 +26,7 @@ function createPath(name: string) {
 }
 
 export async function saveImage(name: string, base64Data: string, resizingPreset: ResizingPresets) {
+    console.log(base64Data.startsWith('data:image\/png;base64'));
     base64Data = base64Data.replace(/^data:image\/png;base64,/, "");
     const buf = Buffer.from(base64Data, 'base64');
     const preset = presetsMap[resizingPreset];
@@ -33,7 +34,8 @@ export async function saveImage(name: string, base64Data: string, resizingPreset
         const resized = await sharp(buf).resize(preset.width, preset.height).toBuffer();
         return await fsp.writeFile(createPath(name), resized);
     } else {
-        return await fsp.writeFile(createPath(name), buf);
+        const resized = await sharp(buf).toBuffer();
+        return await fsp.writeFile(createPath(name), resized);
     }
 }
 

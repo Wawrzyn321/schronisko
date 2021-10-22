@@ -5,10 +5,10 @@ import { seedNews } from './db-import/news-import';
 const prisma = new PrismaClient()
 
 async function main() {
-    // await seedUsers(prisma);
-    await seedNews(prisma);
+    await seedUsers(prisma);
+    // await seedNews(prisma);
 
-    return;
+    // return;
 
     const pages = [
         { title: 'O nas', id: 'o-nas' },

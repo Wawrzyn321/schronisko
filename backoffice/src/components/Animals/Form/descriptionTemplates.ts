@@ -14,14 +14,10 @@ export const descriptionTemplates = {
         [AnimalGender.FEMALE]: `() została odrobaczona, odpchlona, zaszczepiona, zachipowana i wykastrowana.
 
 Obowiązuje wizyta przed i poadopcyjna, spacer zapoznawczy, uiszczenie opłaty schroniskowej i podpisanie umowy adopcyjnej.
-        
-Kontakt: ()
 `,
         [AnimalGender.MALE]: `() został odrobaczony, odpchlony, zaszczepiony, zachipowany i wykastrowany.
 
 Obowiązuje wizyta przed i poadopcyjna, spacer zapoznawczy, uiszczenie opłaty schroniskowej i podpisanie umowy adopcyjnej.
-    
-Kontakt: ()
 `
     },
 };

@@ -1,11 +1,13 @@
 import Image from 'next/image';
 import { Animal } from '.prisma/client';
-import { ANIMAL_DETAILS_URL, fetchAnimal, FetchError } from 'api';
+import { fetchAnimal, FetchError } from 'api';
 import styles from './AnimalDetails.module.scss';
 import { useEffect, useState } from 'react';
 import { AnimalImages } from './AnimalImages';
 import { ERROR_ANIMAL_NOT_FOUND, ERROR_GENERIC } from 'errors';
 import { Article } from 'components/Article/Article';
+import opiekun from 'public/site/animal-details/opiekun.svg';
+import kontakt from 'public/site/animal-details/kontakt.svg';
 
 export function AnimalDetails({
   id,
@@ -27,13 +29,8 @@ export function AnimalDetails({
     loadAnimal();
   }, []);
 
-  const MiniIcon = ({ name }: { name: string }) => (
-    <Image
-      src={ANIMAL_DETAILS_URL + '/' + name + '.svg'}
-      alt={name}
-      width="30px"
-      height="30px"
-    />
+  const MiniIcon = ({ name, icon }: { icon: any; name: string }) => (
+    <Image src={icon} alt={name} width="30px" height="30px" />
   );
 
   if (animal) {
@@ -49,14 +46,14 @@ export function AnimalDetails({
         <dl className={styles['animal-metadata']}>
           <div>
             <dt>
-              <MiniIcon name="opiekun" />
+              <MiniIcon name="opiekun" icon={opiekun} />
               Opiekun wirtualny:
             </dt>
             <dd>{animal.virtualCaretakerName || 'brak'}</dd>
           </div>
           <div>
             <dt>
-              <MiniIcon name="kontakt" />
+              <MiniIcon name="kontakt" icon={kontakt} />
               Kontakt:
             </dt>
             <dd>{animal.contactInfo}</dd>

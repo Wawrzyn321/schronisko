@@ -7,12 +7,17 @@ import * as bodyParser from 'body-parser';
 const MAX_REQUEST_SIZE = `${50}mb`;
 const PORT = 60045;
 
-const options = {
-  // httpsOptions: {
-  //   key: fs.readFileSync('../../certs/key.pem'),
-  //   cert: fs.readFileSync('../../certs/privkey.pem')
-  // }
-};
+const DEV = 1;
+
+let options = {};
+if (!DEV) {
+  options = {
+    httpsOptions: {
+      key: fs.readFileSync('/var/svc/certs/privkey.pem'),
+      cert: fs.readFileSync('/var/svc/certs/cert.pem')
+    }
+  };
+}
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, options);

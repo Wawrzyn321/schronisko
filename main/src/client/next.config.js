@@ -36,6 +36,6 @@ module.exports = {
     ];
   },
   images: {
-    domains: ['localhost', 'http://schronisko-backend.oto-jest-wawrzyn.pl'],
+    domains: ['localhost', 'https://schronisko-backend.oto-jest-wawrzyn.pl'],
   },
 };
