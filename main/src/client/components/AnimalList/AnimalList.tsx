@@ -42,6 +42,7 @@ export function AnimalList({
   const filteredAnimals = animals.filter(
     (a) => filter(a) && filterWithCategory(a),
   );
+
   const pagesCount = Math.ceil(filteredAnimals.length / pageSize);
 
   useEffect(() => {
@@ -51,13 +52,13 @@ export function AnimalList({
   }, [currentPage, filteredAnimals]);
 
   useEffect(() => {
-    const loadPage = async () => {
+    const loadAnimals = async () => {
       const { data, error } = await fetchAnimals(category, type);
       setAnimals(data);
       setError(error);
     };
 
-    loadPage();
+    loadAnimals();
   }, []);
 
   const className = `${styles['animals-list']} ${bwMode ? styles['bw'] : ''}`;

@@ -26,8 +26,9 @@ function createPath(name: string) {
 }
 
 export async function saveImage(name: string, base64Data: string, resizingPreset: ResizingPresets) {
-    console.log(base64Data.startsWith('data:image\/png;base64'));
     base64Data = base64Data.replace(/^data:image\/png;base64,/, "");
+    base64Data = base64Data.replace(/^data:image\/jpeg;base64,/, "");
+    base64Data = base64Data.replace(/^data:image\/gif;base64,/, "");
     const buf = Buffer.from(base64Data, 'base64');
     const preset = presetsMap[resizingPreset];
     if (preset) {

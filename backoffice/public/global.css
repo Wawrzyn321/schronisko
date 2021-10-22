@@ -223,6 +223,30 @@ header h1 {
   max-width: 60em;
 }
 
+.preview .ql-indent-1 {
+  margin-left: 3em;
+}
+
+.preview .ql-indent-2 {
+  margin-left: 6em;
+}
+
+.preview .ql-indent-3 {
+  margin-left: 9em;
+}
+
+.preview .ql-indent-4 {
+  margin-left: 12em;
+}
+
+.preview .ql-indent-5 {
+  margin-left: 15em;
+}
+
+.preview .ql-indent-6 {
+  margin-left: 21em;
+}
+
 .preview h1 {
   font-size: 2em;
 }

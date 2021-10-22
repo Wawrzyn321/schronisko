@@ -20,13 +20,7 @@ export default function CatsToAdopt({ ssrPage }: { ssrPage: PageModel }) {
         <Breadcrumbs items={['Zwierzęta', 'Koty do adopcji']} />
         <Page id={ID} ssrPage={ssrPage} />
       </LayoutWrapper>
-      <AnimalList
-        type={AnimalType.CAT}
-        filter={(a: Animal) =>
-          a.virtualCaretakerType === VirtualCaretakerType.Znalazl
-        }
-        withCategoryOverlay
-      />
+      <AnimalList type={AnimalType.CAT} withCategoryOverlay />
     </>
   );
 }

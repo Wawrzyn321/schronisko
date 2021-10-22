@@ -30,7 +30,7 @@ const ServeStatic = ServeStaticModule.forRoot({
   rootPath: join(__dirname, '..', LOCAL_STATIC_FILES_PATH),
   serveStaticOptions: {
     index: false,
-    extensions: ['.png'], //todo
+    extensions: ['.png', '.jpeg', '.jpg', '.gif'],
   },
   //exclude: ['/api*'],
 });

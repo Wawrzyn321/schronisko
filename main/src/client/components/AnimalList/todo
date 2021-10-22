@@ -1,4 +1,24 @@
 todo
 
 paginacja na liście zwierząt - jest ok, ale może ... dodać?
-brzydkie dodawanie v-opiekuna 
+
+sprawdzić po deployu czy pawprinty są jako list-element myślniki
+
+co z linkiem do "Adopcji"
+
+darowizny
+
+seed animali (kilka przykładowych), POTEM wszystkie
+
+seed newsów
+
+seed pagów - z obrazkami
+
+czy adopcje psów są enabled czy nie?
+
+Hej, może tak być - proponuję małą lupkę na miniaturze. Jak user kliknie na lupę to pokaże się zdjęcie w dużym wymiarze, jak kliknie na samo zdjęcie poza lupą to odniesie go do opisu.
+
+formularze
+- wolontariat (psi/koci) (strona główna) (psi okresowo)
+- wirtualne adopcje (najpierw ankieta (na mail adopcje.wirtualne@nadziejanadom.org) (imię, id zwierzęcia, imię + nazwisko adoptującego, "moim wirtualnym opiekunem jest", mail), potem płatność - pokazujemy nr konta i tyle) (strona główna)
+https://mail.google.com/mail/u/0/#search/Zobaczy%C5%82am+w+innej+organizacji+co%C5%9B+takiego+(screen).+My%C5%9Blisz%2C+%C5%BCe+jest+wg+jaka%C5%9B+mo%C5%BCliwo%C5%9B%C4%87%2C+%C5%BCeby+pojawi%C5%82o+si%C4%99+taki+formularza+na+naszej+www+po%C5%82%C4%85czony+z+mailem%3F/FMfcgzGkZZrjSZkkBWqMtJfLmpNwNGrL

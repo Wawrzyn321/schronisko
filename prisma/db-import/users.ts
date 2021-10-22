@@ -74,6 +74,7 @@ export async function seedUsers(prisma: PrismaClient) {
                 }
             },
         });
+        console.log('user', user.login)
     }
 }
 
