@@ -35,7 +35,7 @@ export class AnimalImagesService {
         img.handled = true;
       } else {
         const imageName = `${uuid()}.png`;
-        await saveImage(imageName, image.data, 'Animal Gallery');
+        await saveImage('', imageName, image.data, 'Animal Gallery');
         const { data, ...imageWithNoData } = image;
 
         await this.prisma.animalImage.create({

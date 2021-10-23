@@ -1,15 +1,11 @@
-import {
-  Animal,
-  AnimalType,
-  Page as PageModel,
-  VirtualCaretakerType,
-} from '.prisma/client';
+import { AnimalType, Page as PageModel } from '.prisma/client';
 import { fetchPage } from 'api';
 import { AnimalList } from 'components/AnimalList/AnimalList';
 import { Breadcrumbs } from 'components/Breadcrumbs/Breadcrumbs';
 import { LayoutWrapper } from 'components/LayoutWrapper';
 import { Page } from 'components/Page';
 import React from 'react';
+import { isForAdoption } from 'types';
 
 const ID = 'koty-do-adopcji';
 
@@ -20,7 +16,11 @@ export default function CatsToAdopt({ ssrPage }: { ssrPage: PageModel }) {
         <Breadcrumbs items={['Zwierzęta', 'Koty do adopcji']} />
         <Page id={ID} ssrPage={ssrPage} />
       </LayoutWrapper>
-      <AnimalList type={AnimalType.CAT} withCategoryOverlay />
+      <AnimalList
+        filter={isForAdoption}
+        type={AnimalType.CAT}
+        withCategoryOverlay
+      />
     </>
   );
 }

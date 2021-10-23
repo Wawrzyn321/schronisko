@@ -25,7 +25,7 @@ function createPath(name: string) {
     return LOCAL_STATIC_FILES_PATH + name;
 }
 
-export async function saveImage(name: string, base64Data: string, resizingPreset: ResizingPresets) {
+export async function saveImage(subdir: string, name: string, base64Data: string, resizingPreset: ResizingPresets) {
     base64Data = base64Data.replace(/^data:image\/png;base64,/, "");
     base64Data = base64Data.replace(/^data:image\/jpeg;base64,/, "");
     base64Data = base64Data.replace(/^data:image\/gif;base64,/, "");
@@ -33,10 +33,10 @@ export async function saveImage(name: string, base64Data: string, resizingPreset
     const preset = presetsMap[resizingPreset];
     if (preset) {
         const resized = await sharp(buf).resize(preset.width, preset.height).toBuffer();
-        return await fsp.writeFile(createPath(name), resized);
+        return await fsp.writeFile(createPath(subdir + name), resized);
     } else {
         const resized = await sharp(buf).toBuffer();
-        return await fsp.writeFile(createPath(name), resized);
+        return await fsp.writeFile(createPath(subdir + name), resized);
     }
 }
 
@@ -67,10 +67,10 @@ export async function deleteImagesInContent(prevContent: string, newContent: str
     }
 }
 
-export async function saveImagesFromContentModyfyingIt(content: string, images: ImageData[]) {
+export async function saveImagesFromContentModyfyingIt(content: string, images: ImageData[], subdir = '') {
     for (let { name, base64 } of images) {
-        await saveImage(getLocalPath(name), base64, null);
-        content = content.replace(name, WEB_STATIC_FILES_PATH + name)
+        await saveImage(subdir, getLocalPath(subdir + name), base64, null);
+        content = content.replace(name, WEB_STATIC_FILES_PATH + subdir + name)
     }
     return content;
 }

@@ -31,7 +31,7 @@
       <Field label="Tytuł" required>
         <Input required bind:value={news.title} placeholder="Tytuł" />
       </Field>
-      <Field label="Opis" required>
+      <Field label="Opis">
         <Input bind:value={news.description} placeholder="Opis" />
       </Field>
       <ResizableImageInput
@@ -48,6 +48,7 @@
       imageName={news.imageName}
       width={515}
       height={345}
+      subdir="news/"
     />
   </div>
 </form>

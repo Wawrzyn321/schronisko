@@ -38,8 +38,9 @@ function ActualNews({ id, ssrNews }: { id: string; ssrNews: NewsModel }) {
   } else if (error) {
     if (error.statusCode === 404) {
       return <Article {...ERROR_NEWS_NOT_FOUND} />;
+    } else {
+      return <Article {...ERROR_GENERIC} />;
     }
-    return <Article {...ERROR_GENERIC} />;
   } else {
     return 'Ładowanie...';
   }

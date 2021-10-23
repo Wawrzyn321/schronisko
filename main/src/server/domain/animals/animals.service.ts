@@ -98,7 +98,7 @@ export class AnimalsService {
     const id = uuid();
 
     const imageName = `${id}.png`;
-    await saveImage(imageName, animal.imageData, 'Animal Miniature');
+    await saveImage('', imageName, animal.imageData, 'Animal Miniature');
 
     const { imageData, ...animalData } = animal;
     const createdAnimal = await this.prisma.animal.create({
@@ -130,7 +130,7 @@ export class AnimalsService {
     }
 
     if (animal.imageData) {
-      await saveImage(animal.imageName, animal.imageData, 'Animal Miniature');
+      await saveImage('', animal.imageName, animal.imageData, 'Animal Miniature');
     }
 
     const { imageData, ...animalData } = animal;

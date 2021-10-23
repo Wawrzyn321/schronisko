@@ -1,13 +1,56 @@
 import Image from 'next/image';
-import { Animal } from '.prisma/client';
+import Link from 'next/link';
+import { Animal, AnimalCategory, AnimalType } from '.prisma/client';
 import { fetchAnimal, FetchError } from 'api';
 import styles from './AnimalDetails.module.scss';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AnimalImages } from './AnimalImages';
 import { ERROR_ANIMAL_NOT_FOUND, ERROR_GENERIC } from 'errors';
 import { Article } from 'components/Article/Article';
 import opiekun from 'public/site/animal-details/opiekun.svg';
 import kontakt from 'public/site/animal-details/kontakt.svg';
+import { Breadcrumbs } from 'components/Breadcrumbs/Breadcrumbs';
+
+function AnimalBreadcrumbs({ animal }: { animal: Animal }) {
+  const getNameAndHref = () => {
+    switch (animal.category) {
+      case AnimalCategory.DoAdopcji:
+      case AnimalCategory.PilniePotrzebuja:
+      case AnimalCategory.Weterani:
+        const type = animal.type === AnimalType.DOG ? 'Psy' : 'Koty';
+        const hrefType = animal.type === AnimalType.DOG ? 'dogs' : 'cats';
+        return {
+          name: `${type} do adopcji`,
+          href: '/animals/to-adopt/' + hrefType,
+        };
+      case AnimalCategory.NiedawnoZnalezione:
+        return {
+          name: `Niedawno znalezione`,
+          href: '/animals/recently-found',
+        };
+      case AnimalCategory.ZaTeczowymMostem:
+        return {
+          name: `Odeszły`,
+          href: '/animals/gone',
+        };
+      default:
+        return { name: type, href: '/' };
+    }
+  };
+
+  const { name, href } = getNameAndHref();
+
+  return (
+    <Breadcrumbs
+      items={[
+        'Zwierzęta',
+        <Link key="last" href={href}>
+          {name}
+        </Link>,
+      ]}
+    />
+  );
+}
 
 export function AnimalDetails({
   id,
@@ -35,7 +78,8 @@ export function AnimalDetails({
 
   if (animal) {
     return (
-      <div>
+      <>
+        <AnimalBreadcrumbs animal={animal} />
         <h1>{animal.name}</h1>
         <div className={styles['animal-details--description']}>
           {animal.description.split('\n').map((str, i) => (
@@ -61,13 +105,13 @@ export function AnimalDetails({
         </dl>
 
         <AnimalImages id={id} />
-      </div>
+      </>
     );
   } else if (error) {
     if (error.statusCode === 404) {
-      <Article {...ERROR_ANIMAL_NOT_FOUND} />;
+      return <Article {...ERROR_ANIMAL_NOT_FOUND} />;
     } else {
-      <Article {...ERROR_GENERIC} />;
+      return <Article {...ERROR_GENERIC} />;
     }
   } else {
     return <p>Ładowanie...</p>;

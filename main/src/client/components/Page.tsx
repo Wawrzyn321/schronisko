@@ -1,5 +1,5 @@
 import { Page as PageModel } from '.prisma/client';
-import { FetchError, fetchPage } from 'api';
+import { FetchError, fetchPage, PageFetchFn } from 'api';
 import { ERROR_PAGE, ERROR_PAGE_NOT_FOUND } from 'errors';
 import { useEffect, useState } from 'react';
 import { Article } from './Article/Article';
@@ -8,15 +8,21 @@ interface PageProps {
   id: string;
   ssrPage: PageModel;
   showTitle?: boolean;
+  fetchFn?: PageFetchFn;
 }
 
-export function Page({ id, ssrPage, showTitle = true }: PageProps) {
+export function Page({
+  id,
+  ssrPage,
+  fetchFn = fetchPage,
+  showTitle = true,
+}: PageProps) {
   const [page, setPage] = useState<PageModel>(ssrPage);
   const [error, setError] = useState<FetchError>();
 
   useEffect(() => {
     const loadPage = async () => {
-      const { data, error } = await fetchPage(id, false);
+      const { data, error } = await fetchFn(id, false);
       setPage(data);
       setError(error);
     };
@@ -34,9 +40,9 @@ export function Page({ id, ssrPage, showTitle = true }: PageProps) {
     );
   } else if (error) {
     if (error.statusCode === 404) {
-      <Article {...ERROR_PAGE_NOT_FOUND} showTitle={showTitle} />;
+      return <Article {...ERROR_PAGE_NOT_FOUND} showTitle={showTitle} />;
     } else {
-      <Article {...ERROR_PAGE} showTitle={showTitle} />;
+      return <Article {...ERROR_PAGE} showTitle={showTitle} />;
     }
   } else {
     return <p>'Ładowanie...'</p>;

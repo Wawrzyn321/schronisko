@@ -3,9 +3,9 @@
   import { notifyError, notifySuccess } from '../contexts/notification.context';
   import { settingsService } from '../services/SettingsService';
 
-  const DOG_ADOPTION_SETTING = 'DOG_ADOPTION_ENABLED';
+  const DOG_VOLUNTEERING_SETTING = 'DOG_VOLUNTEERING_ENABLED';
 
-  let dogAdoptionsOpen = false;
+  let dogVolunteeringOpen = false;
   let loading = true;
   let isSaving = false;
 
@@ -13,13 +13,13 @@
     try {
       const settings = await settingsService.get();
 
-      const dogAdoptionsSetting = settings.find(
-        (s) => s.id === DOG_ADOPTION_SETTING
+      const dogVolunteeringSetting = settings.find(
+        (s) => s.id === DOG_VOLUNTEERING_SETTING
       );
-      if (dogAdoptionsSetting) {
-        dogAdoptionsOpen = dogAdoptionsSetting.value === 'true';
+      if (dogVolunteeringSetting) {
+        dogVolunteeringOpen = dogVolunteeringSetting.value === 'true';
       } else {
-        dogAdoptionsOpen = false;
+        dogVolunteeringOpen = false;
       }
 
       loading = false;
@@ -38,16 +38,16 @@
       <label>
         <input
           disabled={isSaving}
-          checked={dogAdoptionsOpen}
+          checked={dogVolunteeringOpen}
           type="checkbox"
           on:change={async () => {
             isSaving = true;
             try {
               await settingsService.upsert(
-                DOG_ADOPTION_SETTING,
-                (!dogAdoptionsOpen).toString()
+                DOG_VOLUNTEERING_SETTING,
+                (!dogVolunteeringOpen).toString()
               );
-              dogAdoptionsOpen = !dogAdoptionsOpen;
+              dogVolunteeringOpen = !dogVolunteeringOpen;
               notifySuccess({ message: 'Zapisano ustawienie.' });
             } catch (e) {
               notifyError({
@@ -58,7 +58,7 @@
             }
           }}
         />
-        Adopcje psów możliwe
+        Psi wolontariat możliwy
       </label>
     {/if}
     {#if loading}

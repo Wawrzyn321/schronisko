@@ -37,7 +37,7 @@
   $: paginatedNews = paginate(filteredNews, pageSize, currentPage);
 
   function onNewsDeleted(n: News) {
-    news = news.filter((n) => n.id !== n.id);
+    news = news.filter((nn) => nn.id !== n.id);
     notifySuccess({ message: `Usunięto newsa ${n.title}.` });
   }
 </script>

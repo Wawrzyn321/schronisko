@@ -48,7 +48,7 @@ export function NewsCarousel({
   const currentNews = recentNews[index];
 
   const currentItem = currentNews && (
-    <img src={IMAGES_URL + '/' + currentNews.imageName} alt={currentNews.id} />
+    <img src={IMAGES_URL + '/news/' + currentNews.imageName} alt={currentNews.id} />
   );
 
   const title = currentNews && (
@@ -57,7 +57,7 @@ export function NewsCarousel({
     </div>
   );
 
-  const description = currentNews && (
+  const description = currentNews?.description && (
     <div className={styles['carousel__description']}>
       <p>{currentNews.description}</p>
     </div>

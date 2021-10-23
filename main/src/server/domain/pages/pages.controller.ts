@@ -9,6 +9,17 @@ import { PermissionsGuard } from '../auth/Permissions.guard';
 import { Query } from '@nestjs/common';
 import { ImageData } from '../../img-fs';
 
+
+@Controller('api/c/pages')
+export class PagesPublicController {
+    constructor(private pagesService: PagesService) { }
+
+    @Public()
+    @Get('dog-volunteering')
+    getDogVolunteeringPage() {
+        return this.pagesService.getDogsPage();
+    }
+}
 @Controller('api/pages')
 export class PagesController {
     constructor(private pagesService: PagesService) { }

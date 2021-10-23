@@ -9,8 +9,8 @@ export function PageLink({
   href: string;
 }) {
   return (
-    <div className={styles['page-link']}>
-      <Link href={href}>{children}</Link>
-    </div>
+    <Link href={href} passHref>
+      <a className={styles['page-link']}>{children}</a>
+    </Link>
   );
 }

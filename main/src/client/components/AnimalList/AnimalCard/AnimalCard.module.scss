@@ -19,6 +19,20 @@
   }
 }
 
+.img-wrapper {
+  position: relative;
+}
+
+.mag-glass {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+}
+
+.mag-glass:hover {
+  transform: scale(1.2);
+}
+
 .animal-ids {
   display: flex;
   justify-content: space-between;

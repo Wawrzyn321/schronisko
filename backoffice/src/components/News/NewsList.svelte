@@ -33,7 +33,7 @@
           <img
             width={152}
             height={112}
-            src={`${STATIC_URL}/${singleNews.imageName}`}
+            src={`${STATIC_URL}/news/${singleNews.imageName}`}
             alt={singleNews.title}
           />
         </a>

@@ -1,7 +1,8 @@
-pg_ctl -D /usr/local/var/postgres start
-psql schronisko
+pg_ctl -D '/Users/i515358/Library/Application Support/Postgres/var-13' restart
+#psql schronisko
 
 .env
 DATABASE_URL="postgres://{USER}:{PASSWORD}@localhost:5432/schronisko"
 
+sudo -u i515358 psql schronisko
 sudo -u postgres psql schronisko

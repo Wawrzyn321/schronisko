@@ -1,7 +1,6 @@
 import { Animal } from '.prisma/client';
 import { fetchAnimal } from 'api';
 import { AnimalDetails } from 'components/AnimalDetails/AnimalDetails';
-import { Breadcrumbs } from 'components/Breadcrumbs/Breadcrumbs';
 import { IdWrapper } from 'components/IdWrapper';
 import { LayoutWrapper } from 'components/LayoutWrapper';
 import React from 'react';
@@ -14,7 +13,6 @@ export default function Cat({ ssrAnimal }: { ssrAnimal: Animal }) {
 function CatDetails({ id, ssrAnimal }: { id: string; ssrAnimal: Animal }) {
   return (
     <LayoutWrapper>
-      <Breadcrumbs items={['Zwierzęta', 'Koty do adopcji']} />
       <AnimalDetails id={id} ssrAnimal={ssrAnimal} />
     </LayoutWrapper>
   );

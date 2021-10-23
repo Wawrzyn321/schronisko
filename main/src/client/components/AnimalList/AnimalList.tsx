@@ -7,6 +7,7 @@ import { paginate, Pagination } from './Pagination/Pagination';
 import { fetchAnimals, FetchError } from 'api';
 import { Article } from 'components/Article/Article';
 import { ERROR_ANIMAL_LIST } from 'errors';
+import { AnimalModal } from './AnimalModal/AnimalModal';
 
 function NotFoundMessage() {
   return (
@@ -29,11 +30,14 @@ export function AnimalList({
   filter?: (animal: Animal) => boolean;
   withCategoryOverlay?: boolean;
 }) {
-  const pageSize = 9;
+  const pageSize = 27;
   const [animals, setAnimals] = useState<Animal[]>([]);
   const [error, setError] = useState<FetchError>(null);
   const [currentPage, setCurrentPage] = useState(0);
   const [filterCategory, setFilterCategory] = useState<AnimalCategory>();
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [modalBWMode, setModalBWMode] = useState(false);
+  const [modalImgSrc, setModalImgSrc] = useState('');
 
   const filterWithCategory = (animal: Animal) => {
     if (!filterCategory) return true;
@@ -82,6 +86,11 @@ export function AnimalList({
                     key={animal.id}
                     showOverlay={withCategoryOverlay}
                     bwMode={bwMode}
+                    openModal={(src: string, bwMode: boolean) => {
+                      setModalOpen(true);
+                      setModalImgSrc(src);
+                      setModalBWMode(bwMode);
+                    }}
                   />
                 ),
               )}
@@ -90,6 +99,12 @@ export function AnimalList({
               pagesCount={pagesCount}
               currentPage={currentPage}
               setCurrentPage={setCurrentPage}
+            />
+            <AnimalModal
+              isOpen={isModalOpen}
+              src={modalImgSrc}
+              close={() => setModalOpen(false)}
+              bwMode={modalBWMode}
             />
           </>
         ) : (

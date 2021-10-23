@@ -3,6 +3,7 @@
 
   export let isPublic: boolean;
   export let isValid: boolean;
+  export let isCreating: boolean;
   export let createAnimal: () => any;
 </script>
 
@@ -20,7 +21,7 @@
       />
       Widoczny na stronie
     </label>
-    <Button type="is-primary" disabled={!isValid} on:click={createAnimal}>
+    <Button type="is-primary" disabled={!isValid || isCreating} on:click={createAnimal}>
       Dodaj
     </Button>
   </div>

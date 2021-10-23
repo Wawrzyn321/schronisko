@@ -6,6 +6,7 @@
   export let height: number;
   export let imageData: string | null;
   export let imageName: string | null;
+  export let subdir = '';
   export let revertImage: () => any;
 </script>
 
@@ -16,7 +17,7 @@
   {#if imageData}
     <img src={imageData} alt="Podgląd" />
   {:else if imageName}
-    <img src={`${STATIC_URL}/${imageName}`} alt="Podgląd" />
+    <img src={`${STATIC_URL}/${subdir}${imageName}`} alt="Podgląd" />
   {/if}
   {#if imageData && imageName}
     <div class="image-preview__overlay">

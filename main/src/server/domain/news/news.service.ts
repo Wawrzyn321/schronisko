@@ -43,10 +43,10 @@ export class NewsService {
       throw new BadRequestException(null, "Brak tytułu lub zdjęcia");
     }
 
-    params.news.content = await saveImagesFromContentModyfyingIt(params.news.content, params.images);
+    params.news.content = await saveImagesFromContentModyfyingIt(params.news.content, params.images, 'news/');
 
     params.news.imageName = `${uuid()}.png`;
-    await saveImage(params.news.imageName, params.imageData, 'News');
+    await saveImage('news/', params.news.imageName, params.imageData, 'News');
     const createdNews = await this.prisma.news.create({ data: params.news });
     await this.logsService.log({
       message: `dodał newsa ${createdNews.title}`,
@@ -66,12 +66,12 @@ export class NewsService {
     }
 
     if (params.imageData) {
-      await saveImage(params.news.imageName, params.imageData, 'News');
+      await saveImage('news/', params.news.imageName, params.imageData, 'News');
     }
 
     await deleteImagesInContent(prevNews.content, params.news.content);
 
-    params.news.content = await saveImagesFromContentModyfyingIt(params.news.content, params.images);
+    params.news.content = await saveImagesFromContentModyfyingIt(params.news.content, params.images, 'news/');
 
     const updatedNews = await this.prisma.news.update({
       where: { id }, data: params.news
@@ -96,7 +96,7 @@ export class NewsService {
   async delete(user: LoggedInUser, id: string): Promise<News> {
     const post = await this.prisma.news.findUnique({ where: { id } });
     try {
-      await deleteImage(post.imageName);
+      await deleteImage('news/' + post.imageName);
     } catch (e: unknown) {
       console.warn(e);
     }

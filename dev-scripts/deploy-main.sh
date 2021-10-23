@@ -1,3 +1,6 @@
+echo 'formatting client...'
+sudo npm run lint:fix --prefix=main/src/client
+
 RSYNC_RSH='ssh -p 60022' rsync \
     --exclude '.git' \
     --exclude 'node_modules' \

@@ -7,13 +7,21 @@ import { LoggedInUser } from '../auth/types';
 import { LogsService } from './../logs/logs.service';
 import { formattedDiff } from '../logs/diff';
 import { deleteImagesInContent, ImageData, saveImagesFromContentModyfyingIt } from '../../img-fs';
+import { SettingsService } from '../settings/settings.service';
 
 @Injectable()
 export class PagesService {
-  constructor(private prisma: PrismaService, private logsService: LogsService) { }
+  constructor(private prisma: PrismaService, private settingsService: SettingsService, private logsService: LogsService) { }
 
   async getAll(takeTop?: number): Promise<PageListElement[]> {
     return await this.prisma.page.findMany({ select: { title: true, id: true }, take: takeTop, orderBy: [{ title: 'asc' }] });
+  }
+
+  async getDogsPage(): Promise<Page> {
+    const settings = await this.settingsService.getAll();
+    const dogVolunteeringEnabledSetting = settings.find(s => s.id === 'DOG_VOLUNTEERING_ENABLED');
+    const areDogVolunteeringEnabled = dogVolunteeringEnabledSetting?.value === 'true';
+    return this.get(areDogVolunteeringEnabled ? 'wolontariat-pies-on' : 'wolontariat-pies-off')
   }
 
   async get(id: string): Promise<Page> {

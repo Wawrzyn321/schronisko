@@ -13,6 +13,8 @@ export const ANIMAL_DETAILS_URL = SITE_IMAGES_URL + '/animal-details'; // todo n
 export const MAIN_PAGE_IMAGES_URL = SITE_IMAGES_URL + '/main';
 export const IMAGES_URL = BACKEND_URL + '/img';
 
+export type PageFetchFn = (id: string, isSSR?: boolean) => Promise<FetchResult<PageModel>>;
+
 export class FetchError extends Error {
     statusCode: number;
 
@@ -93,5 +95,13 @@ export async function fetchRecentNews(
     isSSR = true,
 ): Promise<FetchResult<NewsListElement[]>> {
     const url = (isSSR ? SSR_BACKEND_URL : BACKEND_URL) + '/api/c/news/recent?count=5';
+    return genericFetch(url);
+}
+
+export async function fetchDogVolunteeringPage(
+    _dummyId: string,
+    isSSR = true,
+): Promise<FetchResult<PageModel>> {
+    const url = (isSSR ? SSR_BACKEND_URL : BACKEND_URL) + '/api/c/pages/dog-volunteering';
     return genericFetch(url);
 }

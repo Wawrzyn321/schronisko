@@ -6,16 +6,16 @@
     AnimalType,
     VirtualCaretakerType,
   } from '.prisma/client';
-  import { location, push } from 'svelte-spa-router';
+  import { push } from 'svelte-spa-router';
   import CreateAnimalHeader from '../components/Animals/CreateAnimalHeader.svelte';
   import AnimalForm from '../components/Animals/Form/AnimalForm.svelte';
   import { animalsService } from '../services/AnimalsService';
   import type { AnimalData } from '../services/AnimalsService';
   import { notifyError, notifySuccess } from '../contexts/notification.context';
-  import AnimalImages from '../components/Animals/AnimalImages.svelte';
   import type { AnimalImageParams } from './../services/AnimalImagesService';
 
   let isValid: boolean = false;
+  let isCreating: boolean = false;
   let animal: AnimalData = {
     id: '',
     name: '',
@@ -36,6 +36,7 @@
 
   async function createAnimal() {
     try {
+      isCreating = true;
       const { id } = await animalsService.create(animal, images);
       push(`/animals/${id}`);
       notifySuccess({ message: 'Zwierzę zostało dodane.' });
@@ -48,6 +49,8 @@
       } else {
         notifyError({ message: 'Nie można dodać zwierzęcia: ' + e.message });
       }
+    } finally {
+      isCreating = false;
     }
   }
 </script>
@@ -56,6 +59,7 @@
   <CreateAnimalHeader
     {createAnimal}
     {isValid}
+    {isCreating}
     bind:isPublic={animal.isPublic}
   />
 

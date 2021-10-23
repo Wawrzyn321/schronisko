@@ -10,7 +10,7 @@ export default function VolunteerCats({ ssrPage }: { ssrPage: PageModel }) {
   return (
     <LayoutWrapper>
       <Breadcrumbs items={['Wolontariat', 'Kot']} />
-      <Page id={ID} ssrPage={ssrPage} />
+      <Page id={ID} ssrPage={ssrPage} />A TU BĘDZIE FORMULARZ
     </LayoutWrapper>
   );
 }
