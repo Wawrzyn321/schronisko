@@ -5,7 +5,7 @@ import { AnimalImage, Page as PageModel, Animal } from '@prisma/client';
 const DEV = 1;
 
 const BACKEND_URL = DEV ? 'http://localhost:60045' : 'https://schronisko-backend.oto-jest-wawrzyn.pl';
-const SSR_BACKEND_URL = 'http://localhost:60045';
+const SSR_BACKEND_URL = DEV ? 'http://localhost:60045' : 'https://schronisko-backend.oto-jest-wawrzyn.pl';
 
 export const SITE_IMAGES_URL = BACKEND_URL + '/site';
 export const OVERLAYS_URL = SITE_IMAGES_URL + '/overlays';

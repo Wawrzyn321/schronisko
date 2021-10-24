@@ -26,7 +26,8 @@ export class AnimalsPublicController {
         const type: AnimalType | undefined =
             Object.keys(AnimalType).includes(possibleType) ? possibleType as AnimalType : undefined;
 
-        return this.animalsService.getAll(takeTop, category, type, true);
+            //todo
+        return this.animalsService.getAll(takeTop, 0, category, type, true);
     }
 
     @Get(':id')
@@ -42,9 +43,10 @@ export class AnimalsController {
 
     @RequirePermission(Permission.ANIMAL)
     @Get()
-    getAnimals(@Query('takeTop') takeTopStr: string) {
-        const takeTop = parseInt(takeTopStr) || undefined;
-        return this.animalsService.getAll(takeTop);
+    getAnimals(@Query('take') takeStr: string, @Query('skip') skipStr: string) {
+        const take = parseInt(takeStr) || undefined;
+        const skip = parseInt(skipStr) || undefined;
+        return this.animalsService.getAll(take, skip);
     }
 
     @RequirePermission(Permission.ANIMAL)

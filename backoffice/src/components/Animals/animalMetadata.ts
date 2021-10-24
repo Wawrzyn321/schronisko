@@ -11,6 +11,7 @@ export const animalGenders = Object.values(AnimalGender);
 export const animalGendersMap: { [gender in AnimalGender]: string } = {
   [AnimalGender.FEMALE]: 'Żeńska',
   [AnimalGender.MALE]: 'Męska',
+  [AnimalGender.NOT_SET]: 'Nie podano',
 };
 
 export const animalCategories = Object.values(AnimalCategory);

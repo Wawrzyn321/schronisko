@@ -1,10 +1,19 @@
-co z linkiem do "Adopcji" -
 darowizny -
 formularze
 - wolontariat (psi/koci) (strona główna) (psi okresowo) -
 - wirtualne adopcje (najpierw ankieta (na mail adopcje.wirtualne@nadziejanadom.org) (imię, id zwierzęcia, imię + nazwisko adoptującego, "moim wirtualnym opiekunem jest", mail), potem płatność - pokazujemy nr konta i tyle) (strona główna)
 https://mail.google.com/mail/u/0/#search/Zobaczy%C5%82am+w+innej+organizacji+co%C5%9B+takiego+(screen).+My%C5%9Blisz%2C+%C5%BCe+jest+wg+jaka%C5%9B+mo%C5%BCliwo%C5%9B%C4%87%2C+%C5%BCeby+pojawi%C5%82o+si%C4%99+taki+formularza+na+naszej+www+po%C5%82%C4%85czony+z+mailem%3F/FMfcgzGkZZrjSZkkBWqMtJfLmpNwNGrL -
-media                       to były filmiki - zapytaj co z nimi zrobić
+
+DZIŚ PO ADOPCJI są puste przy 1k rekordów
+
+adminGallery + requests     jezu 9k rekordów -> Animals 3
+paginacja na liście zwierząt - jest ok, ale może '...' dodać? 1
+
+ssr po localhoście a nie jakiś bullshit
+
+po deployu zmień link na backoffice z https://www.schronisko.sosnowiec.pl/ na ten nowy
+
+
 
 
 adminCategoryMenu           X
@@ -18,11 +27,3 @@ userRights                  X
 sites                       DONE przejrzyj -> Pages
 news                        DONE trza eksportować
 pictures                    DONE przejrzyj pliki po nazwach - to chyba zdjęcia z galerii
-
-adminGallery + requests     jezu 9k rekordów -> Animals 3
-paginacja na liście zwierząt - jest ok, ale może '...' dodać? 1
-
-customowy handler do quilla dla html5
-youtube w newsach, są takie 2 więc zrób ręcznie i skopiuje do JSONa
-
-po deployu zmień link na backoffice z https://www.schronisko.sosnowiec.pl/ na ten nowy

@@ -37,6 +37,7 @@ function validateAnimalUpdate(animal: AnimalData): boolean {
 }
 
 type AfterAdoptionAnimal = Pick<Animal, "id" | "imageName" | "name" | "type">;
+type AnimalListElement = Omit<Animal, 'description'>;
 
 function getDailyRandom<T>(items: T[], count: number): T[] {
   if (count >= items.length) {
@@ -62,8 +63,12 @@ function getDailyRandom<T>(items: T[], count: number): T[] {
 export class AnimalsService {
   constructor(private prisma: PrismaService, private logsService: LogsService) { }
 
-  async getAll(takeTop?: number, category?: AnimalCategory, type?: AnimalType, filterPublic?: boolean): Promise<Animal[]> {
-    return await this.prisma.animal.findMany({ take: takeTop, where: { category, type, isPublic: filterPublic ? true : undefined } });
+  async getAll(take?: number, skip?: number, category?: AnimalCategory, type?: AnimalType, filterPublic?: boolean): Promise<AnimalListElement[]> {
+    const animals = await this.prisma.animal.findMany({ take, skip, where: { category, type, isPublic: filterPublic ? true : undefined } });
+    return animals.map((animal: Animal) => {
+      const { description, ...animalListElement } = animal;
+      return animalListElement;
+    });
   }
 
   async getAfterAdoption(count: number): Promise<AfterAdoptionAnimal[]> {
@@ -90,7 +95,7 @@ export class AnimalsService {
     if (!animal.virtualCaretakerName && animal.virtualCaretakerType === VirtualCaretakerType.Znalazl) {
       throw new BadRequestException(null, "Brak nazwy wirtualnego opiekuna.");
     }
-    const existingAnimal = await this.prisma.animal.findUnique({ where: { refNo: animal.refNo } });
+    const existingAnimal = await this.prisma.animal.findUnique({ where: { id: animal.id } });
     if (!!existingAnimal) {
       throw new ConflictException(animal, "Zwierzę o podanym numerze już istnieje.");
     }

@@ -20,7 +20,7 @@
     id: '',
     name: '',
     category: AnimalCategory.DoAdopcji,
-    gender: AnimalGender.FEMALE,
+    gender: AnimalGender.NOT_SET,
     description: '',
     isPublic: true,
     location: AnimalLocation.Schronisko,

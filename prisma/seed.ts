@@ -1,13 +1,15 @@
 import { PrismaClient } from '@prisma/client';
-import { seedUsers } from './db-import/users';
-import { seedNews } from './db-import/news-import';
+import { seedUsers } from './db-import/users/users';
+import { seedNews } from './db-import/news/news-import';
 import { seedPages } from './db-import/pages';
+import { seedAnimals } from './db-import/animals/animals-import';
 
 const prisma = new PrismaClient()
 
 async function main() {
     // await seedUsers(prisma);
-    await seedNews(prisma);
+    // await seedNews(prisma);
+    await seedAnimals(prisma, 1000);
     // await seedPages(prisma);
 }
 main()

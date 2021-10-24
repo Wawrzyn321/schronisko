@@ -20,8 +20,9 @@
   import type { AnimalSortingParams } from './../AnimalsHeader/AnimalSortingParams';
   import { STATIC_URL } from '../../../services/config';
   import EmptyListMessage from '../../shared/EmptyListMessage.svelte';
+  import type { AnimalListElement } from '../../../common/types';
 
-  export let animals: Animal[];
+  export let animals: AnimalListElement[];
   export let loading: boolean;
   export let columnParams: AnimalColumnParams;
   export let filteringParams: AnimalFilteringParams;
@@ -29,7 +30,7 @@
   export let onAnimalDeleted: (animal: Animal) => any;
 
   let deleteModalVisible = false;
-  let selectedAnimal: Animal = null;
+  let selectedAnimal: AnimalListElement = null;
 
   function restrictStringLength(str: string, chars = 40): string {
     if (str.length <= chars) {
@@ -63,11 +64,14 @@
           {animal.name}
         </a>
       </td>
-      {#if columnParams.showDescription}
+      <td>
+        {animal.refNo}
+      </td>
+      <!-- {#if columnParams.showDescription}
         <td class="g-table-ellipsis">
           {restrictStringLength(animal.description)}
         </td>
-      {/if}
+      {/if} -->
       <td>
         {animalTypesMap[animal.type]}
       </td>

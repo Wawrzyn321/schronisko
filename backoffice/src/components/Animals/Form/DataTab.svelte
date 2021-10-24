@@ -35,13 +35,11 @@
     </Field>
     <AnimalTypeSelect bind:type={animal.type} />
     <Field label="Numer ewidencyjny" required style="grid-area: ref">
-      <Tooltip label="Musi być unikalny.">
-        <Input
-          required
-          bind:value={animal.refNo}
-          placeholder="Numer ewidencyjny"
-        />
-      </Tooltip>
+      <Input
+        required
+        bind:value={animal.refNo}
+        placeholder="Numer ewidencyjny"
+      />
     </Field>
     <AnimalLocationSelect bind:location={animal.location} type={animal.type} />
     <Field required label="Dane kontaktowe" style="grid-area: contact">

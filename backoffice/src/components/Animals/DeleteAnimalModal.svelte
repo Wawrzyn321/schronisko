@@ -3,12 +3,13 @@
   import { animalsService } from '../../services/AnimalsService';
   import type { Animal } from '.prisma/client';
   import { notifyError } from '../../contexts/notification.context';
+  import type { AnimalListElement } from '../../common/types';
 
   let loading = false;
 
   export let modalVisible: boolean;
-  export let onAnimalDeleted: (animal: Animal) => any;
-  export let animal: Animal;
+  export let onAnimalDeleted: (animal: AnimalListElement) => any;
+  export let animal: AnimalListElement;
 
   async function deleteAnimal() {
     try {

@@ -1,4 +1,5 @@
 import type { AnimalType, AnimalGender, AnimalLocation, AnimalCategory, Animal } from '.prisma/client';
+import type { AnimalListElement } from './../../../common/types';
 
 export type AnimalFilteringParams = {
     showOnlyPublic: boolean;
@@ -12,7 +13,8 @@ export type AnimalFilteringParams = {
 const filterBySearchPhrase =
     (params: AnimalFilteringParams) => (animal: Animal) =>
         !params.searchPhrase ||
-        animal.name.toLowerCase().includes(params.searchPhrase.toLowerCase());
+        animal.name.toLowerCase().includes(params.searchPhrase.toLowerCase()) ||
+        animal.refNo.toLowerCase().includes(params.searchPhrase.toLowerCase());
 
 const filterByPublic = (params: AnimalFilteringParams) => (animal: Animal) =>
     !params.showOnlyPublic || animal.isPublic;
@@ -33,7 +35,7 @@ const filterByCategory =
         !params.categoryFilter.length ||
         params.categoryFilter.includes(animal.category);
 
-export const applyFiltering = (animals: Animal[], params: AnimalFilteringParams) =>
+export const applyFiltering = (animals: AnimalListElement[], params: AnimalFilteringParams) =>
     animals.filter(filterBySearchPhrase(params))
         .filter(filterByPublic(params))
         .filter(filterByType(params))

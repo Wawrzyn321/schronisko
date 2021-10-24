@@ -1,4 +1,5 @@
 import type { Animal } from '.prisma/client';
+import type { AnimalListElement } from '../../../common/types';
 import type { SortingOrder } from '../../shared/SortControl/SortControl';
 
 export type AnimalSortingParams = {
@@ -6,7 +7,7 @@ export type AnimalSortingParams = {
     sortByDate: SortingOrder;
 }
 
-export function applySorting(animals: Animal[], params: AnimalSortingParams) {
+export function applySorting(animals: AnimalListElement[], params: AnimalSortingParams) {
     const sorter = (a: Animal, b: Animal) => {
         if (params.sortByName) {
             const dir = params.sortByName === 'ASC' ? 1 : -1;

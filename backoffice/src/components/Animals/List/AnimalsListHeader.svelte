@@ -25,12 +25,14 @@
   {/if}
   <th>
     <div style="display: flex">
-      Imię <SortControl bind:sortingOrder={sortingParams.sortByName} />
+      Imię 
+      <!-- <SortControl bind:sortingOrder={sortingParams.sortByName} /> -->
     </div>
   </th>
-  {#if columnParams.showDescription}
+  <th> Numer ewidencyjny </th>
+  <!-- {#if columnParams.showDescription}
     <th class="g-table-ellipsis">Opis</th>
-  {/if}
+  {/if} -->
   <th>
     <div style="display: flex">
       <span>Rodzaj</span>

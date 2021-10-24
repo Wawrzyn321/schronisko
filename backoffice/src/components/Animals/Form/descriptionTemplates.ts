@@ -9,6 +9,7 @@ export const descriptionTemplates = {
     [AnimalCategory.NiedawnoZnalezione]: {
         [AnimalGender.FEMALE]: niedawnoZnalezioneTemplate,
         [AnimalGender.MALE]: niedawnoZnalezioneTemplate,
+        [AnimalGender.NOT_SET]: niedawnoZnalezioneTemplate,
     },
     [AnimalCategory.DoAdopcji]: {
         [AnimalGender.FEMALE]: `() została odrobaczona, odpchlona, zaszczepiona, zachipowana i wykastrowana.
@@ -20,4 +21,8 @@ Obowiązuje wizyta przed i poadopcyjna, spacer zapoznawczy, uiszczenie opłaty s
 Obowiązuje wizyta przed i poadopcyjna, spacer zapoznawczy, uiszczenie opłaty schroniskowej i podpisanie umowy adopcyjnej.
 `
     },
+    [AnimalGender.NOT_SET]: `() został odrobaczony, odpchlony, zaszczepiony, zachipowany i wykastrowany.
+
+Obowiązuje wizyta przed i poadopcyjna, spacer zapoznawczy, uiszczenie opłaty schroniskowej i podpisanie umowy adopcyjnej.
+`
 };

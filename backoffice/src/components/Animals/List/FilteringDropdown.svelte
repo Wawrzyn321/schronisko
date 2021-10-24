@@ -53,7 +53,7 @@
   .dropdown-content {
     &-sm {
       transform: translateX(-75px);
-      width: 100px;
+      width: 130px;
       padding: 10px;
       z-index: 1000;
     }

@@ -8,7 +8,7 @@
 
   const dataRows: { caption: string; property: string }[] = [
     { caption: 'Miniaturka', property: 'showImage' },
-    { caption: 'Opis', property: 'showDescription' },
+    // { caption: 'Opis', property: 'showDescription' },
     { caption: 'Płeć', property: 'showGender' },
     { caption: 'Miejsce', property: 'showLocation' },
     { caption: 'Kategoria', property: 'showCategory' },

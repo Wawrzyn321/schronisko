@@ -28,7 +28,7 @@ export interface AnimalData {
 
 export class AnimalsService {
     async getInitial(): Promise<Animal[]> {
-        return await throwingFetch(baseUrl + "?takeTop=10");
+        return await throwingFetch(baseUrl + "?take=10");
     }
 
     async getAll(): Promise<Animal[]> {
@@ -63,9 +63,11 @@ export class AnimalsService {
         try {
             await animalImagesService.delete(id);
         } catch (e: unknown) {
-            const errorId = uuid();
-            console.warn(errorId + ": " + e.message);
-            throw Error(`Wystąpił błąd na serwerze (${errorId}).`);
+            if (e instanceof Error) {
+                const errorId = uuid();
+                console.warn(errorId + ": " + e.message);
+                throw Error(`Wystąpił błąd na serwerze (${errorId}).`);
+            }
         }
         return await throwingFetch(`${baseUrl}/${(encodeURIComponent(id))}`, {
             method: 'DELETE',

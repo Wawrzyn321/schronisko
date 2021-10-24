@@ -25,6 +25,7 @@ enum AnimalType {
 enum AnimalGender {
   MALE
   FEMALE
+  NOT_SET
 }
 
 enum AnimalLocation {
@@ -79,7 +80,7 @@ model News {
 
 model Animal {
   id                   String               @id @default(uuid())
-  refNo                String               @unique
+  refNo                String
   name                 String
   type                 AnimalType
   gender               AnimalGender

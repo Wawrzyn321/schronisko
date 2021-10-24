@@ -16,8 +16,9 @@
   import { notifyError, notifySuccess } from '../contexts/notification.context';
   import Pagination from '../components/shared/Pagination/Pagination.svelte';
   import { paginate } from '../components/shared/Pagination/pagination';
+  import type { AnimalListElement } from '../common/types';
 
-  let animals: Animal[] = [];
+  let animals: AnimalListElement[] = [];
   let loading = false;
   let columnParams = createDefaultColumnParams();
   let filteringParams = createDefaultFilteringParams();
