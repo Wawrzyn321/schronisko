@@ -29,6 +29,7 @@
     "@nestjs/serve-static": "^2.1.4",
     "@types/bcryptjs": "^2.4.2",
     "@types/passport-jwt": "^3.0.5",
+    "@types/random-seed": "^0.3.3",
     "@types/sharp": "^0.28.3",
     "@types/uuid": "^8.3.0",
     "bcryptjs": "^2.4.3",

@@ -9,6 +9,7 @@
 
 <div class="preview-wrapper">
   <ImagePreview
+    subdir="/animal/"
     imageData={animal.imageData}
     {revertImage}
     imageName={animal.imageName}

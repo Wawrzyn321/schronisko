@@ -51,7 +51,7 @@
             <img
               width={152}
               height={112}
-              src={`${STATIC_URL}/${animal.imageName}`}
+              src={`${STATIC_URL}/animal/${animal.imageName}`}
               alt={animal.name}
               class:is-grayscale={animal.category ===
                 AnimalCategory.ZaTeczowymMostem}

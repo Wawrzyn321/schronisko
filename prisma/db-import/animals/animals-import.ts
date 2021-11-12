@@ -5,7 +5,13 @@ import { PrismaClient } from '@prisma/client';
 import fs from 'fs';
 // @ts-ignore
 import _animals from './adminGallery.json';
+// @ts-ignore
+import _pictures from './pictures.json';
 
+const galleryPath = '/Users/i515358/Desktop/schronisko_sosnowiec_pl/public_html/gallery/';
+const thumbsPath = galleryPath + 'thumbs/';
+const targetAnimalsPath = '/Users/i515358/Nauka/schronisko/prisma/db-import/animals/animal/';
+const targetAnimalImagesPath = targetAnimalsPath + 'pics/';
 
 function mapCategoryId(categoryId: string) {
     switch (categoryId) {
@@ -70,9 +76,9 @@ const filterWithNoImg = (animals: any) => {
 
     return animals.filter((a: any) => {
         if (
-            fs.existsSync('/Users/i515358/Desktop/schronisko_sosnowiec_pl/public_html/gallery/' + a.fileName)
+            fs.existsSync(galleryPath + a.fileName)
             ||
-            fs.existsSync('/Users/i515358/Desktop/schronisko_sosnowiec_pl/public_html/gallery/thumbs/' + a.fileName)
+            fs.existsSync(thumbsPath + a.fileName)
         ) {
             // fs.renameSync('./news/' + n.picture, './news-img/' + n.picture)
             return true;
@@ -86,17 +92,9 @@ const filterWithNoImg = (animals: any) => {
 const setupRefNo = (animals: any) => {
     return animals.map((a: any) => {
         const r = a.name.trim().match(/^(.*?) *(\d+\/ ?\d+)/);
-        let id = 'dipa'
-        if (a.name === 'Dino 627/2019') {
-            console.log(r?.[1], r?.[2])
-            id = a.id;
-        }
         if (r?.[1] && r?.[2]) {
             a.name = r[1];
             a.petId = r[2];
-            if (id === a.id) {
-                console.log(a)
-            }
             return a;
         }
 
@@ -149,7 +147,59 @@ function trySetupContactInfo(a: any) {
     return 'brak';
 }
 
+async function seedAnimalImages(prisma: PrismaClient, animals: any[], count: number | null = null) {
+    let pictures = _pictures.find((e: any) => e.type === 'table')!.data!;
+    let it = count ? Math.min(animals.length, count) : animals.length;
+
+    let cnt = 0;
+    for (let i = 0; i < it; i++) {
+        const pics = pictures.filter(p => p.adminGalleryId === animals[i].id);
+        for (let j = 0; j < pics.length; j++) {
+            const pic = pics[j];
+            let ok = false;
+            if (fs.existsSync(galleryPath + pic.fileName)) {
+                fs.copyFileSync(galleryPath + pic.fileName, targetAnimalImagesPath + pic.fileName);
+                ok = true;
+            } else if (fs.existsSync(thumbsPath + pic.fileName)) {
+                fs.copyFileSync(thumbsPath + pic.fileName, targetAnimalImagesPath + pic.fileName);
+                ok = true;
+            }
+
+            if (ok) {
+                cnt++;
+
+                const image = {
+                    id: pic.id,
+                    order: j,
+                    animalId: animals[i].id,
+                    imageName: pic.fileName,
+                    visible: true,
+                }
+
+                await prisma.animalImage.upsert({
+                    where: { id: pic.id },
+                    update: image,
+                    create: image,
+                });
+            }
+        }
+
+        if (i % 1000 === 0) {
+            console.log(i + '/' + it);
+        }
+    }
+    console.log('seeded', cnt, 'animal pics')
+}
+
 export async function seedAnimals(prisma: PrismaClient, count: number | null = null) {
+
+    if (!fs.existsSync(targetAnimalsPath)) {
+        fs.mkdirSync(targetAnimalsPath);
+    }
+    if (!fs.existsSync(targetAnimalImagesPath)) {
+        fs.mkdirSync(targetAnimalImagesPath);
+    }
+
     //@ts-ignore
     let animals = _animals.find((e: any) => e.type === 'table')!.data!;
     if (count && animals.length !== count) {
@@ -159,7 +209,6 @@ export async function seedAnimals(prisma: PrismaClient, count: number | null = n
         console.log('')
         console.log('-------')
     }
-
 
     animals = setupRefNo(animals)
     animals = setupVCaretaker(animals);
@@ -172,33 +221,44 @@ export async function seedAnimals(prisma: PrismaClient, count: number | null = n
 
     let it = count ? Math.min(animals.length, count!) : animals.length;
     for (let i = 0; i < it; i++) {
-        const a = animals[i];
+    //     const a = animals[i];
 
-        const animal = {
-            id: a.id,
-            refNo: a.petId,
-            name: a.name,
-            type: a.speciesId === '2' ? AnimalType.DOG : AnimalType.CAT,
-            category: mapCategoryId(a.categoryId),
-            description: a.descr,
-            imageName: a.fileName,
-            addedDate: new Date(Date.parse('2014-07-23 11:07:16')),
-            isPublic: a.status === '1',
-            location: tryMapLocation(a),
-            virtualCaretakerType: a.virtualCaretakerType,
-            virtualCaretakerName: a.virtualCaretakerName,
-            note: '',
-            locationDescription: null,
-            contactInfo: trySetupContactInfo(a),
-            gender: trySetupGender(a),
-        };
+    //     if (fs.existsSync(galleryPath + a.fileName)) {
+    //         fs.copyFileSync(galleryPath + a.fileName, targetAnimalsPath + a.fileName)
+    //     } else {
+    //         fs.copyFileSync(thumbsPath + a.fileName, targetAnimalsPath + a.fileName)
+    //     }
 
-        await prisma.animal.upsert({
-            where: { id: animal.id! },
-            update: animal,
-            create: animal,
-        });
+    //     const animal = {
+    //         id: a.id,
+    //         refNo: a.petId,
+    //         name: a.name,
+    //         type: a.speciesId === '2' ? AnimalType.DOG : AnimalType.CAT,
+    //         category: mapCategoryId(a.categoryId),
+    //         description: a.descr,
+    //         imageName: a.fileName,
+    //         addedDate: new Date(Date.parse('2014-07-23 11:07:16')),
+    //         isPublic: a.status === '1',
+    //         location: tryMapLocation(a),
+    //         virtualCaretakerType: a.virtualCaretakerType,
+    //         virtualCaretakerName: a.virtualCaretakerName,
+    //         note: '',
+    //         locationDescription: null,
+    //         contactInfo: trySetupContactInfo(a),
+    //         gender: trySetupGender(a),
+    //     };
 
-        // console.log('news', n.title)
+    //     await prisma.animal.upsert({
+    //         where: { id: animal.id! },
+    //         update: animal,
+    //         create: animal,
+    //     });
+
+        if (i % 1000 === 0) {
+            console.log(i + '/' + it);
+        }
     }
+    console.log('seeded', it, 'animals')
+
+    await seedAnimalImages(prisma, animals, it);
 }

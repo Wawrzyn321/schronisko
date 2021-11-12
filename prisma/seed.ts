@@ -9,7 +9,7 @@ const prisma = new PrismaClient()
 async function main() {
     // await seedUsers(prisma);
     // await seedNews(prisma);
-    await seedAnimals(prisma, 1000);
+    await seedAnimals(prisma, null);
     // await seedPages(prisma);
 }
 main()

@@ -115,3 +115,5 @@ dist
 .pnp.*
 
 coverage-ts/
+
+prisma/db-import/animals

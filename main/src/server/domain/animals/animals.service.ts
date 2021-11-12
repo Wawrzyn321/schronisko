@@ -8,7 +8,7 @@ import { deleteImage, saveImage } from '../../img-fs';
 import { LogsService } from './../logs/logs.service';
 import { LoggedInUser } from '../auth/types';
 import { formattedDiff } from '../logs/diff';
-import gen from 'random-seed';
+import * as gen from 'random-seed';
 
 export interface AnimalData {
   id: string
@@ -39,20 +39,23 @@ function validateAnimalUpdate(animal: AnimalData): boolean {
 type AfterAdoptionAnimal = Pick<Animal, "id" | "imageName" | "name" | "type">;
 type AnimalListElement = Omit<Animal, 'description'>;
 
+function createDailyRandomGen() {
+  const d = new Date();
+  return gen.create((d.getDay() * d.getMonth()).toString());
+}
+
 function getDailyRandom<T>(items: T[], count: number): T[] {
   if (count >= items.length) {
     return items;
   }
 
-  const d = new Date();
-  const rand = gen.create(d.getDay() * d.getMonth());
+  const rand = createDailyRandomGen();
 
   const indices: number[] = [];
-
   for (let i = 0; i < count; i++) {
     let index: number;
     do {
-      index = rand.range(0, items.length);
+      index = rand.range(items.length);
     } while (indices.includes(index));
     indices.push(index);
   }

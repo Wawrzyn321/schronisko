@@ -12,6 +12,7 @@ export const OVERLAYS_URL = SITE_IMAGES_URL + '/overlays';
 export const ANIMAL_DETAILS_URL = SITE_IMAGES_URL + '/animal-details'; // todo niepotrzebne?
 export const MAIN_PAGE_IMAGES_URL = SITE_IMAGES_URL + '/main';
 export const IMAGES_URL = BACKEND_URL + '/img';
+export const ANIMAL_IMAGES_URL = IMAGES_URL + '/animals';
 
 export type PageFetchFn = (id: string, isSSR?: boolean) => Promise<FetchResult<PageModel>>;
 
