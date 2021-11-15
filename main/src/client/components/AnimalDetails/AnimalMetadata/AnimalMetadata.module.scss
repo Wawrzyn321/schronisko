@@ -1,22 +1,3 @@
-.animal-details--description {
-  max-width: 60em;
-  font-weight: 100;
-  text-align: justify;
-}
-
-.animal-images {
-  padding-left: 0;
-
-  li {
-    margin-top: 32px;
-  }
-
-  img {
-    border-radius: 50px;
-    width: 60em;
-  }
-}
-
 .animal-metadata {
   & > div {
     display: flex;

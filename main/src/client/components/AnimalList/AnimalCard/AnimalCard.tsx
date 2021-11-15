@@ -1,37 +1,21 @@
 import styles from './AnimalCard.module.scss';
-import Link from 'next/link';
-import { Animal } from '.prisma/client';
-import { IMAGES_URL, SITE_IMAGES_URL } from 'api';
-import { buildAnimalUrl } from '_util';
+import { SITE_IMAGES_URL } from 'api';
 import { Overlay } from './Overlay';
+import { Animal } from '.prisma/client';
+import { AnimalImage } from './AnimalImage';
+
+interface AnimalCardProps {
+  animal: Animal;
+  showOverlay: boolean;
+  openModal: (animal: Animal) => any;
+}
 
 export function AnimalCard({
   animal,
   showOverlay = false,
-  bwMode = false,
   openModal,
-}: {
-  animal: Animal;
-  showOverlay: boolean;
-  bwMode: boolean;
-  openModal: (img: string, bwMode: boolean) => any;
-}) {
-  let image = (
-    <img
-      src={IMAGES_URL + '/' + animal.imageName}
-      alt={animal.name}
-      width="340px"
-      height="340px"
-    />
-  );
-
-  if (!bwMode) {
-    image = (
-      <Link href={buildAnimalUrl(animal)}>
-        <a>{image}</a>
-      </Link>
-    );
-  }
+}: AnimalCardProps) {
+  const image = <AnimalImage animal={animal} />;
 
   return (
     <li className={styles['animal-card']}>
@@ -43,10 +27,10 @@ export function AnimalCard({
           alt="Powiększ"
           width="20px"
           height="20px"
-          onClick={() => openModal(IMAGES_URL + '/' + animal.imageName, bwMode)}
+          onClick={() => openModal(animal)}
         />
+        {showOverlay && <Overlay category={animal.category} />}
       </div>
-      {showOverlay && <Overlay category={animal.category} />}
       <div className={styles['animal-ids']}>
         <span className={styles['animal-name']}>{animal.name}</span>
         <span>{animal.refNo}</span>

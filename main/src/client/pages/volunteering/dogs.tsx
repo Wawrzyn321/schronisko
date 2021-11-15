@@ -23,5 +23,7 @@ function VolunteerDogsPage({ ssrPage }: { ssrPage: PageModel }) {
 export async function getServerSideProps(): Promise<{
   props: { ssrPage: PageModel };
 }> {
-  return { props: { ssrPage: (await fetchDogVolunteeringPage(ID, true)).data } };
+  return {
+    props: { ssrPage: (await fetchDogVolunteeringPage(ID, true)).data },
+  };
 }

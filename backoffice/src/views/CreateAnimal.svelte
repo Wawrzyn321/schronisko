@@ -30,7 +30,7 @@
     imageData: '',
     contactInfo: '',
     locationDescription: null,
-    refNo: '',
+    refNo: 'b/n',
   };
   let images: AnimalImageParams[] = [];
 
@@ -60,6 +60,7 @@
     {createAnimal}
     {isValid}
     {isCreating}
+    {animal}
     bind:isPublic={animal.isPublic}
   />
 

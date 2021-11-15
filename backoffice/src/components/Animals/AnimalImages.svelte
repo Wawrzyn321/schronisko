@@ -69,7 +69,7 @@
         {#if image.data}
           <img class="image" src={image.data} alt="" />
         {:else if image.imageName}
-          <img class="image" src={`${STATIC_URL}/animal/${image.imageName}`} alt="" />
+          <img class="image" src={`${STATIC_URL}/animals/pics/${image.imageName}`} alt="" />
         {:else}
           <div class="image" />
         {/if}

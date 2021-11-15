@@ -8,6 +8,7 @@
   export let imageName: string | null;
   export let subdir = '';
   export let revertImage: () => any;
+  export let placeholderPic: string | null;
 </script>
 
 <div
@@ -18,6 +19,8 @@
     <img src={imageData} alt="Podgląd" />
   {:else if imageName}
     <img src={`${STATIC_URL}/${subdir}${imageName}`} alt="Podgląd" />
+  {:else if placeholderPic}
+    <img src={placeholderPic} alt="Podgląd" />
   {/if}
   {#if imageData && imageName}
     <div class="image-preview__overlay">

@@ -1,10 +1,14 @@
 <script lang="ts">
+  import type { Animal } from '.prisma/client';
+
   import { Button } from 'svelma';
+  import FormTooltipMessageWrapper from './Form/FormTooltipMessageWrapper.svelte';
 
   export let isPublic: boolean;
   export let isValid: boolean;
   export let isCreating: boolean;
   export let createAnimal: () => any;
+  export let animal: Animal;
 </script>
 
 <header class="g-flex-between-100">
@@ -21,9 +25,15 @@
       />
       Widoczny na stronie
     </label>
-    <Button type="is-primary" disabled={!isValid || isCreating} on:click={createAnimal}>
-      Dodaj
-    </Button>
+    <FormTooltipMessageWrapper {isValid} {animal}>
+      <Button
+        type="is-primary"
+        disabled={!isValid || isCreating}
+        on:click={createAnimal}
+      >
+        Dodaj
+      </Button>
+    </FormTooltipMessageWrapper>
   </div>
 </header>
 

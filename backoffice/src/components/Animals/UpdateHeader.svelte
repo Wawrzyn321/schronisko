@@ -6,11 +6,13 @@
   import { notifySuccess } from '../../contexts/notification.context';
   import DateFromTimestamp from '../shared/DateFromTimestamp.svelte';
   import DeleteAnimalModal from './DeleteAnimalModal.svelte';
+import FormTooltipMessageWrapper from './Form/FormTooltipMessageWrapper.svelte';
 
   export let isPublic: boolean;
   export let timestamp: Date;
   export let isValid: boolean;
   export let animal: Animal;
+  export let isSaving: boolean;
   export let updateAnimal: () => any;
 
   let deleteModalVisible = false;
@@ -39,9 +41,11 @@
       />
       Widoczny na stronie
     </label>
-    <Button type="is-primary" on:click={updateAnimal} disabled={!isValid}>
-      Zapisz
-    </Button>
+    <FormTooltipMessageWrapper {isValid} {animal}>
+      <Button type="is-primary" on:click={updateAnimal} disabled={!isValid || isSaving}>
+        Zapisz
+      </Button>
+    </FormTooltipMessageWrapper>
     <Button
       type="is-danger"
       on:click={() => (deleteModalVisible = true)}

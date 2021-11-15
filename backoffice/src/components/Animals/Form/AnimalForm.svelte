@@ -2,7 +2,6 @@
   import { Tab } from 'svelma';
   import type { AnimalData } from '../../../services/AnimalsService';
   import AnimalImages from './../AnimalImages.svelte';
-  import { VirtualCaretakerType } from '.prisma/client';
   import type { AnimalImageParams } from '../../../services/AnimalImagesService';
   import { querystring } from 'svelte-spa-router';
   import { get } from 'svelte/store';
@@ -19,20 +18,11 @@
   let form: HTMLFormElement;
 
   function revalidateForm() {
-    const isVirtualCaretakerValid =
-      !!animal.virtualCaretakerName ||
-      animal.virtualCaretakerType !== VirtualCaretakerType.Znalazl;
-    const imageValid = !!animal.imageData || !!animal.imageName;
     const imagesValid = images.every(
       (image) => !!image.data || !!image.imageName
     );
 
-    setFormValid(
-      form.checkValidity() &&
-        isVirtualCaretakerValid &&
-        !!imageValid &&
-        imagesValid
-    );
+    setFormValid(form.checkValidity() && imagesValid);
   }
 </script>
 

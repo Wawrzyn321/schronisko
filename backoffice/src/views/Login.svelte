@@ -28,7 +28,6 @@
   // function tryGetLogoutReason(queryString: string): NotifyParams | null {
   //   try {
   //     const reasonStr = new URLSearchParams(queryString).get('reason');
-  //     console.log(reasonStr)
   //     return JSON.parse(reasonStr);
   //   } catch (_) {
   //     return null;

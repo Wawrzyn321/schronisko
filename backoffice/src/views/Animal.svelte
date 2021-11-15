@@ -17,6 +17,7 @@
   let animalData: AnimalData;
   let images: AnimalImageParams[];
   let isValid: boolean = true;
+  let isSaving: boolean;
 
   onMount(async () => {
     const id = encodeURIComponent(params.id);
@@ -43,12 +44,15 @@
 
   async function updateAnimal() {
     try {
+      isSaving = true;
       await animalsService.update(animal, images);
       notifySuccess({ message: 'Dane zwierzęcia zostały zapisane.' });
     } catch (e) {
       notifyError({
         message: 'Nie możnac zapisać danych zwierzęcia : ' + e.message,
       });
+    } finally {
+      isSaving = false;
     }
   }
 </script>
@@ -60,6 +64,7 @@
       {updateAnimal}
       {isValid}
       {animal}
+      {isSaving}
       bind:isPublic={animal.isPublic}
     />
     <AnimalForm

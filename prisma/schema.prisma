@@ -93,7 +93,7 @@ model Animal {
   isPublic             Boolean
   images               AnimalImage[]
   addedDate            DateTime             @default(now())
-  imageName            String
+  imageName            String?
   note                 String?
   contactInfo          String
 }

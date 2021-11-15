@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { fetchAnimalImages, IMAGES_URL } from 'api';
+import { ANIMAL_IMAGES_IMAGES_URL, fetchAnimalImages } from 'api';
 import { AnimalImage } from '.prisma/client';
-import styles from './AnimalDetails.module.scss';
+import styles from './AnimalImages.module.scss';
 import { Article } from 'components/Article/Article';
 import { ERROR_ANIMAL_IMAGES } from 'errors';
 
@@ -22,7 +22,7 @@ export function AnimalImages({ id }: { id: string }) {
       <ul className={styles['animal-images']}>
         {images.map((i) => (
           <li key={i.id}>
-            <img src={IMAGES_URL + '/' + i.imageName} />
+            <img src={ANIMAL_IMAGES_IMAGES_URL + '/' + i.imageName} />
           </li>
         ))}
       </ul>

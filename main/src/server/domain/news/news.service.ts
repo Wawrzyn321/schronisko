@@ -96,7 +96,7 @@ export class NewsService {
   async delete(user: LoggedInUser, id: string): Promise<News> {
     const post = await this.prisma.news.findUnique({ where: { id } });
     try {
-      await deleteImage('news/' + post.imageName);
+      await deleteImage('news/', post.imageName);
     } catch (e: unknown) {
       console.warn(e);
     }

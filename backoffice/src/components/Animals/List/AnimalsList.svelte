@@ -7,7 +7,12 @@
   import DateFromTimestamp from '../../shared/DateFromTimestamp.svelte';
   import AnimalsListHeader from './AnimalsListHeader.svelte';
   import Loader from '../../shared/Loader.svelte';
-  import { Animal, AnimalCategory, VirtualCaretakerType } from '.prisma/client';
+  import {
+    Animal,
+    AnimalCategory,
+    AnimalType,
+    VirtualCaretakerType,
+  } from '.prisma/client';
   import {
     animalGendersMap,
     animalLocationsMap,
@@ -51,7 +56,11 @@
             <img
               width={152}
               height={112}
-              src={`${STATIC_URL}/animal/${animal.imageName}`}
+              src={animal.imageName
+                ? `${STATIC_URL}/animals/${animal.imageName}`
+                : `/img/placeholders/${
+                    animal.type === AnimalType.DOG ? 'pies' : 'kot'
+                  }.png`}
               alt={animal.name}
               class:is-grayscale={animal.category ===
                 AnimalCategory.ZaTeczowymMostem}
@@ -101,7 +110,7 @@
       {#if columnParams.showVirtualCaretaker}
         <td>
           {virtualCaretakerTypesMap[animal.virtualCaretakerType]}
-          {#if animal.virtualCaretakerType === VirtualCaretakerType.Znalazl}
+          {#if animal.virtualCaretakerType === VirtualCaretakerType.Znalazl && animal.virtualCaretakerName}
             ({animal.virtualCaretakerName})
           {/if}
         </td>

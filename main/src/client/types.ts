@@ -10,5 +10,3 @@ export const isForAdoption = (a: Animal) =>
     a.category === AnimalCategory.DoAdopcji ||
     a.category === AnimalCategory.PilniePotrzebuja ||
     a.category === AnimalCategory.Weterani;
-
-

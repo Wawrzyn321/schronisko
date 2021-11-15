@@ -4,11 +4,13 @@
   import ImageResizeModal from './ImageResizeModal/ImageResizeModal.svelte';
 
   export let imageData = '';
+  export let imageName: string | null = null;
   export let label: string;
   export let message: string = null;
   export let revalidateForm: () => any = null;
   export let width: number;
   export let height: number;
+  export let required = true;
 
   let file = null;
   let resizeModalVisible = false;
@@ -31,10 +33,21 @@
   }
 </script>
 
-<Field {label} {message} noStar={!label} required>
+<Field {label} {message} noStar={!label} {required}>
   <div style="display: flex">
     <Input type="file" accept="image/png, image/jpeg" on:input={onFileChange} />
     <Button on:click={openResizeModal} disabled={!file}>Przytnij</Button>
+    <Button
+      type="is-danger"
+      on:click={() => {
+        imageData = '';
+        imageName = '';
+        file = null;
+      }}
+      disabled={!(file || imageData || imageName)}
+    >
+      Usuń
+    </Button>
   </div>
 </Field>
 <ImageResizeModal

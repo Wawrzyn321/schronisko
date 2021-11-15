@@ -5,6 +5,8 @@ import { AnimalImageParams } from './animal-images.controller';
 import { v4 as uuid } from 'uuid';
 import { AnimalImage } from '@prisma/client';
 
+const IMAGES_PATH = 'animals/pics/';
+
 export interface UpsertParams extends AnimalImageParams, AnimalImage { }
 
 @Injectable()
@@ -35,7 +37,7 @@ export class AnimalImagesService {
         img.handled = true;
       } else {
         const imageName = `${uuid()}.png`;
-        await saveImage('', imageName, image.data, 'Animal Gallery');
+        await saveImage(IMAGES_PATH, imageName, image.data, 'Animal Gallery');
         const { data, ...imageWithNoData } = image;
 
         await this.prisma.animalImage.create({
@@ -50,7 +52,7 @@ export class AnimalImagesService {
 
     for (const { image, handled } of imagesAlready) {
       if (!handled) {
-        await this.deleteImage(image.id);
+        await this.deleteImage(IMAGES_PATH, image.id);
       }
     }
 
@@ -61,7 +63,7 @@ export class AnimalImagesService {
     const images = await this.get(animalId);
     for (const image of images) {
       try {
-        await deleteImage(image.imageName);
+        await deleteImage(IMAGES_PATH, image.imageName);
       } catch (e: unknown) {
         console.warn(e);
       }
@@ -69,10 +71,10 @@ export class AnimalImagesService {
     await this.prisma.animalImage.deleteMany({ where: { animalId } })
   }
 
-  async deleteImage(id: string): Promise<void> {
+  async deleteImage(subdir: string, id: string): Promise<void> {
     const image = await this.prisma.animalImage.findFirst({ where: { id } })
     try {
-      await deleteImage(image.imageName);
+      await deleteImage(IMAGES_PATH, image.imageName);
     } catch (e: unknown) {
       console.warn(e);
     }

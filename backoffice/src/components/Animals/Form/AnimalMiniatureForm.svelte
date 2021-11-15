@@ -3,11 +3,10 @@
   import ResizableImageInput from '../../shared/ResizableImageInput.svelte';
   import { Tooltip } from 'svelma';
   import type { AnimalData } from '../../../services/AnimalsService';
+  import { AnimalType } from '.prisma/client';
 
   export let animal: AnimalData;
   export let revalidateForm: () => any;
-
-  let showOverlay = false;
 
   function revertImage() {
     animal.imageData = null;
@@ -19,21 +18,18 @@
     <ResizableImageInput
       label="Miniaturka"
       bind:imageData={animal.imageData}
+      bind:imageName={animal.imageName}
       {revalidateForm}
       width={152}
       height={112}
+      required={false}
     />
   </Tooltip>
-  <!-- <label style="margin-top: 10px">
-      <input
-        checked={showOverlay}
-        type="checkbox"
-        on:change={() => (showOverlay = !showOverlay)}
-      />
-      Podgląd nakładki
-    </label>
-  </div> -->
-  <AnimalImagePreview {animal} {revertImage} {showOverlay} />
+  <AnimalImagePreview
+    {animal}
+    {revertImage}
+    animalType={animal.type}
+  />
 </div>
 
 <style lang="scss">

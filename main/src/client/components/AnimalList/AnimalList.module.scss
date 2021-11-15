@@ -1,13 +1,7 @@
 .animals-list {
   display: flex;
   flex-wrap: wrap;
-
   padding-left: 0;
-
-  &.bw img {
-    filter: grayscale(1);
-    cursor: unset !important;
-  }
 }
 
 .not-found-message {

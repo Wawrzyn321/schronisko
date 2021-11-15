@@ -1,6 +1,20 @@
+import React from 'react';
 import Image from 'next/image';
 import styles from './Pagination.module.scss';
 import arrow from 'public/site/green arrow.svg';
+
+const makePartitions = (currentPage: number, pagesCount: number) => {
+  const radius = 3;
+  return new Array(pagesCount)
+    .fill(0)
+    .map((_, i) => i)
+    .filter(
+      (i) =>
+        i < radius ||
+        i > pagesCount - radius - 1 ||
+        Math.abs(i - currentPage) <= radius / 2,
+    );
+};
 
 export function paginate<T>(
   items: T[],
@@ -34,6 +48,8 @@ export function Pagination({
   pagesCount: number;
   setCurrentPage: (page: number) => any;
 }) {
+  const partitions = makePartitions(currentPage, pagesCount);
+
   return (
     <ul className={styles['pagination']}>
       <button
@@ -43,17 +59,20 @@ export function Pagination({
       >
         <Arrow />
       </button>
-      {new Array(pagesCount).fill(null).map((_: null, i) => (
-        <li key={i}>
-          <button
-            className={
-              i === currentPage ? styles['pagination-current-item'] : ''
-            }
-            onClick={() => setCurrentPage(i)}
-          >
-            {i + 1}
-          </button>
-        </li>
+      {partitions.map((current, index) => (
+        <React.Fragment key={index}>
+          {index > 0 && current - partitions[index - 1] > 1 && '...'}
+          <li>
+            <button
+              className={
+                current === currentPage ? styles['pagination-current-item'] : ''
+              }
+              onClick={() => setCurrentPage(current)}
+            >
+              {current + 1}
+            </button>
+          </li>
+        </React.Fragment>
       ))}
       <button
         disabled={currentPage === pagesCount - 1}

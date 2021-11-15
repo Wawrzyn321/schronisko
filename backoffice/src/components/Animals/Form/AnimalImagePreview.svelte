@@ -1,29 +1,26 @@
 <script lang="ts">
+  import { AnimalType } from '@prisma/client';
+
   import type { AnimalData } from '../../../services/AnimalsService';
   import ImagePreview from '../../News/ImagePreview.svelte';
 
   export let animal: AnimalData;
   export let revertImage: () => any;
-  export let showOverlay: boolean = false;
+  export let animalType: AnimalType;
 </script>
 
 <div class="preview-wrapper">
   <ImagePreview
-    subdir="/animal/"
+    subdir="/animals/"
     imageData={animal.imageData}
     {revertImage}
     imageName={animal.imageName}
     width={576}
     height={432}
+    placeholderPic={`/img/placeholders/${
+      animalType === AnimalType.DOG ? 'pies' : 'kot'
+    }.png`}
   />
-  {#if showOverlay}
-    <img
-      class="overlay"
-      src="img/overlay.svg"
-      style="height: 112px"
-      alt="nakładka"
-    />
-  {/if}
 </div>
 
 <style lang="scss">

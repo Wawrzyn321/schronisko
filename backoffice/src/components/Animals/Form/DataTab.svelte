@@ -1,6 +1,6 @@
 <script lang="ts">
   import Field from '../../shared/Field.svelte';
-  import { Input, Tab, Tooltip } from 'svelma';
+  import { Input, Tab } from 'svelma';
   import AnimalTypeSelect from './AnimalTypeSelect.svelte';
   import AnimalGenderSelect from './AnimalGenderSelect.svelte';
   import AnimalCategorySelect from './AnimalCategorySelect.svelte';
@@ -44,6 +44,7 @@
     <AnimalLocationSelect bind:location={animal.location} type={animal.type} />
     <Field required label="Dane kontaktowe" style="grid-area: contact">
       <Input
+        required
         bind:value={animal.contactInfo}
         placeholder="Np. osoba, numer telefonu, e-mail"
       />
@@ -64,12 +65,8 @@
       />
     </Field>
     {#if animal.virtualCaretakerType === VirtualCaretakerType.Znalazl}
-      <Field
-        required
-        label="Moim wirtualnym opiekunem jest"
-        style="grid-area: v-c-name"
-      >
-        <Input required bind:value={animal.virtualCaretakerName} />
+      <Field label="Moim wirtualnym opiekunem jest" style="grid-area: v-c-name">
+        <Input bind:value={animal.virtualCaretakerName} />
       </Field>
     {/if}
   </div>

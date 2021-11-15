@@ -40,8 +40,8 @@ export async function saveImage(subdir: string, name: string, base64Data: string
     }
 }
 
-export async function deleteImage(name: string) {
-    return await fsp.unlink(createPath(name));
+export async function deleteImage(subdir: string, name: string) {
+    return await fsp.unlink(createPath(subdir + name));
 }
 
 function getLocalPath(name: string) {
@@ -59,7 +59,7 @@ export async function deleteImagesInContent(prevContent: string, newContent: str
         const newFileNames = [...newContent.matchAll(/<img src="(.*?)">/g)].map((t) => t[1]).filter(name => name.startsWith(WEB_STATIC_FILES_PATH));
         for (const fileName of prevFileNames) {
             if (!newFileNames.includes(fileName)) {
-                await deleteImage(getLocalPath(fileName));
+                await deleteImage('', getLocalPath(fileName));
             }
         }
     } catch (e) {

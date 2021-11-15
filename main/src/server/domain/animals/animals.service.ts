@@ -9,6 +9,9 @@ import { LogsService } from './../logs/logs.service';
 import { LoggedInUser } from '../auth/types';
 import { formattedDiff } from '../logs/diff';
 import * as gen from 'random-seed';
+import { AnimalImagesService } from '../animal-images/animal-images.service';
+
+const IMAGES_PATH = 'animals/';
 
 export interface AnimalData {
   id: string
@@ -29,7 +32,7 @@ export interface AnimalData {
 }
 
 function validateAnimalCreate(animal: AnimalData): boolean {
-  return validateAnimalUpdate(animal) && !!animal.imageData;
+  return validateAnimalUpdate(animal);
 }
 
 function validateAnimalUpdate(animal: AnimalData): boolean {
@@ -64,7 +67,7 @@ function getDailyRandom<T>(items: T[], count: number): T[] {
 
 @Injectable()
 export class AnimalsService {
-  constructor(private prisma: PrismaService, private logsService: LogsService) { }
+  constructor(private prisma: PrismaService, private logsService: LogsService, private animalImagesService: AnimalImagesService) { }
 
   async getAll(take?: number, skip?: number, category?: AnimalCategory, type?: AnimalType, filterPublic?: boolean): Promise<AnimalListElement[]> {
     const animals = await this.prisma.animal.findMany({ take, skip, where: { category, type, isPublic: filterPublic ? true : undefined } });
@@ -105,8 +108,11 @@ export class AnimalsService {
 
     const id = uuid();
 
-    const imageName = `${id}.png`;
-    await saveImage('', imageName, animal.imageData, 'Animal Miniature');
+    let imageName = null
+    if (animal.imageData) {
+      imageName = `${id}.png`;
+      await saveImage(IMAGES_PATH, imageName, animal.imageData, 'Animal Miniature');
+    }
 
     const { imageData, ...animalData } = animal;
     const createdAnimal = await this.prisma.animal.create({
@@ -125,9 +131,6 @@ export class AnimalsService {
     if (!validateAnimalUpdate(animal)) {
       throw new BadRequestException(id, "Brak nazwy lub id.");
     }
-    if (!animal.virtualCaretakerName && animal.virtualCaretakerType === VirtualCaretakerType.Znalazl) {
-      throw new BadRequestException(id, "Brak nazwy wirtualnego opiekuna.");
-    }
     const prevAnimal = await this.prisma.animal.findUnique({ where: { id } });
     if (!prevAnimal) {
       throw new NotFoundException();
@@ -138,10 +141,22 @@ export class AnimalsService {
     }
 
     if (animal.imageData) {
-      await saveImage('', animal.imageName, animal.imageData, 'Animal Miniature');
+      if (!animal.imageName) {
+        animal.imageName = `${uuid()}.png`;
+      }
+      await saveImage(IMAGES_PATH, animal.imageName, animal.imageData, 'Animal Miniature');
+    } else {
+      if (prevAnimal.imageName !== null && !animal.imageData) {
+        try {
+          await deleteImage(IMAGES_PATH, prevAnimal.imageName);
+        } catch (e) {
+          console.warn(e);
+        }
+      }
     }
 
     const { imageData, ...animalData } = animal;
+    
     const updatedAnimal = await this.prisma.animal.update({
       where: { id }, data: animalData
     });
@@ -181,16 +196,18 @@ export class AnimalsService {
     if (!animal) {
       throw new NotFoundException();
     }
-    await this.prisma.animalImage.deleteMany({ where: { animalId: id } });
-    try {
-      await deleteImage(animal.imageName);
-    } catch (e: unknown) {
-      console.warn(e);
-      await this.logsService.log({
-        message: `usunał zwierzę ${animal.name}, ale nie udało się usunąć jego zdjęcia.`,
-        permission: Permission.ANIMAL,
-        user,
-      })
+    await this.animalImagesService.deleteByAnimal(id);
+    if (animal.imageName) {
+      try {
+        await deleteImage(IMAGES_PATH, animal.imageName);
+      } catch (e: unknown) {
+        console.warn(e);
+        await this.logsService.log({
+          message: `usunał zwierzę ${animal.name}, ale nie udało się usunąć jego zdjęcia.`,
+          permission: Permission.ANIMAL,
+          user,
+        })
+      }
     }
 
     const deletedAnimal = await this.prisma.animal.delete({

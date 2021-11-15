@@ -7,7 +7,7 @@ import { paginate, Pagination } from './Pagination/Pagination';
 import { fetchAnimals, FetchError } from 'api';
 import { Article } from 'components/Article/Article';
 import { ERROR_ANIMAL_LIST } from 'errors';
-import { AnimalModal } from './AnimalModal/AnimalModal';
+import { AnimalModal, AnimalModalData } from './AnimalModal/AnimalModal';
 
 function NotFoundMessage() {
   return (
@@ -17,32 +17,34 @@ function NotFoundMessage() {
   );
 }
 
+interface AnimalListProps {
+  category?: AnimalCategory;
+  type?: AnimalType;
+  filter?: (animal: Animal) => boolean;
+  withCategoryOverlay?: boolean;
+}
+
 export function AnimalList({
-  bwMode = false,
   category = null,
   type = null,
   filter = () => true,
   withCategoryOverlay = false,
-}: {
-  category?: AnimalCategory;
-  type?: AnimalType;
-  bwMode?: boolean;
-  filter?: (animal: Animal) => boolean;
-  withCategoryOverlay?: boolean;
-}) {
+}: AnimalListProps) {
   const pageSize = 27;
   const [animals, setAnimals] = useState<Animal[]>([]);
   const [error, setError] = useState<FetchError>(null);
   const [currentPage, setCurrentPage] = useState(0);
   const [filterCategory, setFilterCategory] = useState<AnimalCategory>();
-  const [isModalOpen, setModalOpen] = useState(false);
-  const [modalBWMode, setModalBWMode] = useState(false);
-  const [modalImgSrc, setModalImgSrc] = useState('');
+  const [modalData, setModalData] = useState<AnimalModalData>({
+    isOpen: false,
+    animal: null,
+  });
 
   const filterWithCategory = (animal: Animal) => {
     if (!filterCategory) return true;
     return animal.category === filterCategory;
   };
+
   const filteredAnimals = animals.filter(
     (a) => filter(a) && filterWithCategory(a),
   );
@@ -57,15 +59,18 @@ export function AnimalList({
 
   useEffect(() => {
     const loadAnimals = async () => {
-      const { data, error } = await fetchAnimals(category, type);
+      const { data, error } = await fetchAnimals(
+        category,
+        type,
+        currentPage * pageSize,
+        pageSize,
+      );
       setAnimals(data);
       setError(error);
     };
 
     loadAnimals();
   }, []);
-
-  const className = `${styles['animals-list']} ${bwMode ? styles['bw'] : ''}`;
 
   if (animals) {
     return (
@@ -78,18 +83,18 @@ export function AnimalList({
         )}
         {filteredAnimals.length ? (
           <>
-            <ul className={className}>
+            <ul className={styles['animals-list']}>
               {paginate(filteredAnimals, pageSize, currentPage).map(
                 (animal: Animal) => (
                   <AnimalCard
                     animal={animal}
                     key={animal.id}
                     showOverlay={withCategoryOverlay}
-                    bwMode={bwMode}
-                    openModal={(src: string, bwMode: boolean) => {
-                      setModalOpen(true);
-                      setModalImgSrc(src);
-                      setModalBWMode(bwMode);
+                    openModal={(animal: Animal) => {
+                      setModalData({
+                        isOpen: true,
+                        animal,
+                      });
                     }}
                   />
                 ),
@@ -101,10 +106,9 @@ export function AnimalList({
               setCurrentPage={setCurrentPage}
             />
             <AnimalModal
-              isOpen={isModalOpen}
-              src={modalImgSrc}
-              close={() => setModalOpen(false)}
-              bwMode={modalBWMode}
+              isOpen={modalData.isOpen}
+              animal={modalData.animal}
+              close={() => setModalData({ animal: null, isOpen: false })}
             />
           </>
         ) : (

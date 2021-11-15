@@ -1,57 +1,15 @@
+usunięcie zdjęć przy przenoszeniu - powiedz że nie warto, bo dobry VPS ma 80 GB a myśmy zajęli 15GB
+lupka przy miniaturce - słaby interes, bo nie wiemy które to zdjęcie
 darowizny -
 formularze
 - wolontariat (psi/koci) (strona główna) (psi okresowo) -
 - wirtualne adopcje (najpierw ankieta (na mail adopcje.wirtualne@nadziejanadom.org) (imię, id zwierzęcia, imię + nazwisko adoptującego, "moim wirtualnym opiekunem jest", mail), potem płatność - pokazujemy nr konta i tyle) (strona główna)
 https://mail.google.com/mail/u/0/#search/Zobaczy%C5%82am+w+innej+organizacji+co%C5%9B+takiego+(screen).+My%C5%9Blisz%2C+%C5%BCe+jest+wg+jaka%C5%9B+mo%C5%BCliwo%C5%9B%C4%87%2C+%C5%BCeby+pojawi%C5%82o+si%C4%99+taki+formularza+na+naszej+www+po%C5%82%C4%85czony+z+mailem%3F/FMfcgzGkZZrjSZkkBWqMtJfLmpNwNGrL -
 
-adminGallery + requests     jezu 9k rekordów -> Animals 3
-paginacja na liście zwierząt - jest ok, ale może '...' dodać? 1
+paginacja zwieerzat na mainie
 
 ssr po localhoście a nie jakiś bullshit
 
-po deployu zmień link na backoffice z https://www.schronisko.sosnowiec.pl/ na ten nowy
-
 zmiana rozmiaru obrazków full rozmiar itd - zmiana presetów
 
-
-adminCategoryMenu           X
-adminGalleryHeader          X
-adminUsers                  DONE
-leftmenu                    X
-messages                    X
-sizes                       X
-species                     X
-userRights                  X
-sites                       DONE przejrzyj -> Pages
-news                        DONE trza eksportować
-pictures                    DONE przejrzyj pliki po nazwach - to chyba zdjęcia z galerii
-
-
-est] 92260   - 28/10/2021, 20:04:34   [ExceptionsHandler] Cannot read property 'create' of undefined +129ms
-TypeError: Cannot read property 'create' of undefined
-    at getDailyRandom (/Users/i515358/Nauka/schronisko/main/dist/domain/animals/animals.service.js:44:40)
-    at AnimalsService.getAfterAdoption (/Users/i515358/Nauka/schronisko/main/dist/domain/animals/animals.service.js:70:16)
-    at processTicksAndRejections (internal/process/task_queues.js:95:5)
-    at async /Users/i515358/Nauka/schronisko/main/node_modules/@nestjs/core/router/router-execution-context.js:46:28
-    at async /Users/i515358/Nauka/schronisko/main/node_modules/@nestjs/core/router/router-proxy.js:9:17
-FetchError: Internal server error
-    at throwingFetch (webpack-internal:///./api.ts:54:9)
-    at processTicksAndRejections (internal/process/task_queues.js:95:5)
-    at async genericFetch (webpack-internal:///./api.ts:60:13)
-    at async getServerSideProps (webpack-internal:///./pages/index.tsx:51:33)
-    at async Object.renderToHTML (/Users/i515358/Nauka/schronisko/main/node_modules/next/dist/server/render.js:458:20)
-    at async doRender (/Users/i515358/Nauka/schronisko/main/node_modules/next/dist/server/next-server.js:1146:38)
-    at async /Users/i515358/Nauka/schronisko/main/node_modules/next/dist/server/next-server.js:1241:28
-    at async /Users/i515358/Nauka/schronisko/main/node_modules/next/dist/server/response-cache.js:63:36 {
-  statusCode: 500
-}
-
-dla znalazły dom nieklikalne, tak samo jak 
-
-usunięcie zdjęć przy przenoszeniu
-
-zdjęcie niewymagane
-
-więcej ux - uzupełnij to i to tam gdzie są taby
-
-w-opiekun opcjonalnie
+po deployu zmień link na backoffice z https://www.schronisko.sosnowiec.pl/ na ten nowy
