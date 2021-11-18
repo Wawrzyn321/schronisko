@@ -6,14 +6,14 @@ import Logs from '../views/Logs.svelte';
 import Profile from '../views/Profile.svelte';
 
 import Pages from '../views/Pages.svelte';
-import Page from '../views/Page.svelte';
+import PageDetails from '../views/PageDetails.svelte';
 
 import News from '../views/News.svelte';
-import SingleNews from '../views/SingleNews.svelte';
+import NewsDetails from '../views/NewsDetails.svelte';
 import CreateNews from '../views/CreateNews.svelte';
 
 import Animals from '../views/Animals.svelte';
-import Animal from '../views/Animal.svelte';
+import AnimalDetails from '../views/AnimalDetails.svelte';
 import CreateAnimal from '../views/CreateAnimal.svelte';
 
 import Settings from '../views/Settings.svelte';
@@ -26,12 +26,12 @@ export const routes = {
     '/users': unauthorizedWrapper(Users),
     '/logs': unauthorizedWrapper(Logs),
     '/pages': unauthorizedWrapper(Pages),
-    '/pages/:id': unauthorizedWrapper(Page),
+    '/pages/:id': unauthorizedWrapper(PageDetails),
     '/news': unauthorizedWrapper(News),
-    '/news/:id': unauthorizedWrapper(SingleNews),
+    '/news/:id': unauthorizedWrapper(NewsDetails),
     '/news-add': unauthorizedWrapper(CreateNews),
     '/animals': unauthorizedWrapper(Animals),
-    '/animals/:id': unauthorizedWrapper(Animal),
+    '/animals/:id': unauthorizedWrapper(AnimalDetails),
     '/animals-add': unauthorizedWrapper(CreateAnimal),
     '/profile': unauthorizedWrapper(Profile),
     '/settings': unauthorizedWrapper(Settings),
