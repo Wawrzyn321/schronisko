@@ -8,19 +8,19 @@ import { v4 as uuid } from 'uuid';
 const baseUrl = `${API_URL}/api/animals`
 
 export interface AnimalData {
-    name: string
-    id: string
-    type: AnimalType
-    gender: AnimalGender
-    description: string
-    category: AnimalCategory
-    location: AnimalLocation | null
-    locationDescription: string | null
-    virtualCaretakerName: string | null
-    virtualCaretakerType: VirtualCaretakerType
-    isPublic: boolean
-    imageData?: string
-    imageName?: string
+    name: string;
+    id: string;
+    type: AnimalType;
+    gender: AnimalGender;
+    description: string;
+    category: AnimalCategory;
+    location: AnimalLocation | null;
+    locationDescription: string | null;
+    virtualCaretakerName: string | null;
+    virtualCaretakerType: VirtualCaretakerType;
+    isPublic: boolean;
+    imageData?: string;
+    imageName?: string;
     note?: string;
     contactInfo: string;
     refNo: string;

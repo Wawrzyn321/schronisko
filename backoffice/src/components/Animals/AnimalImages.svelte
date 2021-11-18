@@ -77,8 +77,8 @@
           bind:imageData={image.data}
           {revalidateForm}
           label=""
-          width={708}
-          height={533}
+          width={1416}
+          height={1066}
         />
         <div>
           <div class="eye-tooltip">

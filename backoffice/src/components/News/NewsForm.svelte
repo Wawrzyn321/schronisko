@@ -38,8 +38,8 @@
         label="Tło"
         message="Widoczne na sliderze."
         bind:imageData
-        width={515}
-        height={345}
+        width={1030}
+        height={690}
       />
     </div>
     <ImagePreview
@@ -49,6 +49,7 @@
       width={515}
       height={345}
       subdir="news/"
+      placeholderPic=""
     />
   </div>
 </form>

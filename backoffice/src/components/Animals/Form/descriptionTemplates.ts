@@ -19,10 +19,10 @@ Obowiązuje wizyta przed i poadopcyjna, spacer zapoznawczy, uiszczenie opłaty s
         [AnimalGender.MALE]: `() został odrobaczony, odpchlony, zaszczepiony, zachipowany i wykastrowany.
 
 Obowiązuje wizyta przed i poadopcyjna, spacer zapoznawczy, uiszczenie opłaty schroniskowej i podpisanie umowy adopcyjnej.
-`
-    },
-    [AnimalGender.NOT_SET]: `() został odrobaczony, odpchlony, zaszczepiony, zachipowany i wykastrowany.
+`,
+        [AnimalGender.NOT_SET]: `() został odrobaczony, odpchlony, zaszczepiony, zachipowany i wykastrowany.
 
 Obowiązuje wizyta przed i poadopcyjna, spacer zapoznawczy, uiszczenie opłaty schroniskowej i podpisanie umowy adopcyjnej.
 `
+    },
 };

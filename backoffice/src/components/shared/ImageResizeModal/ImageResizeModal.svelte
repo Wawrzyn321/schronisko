@@ -25,6 +25,9 @@
   let y = 0;
   let isMouseDown = false;
 
+// problem jest taki że obraz jest brany taki jaki jest, więc trzeba brać proporcje zamiast pikseli
+
+
   $: {
     if (file && imageCanvas && frameCanvas && forceRefresh) {
       forceRefresh = false;

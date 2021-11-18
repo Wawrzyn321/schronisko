@@ -6,18 +6,20 @@ export type ImageData = { name: string, base64: string };
 
 type ResizingPresets = 'News' | 'Animal Gallery' | 'Animal Miniature';
 
-const presetsMap: { [gender in ResizingPresets]: { width: number, height: number } } = {
+type Size = { width: number, height: number };
+
+const presetsMap: { [gender in ResizingPresets]: Size } = {
     'News': {
-        width: 515,
-        height: 345,
+        width: 1030,
+        height: 690,
     },
     "Animal Gallery": {
-        width: 708,
-        height: 533,
+        width: 1416,
+        height: 1066,
     },
     "Animal Miniature": {
-        width: 576,
-        height: 432,
+        width: 1296,
+        height: 972,
     }
 }
 
@@ -30,14 +32,10 @@ export async function saveImage(subdir: string, name: string, base64Data: string
     base64Data = base64Data.replace(/^data:image\/jpeg;base64,/, "");
     base64Data = base64Data.replace(/^data:image\/gif;base64,/, "");
     const buf = Buffer.from(base64Data, 'base64');
-    const preset = presetsMap[resizingPreset];
-    if (preset) {
-        const resized = await sharp(buf).resize(preset.width, preset.height).toBuffer();
-        return await fsp.writeFile(createPath(subdir + name), resized);
-    } else {
-        const resized = await sharp(buf).toBuffer();
-        return await fsp.writeFile(createPath(subdir + name), resized);
-    }
+    const preset: Size = presetsMap[resizingPreset] || { width: 1920, height: 1080 };
+    const resizeOptions = { ...preset, fit: 'cover', withoutEnlargement: true };
+    const resized = await (sharp(buf).resize(resizeOptions).toBuffer());
+    return await fsp.writeFile(createPath(subdir + name), resized);
 }
 
 export async function deleteImage(subdir: string, name: string) {

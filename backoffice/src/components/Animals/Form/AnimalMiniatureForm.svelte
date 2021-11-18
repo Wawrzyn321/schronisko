@@ -3,7 +3,6 @@
   import ResizableImageInput from '../../shared/ResizableImageInput.svelte';
   import { Tooltip } from 'svelma';
   import type { AnimalData } from '../../../services/AnimalsService';
-  import { AnimalType } from '.prisma/client';
 
   export let animal: AnimalData;
   export let revalidateForm: () => any;
@@ -20,8 +19,8 @@
       bind:imageData={animal.imageData}
       bind:imageName={animal.imageName}
       {revalidateForm}
-      width={152}
-      height={112}
+      width={1296}
+      height={972}
       required={false}
     />
   </Tooltip>
