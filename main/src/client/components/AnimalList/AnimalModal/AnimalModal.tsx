@@ -26,7 +26,7 @@ export function AnimalModal({
 }: {
   isOpen: boolean;
   animal: Animal;
-  close: Function;
+  close: () => any;
 }) {
   if (!animal) return null;
 

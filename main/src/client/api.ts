@@ -32,7 +32,6 @@ async function throwingFetch(input: string, init: RequestInit = null, isSSR = fa
             return null;
         }
         const isNode = typeof window === 'undefined';
-        console.log('isNode', isNode);
         if (isNode) {
             var Agent = (require('https') as any).Agent;
             return {
@@ -57,6 +56,11 @@ async function throwingFetch(input: string, init: RequestInit = null, isSSR = fa
 interface FetchResult<T> {
     data?: T;
     error?: FetchError;
+}
+
+export interface AnimalListResult {
+    animals: Animal[];
+    totalCount: number;
 }
 
 async function genericFetchGet<T>(url: string, isSSR: boolean = false): Promise<FetchResult<T>> {
@@ -92,8 +96,10 @@ export async function fetchPage(id: string, isSSR = true): Promise<FetchResult<P
     return genericFetchGet(url, isSSR)
 }
 
-export async function fetchAnimals(category: AnimalCategory, type: AnimalType, start: number, take: number): Promise<FetchResult<Animal[]>> {
-    const url = `${BACKEND_URL}/api/c/animals?category=${category}&type=${type}&start=${start}&take=${take}`;
+export async function fetchAnimals({
+    category, type, skip, take
+}: { category: AnimalCategory, type: AnimalType, skip: number, take: number }): Promise<FetchResult<AnimalListResult>> {
+    const url = `${BACKEND_URL}/api/c/animals?category=${category}&type=${type}&skip=${skip}&take=${take}`;
     return genericFetchGet(url);
 }
 

@@ -5,7 +5,7 @@ export const buildAnimalUrl = (animal: { type: string, id: string }) => {
     return `/animals/${animal.type.toLocaleLowerCase()}/${animal.id}`;
 };
 
-export const buildAnimalImageUrl = (animal: Animal) => {
+export const buildAnimalImageUrl = (animal: { type: AnimalType, imageName: string }) => {
     if (animal.imageName) {
         return ANIMAL_IMAGES_URL + '/' + animal.imageName;
     } else {

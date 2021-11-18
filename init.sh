@@ -10,6 +10,8 @@ npm run push --prefix=prisma
 npm run seed --prefix=prisma
 echo 'npm i main'
 npm i --prefix=main
+echo 'npm i client'
+npm i --prefix=main/src/client
 echo 'replacing "DEV = 1" with "DEV = 0" in main/src/server/app.module.ts'
 sed -i "s/DEV = 1/DEV = 0/" main/src/server/app.module.ts
 echo 'replacing "DEV = 1" with "DEV = 0" in main/src/client/api.ts'

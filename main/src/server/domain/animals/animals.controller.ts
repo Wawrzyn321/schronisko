@@ -19,15 +19,16 @@ export class AnimalsPublicController {
     }
 
     @Get()
-    getAnimalsPublic(@Query('count') takeTopStr: string, @Query('category') possibleCategory: string, @Query('type') possibleType: string) {
-        const takeTop = parseInt(takeTopStr) || undefined;
+    getAnimalsPublic(@Query('category') possibleCategory: string, @Query('type') possibleType: string, @Query('skip') possiblySkip, @Query('take') possiblyTake: string) {
+        const skip = parseInt(possiblySkip) || 0;
+        const take = parseInt(possiblyTake) || 27;
+
         const category: AnimalCategory | undefined =
             Object.keys(AnimalCategory).includes(possibleCategory) ? possibleCategory as AnimalCategory : undefined;
         const type: AnimalType | undefined =
             Object.keys(AnimalType).includes(possibleType) ? possibleType as AnimalType : undefined;
 
-            //todo
-        return this.animalsService.getAll(takeTop, 0, category, type, true);
+        return this.animalsService.getAllPublic(take, skip, category, type);
     }
 
     @Get(':id')

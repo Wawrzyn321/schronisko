@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import styles from './AfterAdoptionAnimals.module.scss';
 import { AfterAdoptionAnimal } from 'types';
-import { ANIMAL_IMAGES_URL, MAIN_PAGE_IMAGES_URL } from 'api';
-import { buildAnimalUrl } from '_util';
+import { MAIN_PAGE_IMAGES_URL } from 'api';
+import { buildAnimalImageUrl, buildAnimalUrl } from '_util';
 import { Animal } from '.prisma/client';
 
 function AnimalImage({ animal }: { animal: AfterAdoptionAnimal }) {
@@ -10,7 +10,7 @@ function AnimalImage({ animal }: { animal: AfterAdoptionAnimal }) {
     <div>
       <div className={styles['animal-image']}>
         <img
-          src={ANIMAL_IMAGES_URL + '/' + animal.imageName}
+          src={buildAnimalImageUrl(animal)}
           alt={animal.imageName}
         />
         <div className={styles['animal-image__link']}>

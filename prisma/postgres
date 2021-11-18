@@ -1,5 +1,4 @@
 pg_ctl -D '/Users/i515358/Library/Application Support/Postgres/var-13' restart
-#psql schronisko
 
 .env
 DATABASE_URL="postgres://{USER}:{PASSWORD}@localhost:5432/schronisko"

@@ -1,9 +1,4 @@
-import {
-  Animal,
-  AnimalCategory,
-  AnimalType,
-  Page as PageModel,
-} from '.prisma/client';
+import { AnimalType, Page as PageModel } from '.prisma/client';
 import { fetchPage } from 'api';
 import { AnimalList } from 'components/AnimalList/AnimalList';
 import { Breadcrumbs } from 'components/Breadcrumbs/Breadcrumbs';

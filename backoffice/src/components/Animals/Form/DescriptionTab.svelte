@@ -4,7 +4,7 @@
   import Field from '../../shared/Field.svelte';
   import { descriptionTemplates } from './descriptionTemplates';
 
-  export let revalidateForm: Function;
+  export let revalidateForm: () => any;
   export let animal: AnimalData;
 
   const descriptionTemplate =
