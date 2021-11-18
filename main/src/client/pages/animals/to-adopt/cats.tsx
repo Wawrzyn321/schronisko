@@ -1,11 +1,9 @@
-import { AnimalType, Page as PageModel } from '.prisma/client';
+import { AnimalCategory, AnimalType, Page as PageModel } from '.prisma/client';
 import { fetchPage } from 'api';
 import { AnimalList } from 'components/AnimalList/AnimalList';
 import { Breadcrumbs } from 'components/Breadcrumbs/Breadcrumbs';
 import { LayoutWrapper } from 'components/LayoutWrapper';
 import { Page } from 'components/Page';
-import React from 'react';
-import { isForAdoption } from 'types';
 
 const ID = 'koty-do-adopcji';
 
@@ -17,7 +15,11 @@ export default function CatsToAdopt({ ssrPage }: { ssrPage: PageModel }) {
         <Page id={ID} ssrPage={ssrPage} />
       </LayoutWrapper>
       <AnimalList
-        filter={isForAdoption}
+        categories={[
+          AnimalCategory.DoAdopcji,
+          AnimalCategory.PilniePotrzebuja,
+          AnimalCategory.Weterani,
+        ]}
         type={AnimalType.CAT}
         withCategoryOverlay
       />

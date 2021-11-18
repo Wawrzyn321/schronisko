@@ -15,7 +15,7 @@ export default function Adopted({ ssrPage }: { ssrPage: PageModel }) {
         <Breadcrumbs items={['Zwierzęta', 'Znalazły dom']} />
         <Page id={ID} ssrPage={ssrPage} />
       </LayoutWrapper>
-      <AnimalList category={AnimalCategory.ZnalazlyDom} />
+      <AnimalList categories={[AnimalCategory.ZnalazlyDom]} />
     </>
   );
 }

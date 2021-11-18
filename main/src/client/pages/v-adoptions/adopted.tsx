@@ -1,8 +1,4 @@
-import {
-  Animal,
-  Page as PageModel,
-  VirtualCaretakerType,
-} from '.prisma/client';
+import { Page as PageModel, VirtualCaretakerType } from '.prisma/client';
 import { fetchPage } from 'api';
 import { AnimalList } from 'components/AnimalList/AnimalList';
 import { Breadcrumbs } from 'components/Breadcrumbs/Breadcrumbs';
@@ -19,11 +15,7 @@ export default function VirtualAdopted({ ssrPage }: { ssrPage: PageModel }) {
         <Breadcrumbs items={['Adopcje wirtualne', 'Znalazły opiekunów']} />
         <Page id={ID} ssrPage={ssrPage} />
       </LayoutWrapper>
-      <AnimalList
-        filter={(a: Animal) =>
-          a.virtualCaretakerType === VirtualCaretakerType.Znalazl
-        }
-      />
+      <AnimalList vCaretakerType={VirtualCaretakerType.Znalazl} />
     </>
   );
 }

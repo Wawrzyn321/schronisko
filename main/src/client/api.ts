@@ -1,6 +1,6 @@
 import { NewsListElement } from 'types';
 import { AnimalCategory, AnimalType, News } from '.prisma/client';
-import { AnimalImage, Page as PageModel, Animal } from '@prisma/client';
+import { AnimalImage, Page as PageModel, Animal, VirtualCaretakerType } from '@prisma/client';
 
 const DEV = 1;
 
@@ -97,9 +97,9 @@ export async function fetchPage(id: string, isSSR = true): Promise<FetchResult<P
 }
 
 export async function fetchAnimals({
-    category, type, skip, take
-}: { category: AnimalCategory, type: AnimalType, skip: number, take: number }): Promise<FetchResult<AnimalListResult>> {
-    const url = `${BACKEND_URL}/api/c/animals?category=${category}&type=${type}&skip=${skip}&take=${take}`;
+    categories = [], type, vCaretakerType, skip, take
+}: { categories: AnimalCategory[], vCaretakerType: VirtualCaretakerType, type: AnimalType, skip: number, take: number }): Promise<FetchResult<AnimalListResult>> {
+    const url = `${BACKEND_URL}/api/c/animals?categories=${categories.join(',')}&vCaretakerType=${vCaretakerType}&type=${type}&skip=${skip}&take=${take}`;
     return genericFetchGet(url);
 }
 

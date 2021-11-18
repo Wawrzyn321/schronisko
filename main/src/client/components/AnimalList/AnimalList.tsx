@@ -1,5 +1,10 @@
 import styles from './AnimalList.module.scss';
-import { Animal, AnimalCategory, AnimalType } from '.prisma/client';
+import {
+  Animal,
+  AnimalCategory,
+  AnimalType,
+  VirtualCaretakerType,
+} from '.prisma/client';
 import { useEffect, useState } from 'react';
 import { AnimalCategoryLegend } from './AnimalCategoryLegend/AnimalCategoryLegend';
 import { AnimalCard } from './AnimalCard/AnimalCard';
@@ -18,16 +23,16 @@ function NotFoundMessage() {
 }
 
 interface AnimalListProps {
-  category?: AnimalCategory;
+  categories?: AnimalCategory[];
+  vCaretakerType?: VirtualCaretakerType;
   type?: AnimalType;
-  filter?: (animal: Animal) => boolean;
   withCategoryOverlay?: boolean;
 }
 
 export function AnimalList({
-  category = null,
+  categories = [],
+  vCaretakerType = null,
   type = null,
-  filter = () => true,
   withCategoryOverlay = false,
 }: AnimalListProps) {
   const pageSize = 27;
@@ -37,20 +42,10 @@ export function AnimalList({
   const [currentPage, setCurrentPage] = useState(
     getPageFromQueryString(Number.MAX_VALUE),
   );
-  const [filterCategory, setFilterCategory] = useState<AnimalCategory>();
   const [modalData, setModalData] = useState<AnimalModalData>({
     isOpen: false,
     animal: null,
   });
-
-  const filterWithCategory = (animal: Animal) => {
-    if (!filterCategory) return true;
-    return animal.category === filterCategory;
-  };
-
-  const filteredAnimals = animals.filter(
-    (a) => filter(a) && filterWithCategory(a),
-  );
 
   const pagesCount = Math.ceil(totalCount / pageSize);
 
@@ -59,12 +54,13 @@ export function AnimalList({
     if (firstLoadHappened && currentPage > pagesCount) {
       setCurrentPage(0);
     }
-  }, [currentPage, filteredAnimals]);
+  }, [currentPage, animals]);
 
   useEffect(() => {
     const loadAnimals = async () => {
       const { data, error } = await fetchAnimals({
-        category,
+        categories,
+        vCaretakerType,
         type,
         skip: currentPage * pageSize,
         take: pageSize,
@@ -99,16 +95,11 @@ export function AnimalList({
   if (animals) {
     return (
       <>
-        {withCategoryOverlay && (
-          <AnimalCategoryLegend
-            category={filterCategory}
-            setCategory={setFilterCategory}
-          />
-        )}
-        {filteredAnimals.length ? (
+        {withCategoryOverlay && <AnimalCategoryLegend />}
+        {animals.length ? (
           <>
             <ul className={styles['animals-list']}>
-              {filteredAnimals.map((animal: Animal) => (
+              {animals.map((animal: Animal) => (
                 <AnimalCard
                   animal={animal}
                   key={animal.id}

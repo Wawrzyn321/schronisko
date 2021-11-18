@@ -3,7 +3,6 @@ import { Page } from 'components/Page';
 import { Breadcrumbs } from 'components/Breadcrumbs/Breadcrumbs';
 import { AnimalList } from 'components/AnimalList/AnimalList';
 import { fetchPage } from 'api';
-import { Animal } from '@prisma/client';
 import { LayoutWrapper } from 'components/LayoutWrapper';
 
 const ID = 'szukaja-opiekunow';
@@ -16,9 +15,7 @@ export default function VirtualToAdopt({ ssrPage }: { ssrPage: PageModel }) {
         <Page id={ID} ssrPage={ssrPage} />
       </LayoutWrapper>
       <AnimalList
-        filter={(a: Animal) =>
-          a.virtualCaretakerType === VirtualCaretakerType.Szuka
-        }
+        vCaretakerType={VirtualCaretakerType.Szuka}
         withCategoryOverlay
       />
     </>

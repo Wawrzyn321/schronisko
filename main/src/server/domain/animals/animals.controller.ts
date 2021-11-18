@@ -1,9 +1,9 @@
-import { AnimalCategory, AnimalType } from '.prisma/client';
+import { AnimalCategory, AnimalType, VirtualCaretakerType } from '.prisma/client';
 import { Public } from './../auth/public.decorator';
 import { LoggedInUser } from './../auth/types';
 import { AnimalsService, AnimalData } from './animals.service';
 import { RequirePermission } from '../auth/Permissions.decorator';
-import { Controller, Get, UseGuards, Param, Patch, Body, Post, Delete, Request, Query, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, UseGuards, Param, Patch, Body, Post, Delete, Request, Query } from '@nestjs/common';
 import { Permission } from '@prisma/client';
 import { PermissionsGuard } from '../auth/Permissions.guard';
 
@@ -19,16 +19,30 @@ export class AnimalsPublicController {
     }
 
     @Get()
-    getAnimalsPublic(@Query('category') possibleCategory: string, @Query('type') possibleType: string, @Query('skip') possiblySkip, @Query('take') possiblyTake: string) {
+    getAnimalsPublic(@Query('categories') possibleCategories: string, @Query('type') possibleType: string, @Query('vCaretakerType') possibleVaretakerType: string, @Query('skip') possiblySkip, @Query('take') possiblyTake: string) {
         const skip = parseInt(possiblySkip) || 0;
         const take = parseInt(possiblyTake) || 27;
 
-        const category: AnimalCategory | undefined =
-            Object.keys(AnimalCategory).includes(possibleCategory) ? possibleCategory as AnimalCategory : undefined;
-        const type: AnimalType | undefined =
-            Object.keys(AnimalType).includes(possibleType) ? possibleType as AnimalType : undefined;
+        function getFromEnumOrUndefined<T>(possibleT: string, keys: string[]): T | undefined {
+            if (keys.includes(possibleT)) {
+                return (possibleT as unknown) as T;
+            } else {
+                return undefined;
+            }
+        }
 
-        return this.animalsService.getAllPublic(take, skip, category, type);
+        const categories = [];
+        for (const possibleCategory of (possibleCategories || '').split(',')) {
+            const c = getFromEnumOrUndefined<AnimalCategory>(possibleCategory, Object.keys(AnimalCategory));
+            if (c) {
+                categories.push(c);
+            }
+        }
+
+        const type = getFromEnumOrUndefined<AnimalType>(possibleType, Object.keys(AnimalType));
+        const virtualCaretakerType = getFromEnumOrUndefined<VirtualCaretakerType>(possibleVaretakerType, Object.keys(VirtualCaretakerType));
+
+        return this.animalsService.getAllPublic(take, skip, virtualCaretakerType, categories, type);
     }
 
     @Get(':id')

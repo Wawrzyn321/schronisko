@@ -69,17 +69,17 @@ function getDailyRandom<T>(items: T[], count: number): T[] {
 export class AnimalsService {
   constructor(private prisma: PrismaService, private logsService: LogsService, private animalImagesService: AnimalImagesService) { }
 
-  async getAllPublic(take?: number, skip?: number, category?: AnimalCategory, type?: AnimalType) {
-    const animals = await this.getAll(take, skip, category, type, true);
-    const totalCount = await this.prisma.animal.count({ where: { category, type, isPublic: true } });
+  async getAllPublic(take?: number, skip?: number, virtualCaretakerType?: VirtualCaretakerType, categories?: AnimalCategory[], type?: AnimalType) {
+    const animals = await this.getAll(take, skip, virtualCaretakerType, categories, type, true);
+    const totalCount = await this.prisma.animal.count({ where: { category: categories?.length ? { in: categories } : undefined, type, virtualCaretakerType, isPublic: true } });
     return {
       animals,
       totalCount,
     }
   }
 
-  async getAll(take?: number, skip?: number, category?: AnimalCategory, type?: AnimalType, filterPublic?: boolean): Promise<AnimalListElement[]> {
-    const animals = await this.prisma.animal.findMany({ take, skip, where: { category, type, isPublic: filterPublic ? true : undefined } });
+  async getAll(take?: number, skip?: number, virtualCaretakerType?: VirtualCaretakerType, categories?: AnimalCategory[], type?: AnimalType, filterPublic?: boolean): Promise<AnimalListElement[]> {
+    const animals = await this.prisma.animal.findMany({ take, skip, where: { category: categories?.length ? { in: categories } : undefined, type, virtualCaretakerType, isPublic: filterPublic ? true : undefined } });
     return animals.map((animal: Animal) => {
       const { description, ...animalListElement } = animal;
       return animalListElement;

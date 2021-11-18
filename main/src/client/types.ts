@@ -6,7 +6,7 @@ export type NewsListElement = Pick<News, 'id' | 'description' | 'title' | 'creat
 
 export type SSRContext = { query: { id: string } };
 
-export const isForAdoption = (a: Animal) =>
-    a.category === AnimalCategory.DoAdopcji ||
-    a.category === AnimalCategory.PilniePotrzebuja ||
-    a.category === AnimalCategory.Weterani;
+// export const isForAdoption = (a: Animal) =>
+//     a.category === AnimalCategory.DoAdopcji ||
+//     a.category === AnimalCategory.PilniePotrzebuja ||
+//     a.category === AnimalCategory.Weterani;

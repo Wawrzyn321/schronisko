@@ -24,7 +24,7 @@ export default function Gone(props: GoneProps) {
           <Page id={ID_poem} ssrPage={props.ssrPoem} showTitle={false} />
         </div>
       </LayoutWrapper>
-      <AnimalList category={AnimalCategory.ZaTeczowymMostem} />
+      <AnimalList categories={[AnimalCategory.ZaTeczowymMostem]} />
     </>
   );
 }

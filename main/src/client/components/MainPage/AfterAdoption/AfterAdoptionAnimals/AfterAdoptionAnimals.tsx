@@ -9,10 +9,7 @@ function AnimalImage({ animal }: { animal: AfterAdoptionAnimal }) {
   return (
     <div>
       <div className={styles['animal-image']}>
-        <img
-          src={buildAnimalImageUrl(animal)}
-          alt={animal.imageName}
-        />
+        <img src={buildAnimalImageUrl(animal)} alt={animal.imageName} />
         <div className={styles['animal-image__link']}>
           <Link href={buildAnimalUrl(animal)}>Dowiedz się więcej</Link>
         </div>

@@ -14,7 +14,7 @@ export default function RecentlyFound({ ssrPage }: { ssrPage: PageModel }) {
         <Breadcrumbs items={['Zwierzęta', 'Zwierzęta znalezione']} />
         <Page id={ID} ssrPage={ssrPage} />
       </LayoutWrapper>
-      <AnimalList category={AnimalCategory.NiedawnoZnalezione} />
+      <AnimalList categories={[AnimalCategory.NiedawnoZnalezione]} />
     </>
   );
 }
