@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { scaleToFit, restrictPosition } from './helpers';
+  import { scaleToFit, restrictPosition, fit } from './helpers';
   import { Button } from 'svelma';
   import Modal from '../Modal.svelte';
 
@@ -25,8 +25,9 @@
   let y = 0;
   let isMouseDown = false;
 
-// problem jest taki że obraz jest brany taki jaki jest, więc trzeba brać proporcje zamiast pikseli
-
+  let originalWidth: number;
+  let originalHeight: number;
+  let img: HTMLImageElement;
 
   $: {
     if (file && imageCanvas && frameCanvas && forceRefresh) {
@@ -44,6 +45,8 @@
   function initFrame() {
     x = (frameCanvas.width - targetWidth) / 2;
     y = (frameCanvas.height - targetHeight) / 2;
+    if (x < 0) x = 0;
+    if (y < 0) y = 0;
     drawFrame();
   }
 
@@ -112,14 +115,15 @@
     x = 0;
     y = 0;
 
-    const img = new Image();
+    img = new Image();
     img.onload = function () {
       const maxWidth = window.innerWidth * 0.8 - 80;
       const maxHeight = window.innerHeight * 0.51 - 120;
-      const { width, height } = this as any;
+      originalWidth = (this as any).width;
+      originalHeight = (this as any).height;
       const [imageWidth, imageHeight] = scaleToFit(
-        width,
-        height,
+        originalWidth,
+        originalHeight,
         maxWidth,
         maxHeight
       );
@@ -141,16 +145,36 @@
   }
 
   function apply() {
-    const imageData = imageCanvas
-      .getContext('2d')
-      .getImageData(x, y, targetWidth * scale, targetHeight * scale);
+    const normalizedX = x / targetWidth;
+    const normalizedY = y / targetHeight;
 
-    const canvas = document.createElement('canvas');
-    canvas.width = targetWidth * scale;
-    canvas.height = targetHeight * scale;
-    const ctx = canvas.getContext('2d');
-    ctx.putImageData(imageData, 0, 0);
-    setImageData(canvas.toDataURL());
+    const originalSizeCanvas = document.createElement('canvas');
+    originalSizeCanvas.width = originalWidth;
+    originalSizeCanvas.height = originalHeight;
+    originalSizeCanvas
+      .getContext('2d')
+      .drawImage(img, 0, 0, originalWidth, originalHeight);
+
+    const [fittedWidth, fittedHeight] = fit(
+      originalWidth,
+      originalHeight,
+      targetWidth,
+      targetHeight
+    );
+    const imageData = originalSizeCanvas
+      .getContext('2d')
+      .getImageData(
+        normalizedX * fittedWidth,
+        normalizedY * fittedHeight,
+        scale * fittedWidth,
+        scale * fittedHeight
+      );
+
+    const saveCanvas = document.createElement('canvas');
+    saveCanvas.width = scale * fittedWidth;
+    saveCanvas.height = scale * fittedHeight;
+    saveCanvas.getContext('2d').putImageData(imageData, 0, 0);
+    setImageData(saveCanvas.toDataURL());
   }
 </script>
 
@@ -196,7 +220,7 @@
 
   :global(#resize-modal-wrapper .modal-content) {
     width: 80vw;
-    height: 45vh;
+    height: 46vh;
     padding: 0;
     margin: 0;
   }
@@ -204,5 +228,10 @@
   .modal-footer {
     margin-right: 20px;
     font-size: smaller;
+    display: flex;
+
+    & > :global(*) {
+      margin-left: 10px;
+    }
   }
 </style>
