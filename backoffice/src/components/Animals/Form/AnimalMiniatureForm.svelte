@@ -19,8 +19,8 @@
       bind:imageData={animal.imageData}
       bind:imageName={animal.imageName}
       {revalidateForm}
-      width={1296}
-      height={972}
+      width={1300}
+      height={975}
       required={false}
     />
   </Tooltip>

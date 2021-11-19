@@ -8,7 +8,7 @@
   import { animalsService } from '../services/AnimalsService';
   import { animalImagesService } from '../services/AnimalImagesService';
   import type { AnimalImageParams } from '../services/AnimalImagesService';
-  import type { Animal } from '.prisma/client';
+  import type { Animal, AnimalCategory } from '.prisma/client';
   import type { AnimalData } from '../services/AnimalsService';
 
   export let params: { id: string };
@@ -18,12 +18,14 @@
   let images: AnimalImageParams[];
   let isValid: boolean = true;
   let isSaving: boolean;
+  let prevCategory: AnimalCategory;
 
   onMount(async () => {
     const id = encodeURIComponent(params.id);
     try {
       animal = await animalsService.get(id);
       animalData = animal as AnimalData;
+      prevCategory = animal.category;
     } catch (e) {
       notifyError({
         message: 'Nie można pobrać danych zwierzęcia: ' + e.message,
@@ -46,6 +48,7 @@
     try {
       isSaving = true;
       await animalsService.update(animal, images);
+      prevCategory = animal.category;
       notifySuccess({ message: 'Dane zwierzęcia zostały zapisane.' });
     } catch (e) {
       notifyError({
@@ -65,6 +68,7 @@
       {isValid}
       {animal}
       {isSaving}
+      {prevCategory}
       bind:isPublic={animal.isPublic}
     />
     <AnimalForm

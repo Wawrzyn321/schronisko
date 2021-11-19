@@ -1,12 +1,14 @@
 <script lang="ts">
-  import type { Animal } from '.prisma/client';
+  import type { Animal, AnimalCategory } from '.prisma/client';
 
   import { Button } from 'svelma';
   import { push } from 'svelte-spa-router';
   import { notifySuccess } from '../../contexts/notification.context';
+  import AnimalUpdateWarningModal from '../../views/AnimalUpdateWarningModal.svelte';
   import DateFromTimestamp from '../shared/DateFromTimestamp.svelte';
   import DeleteAnimalModal from './DeleteAnimalModal.svelte';
-import FormTooltipMessageWrapper from './Form/FormTooltipMessageWrapper.svelte';
+  import { changedToReadonly } from './Form/animal-readonly';
+  import FormTooltipMessageWrapper from './Form/FormTooltipMessageWrapper.svelte';
 
   export let isPublic: boolean;
   export let timestamp: Date;
@@ -14,7 +16,9 @@ import FormTooltipMessageWrapper from './Form/FormTooltipMessageWrapper.svelte';
   export let animal: Animal;
   export let isSaving: boolean;
   export let updateAnimal: () => any;
+  export let prevCategory: AnimalCategory;
 
+  let isWarningModalVisible = false;
   let deleteModalVisible = false;
 
   function onAnimalDeleted() {
@@ -42,7 +46,17 @@ import FormTooltipMessageWrapper from './Form/FormTooltipMessageWrapper.svelte';
       Widoczny na stronie
     </label>
     <FormTooltipMessageWrapper {isValid} {animal}>
-      <Button type="is-primary" on:click={updateAnimal} disabled={!isValid || isSaving}>
+      <Button
+        type="is-primary"
+        on:click={() => {
+          if (changedToReadonly(animal.category, prevCategory)) {
+            isWarningModalVisible = true;
+          } else {
+            updateAnimal();
+          }
+        }}
+        disabled={!isValid || isSaving}
+      >
         Zapisz
       </Button>
     </FormTooltipMessageWrapper>
@@ -59,6 +73,11 @@ import FormTooltipMessageWrapper from './Form/FormTooltipMessageWrapper.svelte';
   bind:modalVisible={deleteModalVisible}
   {onAnimalDeleted}
   {animal}
+/>
+<AnimalUpdateWarningModal
+  bind:modalVisible={isWarningModalVisible}
+  doUpdateAnimal={updateAnimal}
+  category={animal.category}
 />
 
 <style lang="scss">

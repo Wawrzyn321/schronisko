@@ -10,6 +10,7 @@ import { LoggedInUser } from '../auth/types';
 import { formattedDiff } from '../logs/diff';
 import * as gen from 'random-seed';
 import { AnimalImagesService } from '../animal-images/animal-images.service';
+import { changedToReadonly } from './readonly-animal';
 
 const IMAGES_PATH = 'animals/';
 
@@ -162,6 +163,10 @@ export class AnimalsService {
           console.warn(e);
         }
       }
+    }
+
+    if (changedToReadonly(animal.category, prevAnimal.category)) {
+      await this.animalImagesService.deleteByAnimal(animal.id);
     }
 
     const { imageData, ...animalData } = animal;

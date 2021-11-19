@@ -38,16 +38,16 @@
         label="Tło"
         message="Widoczne na sliderze."
         bind:imageData
-        width={1030}
-        height={690}
+        width={1000}
+        height={670}
       />
     </div>
     <ImagePreview
       {imageData}
       {revertImage}
       imageName={news.imageName}
-      width={515}
-      height={345}
+      width={500}
+      height={335}
       subdir="news/"
       placeholderPic=""
     />

@@ -2,6 +2,13 @@ import Link from 'next/link';
 import { buildAnimalImageUrl, buildAnimalUrl } from '_util';
 import { Animal, AnimalCategory } from '.prisma/client';
 
+function isReadonly(category: AnimalCategory) {
+  return (
+    category === AnimalCategory.ZaTeczowymMostem ||
+    category === AnimalCategory.ZnalazlyDom
+  );
+}
+
 export function AnimalImage({ animal }: { animal: Animal }) {
   const bwMode = animal.category === AnimalCategory.ZaTeczowymMostem;
   const imageStyle = bwMode ? { filter: 'grayscale(1)' } : {};
@@ -16,9 +23,7 @@ export function AnimalImage({ animal }: { animal: Animal }) {
     />
   );
 
-  const canGoToDetails =
-    animal.category !== AnimalCategory.ZaTeczowymMostem &&
-    animal.category !== AnimalCategory.ZnalazlyDom;
+  const canGoToDetails = !isReadonly(animal.category);
   if (canGoToDetails) {
     return (
       <Link href={buildAnimalUrl(animal)}>

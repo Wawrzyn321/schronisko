@@ -8,6 +8,7 @@
   import Tabs from '../../shared/Tabs.svelte';
   import DescriptionTab from './DescriptionTab.svelte';
   import DataTab from './DataTab.svelte';
+  import { isReadonly } from './animal-readonly';
 
   export let animal: AnimalData;
   export let images: AnimalImageParams[] = [];
@@ -18,9 +19,9 @@
   let form: HTMLFormElement;
 
   function revalidateForm() {
-    const imagesValid = images.every(
-      (image) => !!image.data || !!image.imageName
-    );
+    const imagesValid =
+      isReadonly(animal.category) ||
+      images.every((image) => !!image.data || !!image.imageName);
 
     setFormValid(form.checkValidity() && imagesValid);
   }
@@ -29,8 +30,18 @@
 <form bind:this={form} on:input={revalidateForm} on:change={revalidateForm}>
   <Tabs mapping={['data', 'description', 'photos']} currentTab={mode}>
     <DataTab bind:animal {revalidateForm} />
-    <DescriptionTab bind:animal {revalidateForm} />
-    <Tab label="Zdjęcia"><AnimalImages bind:images {revalidateForm} /></Tab>
+    <DescriptionTab
+      bind:animal
+      {revalidateForm}
+      isReadonly={isReadonly(animal.category)}
+    />
+    <Tab label="Zdjęcia">
+      {#if isReadonly(animal.category)}
+        Nie można dodać zdjęć do zwierząt w tej kategorii.
+      {:else}
+        <AnimalImages bind:images {revalidateForm} />
+      {/if}
+    </Tab>
   </Tabs>
 </form>
 

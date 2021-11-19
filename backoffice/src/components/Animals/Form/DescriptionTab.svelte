@@ -6,6 +6,7 @@
 
   export let revalidateForm: () => any;
   export let animal: AnimalData;
+  export let isReadonly: boolean;
 
   const descriptionTemplate =
     descriptionTemplates[animal.category]?.[animal.gender];
@@ -33,13 +34,18 @@
       </Tooltip>
     {/if}
   </div>
-  <Tooltip label="Opis widoczny na stronie.">
+  <Tooltip
+    label={isReadonly
+      ? 'Opis zwierzęcia z tej kategorii nie jest wyświetlany.'
+      : 'Opis widoczny na stronie.'}
+  >
     <Input
       required
       maxlength="1500"
       bind:value={animal.description}
       type="textarea"
       placeholder="Opis zwierzęcia"
+      disabled={isReadonly}
     />
   </Tooltip>
   <br />

@@ -10,16 +10,17 @@ type Size = { width: number, height: number };
 
 const presetsMap: { [gender in ResizingPresets]: Size } = {
     'News': {
-        width: 1030,
-        height: 690,
+        width: 1000,
+        height: 670,
     },
     "Animal Gallery": {
-        width: 1416,
-        height: 1066,
+        width: 1333,
+        height: 1000,
     },
+    // niby miniature, ale i tak musi być rozsądnej jakości żeby pokazać w lightboxie
     "Animal Miniature": {
-        width: 1296,
-        height: 972,
+        width: 1300,
+        height: 975,
     }
 }
 

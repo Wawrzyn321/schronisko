@@ -1,13 +1,13 @@
 <script lang="ts">
   import type { Animal } from '.prisma/client';
-
   import { Tooltip } from 'svelma';
+  import { isReadonly } from './animal-readonly';
 
   export let isValid: boolean;
   export let animal: Animal;
 
   export function formTooltipMessage(animal: Animal) {
-    if (!animal.description) {
+    if (!animal.description && !isReadonly(animal)) {
       return 'Uzupełnij opis zwierzęcia.';
     } else if (!animal.name) {
       return 'Uzupełnij imię.';

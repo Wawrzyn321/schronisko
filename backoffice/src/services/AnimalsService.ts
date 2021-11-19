@@ -4,6 +4,7 @@ import { API_URL } from './config';
 import type { Animal, AnimalCategory, AnimalGender, AnimalLocation, AnimalType, VirtualCaretakerType } from '.prisma/client';
 import { animalImagesService } from "./AnimalImagesService";
 import { v4 as uuid } from 'uuid';
+import { isReadonly } from '../components/Animals/Form/animal-readonly';
 
 const baseUrl = `${API_URL}/api/animals`
 
@@ -55,7 +56,9 @@ export class AnimalsService {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(animal),
         });
-        await animalImagesService.upsert(updatedAnimal.id, images);
+        if (!isReadonly(animal.category)) {
+            await animalImagesService.upsert(updatedAnimal.id, images);
+        }
         return updatedAnimal;
     }
 

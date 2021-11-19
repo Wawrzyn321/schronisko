@@ -9,7 +9,6 @@ const SSR_BACKEND_URL = DEV ? 'http://localhost:60045' : 'https://schronisko-bac
 
 export const SITE_IMAGES_URL = BACKEND_URL + '/site';
 export const OVERLAYS_URL = SITE_IMAGES_URL + '/overlays';
-export const ANIMAL_DETAILS_URL = SITE_IMAGES_URL + '/animal-details'; // todo niepotrzebne?
 export const MAIN_PAGE_IMAGES_URL = SITE_IMAGES_URL + '/main';
 export const IMAGES_URL = BACKEND_URL + '/img';
 export const ANIMAL_IMAGES_URL = IMAGES_URL + '/animals';

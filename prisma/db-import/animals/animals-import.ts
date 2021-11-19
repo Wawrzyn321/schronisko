@@ -1,12 +1,12 @@
 import { AnimalType, AnimalCategory, AnimalGender, VirtualCaretakerType, AnimalLocation } from '.prisma/client';
 import { PrismaClient } from '@prisma/client';
 
-
 import fs from 'fs';
 // @ts-ignore
 import _animals from './adminGallery.json';
 // @ts-ignore
 import _pictures from './pictures.json';
+import { decode } from 'html-entities';
 
 const galleryPath = '/Users/i515358/Desktop/schronisko_sosnowiec_pl/public_html/gallery/';
 const thumbsPath = galleryPath + 'thumbs/';
@@ -153,9 +153,12 @@ async function seedAnimalImages(prisma: PrismaClient, animals: any[], count: num
 
     let cnt = 0;
     for (let i = 0; i < it; i++) {
-        const pics = pictures.filter(p => p.adminGalleryId === animals[i].id);
-        for (let j = 0; j < pics.length; j++) {
-            const pic = pics[j];
+        if (animals[i].category === AnimalCategory.ZaTeczowymMostem || animals[i].category === AnimalCategory.ZnalazlyDom) {
+            continue;
+        }
+        const picsForAnimalI = pictures.filter(p => p.adminGalleryId === animals[i].id);
+        for (let j = 0; j < picsForAnimalI.length; j++) {
+            const pic = picsForAnimalI[j];
             let ok = false;
             if (fs.existsSync(galleryPath + pic.fileName)) {
                 fs.copyFileSync(galleryPath + pic.fileName, targetAnimalImagesPath + pic.fileName);
@@ -221,38 +224,38 @@ export async function seedAnimals(prisma: PrismaClient, count: number | null = n
 
     let it = count ? Math.min(animals.length, count!) : animals.length;
     for (let i = 0; i < it; i++) {
-    //     const a = animals[i];
+        const a = animals[i];
 
-    //     if (fs.existsSync(galleryPath + a.fileName)) {
-    //         fs.copyFileSync(galleryPath + a.fileName, targetAnimalsPath + a.fileName)
-    //     } else {
-    //         fs.copyFileSync(thumbsPath + a.fileName, targetAnimalsPath + a.fileName)
-    //     }
+        if (fs.existsSync(galleryPath + a.fileName)) {
+            fs.copyFileSync(galleryPath + a.fileName, targetAnimalsPath + a.fileName)
+        } else {
+            fs.copyFileSync(thumbsPath + a.fileName, targetAnimalsPath + a.fileName)
+        }
 
-    //     const animal = {
-    //         id: a.id,
-    //         refNo: a.petId,
-    //         name: a.name,
-    //         type: a.speciesId === '2' ? AnimalType.DOG : AnimalType.CAT,
-    //         category: mapCategoryId(a.categoryId),
-    //         description: a.descr,
-    //         imageName: a.fileName,
-    //         addedDate: new Date(Date.parse('2014-07-23 11:07:16')),
-    //         isPublic: a.status === '1',
-    //         location: tryMapLocation(a),
-    //         virtualCaretakerType: a.virtualCaretakerType,
-    //         virtualCaretakerName: a.virtualCaretakerName,
-    //         note: '',
-    //         locationDescription: null,
-    //         contactInfo: trySetupContactInfo(a),
-    //         gender: trySetupGender(a),
-    //     };
+        const animal = {
+            id: a.id,
+            refNo: a.petId,
+            name: a.name,
+            type: a.speciesId === '2' ? AnimalType.DOG : AnimalType.CAT,
+            category: mapCategoryId(a.categoryId),
+            description: decode(a.descr),
+            imageName: a.fileName,
+            addedDate: new Date(Date.parse('2014-07-23 11:07:16')),
+            isPublic: a.status === '1',
+            location: tryMapLocation(a),
+            virtualCaretakerType: a.virtualCaretakerType,
+            virtualCaretakerName: a.virtualCaretakerName,
+            note: '',
+            locationDescription: null,
+            contactInfo: trySetupContactInfo(a),
+            gender: trySetupGender(a),
+        };
 
-    //     await prisma.animal.upsert({
-    //         where: { id: animal.id! },
-    //         update: animal,
-    //         create: animal,
-    //     });
+        await prisma.animal.upsert({
+            where: { id: animal.id! },
+            update: animal,
+            create: animal,
+        });
 
         if (i % 1000 === 0) {
             console.log(i + '/' + it);

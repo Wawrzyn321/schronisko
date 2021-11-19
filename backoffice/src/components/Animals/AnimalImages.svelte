@@ -51,7 +51,7 @@
   <div class="g-flex-between-100">
     <p>
       Tutaj możesz dodać obrazy przedstawiające zwierzę. Powinny one mieć
-      proporcje 708x533.
+      proporcje ~4/3.
       <br />
       Maksymalnie możesz dodać 8 zdjęć.
     </p>
@@ -69,7 +69,11 @@
         {#if image.data}
           <img class="image" src={image.data} alt="" />
         {:else if image.imageName}
-          <img class="image" src={`${STATIC_URL}/animals/pics/${image.imageName}`} alt="" />
+          <img
+            class="image"
+            src={`${STATIC_URL}/animals/pics/${image.imageName}`}
+            alt=""
+          />
         {:else}
           <div class="image" />
         {/if}
@@ -77,8 +81,8 @@
           bind:imageData={image.data}
           {revalidateForm}
           label=""
-          width={1416}
-          height={1066}
+          width={1333}
+          height={1000}
         />
         <div>
           <div class="eye-tooltip">

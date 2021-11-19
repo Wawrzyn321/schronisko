@@ -52,7 +52,7 @@ export class AnimalImagesService {
 
     for (const { image, handled } of imagesAlready) {
       if (!handled) {
-        await this.deleteImage(IMAGES_PATH, image.id);
+        await this.deleteImage(image.id);
       }
     }
 
@@ -71,7 +71,7 @@ export class AnimalImagesService {
     await this.prisma.animalImage.deleteMany({ where: { animalId } })
   }
 
-  async deleteImage(subdir: string, id: string): Promise<void> {
+  async deleteImage(id: string): Promise<void> {
     const image = await this.prisma.animalImage.findFirst({ where: { id } })
     try {
       await deleteImage(IMAGES_PATH, image.imageName);

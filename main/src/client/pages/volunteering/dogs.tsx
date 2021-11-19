@@ -11,7 +11,9 @@ export default function VolunteerDogs({ ssrPage }: { ssrPage: PageModel }) {
   return (
     <LayoutWrapper>
       <Breadcrumbs items={['Wolontariat', 'Pies']} />
-      <VolunteerDogsPage ssrPage={ssrPage} />A TU BĘDZIE FORMULARZ
+      <VolunteerDogsPage ssrPage={ssrPage} />
+      
+      A TU BĘDZIE FORMULARZ
     </LayoutWrapper>
   );
 }

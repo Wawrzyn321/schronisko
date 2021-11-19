@@ -7,10 +7,10 @@ import { seedAnimals } from './db-import/animals/animals-import';
 const prisma = new PrismaClient()
 
 async function main() {
-    // await seedUsers(prisma);
-    // await seedNews(prisma);
-    // await seedAnimals(prisma, null);
-    // await seedPages(prisma);
+    await seedUsers(prisma);
+    await seedNews(prisma);
+    await seedAnimals(prisma, null);
+    await seedPages(prisma);
 }
 main()
     .catch((e: Error) => {
