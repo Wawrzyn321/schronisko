@@ -3,12 +3,11 @@ import { FetchError, fetchNews } from 'api';
 import { useEffect, useState } from 'react';
 import { News as NewsModel } from '.prisma/client';
 import { Article } from 'components/Article/Article';
-import { ERROR_GENERIC, ERROR_NEWS_NOT_FOUND } from 'errors';
+import { ErrorWrapper, ERROR_GENERIC, ERROR_NEWS_NOT_FOUND } from 'errors';
 import { SSRContext } from 'types';
-import { LayoutWrapper } from 'components/LayoutWrapper';
 
-export default function News() {
-  return <IdWrapper Component={ActualNews} />;
+export default function News({ ssrNews }: { ssrNews: NewsModel }) {
+  return <IdWrapper Component={ActualNews} ssrNews={ssrNews} />;
 }
 
 function ActualNews({ id, ssrNews }: { id: string; ssrNews: NewsModel }) {
@@ -22,28 +21,25 @@ function ActualNews({ id, ssrNews }: { id: string; ssrNews: NewsModel }) {
       setError(error);
     };
 
-    loadPage();
+    if (!ssrNews) {
+      loadPage();
+    }
   }, []);
 
-  if (news) {
-    return (
-      <LayoutWrapper>
-        <Article
-          title={news.title}
-          content={news.content}
-          date={news.createdAt}
-        />
-      </LayoutWrapper>
-    );
-  } else if (error) {
-    if (error.statusCode === 404) {
-      return <Article {...ERROR_NEWS_NOT_FOUND} />;
-    } else {
-      return <Article {...ERROR_GENERIC} />;
-    }
-  } else {
-    return 'Ładowanie...';
-  }
+  return (
+    <ErrorWrapper
+      isLoaded={!!news}
+      error={error}
+      errorGeneric={ERROR_GENERIC}
+      error404={ERROR_NEWS_NOT_FOUND}
+    >
+      <Article
+        title={news?.title}
+        content={news?.content}
+        date={news?.createdAt}
+      />
+    </ErrorWrapper>
+  );
 }
 
 export async function getServerSideProps(context: SSRContext): Promise<{

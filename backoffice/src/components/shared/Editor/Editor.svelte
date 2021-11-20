@@ -65,7 +65,7 @@
     });
   }
 
-  function onEditorChange(e) {
+  function onEditorChange(e: { detail: { html: string } }) {
     content = e.detail.html;
     onChange(content, fileMap);
   }
@@ -92,7 +92,7 @@
     });
   };
 
-  async function keydown(e) {
+  async function keydown(e: KeyboardEvent) {
     const { metaKey, ctrlKey, key } = e;
     if (key === 's' && (metaKey || ctrlKey)) {
       requestSave && requestSave();

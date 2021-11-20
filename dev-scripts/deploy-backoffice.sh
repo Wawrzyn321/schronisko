@@ -1,4 +1,4 @@
-echo 'building...'
+echo 'linting  & building...'
 npm run build --prefix=backoffice
 echo 'build done'
 RSYNC_RSH='ssh -p 60022' rsync --progress \

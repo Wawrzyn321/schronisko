@@ -1,18 +1,6 @@
 import { Animal, AnimalCategory } from '.prisma/client';
-import Modal from 'react-modal';
 import { buildAnimalImageUrl } from '_util';
-
-const customStyles = {
-  content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-  },
-};
-Modal.setAppElement('#__next');
+import { Modal } from 'components/Modal';
 
 export interface AnimalModalData {
   isOpen: boolean;
@@ -35,7 +23,7 @@ export function AnimalModal({
   const src = buildAnimalImageUrl(animal);
 
   return (
-    <Modal isOpen={isOpen} onRequestClose={close} style={customStyles}>
+    <Modal isOpen={isOpen} onRequestClose={close}>
       <img style={style} src={src} alt="" />
     </Modal>
   );

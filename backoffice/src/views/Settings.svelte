@@ -1,27 +1,19 @@
 <script lang="ts">
+  import type { Settings } from '.prisma/client';
+
   import { onMount } from 'svelte';
-  import { notifyError, notifySuccess } from '../contexts/notification.context';
+  import DogVolunteering from '../components/Settings/DogVolunteering.svelte';
+  import NumberInput from '../components/Settings/NumberInput.svelte';
+  import { notifyError } from '../contexts/notification.context';
   import { settingsService } from '../services/SettingsService';
 
-  const DOG_VOLUNTEERING_SETTING = 'DOG_VOLUNTEERING_ENABLED';
-
-  let dogVolunteeringOpen = false;
   let loading = true;
   let isSaving = false;
+  let settings: Settings[];
 
   onMount(async () => {
     try {
-      const settings = await settingsService.get();
-
-      const dogVolunteeringSetting = settings.find(
-        (s) => s.id === DOG_VOLUNTEERING_SETTING
-      );
-      if (dogVolunteeringSetting) {
-        dogVolunteeringOpen = dogVolunteeringSetting.value === 'true';
-      } else {
-        dogVolunteeringOpen = false;
-      }
-
+      settings = await settingsService.get();
       loading = false;
     } catch (e) {
       notifyError({ message: 'Nie można pobrać ustawień: ' + e.message });
@@ -35,31 +27,19 @@
   </header>
   <section>
     {#if !loading}
-      <label>
-        <input
-          disabled={isSaving}
-          checked={dogVolunteeringOpen}
-          type="checkbox"
-          on:change={async () => {
-            isSaving = true;
-            try {
-              await settingsService.upsert(
-                DOG_VOLUNTEERING_SETTING,
-                (!dogVolunteeringOpen).toString()
-              );
-              dogVolunteeringOpen = !dogVolunteeringOpen;
-              notifySuccess({ message: 'Zapisano ustawienie.' });
-            } catch (e) {
-              notifyError({
-                message: 'Nie można zapisać ustawienia: ' + e.message,
-              });
-            } finally {
-              isSaving = false;
-            }
-          }}
-        />
-        Psi wolontariat możliwy
-      </label>
+      <DogVolunteering bind:isSaving bind:settings />
+      <NumberInput
+        name="Numer KRS"
+        bind:isSaving
+        bind:settings
+        settingsKey="KRS_NUMBER"
+      />
+      <NumberInput
+        name="Numer konta wirtualnych adopcji"
+        bind:isSaving
+        bind:settings
+        settingsKey="V_ADOPTION_ACCOUNT_NUMBER"
+      />
     {/if}
     {#if loading}
       Ładowanie ustawień...

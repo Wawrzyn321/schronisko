@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "rollup -c",
+    "build": "npm run check && rollup -c",
     "dev": "rollup -c -w",
     "start": "sirv public -s --port 5555",
-    "validate": "svelte-check --ignore node_modules",
     "test": "jest src",
-    "test:watch": "npm run test -- --watch"
+    "test:watch": "npm run test -- --watch",
+    "check": "svelte-check --fail-on-warnings --fail-on-hints --tsconfig ./tsconfig.json --ignore node_modules"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",

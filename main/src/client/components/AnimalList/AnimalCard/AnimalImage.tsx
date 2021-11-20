@@ -1,13 +1,7 @@
 import Link from 'next/link';
 import { buildAnimalImageUrl, buildAnimalUrl } from '_util';
 import { Animal, AnimalCategory } from '.prisma/client';
-
-function isReadonly(category: AnimalCategory) {
-  return (
-    category === AnimalCategory.ZaTeczowymMostem ||
-    category === AnimalCategory.ZnalazlyDom
-  );
-}
+import { isReadonly } from '../isReadonly';
 
 export function AnimalImage({ animal }: { animal: Animal }) {
   const bwMode = animal.category === AnimalCategory.ZaTeczowymMostem;
@@ -26,7 +20,7 @@ export function AnimalImage({ animal }: { animal: Animal }) {
   const canGoToDetails = !isReadonly(animal.category);
   if (canGoToDetails) {
     return (
-      <Link href={buildAnimalUrl(animal)}>
+      <Link href={buildAnimalUrl(animal.id)}>
         <a style={{ cursor: 'pointer' }}>{image}</a>
       </Link>
     );

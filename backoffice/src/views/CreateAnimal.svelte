@@ -16,7 +16,7 @@
 
   let isValid: boolean = false;
   let isCreating: boolean = false;
-  let animal: AnimalData = {
+  let animalData: AnimalData = {
     id: '',
     name: '',
     category: AnimalCategory.DoAdopcji,
@@ -37,7 +37,7 @@
   async function createAnimal() {
     try {
       isCreating = true;
-      const { id } = await animalsService.create(animal, images);
+      const { id } = await animalsService.create(animalData, images);
       push(`/animals/${id}`);
       notifySuccess({ message: 'Zwierzę zostało dodane.' });
     } catch (e) {
@@ -60,12 +60,12 @@
     {createAnimal}
     {isValid}
     {isCreating}
-    {animal}
-    bind:isPublic={animal.isPublic}
+    {animalData}
+    bind:isPublic={animalData.isPublic}
   />
 
   <AnimalForm
-    bind:animal
+    bind:animal={animalData}
     bind:images
     setFormValid={(valid) => (isValid = valid)}
   />

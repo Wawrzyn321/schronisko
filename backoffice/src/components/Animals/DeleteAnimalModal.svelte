@@ -1,7 +1,6 @@
 <script lang="ts">
   import Modal from '../shared/Modal.svelte';
   import { animalsService } from '../../services/AnimalsService';
-  import type { Animal } from '.prisma/client';
   import { notifyError } from '../../contexts/notification.context';
   import type { AnimalListElement } from '../../common/types';
 

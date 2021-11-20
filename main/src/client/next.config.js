@@ -9,12 +9,12 @@ module.exports = {
         permanent: true,
       },
       {
-        source: '/animals/dog',
+        source: '/animals/details',
         destination: '/',
         permanent: true,
       },
       {
-        source: '/animals/cat',
+        source: '/animals/v-adopt',
         destination: '/',
         permanent: true,
       },

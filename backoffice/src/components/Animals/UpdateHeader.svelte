@@ -45,7 +45,7 @@
       />
       Widoczny na stronie
     </label>
-    <FormTooltipMessageWrapper {isValid} {animal}>
+    <FormTooltipMessageWrapper {isValid} animalData={animal}>
       <Button
         type="is-primary"
         on:click={() => {

@@ -8,7 +8,7 @@
 
   export let pageSize = 10;
   export let itemsCount: number;
-  export let currentPage;
+  export let currentPage: number;
 
   $: pagesCount = Math.ceil(itemsCount / pageSize);
 

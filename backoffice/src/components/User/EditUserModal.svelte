@@ -15,7 +15,7 @@
   let isActive: boolean;
   let loading = false;
 
-  const onShow = async (_) => {
+  const onShow = async (_: any) => {
     loading = true;
     permissions = [];
     if (!user) return;

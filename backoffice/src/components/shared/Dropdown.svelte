@@ -2,8 +2,8 @@
   let isOpen = false;
   let dropdownRef: HTMLDivElement;
 
-  function onClick(e) {
-    if (dropdownRef !== e.target && !dropdownRef.contains(e.target)) {
+  function onClick(e: MouseEvent) {
+    if (dropdownRef !== e.target && !dropdownRef.contains(e.target as Node)) {
       isOpen = false;
     }
   }
@@ -17,7 +17,7 @@
     }
   }
 
-  function windowKeyDown(e) {
+  function windowKeyDown(e: KeyboardEvent) {
     const ESCAPE_KEY = 'Escape';
     if (isOpen && e.key === ESCAPE_KEY) {
       isOpen = false;
@@ -29,7 +29,7 @@
   }
 </script>
 
-<svelte:window on:keydown={windowKeyDown}/>
+<svelte:window on:keydown={windowKeyDown} />
 <div>
   <div on:click={toggleDropdown}>
     <slot name="trigger" />

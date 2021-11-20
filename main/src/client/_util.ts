@@ -1,8 +1,8 @@
 import { SITE_IMAGES_URL, ANIMAL_IMAGES_URL } from 'api';
 import { AnimalType } from '.prisma/client';
-import { Animal } from '@prisma/client';
-export const buildAnimalUrl = (animal: { type: string, id: string }) => {
-    return `/animals/${animal.type.toLocaleLowerCase()}/${animal.id}`;
+
+export const buildAnimalUrl = (animalId: string) => {
+    return `/animals/details/${animalId}`;
 };
 
 export const buildAnimalImageUrl = (animal: { type: AnimalType, imageName: string }) => {

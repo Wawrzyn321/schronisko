@@ -1,10 +1,9 @@
 <script lang="ts">
   import { logIn, LOGOUT_NOTIFY_PARAMS } from '../contexts/auth.context';
-  import { push, querystring } from 'svelte-spa-router';
+  import { push } from 'svelte-spa-router';
 
   import { Field, Input, Button, Notification } from 'svelma';
   import { onMount } from 'svelte';
-  import { get } from 'svelte/store';
   import { notify } from '../contexts/notification.context';
   import type { NotifyParams } from '../contexts/notification.context';
 

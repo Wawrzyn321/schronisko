@@ -34,10 +34,5 @@
       position: absolute;
       left: 0;
     }
-
-    .overlay {
-      left: 100%;
-      margin-left: var(--padding);
-    }
   }
 </style>

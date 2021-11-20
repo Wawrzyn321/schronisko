@@ -1,6 +1,6 @@
 import { Page as PageModel } from '.prisma/client';
 import { FetchError, fetchPage, PageFetchFn } from 'api';
-import { ERROR_PAGE, ERROR_PAGE_NOT_FOUND } from 'errors';
+import { ErrorWrapper, ERROR_PAGE, ERROR_PAGE_NOT_FOUND } from 'errors';
 import { useEffect, useState } from 'react';
 import { Article } from './Article/Article';
 
@@ -27,24 +27,23 @@ export function Page({
       setError(error);
     };
 
-    loadPage();
+    if (!ssrPage) {
+      loadPage();
+    }
   }, []);
 
-  if (page) {
-    return (
+  return (
+    <ErrorWrapper
+      isLoaded={!!page}
+      error={error}
+      errorGeneric={{ ...ERROR_PAGE, showTitle }}
+      error404={{ ...ERROR_PAGE_NOT_FOUND, showTitle }}
+    >
       <Article
-        title={page.title}
-        content={page.content}
+        title={page?.title}
+        content={page?.content}
         showTitle={showTitle}
       />
-    );
-  } else if (error) {
-    if (error.statusCode === 404) {
-      return <Article {...ERROR_PAGE_NOT_FOUND} showTitle={showTitle} />;
-    } else {
-      return <Article {...ERROR_PAGE} showTitle={showTitle} />;
-    }
-  } else {
-    return <p>'Ładowanie...'</p>;
-  }
+    </ErrorWrapper>
+  );
 }

@@ -1,6 +1,12 @@
 <script lang="ts">
   import { onMount, setContext } from 'svelte';
-  import { omit } from './../../../node_modules/svelma/src/utils';
+
+  function omit(obj: any, ...keysToOmit: string[]) {
+    return Object.keys(obj).reduce((acc, key) => {
+      if (keysToOmit.indexOf(key) === -1) acc[key] = obj[key];
+      return acc;
+    }, {});
+  }
 
   export let noStar: boolean = false;
 
@@ -52,28 +58,19 @@
 
   setContext('type', () => type);
 
-  let el;
-  let labelEl;
-  let messageEl;
+  let el: any;
+  let labelEl: any;
+  let messageEl: any;
   let fieldType = '';
-  let hasIcons = false;
-  let iconType = '';
   let mounted = false;
   let newPosition = '';
-
-  // Determine the icon type
-  $: {
-    if (['is-danger', 'is-success'].includes(type)) {
-      iconType = type;
-    }
-  }
 
   $: {
     if (grouped) fieldType = 'is-grouped';
     else if (mounted) {
       const childNodes = Array.prototype.filter.call(
         el.children,
-        (c) => ![labelEl, messageEl].includes(c)
+        (c: any) => ![labelEl, messageEl].includes(c)
       );
       if (childNodes.length > 1 && addons) {
         fieldType = 'has-addons';

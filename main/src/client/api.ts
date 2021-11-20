@@ -1,6 +1,6 @@
 import { NewsListElement } from 'types';
 import { AnimalCategory, AnimalType, News } from '.prisma/client';
-import { AnimalImage, Page as PageModel, Animal, VirtualCaretakerType } from '@prisma/client';
+import { AnimalImage, Page as PageModel, Animal, VirtualCaretakerType, Settings } from '@prisma/client';
 
 const DEV = 1;
 
@@ -93,6 +93,11 @@ export async function fetchAnimalImages(id: string): Promise<FetchResult<AnimalI
 export async function fetchPage(id: string, isSSR = true): Promise<FetchResult<PageModel>> {
     const url = (isSSR ? SSR_BACKEND_URL : BACKEND_URL) + '/api/pages/' + id;
     return genericFetchGet(url, isSSR)
+}
+
+export async function fetchSettings(): Promise<FetchResult<Settings[]>> {
+    const url = '/api/settings';
+    return genericFetchGet(url);
 }
 
 export async function fetchAnimals({

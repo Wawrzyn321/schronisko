@@ -4,6 +4,7 @@ import { AnimalImage } from '.prisma/client';
 import styles from './AnimalImages.module.scss';
 import { Article } from 'components/Article/Article';
 import { ERROR_ANIMAL_IMAGES } from 'errors';
+import { LayoutWrapper } from 'components/LayoutWrapper';
 
 export function AnimalImages({ id }: { id: string }) {
   const [images, setImages] = useState<AnimalImage[]>([]);
@@ -14,7 +15,9 @@ export function AnimalImages({ id }: { id: string }) {
       setImages(data);
     };
 
-    loadImages();
+    if (!images) {
+      loadImages();
+    }
   }, []);
 
   if (images) {
@@ -28,6 +31,10 @@ export function AnimalImages({ id }: { id: string }) {
       </ul>
     );
   } else {
-    return <Article {...ERROR_ANIMAL_IMAGES} showTitle={false} />;
+    return (
+      <LayoutWrapper>
+        <Article {...ERROR_ANIMAL_IMAGES} showTitle={false} />
+      </LayoutWrapper>
+    );
   }
 }
