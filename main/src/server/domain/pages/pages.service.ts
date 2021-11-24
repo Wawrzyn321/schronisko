@@ -26,7 +26,6 @@ export class PagesService {
   }
 
   async get(id: string, useSubstitution: boolean): Promise<Page> {
-    console.log(id);
     const page = await this.prisma.page.findUnique({ where: { id } });
     if (!page) {
       throw new NotFoundException();

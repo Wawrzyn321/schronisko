@@ -14,7 +14,6 @@ export class AnimalImagesService {
   constructor(private prisma: PrismaService) { }
 
   async get(animalId: string, filterPublic?: boolean): Promise<AnimalImage[]> {
-    // better findUnique instead of findFirst
     if (!this.prisma.animal.findFirst({ where: { id: animalId, isPublic: filterPublic ? true : undefined } })) {
       throw new NotFoundException();
     }

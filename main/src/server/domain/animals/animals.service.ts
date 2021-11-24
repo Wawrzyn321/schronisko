@@ -96,7 +96,6 @@ export class AnimalsService {
   }
 
   async get(id: string, filterPublic?: boolean): Promise<Animal> {
-    // better findUnique instead of findFirst
     const animal = await this.prisma.animal.findFirst({ where: { id, isPublic: filterPublic ? true : undefined } });
     if (!animal) {
       throw new NotFoundException();

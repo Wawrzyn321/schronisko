@@ -37,7 +37,6 @@ export class NewsService {
   }
 
   async get(id: string, props: GetProps): Promise<News> {
-    // better findUnique instead of findFirst
     const news = await this.prisma.news.findFirst({ where: { id, isPublished: props.filterPublic ? true : undefined } });
     if (!news) {
       throw new NotFoundException();
