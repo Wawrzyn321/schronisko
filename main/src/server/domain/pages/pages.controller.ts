@@ -9,7 +9,6 @@ import { PermissionsGuard } from '../auth/Permissions.guard';
 import { Query } from '@nestjs/common';
 import { ImageData } from '../../img-fs';
 
-
 @Controller('api/c/pages')
 export class PagesPublicController {
     constructor(private pagesService: PagesService) { }
@@ -18,6 +17,12 @@ export class PagesPublicController {
     @Get('dog-volunteering')
     getDogVolunteeringPage() {
         return this.pagesService.getDogsPage();
+    }
+    
+    @Public()
+    @Get(':id')
+    getPage(@Param("id") pageId: string) {
+        return this.pagesService.get(pageId, true);
     }
 }
 @Controller('api/pages')
@@ -34,7 +39,7 @@ export class PagesController {
     @Public()
     @Get(':id')
     getPage(@Param("id") pageId: string) {
-        return this.pagesService.get(pageId);
+        return this.pagesService.get(pageId, false);
     }
 
     @RequirePermission(Permission.PAGE)

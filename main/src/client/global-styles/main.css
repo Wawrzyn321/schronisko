@@ -44,3 +44,25 @@ main > footer {
 #__next {
   display: contents;
 }
+
+.form-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 32px;
+}
+
+.form--button {
+  background-color: var(--text-color);
+  text-transform: uppercase;
+  padding: 12px 54px;
+  border-radius: 32px;
+  color: white;
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.form--button:disabled {
+  cursor: not-allowed;
+  background-color: #7daf91;
+  float: right;
+}

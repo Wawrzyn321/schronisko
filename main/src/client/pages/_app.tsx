@@ -23,11 +23,7 @@ export default function App({
           name="description"
           content="Schronisko dla zwierząt Miejskiego Zakładu Usług Komunalnych w Sosnowcu"
         ></meta>
-        <link
-          rel="icon"
-          type="image/png"
-          href="/site/favicon.ico"
-        ></link>
+        <link rel="icon" type="image/png" href="/site/favicon.ico"></link>
       </Head>
       <Header />
       <Component {...pageProps} />

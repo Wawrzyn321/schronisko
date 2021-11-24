@@ -9,13 +9,48 @@ export function FullName({
 }: SimpleInputProps) {
   return (
     <label>
-      Imię i nazwisko adoptującego *
+      Imię i nazwisko *
       <input
         required
         placeholder="Nie przetwarzamy danych"
         value={fullName}
         onChange={(e) => setFullName(e.target.value)}
         maxLength={50}
+      />
+    </label>
+  );
+}
+
+export function Tel({
+  value: telNumber,
+  setValue: setTelNumber,
+}: SimpleInputProps) {
+  return (
+    <label>
+      Numer telefonu
+      <input
+        type="tel"
+        required
+        placeholder="Telefon kontaktowy"
+        value={telNumber}
+        onChange={(e) => setTelNumber(e.target.value)}
+      />
+    </label>
+  );
+}
+
+export function BirthDate({
+  value: birthDate,
+  setValue: setBirthDate,
+}: SimpleInputProps) {
+  return (
+    <label>
+      Data urodzenia
+      <input
+        type="date"
+        required
+        value={birthDate}
+        onChange={(e) => setBirthDate(e.target.value)}
       />
     </label>
   );
@@ -67,6 +102,25 @@ export function AdditionalMessage({
         placeholder="Dodatkowe uwagi"
         value={additionalMessage}
         onChange={(e) => setAdditionalMessage(e.target.value)}
+        maxLength={160}
+      />
+    </label>
+  );
+}
+
+export function About({
+  value: about,
+  setValue: setAbout,
+}: SimpleInputProps) {
+  return (
+    <label>
+      Coś o sobie
+      <textarea
+        rows={7}
+        required
+        placeholder="Kilka słów o sobie, posiadane zwierzęta, poprzednie doświadczenie"
+        value={about}
+        onChange={(e) => setAbout(e.target.value)}
         maxLength={160}
       />
     </label>

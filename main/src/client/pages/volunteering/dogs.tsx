@@ -1,19 +1,27 @@
-import { Page as PageModel } from '.prisma/client';
-import { fetchDogVolunteeringPage } from 'api';
+import { Page as PageModel, Settings } from '.prisma/client';
+import { fetchDogVolunteeringPage, fetchSettings } from 'api';
 import { Breadcrumbs } from 'components/Breadcrumbs/Breadcrumbs';
 import { LayoutWrapper } from 'components/LayoutWrapper';
 import { Page } from 'components/Page';
 import React from 'react';
+import { DogVolunteeringWrapper } from './DogVolunteeringWrapper';
 
-const ID = '';
+const ID = ''; //todo
 
-export default function VolunteerDogs({ ssrPage }: { ssrPage: PageModel }) {
+type VolunteerDogsProps = {
+  ssrPage: PageModel;
+  ssrSettings: Settings[];
+};
+
+export default function VolunteerDogs({
+  ssrPage,
+  ssrSettings,
+}: VolunteerDogsProps) {
   return (
     <LayoutWrapper>
       <Breadcrumbs items={['Wolontariat', 'Pies']} />
       <VolunteerDogsPage ssrPage={ssrPage} />
-      
-      A TU BĘDZIE FORMULARZ
+      <DogVolunteeringWrapper ssrSettings={ssrSettings} />
     </LayoutWrapper>
   );
 }
@@ -23,9 +31,12 @@ function VolunteerDogsPage({ ssrPage }: { ssrPage: PageModel }) {
 }
 
 export async function getServerSideProps(): Promise<{
-  props: { ssrPage: PageModel };
+  props: VolunteerDogsProps;
 }> {
   return {
-    props: { ssrPage: (await fetchDogVolunteeringPage(ID, true)).data },
+    props: {
+      ssrPage: (await fetchDogVolunteeringPage(ID)).data,
+      ssrSettings: (await fetchSettings()).data,
+    },
   };
 }

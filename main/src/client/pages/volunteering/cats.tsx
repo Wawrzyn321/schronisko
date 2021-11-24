@@ -3,6 +3,7 @@ import { fetchPage } from 'api';
 import { Breadcrumbs } from 'components/Breadcrumbs/Breadcrumbs';
 import { LayoutWrapper } from 'components/LayoutWrapper';
 import { Page } from 'components/Page';
+import { VolunteeringForm } from 'components/VolunteeringForm/VolunteeringForm';
 
 const ID = 'wolontariat-kot';
 
@@ -10,7 +11,8 @@ export default function VolunteerCats({ ssrPage }: { ssrPage: PageModel }) {
   return (
     <LayoutWrapper>
       <Breadcrumbs items={['Wolontariat', 'Kot']} />
-      <Page id={ID} ssrPage={ssrPage} />A TU BĘDZIE FORMULARZ
+      <Page id={ID} ssrPage={ssrPage} />
+      <VolunteeringForm />
     </LayoutWrapper>
   );
 }

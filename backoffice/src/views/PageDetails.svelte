@@ -9,6 +9,7 @@
   import { notifyError, notifySuccess } from '../contexts/notification.context';
   import Loader from '../components/shared/Loader.svelte';
   import type { FileMap } from '../components/shared/Editor/FileMap';
+import AboutSubstitutions from '../components/AboutSubstitutions.svelte';
 
   export let params: { id: string };
 
@@ -67,6 +68,7 @@
         </Button>
       </div>
     </header>
+    <AboutSubstitutions />
     <EditorTabs
       title={page.title}
       contentForPreview={editedContent}

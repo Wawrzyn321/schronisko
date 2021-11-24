@@ -25,7 +25,7 @@ export class NewsPublicController {
 
     @Get(':id')
     getSingleNews(@Param("id") newsId: string) {
-        return this.newsService.get(newsId, true);
+        return this.newsService.get(newsId, {filterPublic: true, useSubstitution: true});
     }
 }
 
@@ -43,7 +43,7 @@ export class NewsController {
     @RequirePermission(Permission.NEWS)
     @Get(':id')
     getSingleNews(@Param("id") newsId: string) {
-        return this.newsService.get(newsId);
+        return this.newsService.get(newsId, {filterPublic: false, useSubstitution: false});
     }
 
     @RequirePermission(Permission.NEWS)

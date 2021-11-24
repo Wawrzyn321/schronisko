@@ -1,3 +1,4 @@
+import { containsSubsitution, subsitute } from '../../substitutions';
 import { Permission } from '@prisma/client';
 import { LoggedInUser } from './../auth/types';
 import { NewsCreateInput, NewsUpdateInput, NewsModifyParams, NewsListElement } from './News';
@@ -9,12 +10,18 @@ import { saveImage, deleteImage, saveImagesFromContentModyfyingIt, deleteImagesI
 import { validateNewsCreate, validateNewsUpdate } from './helpers';
 import { LogsService } from '../logs/logs.service';
 import { formattedDiff } from '../logs/diff';
+import { SettingsService } from '../settings/settings.service';
 
 const imageListElementFields = { title: true, description: true, id: true, isPublished: true, createdAt: true, imageName: true };
 
+type GetProps = {
+  filterPublic: boolean;
+  useSubstitution: boolean;
+}
+
 @Injectable()
 export class NewsService {
-  constructor(private prisma: PrismaService, private logsService: LogsService) { }
+  constructor(private prisma: PrismaService, private logsService: LogsService, private settingsService: SettingsService) { }
 
   toListElement(news: News): NewsListElement {
     const { content, ...listElement } = news;
@@ -29,12 +36,18 @@ export class NewsService {
     return await this.prisma.news.findMany({ take: count, where: { isPublished: true }, select: imageListElementFields, orderBy: [{ createdAt: 'desc' }] });
   }
 
-  async get(id: string, filterPublic?: boolean): Promise<News> {
+  async get(id: string, props: GetProps): Promise<News> {
     // better findUnique instead of findFirst
-    const news = await this.prisma.news.findFirst({ where: { id, isPublished: filterPublic ? true : undefined } });
+    const news = await this.prisma.news.findFirst({ where: { id, isPublished: props.filterPublic ? true : undefined } });
     if (!news) {
       throw new NotFoundException();
     }
+
+    if (props.useSubstitution && containsSubsitution(news.content)) {
+      const settings = await this.settingsService.getAll();
+      news.content = subsitute(news.content, settings);
+    }
+
     return news;
   }
 
@@ -60,7 +73,7 @@ export class NewsService {
     if (!validateNewsUpdate(params.news)) {
       throw new BadRequestException(id, "Brak tytułu.");
     }
-    const prevNews = await this.get(id);
+    const prevNews = await this.get(id, { filterPublic: false, useSubstitution: false });
     if (prevNews.id !== id) {
       throw new BadRequestException(id, "id musi się zgadzać");
     }

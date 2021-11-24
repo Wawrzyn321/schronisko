@@ -22,7 +22,7 @@ export function Page({
 
   useEffect(() => {
     const loadPage = async () => {
-      const { data, error } = await fetchFn(id, false);
+      const { data, error } = await fetchFn(id);
       setPage(data);
       setError(error);
     };

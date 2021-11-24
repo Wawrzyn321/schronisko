@@ -25,22 +25,29 @@ export class FetchError extends Error {
     }
 }
 
-async function throwingFetch(input: string, init: RequestInit = null, isSSR = false): Promise<any> {
-    function createRequestOptions(skipHttpsValidation: boolean): RequestInit {
+function isSSR(): boolean {
+    return typeof window === 'undefined';
+}
+
+function getBackendUrl() {
+    return isSSR() ? SSR_BACKEND_URL : BACKEND_URL
+}
+
+async function throwingFetch(input: string, init: RequestInit = null): Promise<any> {
+    function createRequestOptions(): RequestInit {
         if (input.startsWith('http://')) {
             return null;
         }
-        const isNode = typeof window === 'undefined';
-        if (isNode) {
+        if (isSSR()) {
             var Agent = (require('https') as any).Agent;
             return {
-                agent: new Agent({ rejectUnauthorized: !skipHttpsValidation })
+                agent: new Agent({ rejectUnauthorized: true })
             } as RequestInit;
         }
         return null;
     }
 
-    const response = await fetch(input, { ...init, ...createRequestOptions(isSSR) });
+    const response = await fetch(input, { ...init, ...createRequestOptions() });
     if (response.ok) {
         if (response.headers.get('content-type')?.includes('application/json')) {
             return await response.json();
@@ -62,10 +69,10 @@ export interface AnimalListResult {
     totalCount: number;
 }
 
-async function genericFetchGet<T>(url: string, isSSR: boolean = false): Promise<FetchResult<T>> {
+async function genericFetchGet<T>(url: string): Promise<FetchResult<T>> {
     try {
         return {
-            data: await throwingFetch(url, null, isSSR),
+            data: await throwingFetch(url, null),
             error: null,
         };
     } catch (e) {
@@ -79,9 +86,8 @@ async function genericFetchGet<T>(url: string, isSSR: boolean = false): Promise<
 
 export async function fetchAnimal(
     id: string,
-    isSSR = true,
 ): Promise<FetchResult<Animal>> {
-    const url = (isSSR ? SSR_BACKEND_URL : BACKEND_URL) + '/api/c/animals/' + id;
+    const url = (getBackendUrl()) + '/api/c/animals/' + id;
     return genericFetchGet(url);
 }
 
@@ -90,13 +96,13 @@ export async function fetchAnimalImages(id: string): Promise<FetchResult<AnimalI
     return genericFetchGet(url);
 }
 
-export async function fetchPage(id: string, isSSR = true): Promise<FetchResult<PageModel>> {
-    const url = (isSSR ? SSR_BACKEND_URL : BACKEND_URL) + '/api/pages/' + id;
-    return genericFetchGet(url, isSSR)
+export async function fetchPage(id: string): Promise<FetchResult<PageModel>> {
+    const url = (getBackendUrl()) + '/api/c/pages/' + id;
+    return genericFetchGet(url)
 }
 
 export async function fetchSettings(): Promise<FetchResult<Settings[]>> {
-    const url = '/api/settings';
+    const url = (getBackendUrl()) + '/api/settings';
     return genericFetchGet(url);
 }
 
@@ -108,27 +114,25 @@ export async function fetchAnimals({
 }
 
 export async function fetchAfterAdoptionAnimals(isSSR: boolean = true): Promise<FetchResult<Animal[]>> {
-    const url = (isSSR ? SSR_BACKEND_URL : BACKEND_URL) +
+    const url = (getBackendUrl()) +
         '/api/c/animals/after-adoption?count=3';
-    return genericFetchGet(url, isSSR)
+    return genericFetchGet(url)
 }
 
-export async function fetchNews(id: string, isSSR = true): Promise<FetchResult<News>> {
-    const url = (isSSR ? SSR_BACKEND_URL : BACKEND_URL) + '/api/c/news/' + id;
-    return genericFetchGet(url, isSSR);
+export async function fetchNews(id: string): Promise<FetchResult<News>> {
+    const url = (getBackendUrl()) + '/api/c/news/' + id;
+    return genericFetchGet(url);
 }
 
 export async function fetchRecentNews(
-    isSSR = true,
 ): Promise<FetchResult<NewsListElement[]>> {
-    const url = (isSSR ? SSR_BACKEND_URL : BACKEND_URL) + '/api/c/news/recent?count=5';
-    return genericFetchGet(url, isSSR);
+    const url = (getBackendUrl()) + '/api/c/news/recent?count=5';
+    return genericFetchGet(url);
 }
 
 export async function fetchDogVolunteeringPage(
     _dummyId: string,
-    isSSR = true,
 ): Promise<FetchResult<PageModel>> {
-    const url = (isSSR ? SSR_BACKEND_URL : BACKEND_URL) + '/api/c/pages/dog-volunteering';
-    return genericFetchGet(url, isSSR);
+    const url = (getBackendUrl()) + '/api/c/pages/dog-volunteering';
+    return genericFetchGet(url);
 }

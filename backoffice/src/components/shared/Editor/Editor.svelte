@@ -3,6 +3,16 @@
   import ImageUploader from 'quill-image-uploader';
   import type { FileMap } from './FileMap';
 
+  var Link = Quill.import('formats/link');
+  class MyLink extends Link {
+    static create(value) {
+      const node = super.create(value);
+      node.removeAttribute('target');
+      return node;
+    }
+  }
+  Quill.register(MyLink, true);
+
   const toolbarOptions = [
     [{ header: [1, 2, 3, 4, 5, 6, false] }],
     ['blockquote', 'link', 'image', 'video'],

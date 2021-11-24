@@ -8,6 +8,7 @@ import { LogsService } from './../logs/logs.service';
 import { formattedDiff } from '../logs/diff';
 import { deleteImagesInContent, ImageData, saveImagesFromContentModyfyingIt } from '../../img-fs';
 import { SettingsService } from '../settings/settings.service';
+import { containsSubsitution, subsitute } from './../../substitutions';
 
 @Injectable()
 export class PagesService {
@@ -21,19 +22,25 @@ export class PagesService {
     const settings = await this.settingsService.getAll();
     const dogVolunteeringEnabledSetting = settings.find(s => s.id === 'DOG_VOLUNTEERING_ENABLED');
     const areDogVolunteeringEnabled = dogVolunteeringEnabledSetting?.value === 'true';
-    return this.get(areDogVolunteeringEnabled ? 'wolontariat-pies-on' : 'wolontariat-pies-off')
+    return this.get(areDogVolunteeringEnabled ? 'wolontariat-pies-on' : 'wolontariat-pies-off', true)
   }
 
-  async get(id: string): Promise<Page> {
+  async get(id: string, useSubstitution: boolean): Promise<Page> {
+    console.log(id);
     const page = await this.prisma.page.findUnique({ where: { id } });
     if (!page) {
       throw new NotFoundException();
+    }
+
+    if (useSubstitution && containsSubsitution(page.content)) {
+      const settings = await this.settingsService.getAll();
+      page.content = subsitute(page.content, settings);
     }
     return page;
   }
 
   async update(user: LoggedInUser, id: string, page: Page, images: ImageData[]): Promise<Page> {
-    const prevPage = await this.get(id);
+    const prevPage = await this.get(id, false);
     if (prevPage.id !== id) {
       throw new BadRequestException(id, "id musi się zgadzać");
     }

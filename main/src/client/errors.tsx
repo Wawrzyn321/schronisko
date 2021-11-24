@@ -40,6 +40,11 @@ export const ERROR_ANIMAL_LIST: ErrorProps = {
   title: 'Błąd ładowania listy zwierząt',
 };
 
+export const ERROR_VOLUNTEERING_FORM: ErrorProps = {
+  content: 'Tak że tego, coś poszło nie tak.',
+  title: 'Błąd ładowania formularza wolontariatu',
+}
+
 type ErrorWrapperProps = {
   isLoaded: boolean;
   error: FetchError;

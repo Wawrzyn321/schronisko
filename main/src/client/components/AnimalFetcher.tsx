@@ -17,7 +17,7 @@ export function AnimalFetcher({
 
   useEffect(() => {
     const loadAnimal = async () => {
-      const { data, error } = await fetchAnimal(id, false);
+      const { data, error } = await fetchAnimal(id);
       setAnimal(data);
       setError(error);
     };
