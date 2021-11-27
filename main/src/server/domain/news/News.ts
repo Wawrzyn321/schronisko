@@ -1,4 +1,5 @@
 import { ImageData } from './../../img-fs';
+
 export interface NewsCreateInput {
     title: string;
     description: string;

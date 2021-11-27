@@ -3,6 +3,7 @@ import { Page as PageModel } from '.prisma/client';
 import { Page } from 'components/Page';
 import { fetchPageIds, fetchPage } from 'api/api';
 import { LayoutWrapper } from 'components/LayoutWrapper';
+import { getStaticPropsProps } from 'types';
 
 export default function PageComponent({ ssrPage }: { ssrPage: PageModel }) {
   return <IdWrapper Component={ActualPage} ssrPage={ssrPage} />;
@@ -33,11 +34,7 @@ export async function getStaticPaths() {
   return { paths, fallback: true };
 }
 
-export async function getStaticProps({
-  params,
-}: {
-  params: { id: string };
-}): Promise<{
+export async function getStaticProps({ params }: getStaticPropsProps): Promise<{
   props: { ssrPage: PageModel };
 }> {
   const { id } = params;

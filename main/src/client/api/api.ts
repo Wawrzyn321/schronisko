@@ -1,10 +1,9 @@
+import { AnimalListResult, CaptchaSubmit, VolunteeringFormFetch } from './../types';
 import { FormCaptcha } from '../components/Captcha/Captcha';
 import { NewsListElement } from 'types';
 import { AnimalCategory, AnimalType, News } from '.prisma/client';
 import { AnimalImage, Page as PageModel, Animal, VirtualCaretakerType, Settings } from '@prisma/client';
 import { BACKEND_URL, getBackendUrl, isSSR, SSR_BACKEND_URL } from './config';
-
-export type PageFetchFn = (id: string, isSSR?: boolean) => Promise<FetchResult<PageModel>>;
 
 export class FetchError extends Error {
     statusCode: number;
@@ -13,6 +12,11 @@ export class FetchError extends Error {
         super(message);
         this.statusCode = statusCode;
     }
+}
+
+export interface FetchResult<T> {
+    data?: T;
+    error?: FetchError;
 }
 
 async function throwingFetch(input: string, init: RequestInit = null): Promise<any> {
@@ -39,16 +43,6 @@ async function throwingFetch(input: string, init: RequestInit = null): Promise<a
     }
     const error = await response.json();
     throw new FetchError(error.message, error.statusCode);
-}
-
-interface FetchResult<T> {
-    data?: T;
-    error?: FetchError;
-}
-
-export interface AnimalListResult {
-    animals: Animal[];
-    totalCount: number;
 }
 
 async function genericFetch<T>(url: string, init: RequestInit = null): Promise<FetchResult<T>> {
@@ -118,19 +112,6 @@ export async function fetchRecentNews(
 export async function fetchCaptcha(): Promise<FetchResult<FormCaptcha>> {
     const url = BACKEND_URL + '/api/mail/captcha';
     return genericFetch(url, { method: 'POST' });
-}
-
-type CaptchaSubmit = {
-    id: string;
-    text: string;
-}
-
-type VolunteeringFormFetch = {
-    fullName: string;
-    email: string;
-    telNumber: string;
-    birthDate: string;
-    about: string;
 }
 
 export async function fetchVolunteeringForm(captcha: CaptchaSubmit, props: VolunteeringFormFetch): Promise<FetchResult<void>> {

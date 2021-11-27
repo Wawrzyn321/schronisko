@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { News as NewsModel } from '.prisma/client';
 import { Article } from 'components/Article/Article';
 import { ErrorWrapper, ERROR_GENERIC, ERROR_NEWS_NOT_FOUND } from 'errors';
-import { SSRContext } from 'types';
+import { getStaticPropsProps } from 'types';
 
 export default function News({ ssrNews }: { ssrNews: NewsModel }) {
   return <IdWrapper Component={ActualNews} ssrNews={ssrNews} />;
@@ -42,10 +42,20 @@ function ActualNews({ id, ssrNews }: { id: string; ssrNews: NewsModel }) {
   );
 }
 
-export async function getServerSideProps(context: SSRContext): Promise<{
+export async function getStaticPaths() {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  };
+}
+
+export async function getStaticProps({ params }: getStaticPropsProps): Promise<{
   props: { ssrNews: NewsModel };
+  revalidate: number;
 }> {
-  const { id } = context.query;
-  const news = await fetchNews(id);
-  return { props: { ssrNews: news.data } };
+  const { id } = params;
+  return {
+    props: { ssrNews: (await fetchNews(id)).data },
+    revalidate: 60,
+  };
 }
