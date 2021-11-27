@@ -15,7 +15,6 @@ export function Form({
 
   const onSubmit = (e: { preventDefault: () => any }) => {
     e.preventDefault();
-    console.log('no halo')
     handleSubmit();
   };
 

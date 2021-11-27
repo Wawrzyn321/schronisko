@@ -15,6 +15,7 @@ import { AnimalImagesModule } from './domain/animal-images/animal-images.module'
 import { LogsModule } from './domain/logs/logs.module';
 import { SettingsModule } from './domain/settings/settings.module';
 import { ViewModule } from './domain/view/view.module'
+import { CommunicationModule } from './domain/communication/communication.module';
 
 const STATIC_FILES_PATH = '/img/';
 export const LOCAL_STATIC_FILES_PATH = 'src/client/public' + STATIC_FILES_PATH;
@@ -25,7 +26,7 @@ export const WEB_STATIC_FILES_PATH = DEV ?
   'http://localhost:60045' + STATIC_FILES_PATH :
   'https://schronisko-backend.oto-jest-wawrzyn.pl' + STATIC_FILES_PATH;
 
-const domainModules = [AuthModule, UsersModule, PagesModule, NewsModule, AnimalsModule, AnimalImagesModule, LogsModule, SettingsModule];
+const domainModules = [AuthModule, UsersModule, PagesModule, NewsModule, AnimalsModule, AnimalImagesModule, LogsModule, SettingsModule, CommunicationModule];
 const ServeStatic = ServeStaticModule.forRoot({
   rootPath: join(__dirname, '..', LOCAL_STATIC_FILES_PATH),
   serveStaticOptions: {

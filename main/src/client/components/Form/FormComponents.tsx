@@ -108,10 +108,7 @@ export function AdditionalMessage({
   );
 }
 
-export function About({
-  value: about,
-  setValue: setAbout,
-}: SimpleInputProps) {
+export function About({ value: about, setValue: setAbout }: SimpleInputProps) {
   return (
     <label>
       Coś o sobie

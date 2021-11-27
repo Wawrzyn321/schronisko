@@ -1,3 +1,4 @@
+import { FormCaptcha } from './components/Captcha/Captcha';
 import { NewsListElement } from 'types';
 import { AnimalCategory, AnimalType, News } from '.prisma/client';
 import { AnimalImage, Page as PageModel, Animal, VirtualCaretakerType, Settings } from '@prisma/client';
@@ -69,10 +70,10 @@ export interface AnimalListResult {
     totalCount: number;
 }
 
-async function genericFetchGet<T>(url: string): Promise<FetchResult<T>> {
+async function genericFetch<T>(url: string, init: RequestInit = null): Promise<FetchResult<T>> {
     try {
         return {
-            data: await throwingFetch(url, null),
+            data: await throwingFetch(url, init),
             error: null,
         };
     } catch (e) {
@@ -88,51 +89,77 @@ export async function fetchAnimal(
     id: string,
 ): Promise<FetchResult<Animal>> {
     const url = (getBackendUrl()) + '/api/c/animals/' + id;
-    return genericFetchGet(url);
+    return genericFetch(url);
 }
 
 export async function fetchAnimalImages(id: string): Promise<FetchResult<AnimalImage[]>> {
     const url = BACKEND_URL + '/api/c/animal-images/' + id;
-    return genericFetchGet(url);
+    return genericFetch(url);
 }
 
 export async function fetchPage(id: string): Promise<FetchResult<PageModel>> {
     const url = (getBackendUrl()) + '/api/c/pages/' + id;
-    return genericFetchGet(url)
+    return genericFetch(url)
+}
+
+export async function fetchPageIds(): Promise<string[]> {
+    return await throwingFetch(SSR_BACKEND_URL + '/api/c/pages');
 }
 
 export async function fetchSettings(): Promise<FetchResult<Settings[]>> {
     const url = (getBackendUrl()) + '/api/settings';
-    return genericFetchGet(url);
+    return genericFetch(url);
 }
 
 export async function fetchAnimals({
     categories = [], type, vCaretakerType, skip, take
 }: { categories: AnimalCategory[], vCaretakerType: VirtualCaretakerType, type: AnimalType, skip: number, take: number }): Promise<FetchResult<AnimalListResult>> {
     const url = `${BACKEND_URL}/api/c/animals?categories=${categories.join(',')}&vCaretakerType=${vCaretakerType}&type=${type}&skip=${skip}&take=${take}`;
-    return genericFetchGet(url);
+    return genericFetch(url);
 }
 
-export async function fetchAfterAdoptionAnimals(isSSR: boolean = true): Promise<FetchResult<Animal[]>> {
-    const url = (getBackendUrl()) +
-        '/api/c/animals/after-adoption?count=3';
-    return genericFetchGet(url)
+export async function fetchAfterAdoptionAnimals(): Promise<FetchResult<Animal[]>> {
+    const url = getBackendUrl() + '/api/c/animals/after-adoption?count=3';
+    return genericFetch(url)
 }
 
 export async function fetchNews(id: string): Promise<FetchResult<News>> {
     const url = (getBackendUrl()) + '/api/c/news/' + id;
-    return genericFetchGet(url);
+    return genericFetch(url);
 }
 
 export async function fetchRecentNews(
 ): Promise<FetchResult<NewsListElement[]>> {
     const url = (getBackendUrl()) + '/api/c/news/recent?count=5';
-    return genericFetchGet(url);
+    return genericFetch(url);
+}
+
+export async function fetchCaptcha(): Promise<FetchResult<FormCaptcha>> {
+    const url = BACKEND_URL + '/api/mail/captcha';
+    return genericFetch(url, { method: 'POST' });
+}
+
+type CaptchaSubmit = {
+    id: string;
+    text: string;
+}
+
+type VolunteeringFormFetch = {
+    fullName: string;
+    email: string;
+    telNumber: string;
+    birthDate: string;
+    about: string;
+}
+
+export async function fetchVolunteeringForm(captcha: CaptchaSubmit, props: VolunteeringFormFetch): Promise<FetchResult<void>> {
+    const url = BACKEND_URL + `/api/mail/volunteer?id=${captcha.id}&text=${captcha.text}`;
+    return genericFetch(url, { method: 'POST', body: JSON.stringify(props) });
 }
 
 export async function fetchDogVolunteeringPage(
     _dummyId: string,
 ): Promise<FetchResult<PageModel>> {
     const url = (getBackendUrl()) + '/api/c/pages/dog-volunteering';
-    return genericFetchGet(url);
+    return genericFetch(url);
 }

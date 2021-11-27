@@ -25,6 +25,10 @@ export class PagesService {
     return this.get(areDogVolunteeringEnabled ? 'wolontariat-pies-on' : 'wolontariat-pies-off', true)
   }
 
+  async getIds(): Promise<string[]> {
+    return (await this.prisma.page.findMany()).map(p => p.id);
+  }
+
   async get(id: string, useSubstitution: boolean): Promise<Page> {
     const page = await this.prisma.page.findUnique({ where: { id } });
     if (!page) {

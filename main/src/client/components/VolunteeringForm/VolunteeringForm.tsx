@@ -1,3 +1,5 @@
+import { fetchVolunteeringForm } from 'api';
+import { Captcha } from 'components/Captcha/Captcha';
 import { LayoutWrapper } from 'components/LayoutWrapper';
 import { useState } from 'react';
 import { Form } from '../Form/Form';
@@ -9,10 +11,29 @@ export function VolunteeringForm() {
   const [telNumber, setTelNumber] = useState('');
   const [birthDate, setBirthDate] = useState('');
   const [about, setAbout] = useState('');
+  const [captcha, setCaptcha] = useState('');
+  const [captchaId, setCaptchaId] = useState('');
+
+  const sendForm = async () => {
+    try {
+      await fetchVolunteeringForm(
+        { id: captchaId, text: captcha },
+        {
+          fullName,
+          email,
+          telNumber,
+          birthDate,
+          about,
+        },
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   return (
     <LayoutWrapper>
-      <Form handleSubmit={() => console.log('dupa')}>
+      <Form handleSubmit={sendForm}>
         {(valid: boolean) => (
           <>
             <div className="form-grid-2">
@@ -24,9 +45,20 @@ export function VolunteeringForm() {
               <BirthDate value={birthDate} setValue={setBirthDate} />
             </div>
             <About value={about} setValue={setAbout} />
-            <button className="form--button" disabled={!valid}>
-              Zatwierdź
-            </button>
+            <div className="form-grid-3">
+              <Captcha onGenerate={setCaptchaId} />
+              <label>
+                Wpisz captchę:
+                <input
+                  required
+                  value={captcha}
+                  onChange={(e) => setCaptcha(e.target.value)}
+                />
+              </label>
+              <button className="form--button" disabled={!valid}>
+                Wyślij
+              </button>
+            </div>
           </>
         )}
       </Form>

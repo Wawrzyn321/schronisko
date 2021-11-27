@@ -51,6 +51,12 @@ main > footer {
   column-gap: 32px;
 }
 
+.form-grid-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 32px;
+}
+
 .form--button {
   background-color: var(--text-color);
   text-transform: uppercase;

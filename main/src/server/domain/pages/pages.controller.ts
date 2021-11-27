@@ -24,6 +24,12 @@ export class PagesPublicController {
     getPage(@Param("id") pageId: string) {
         return this.pagesService.get(pageId, true);
     }
+
+    @Public()
+    @Get()
+    getPageIdsForPrerender() {
+        return this.pagesService.getIds();
+    }
 }
 @Controller('api/pages')
 export class PagesController {

@@ -4,7 +4,7 @@ import { Breadcrumbs } from 'components/Breadcrumbs/Breadcrumbs';
 import { LayoutWrapper } from 'components/LayoutWrapper';
 import { Page } from 'components/Page';
 import React from 'react';
-import { DogVolunteeringWrapper } from './DogVolunteeringWrapper';
+import { DogVolunteeringWrapper } from '../../components/DogVolunteeringWrapper';
 
 const ID = ''; //todo
 

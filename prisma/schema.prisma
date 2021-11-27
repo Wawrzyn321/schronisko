@@ -117,15 +117,21 @@ model UserPermissions {
 }
 
 model Logs {
-  id          String     @id @default(uuid())
-  time        DateTime
-  userId      Int
-  login       String
-  message String
-  permission  Permission
+  id         String     @id @default(uuid())
+  time       DateTime
+  userId     Int
+  login      String
+  message    String
+  permission Permission
 }
 
 model Settings {
-  id          String     @id
-  value       String
+  id    String @id
+  value String
+}
+
+model Captcha {
+  id        String   @id @default(uuid())
+  text      String
+  timestamp DateTime
 }

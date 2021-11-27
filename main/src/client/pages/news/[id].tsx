@@ -16,7 +16,7 @@ function ActualNews({ id, ssrNews }: { id: string; ssrNews: NewsModel }) {
 
   useEffect(() => {
     const loadPage = async () => {
-      const { data, error } = await fetchNews(id, false);
+      const { data, error } = await fetchNews(id);
       setNews(data);
       setError(error);
     };
@@ -46,6 +46,6 @@ export async function getServerSideProps(context: SSRContext): Promise<{
   props: { ssrNews: NewsModel };
 }> {
   const { id } = context.query;
-  const news = await fetchNews(id, true);
+  const news = await fetchNews(id);
   return { props: { ssrNews: news.data } };
 }
