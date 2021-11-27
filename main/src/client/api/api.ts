@@ -1,19 +1,8 @@
-import { FormCaptcha } from './components/Captcha/Captcha';
+import { FormCaptcha } from '../components/Captcha/Captcha';
 import { NewsListElement } from 'types';
 import { AnimalCategory, AnimalType, News } from '.prisma/client';
 import { AnimalImage, Page as PageModel, Animal, VirtualCaretakerType, Settings } from '@prisma/client';
-
-const DEV = 1;
-
-const BACKEND_URL = DEV ? 'http://localhost:60045' : 'https://schronisko-backend.oto-jest-wawrzyn.pl';
-const SSR_BACKEND_URL = DEV ? 'http://localhost:60045' : 'https://schronisko-backend.oto-jest-wawrzyn.pl';
-
-export const SITE_IMAGES_URL = BACKEND_URL + '/site';
-export const OVERLAYS_URL = SITE_IMAGES_URL + '/overlays';
-export const MAIN_PAGE_IMAGES_URL = SITE_IMAGES_URL + '/main';
-export const IMAGES_URL = BACKEND_URL + '/img';
-export const ANIMAL_IMAGES_URL = IMAGES_URL + '/animals';
-export const ANIMAL_IMAGES_IMAGES_URL = ANIMAL_IMAGES_URL + '/pics';
+import { BACKEND_URL, getBackendUrl, isSSR, SSR_BACKEND_URL } from './config';
 
 export type PageFetchFn = (id: string, isSSR?: boolean) => Promise<FetchResult<PageModel>>;
 
@@ -24,14 +13,6 @@ export class FetchError extends Error {
         super(message);
         this.statusCode = statusCode;
     }
-}
-
-function isSSR(): boolean {
-    return typeof window === 'undefined';
-}
-
-function getBackendUrl() {
-    return isSSR() ? SSR_BACKEND_URL : BACKEND_URL
 }
 
 async function throwingFetch(input: string, init: RequestInit = null): Promise<any> {

@@ -1,4 +1,4 @@
-import { fetchCaptcha, FetchError } from 'api';
+import { fetchCaptcha, FetchError } from 'api/api';
 import { useEffect, useState } from 'react';
 
 export type FormCaptcha = {

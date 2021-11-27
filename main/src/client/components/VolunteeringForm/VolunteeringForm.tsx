@@ -1,4 +1,4 @@
-import { fetchVolunteeringForm } from 'api';
+import { fetchVolunteeringForm } from 'api/api';
 import { Captcha } from 'components/Captcha/Captcha';
 import { LayoutWrapper } from 'components/LayoutWrapper';
 import { useState } from 'react';

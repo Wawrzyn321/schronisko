@@ -1,5 +1,5 @@
 import { Page as PageModel } from '.prisma/client';
-import { FetchError, fetchPage, fetchSettings } from 'api';
+import { FetchError, fetchPage, fetchSettings } from 'api/api';
 import { useEffect, useState } from 'react';
 import { AdoptionModalProps } from './VAdoptionModalContent';
 

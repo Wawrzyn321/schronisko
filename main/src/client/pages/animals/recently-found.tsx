@@ -1,5 +1,5 @@
 import { AnimalCategory, Page as PageModel } from '.prisma/client';
-import { fetchPage } from 'api';
+import { fetchPage } from 'api/api';
 import { AnimalList } from 'components/AnimalList/AnimalList';
 import { Breadcrumbs } from 'components/Breadcrumbs/Breadcrumbs';
 import { LayoutWrapper } from 'components/LayoutWrapper';

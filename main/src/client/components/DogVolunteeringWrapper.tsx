@@ -1,5 +1,5 @@
 import { Settings } from '.prisma/client';
-import { FetchError, fetchSettings } from 'api';
+import { FetchError, fetchSettings } from 'api/api';
 import { Article } from 'components/Article/Article';
 import { VolunteeringForm } from 'components/VolunteeringForm/VolunteeringForm';
 import { ERROR_VOLUNTEERING_FORM } from 'errors';

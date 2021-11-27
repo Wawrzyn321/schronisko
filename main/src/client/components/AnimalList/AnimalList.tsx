@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 import { AnimalCategoryLegend } from './AnimalCategoryLegend/AnimalCategoryLegend';
 import { AnimalCard } from './AnimalCard/AnimalCard';
 import { Pagination } from './Pagination/Pagination';
-import { fetchAnimals, FetchError } from 'api';
+import { fetchAnimals, FetchError } from 'api/api';
 import { Article } from 'components/Article/Article';
 import { ERROR_ANIMAL_LIST } from 'errors';
 import { AnimalModal, AnimalModalData } from './AnimalModal/AnimalModal';

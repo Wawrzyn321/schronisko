@@ -1,5 +1,5 @@
 import { Page as PageModel } from '.prisma/client';
-import { fetchPage } from 'api';
+import { fetchPage } from 'api/api';
 import { Breadcrumbs } from 'components/Breadcrumbs/Breadcrumbs';
 import { LayoutWrapper } from 'components/LayoutWrapper';
 import { Page } from 'components/Page';

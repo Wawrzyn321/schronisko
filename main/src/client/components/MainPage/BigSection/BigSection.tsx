@@ -1,4 +1,4 @@
-import { MAIN_PAGE_IMAGES_URL } from 'api';
+import { MAIN_PAGE_IMAGES_URL } from 'api/config';
 import styles from './BigSection.module.scss';
 import { NewsListElement } from 'types';
 import { Page as PageModel } from '.prisma/client';

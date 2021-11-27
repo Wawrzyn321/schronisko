@@ -1,5 +1,5 @@
 import { Page as PageModel, Settings } from '.prisma/client';
-import { fetchDogVolunteeringPage, fetchSettings } from 'api';
+import { fetchDogVolunteeringPage, fetchSettings } from 'api/api';
 import { Breadcrumbs } from 'components/Breadcrumbs/Breadcrumbs';
 import { LayoutWrapper } from 'components/LayoutWrapper';
 import { Page } from 'components/Page';

@@ -1,8 +1,11 @@
 import Link from 'next/link';
 import styles from './AfterAdoptionAnimals.module.scss';
 import { AfterAdoptionAnimal } from 'types';
-import { MAIN_PAGE_IMAGES_URL } from 'api';
-import { buildAnimalImageUrl, buildAnimalUrl } from '_util';
+import {
+  MAIN_PAGE_IMAGES_URL,
+  buildAnimalImageUrl,
+  buildAnimalUrl,
+} from 'api/config';
 import { Animal } from '.prisma/client';
 
 function AnimalImage({ animal }: { animal: AfterAdoptionAnimal }) {

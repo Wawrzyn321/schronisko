@@ -1,4 +1,4 @@
-import { FetchError } from 'api';
+import { FetchError } from 'api/api';
 import { Article, ArticleProps } from 'components/Article/Article';
 import { LayoutWrapper } from 'components/LayoutWrapper';
 import React from 'react';

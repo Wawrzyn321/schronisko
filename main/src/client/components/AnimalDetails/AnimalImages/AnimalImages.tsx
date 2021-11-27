@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import { ANIMAL_IMAGES_IMAGES_URL, fetchAnimalImages } from 'api';
+import { ANIMAL_IMAGES_IMAGES_URL } from 'api/config';
 import { AnimalImage } from '.prisma/client';
 import styles from './AnimalImages.module.scss';
 import { Article } from 'components/Article/Article';
 import { ERROR_ANIMAL_IMAGES } from 'errors';
 import { LayoutWrapper } from 'components/LayoutWrapper';
+import { fetchAnimalImages } from 'api/api';
 
 export function AnimalImages({ id }: { id: string }) {
   const [images, setImages] = useState<AnimalImage[]>([]);

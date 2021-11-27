@@ -1,5 +1,5 @@
 import { IdWrapper } from 'components/IdWrapper';
-import { FetchError, fetchNews } from 'api';
+import { FetchError, fetchNews } from 'api/api';
 import { useEffect, useState } from 'react';
 import { News as NewsModel } from '.prisma/client';
 import { Article } from 'components/Article/Article';

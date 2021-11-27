@@ -1,6 +1,6 @@
 import React from 'react';
 import { Animal } from '.prisma/client';
-import { fetchAnimal } from 'api';
+import { fetchAnimal } from 'api/api';
 import { IdWrapper } from 'components/IdWrapper';
 import { LayoutWrapper } from 'components/LayoutWrapper';
 import { SSRContext } from 'types';

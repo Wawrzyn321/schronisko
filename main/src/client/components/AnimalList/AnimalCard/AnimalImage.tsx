@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { buildAnimalImageUrl, buildAnimalUrl } from '_util';
+import { buildAnimalImageUrl, buildAnimalUrl } from 'api/config';
 import { Animal, AnimalCategory } from '.prisma/client';
 import { isReadonly } from '../isReadonly';
 

@@ -4,7 +4,7 @@ import { AfterAdoption } from 'components/MainPage/AfterAdoption/AfterAdoption';
 import { FaqBanner } from 'components/MainPage/FaqBanner';
 import { DonateAndRecentlyFound } from 'components/MainPage/DonateAndRecentlyFound/DonateAndRecentlyFound';
 
-import { fetchAfterAdoptionAnimals, fetchPage, fetchRecentNews } from 'api';
+import { fetchAfterAdoptionAnimals, fetchPage, fetchRecentNews } from 'api/api';
 import { AfterAdoptionAnimal, NewsListElement } from 'types';
 
 const ID = 'glowna-adopcje';

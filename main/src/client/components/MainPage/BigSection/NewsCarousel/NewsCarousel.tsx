@@ -1,4 +1,4 @@
-import { IMAGES_URL } from 'api';
+import { IMAGES_URL } from 'api/config';
 import Image from 'next/image';
 import whiteArrow from 'public/site/main/white arrow.svg';
 import styles from './NewsCarousel.module.scss';

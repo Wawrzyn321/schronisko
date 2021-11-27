@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Animal } from '.prisma/client';
-import { fetchAnimal } from 'api';
+import { fetchAnimal } from 'api/api';
 import { IdWrapper } from 'components/IdWrapper';
 import { SSRContext } from 'types';
 import { Breadcrumbs } from 'components/Breadcrumbs/Breadcrumbs';

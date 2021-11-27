@@ -1,5 +1,5 @@
 import { Page as PageModel } from '.prisma/client';
-import { FetchError, fetchPage, PageFetchFn } from 'api';
+import { FetchError, fetchPage, PageFetchFn } from 'api/api';
 import { ErrorWrapper, ERROR_PAGE, ERROR_PAGE_NOT_FOUND } from 'errors';
 import { useEffect, useState } from 'react';
 import { Article } from './Article/Article';

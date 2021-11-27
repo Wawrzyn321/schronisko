@@ -1,6 +1,6 @@
 import styles from './AnimalCard.module.scss';
 import { AnimalCategory } from '.prisma/client';
-import { OVERLAYS_URL } from 'api';
+import { OVERLAYS_URL } from 'api/config';
 
 export function Overlay({ category }: { category: AnimalCategory }) {
   const Img = ({ name }: { name: string }) => (

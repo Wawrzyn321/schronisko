@@ -1,5 +1,5 @@
 import styles from './AnimalCard.module.scss';
-import { SITE_IMAGES_URL } from 'api';
+import { SITE_IMAGES_URL } from 'api/config';
 import { Overlay } from './Overlay';
 import { Animal } from '.prisma/client';
 import { AnimalImage } from './AnimalImage';

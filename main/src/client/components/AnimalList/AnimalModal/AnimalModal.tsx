@@ -1,5 +1,5 @@
 import { Animal, AnimalCategory } from '.prisma/client';
-import { buildAnimalImageUrl } from '_util';
+import { buildAnimalImageUrl } from 'api/config';
 import { Modal } from 'components/Modal';
 
 export interface AnimalModalData {
