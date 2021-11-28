@@ -21,7 +21,7 @@ export function VAdoptionForm({ animal }: { animal: Animal }) {
   const [vCaretakerName, setVCaretakerName] = useState('');
   const [email, setEmail] = useState('');
   const [additionalMessage, setAdditionalMessage] = useState('');
-  const [captcha, setCaptcha] = useState<FormCaptcha>(null);
+  const [captcha, setCaptcha] = useState<FormCaptcha>({ id: '', text: '' });
 
   const [showAdoptionModal, setShowAdoptionModal] = useState(false);
 
@@ -73,7 +73,7 @@ export function VAdoptionForm({ animal }: { animal: Animal }) {
                 Wpisz captchę:
                 <input
                   required
-                  value={captcha?.text}
+                  value={captcha.text}
                   onChange={(e) =>
                     setCaptcha({ ...captcha, text: e.target.value })
                   }

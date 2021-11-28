@@ -12,7 +12,7 @@ export function VolunteeringForm() {
   const [telNumber, setTelNumber] = useState('');
   const [birthDate, setBirthDate] = useState('');
   const [about, setAbout] = useState('');
-  const [captcha, setCaptcha] = useState<FormCaptcha>(null);
+  const [captcha, setCaptcha] = useState<FormCaptcha>({ id: '', text: '' });
 
   const sendForm = async () => {
     try {
@@ -48,7 +48,7 @@ export function VolunteeringForm() {
                 Wpisz captchę:
                 <input
                   required
-                  value={captcha?.text}
+                  value={captcha.text}
                   onChange={(e) =>
                     setCaptcha({ ...captcha, text: e.target.value })
                   }
