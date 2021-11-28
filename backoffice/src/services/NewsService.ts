@@ -7,7 +7,7 @@ import { replaceContent } from "../components/shared/Editor/FileMap";
 const baseUrl = `${API_URL}/api/news`
 
 export type NewsListElement = Pick<News, 'id' | 'description' | 'title' | 'createdAt' | 'isPublished' | 'imageName'>;
-export interface NewsCreateParams {
+export type NewsCreateParams = {
     title: string;
     description: string;
     isPublished: boolean;

@@ -5,7 +5,7 @@ import { Controller, Get, UseGuards, Param, Patch, Body, Post, Delete, Put } fro
 import { Permission } from '@prisma/client';
 import { PermissionsGuard } from '../auth/Permissions.guard';
 
-export interface AnimalImageParams {
+export type AnimalImageParams = {
     data: string;
     order: number;
     visible: boolean;

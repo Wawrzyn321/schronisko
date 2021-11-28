@@ -1,6 +1,6 @@
 import { ImageData } from './../../img-fs';
 
-export interface NewsCreateInput {
+export type NewsCreateInput = {
     title: string;
     description: string;
     isPublished: boolean;
@@ -19,7 +19,7 @@ export interface NewsModifyParams<TNewsInput> {
     imageData: string;
 }
 
-export interface NewsListElement {
+export type NewsListElement = {
     id: string;
     description: string;
     title: string;

@@ -1,5 +1,6 @@
 import { get } from 'svelte/store';
 import { auth, checkForTokenExpiration } from "../contexts/auth.context";
+
 interface RequestInitWithAuth extends RequestInit {
     noAuth?: boolean;
 }

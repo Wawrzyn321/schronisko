@@ -1,12 +1,12 @@
 import { Permission } from '@prisma/client';
 
-export interface LoggedInUser {
+export type LoggedInUser = {
     id: number;
     login: string;
     permissions: Permission[];
 }
 
-export interface JWTValidationPayload {
+export type JWTValidationPayload = {
     sub: number;
     login: string;
     permissions: Permission[];

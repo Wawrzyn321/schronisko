@@ -1,4 +1,4 @@
-export interface PageListElement {
+export type PageListElement = {
     id: string;
     title: string;
 }

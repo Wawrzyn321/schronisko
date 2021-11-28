@@ -14,7 +14,7 @@ import { changedToReadonly } from './readonly-animal';
 
 const IMAGES_PATH = 'animals/';
 
-export interface AnimalData {
+export type AnimalData = {
   id: string
   refNo: string
   name: string

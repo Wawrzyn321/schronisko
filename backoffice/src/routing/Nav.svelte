@@ -6,7 +6,7 @@
   import active from 'svelte-spa-router/active';
   import { Permission } from '@prisma/client';
 
-  interface NavigationRoute {
+  type NavigationRoute = {
     name: string;
     requiredPermission: Permission;
     path: string;

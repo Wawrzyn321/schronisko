@@ -11,12 +11,12 @@ export interface UserViewModel extends Omit<User, "passwordHash"> {
   permissions?: Permission[];
 }
 
-export interface UserLoginParams {
+export type UserLoginParams = {
   login: string;
   password: string;
 };
 
-export interface ChangePasswordParams {
+export type ChangePasswordParams = {
   currentPassword: string;
   newPassword: string;
 }

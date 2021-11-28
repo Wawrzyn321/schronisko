@@ -12,7 +12,7 @@ const getAuthRemainingTime = (token: string) => {
     return seconds;
 }
 
-interface Auth {
+type Auth = {
     token: string;
     user: UserViewModel;
 }

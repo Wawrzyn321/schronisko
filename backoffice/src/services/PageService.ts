@@ -2,7 +2,7 @@ import type { FileMap } from '../components/shared/Editor/FileMap';
 import { throwingFetch } from "./throwingFetch";
 import { API_URL } from './config';
 import { replaceContent } from "../components/shared/Editor/FileMap";
-export interface PageListElement {
+export type PageListElement = {
     id: string;
     title: string;
 }

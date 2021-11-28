@@ -1,11 +1,11 @@
 import { allPermissions } from './../auth/permissions';
 import type { Permission } from '@prisma/client';
 
-export interface UserPermissionsWrapper {
+export type UserPermissionsWrapper = {
   permission: Permission;
 }
 
-export interface UserDto {
+export type UserDto = {
   id: number;
   login: string;
   firstName: string;
@@ -15,7 +15,7 @@ export interface UserDto {
   permissions: Permission[];
 }
 
-export interface UserCreateDto {
+export type UserCreateDto = {
   login: string;
   firstName: string;
   lastName: string;
@@ -26,7 +26,7 @@ export interface UserCreateDto {
   }
 }
 
-export interface UserUpdateDto {
+export type UserUpdateDto = {
   login: string;
   firstName: string;
   lastName: string;

@@ -3,7 +3,7 @@ import { API_URL } from './config';
 
 const baseUrl = `${API_URL}/api/animal-images`
 
-export interface AnimalImageParams {
+export type AnimalImageParams = {
     data: string;
     order: number;
     imageName?: string;

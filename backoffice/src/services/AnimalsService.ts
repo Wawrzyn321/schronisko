@@ -8,7 +8,7 @@ import { isReadonly } from '../components/Animals/Form/animal-readonly';
 
 const baseUrl = `${API_URL}/api/animals`
 
-export interface AnimalData {
+export type AnimalData = {
     name: string;
     id: string;
     type: AnimalType;
