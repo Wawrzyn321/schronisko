@@ -4,7 +4,7 @@ import { Overlay } from './Overlay';
 import { Animal } from '.prisma/client';
 import { AnimalImage } from './AnimalImage';
 
-interface AnimalCardProps {
+type AnimalCardProps = {
   animal: Animal;
   showOverlay: boolean;
   openModal: (animal: Animal) => any;

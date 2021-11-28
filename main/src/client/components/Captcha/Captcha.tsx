@@ -1,17 +1,15 @@
 import { fetchCaptcha, FetchError } from 'api/api';
 import { useEffect, useState } from 'react';
 
-export type FormCaptcha = {
+export type ReceivedCaptcha = {
   id: string;
   uri: string;
 };
 
-export function Captcha({ onGenerate }) {
-  const [captcha, setCaptcha] = useState<FormCaptcha>(null);
+export function Captcha({ onGenerate }: { onGenerate: (id: string) => any }) {
+  const [captcha, setCaptcha] = useState<ReceivedCaptcha>(null);
   const [error, setError] = useState<FetchError>(null);
   const [loading, setLoading] = useState(true);
-
-  console.log(error, loading);
 
   const loadCaptcha = async () => {
     setLoading(true);

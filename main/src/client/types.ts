@@ -15,7 +15,7 @@ export type getStaticPropsProps = {
 
 export type PageFetchFn = (id: string, isSSR?: boolean) => Promise<FetchResult<PageModel>>;
 
-export type CaptchaSubmit = {
+export type FormCaptcha = {
     id: string;
     text: string;
 }
@@ -28,7 +28,17 @@ export type VolunteeringFormFetch = {
     about: string;
 }
 
-export interface AnimalListResult {
+export type VAdoptionFormFetch = {
+    fullName: string;
+    vCaretakerName: string;
+    email: string;
+    additionalMessage: string;
+    animalId: string;
+    animalName: string;
+    animalRefNo: string;
+}
+
+export type AnimalListResult = {
     animals: Animal[];
     totalCount: number;
 }

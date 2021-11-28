@@ -8,13 +8,14 @@ import { fetchAfterAdoptionAnimals, fetchPage, fetchRecentNews } from 'api/api';
 import { AfterAdoptionAnimal, NewsListElement } from 'types';
 
 const ID = 'glowna-adopcje';
-interface HomeProps {
+
+type HomeProps = {
   ssrData: {
     afterAdoptionAnimals: AfterAdoptionAnimal[];
     recentNews: NewsListElement[];
     mainPage: PageModel;
   };
-}
+};
 
 export default function Home({ ssrData }: HomeProps) {
   return (

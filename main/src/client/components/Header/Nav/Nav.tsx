@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import styles from './Nav.module.scss';
 
-interface SubListItem {
+type SubListItem = {
   name: string;
   path: string;
 }

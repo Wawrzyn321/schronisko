@@ -22,7 +22,7 @@ function NotFoundMessage() {
   );
 }
 
-interface AnimalListProps {
+type AnimalListProps = {
   categories?: AnimalCategory[];
   vCaretakerType?: VirtualCaretakerType;
   type?: AnimalType;

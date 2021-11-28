@@ -2,10 +2,10 @@ import { Animal, AnimalCategory } from '.prisma/client';
 import { buildAnimalImageUrl } from 'api/config';
 import { Modal } from 'components/Modal';
 
-export interface AnimalModalData {
+export type AnimalModalData = {
   isOpen: boolean;
   animal: Animal;
-}
+};
 
 export function AnimalModal({
   isOpen,

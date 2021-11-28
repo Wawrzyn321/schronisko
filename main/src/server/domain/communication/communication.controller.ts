@@ -4,7 +4,7 @@ import { Public } from '../auth/public.decorator';
 import { Controller, Post, Query, Body } from '@nestjs/common';
 
 @Public()
-@Controller('api/mail')
+@Controller('api/comms')
 export class CommunicationController {
     constructor(private communicationService: CommunicationService) { }
 

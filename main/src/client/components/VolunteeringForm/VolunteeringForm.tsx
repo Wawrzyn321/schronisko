@@ -2,6 +2,7 @@ import { fetchVolunteeringForm } from 'api/api';
 import { Captcha } from 'components/Captcha/Captcha';
 import { LayoutWrapper } from 'components/LayoutWrapper';
 import { useState } from 'react';
+import { FormCaptcha } from 'types';
 import { Form } from '../Form/Form';
 import { Email, FullName, Tel, BirthDate, About } from '../Form/FormComponents';
 
@@ -11,21 +12,17 @@ export function VolunteeringForm() {
   const [telNumber, setTelNumber] = useState('');
   const [birthDate, setBirthDate] = useState('');
   const [about, setAbout] = useState('');
-  const [captcha, setCaptcha] = useState('');
-  const [captchaId, setCaptchaId] = useState('');
+  const [captcha, setCaptcha] = useState<FormCaptcha>(null);
 
   const sendForm = async () => {
     try {
-      await fetchVolunteeringForm(
-        { id: captchaId, text: captcha },
-        {
-          fullName,
-          email,
-          telNumber,
-          birthDate,
-          about,
-        },
-      );
+      await fetchVolunteeringForm(captcha, {
+        fullName,
+        email,
+        telNumber,
+        birthDate,
+        about,
+      });
     } catch (e) {
       console.log(e);
     }
@@ -46,13 +43,15 @@ export function VolunteeringForm() {
             </div>
             <About value={about} setValue={setAbout} />
             <div className="form-grid-3">
-              <Captcha onGenerate={setCaptchaId} />
+              <Captcha onGenerate={(id) => setCaptcha({ ...captcha, id })} />
               <label>
                 Wpisz captchę:
                 <input
                   required
-                  value={captcha}
-                  onChange={(e) => setCaptcha(e.target.value)}
+                  value={captcha?.text}
+                  onChange={(e) =>
+                    setCaptcha({ ...captcha, text: e.target.value })
+                  }
                 />
               </label>
               <button className="form--button" disabled={!valid}>

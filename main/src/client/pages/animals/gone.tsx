@@ -9,10 +9,10 @@ import { LayoutWrapper } from 'components/LayoutWrapper';
 const ID_main = 'odeszly';
 const ID_poem = 'odeszly-wiersz';
 
-interface GoneProps {
+type GoneProps = {
   ssrDescription: PageModel;
   ssrPoem: PageModel;
-}
+};
 
 export default function Gone(props: GoneProps) {
   return (

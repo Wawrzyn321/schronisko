@@ -1,11 +1,7 @@
 import styles from './AnimalCategoryLegend.module.scss';
 
-interface ColorCoderProps {
-  color: string;
-}
-
 export function AnimalCategoryLegend() {
-  const ColorCoder = ({ color }: ColorCoderProps) => {
+  const ColorCoder = ({ color }: { color: string }) => {
     return (
       <span
         style={{ backgroundColor: color }}

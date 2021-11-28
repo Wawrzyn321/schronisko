@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { PageFetchFn } from 'types';
 import { Article } from './Article/Article';
 
-interface PageProps {
+type PageProps = {
   id: string;
   ssrPage: PageModel;
   showTitle?: boolean;
