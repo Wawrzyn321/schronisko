@@ -10,7 +10,7 @@ import {
   AdditionalMessage,
 } from '../Form/FormComponents';
 import { Form } from '../Form/Form';
-import { Captcha } from 'components/Captcha/Captcha';
+import { useCaptcha } from 'components/Captcha/useCapcha';
 import { FormCaptcha } from 'types';
 import { fetchVAdoptionForm } from 'api/api';
 
@@ -25,6 +25,10 @@ export function VAdoptionForm({ animal }: { animal: Animal }) {
 
   const [showAdoptionModal, setShowAdoptionModal] = useState(false);
 
+  const [refetchCaptcha, captchaElement] = useCaptcha((id) =>
+    setCaptcha({ ...captcha, id }),
+  );
+
   const onSubmit = async () => {
     try {
       await fetchVAdoptionForm(captcha, {
@@ -38,8 +42,15 @@ export function VAdoptionForm({ animal }: { animal: Animal }) {
       });
       setShowAdoptionModal(true);
     } catch (e) {
-      console.log(e);
-      // todo alert tu i w VolunteeringForm
+      if (e.statusCode === 400) {
+        alert('Nieprawidłowa captcha! Spróbuj ponownie.');
+        refetchCaptcha();
+      } else {
+        console.warn(e);
+        alert(
+          'Ups... coś poszło nie tak. Jeśli sytuacja będzie się powtarzać, wyślij aplikację bezpośrednio pod adres Wawrzyn321@gmail.com.',
+        );
+      }
     }
   };
 
@@ -66,9 +77,9 @@ export function VAdoptionForm({ animal }: { animal: Animal }) {
             <AdditionalMessage
               value={additionalMessage}
               setValue={setAdditionalMessage}
-            />{' '}
+            />
             <div className="form-grid-3">
-              <Captcha onGenerate={(id) => setCaptcha({ ...captcha, id })} />
+              {captchaElement}
               <label>
                 Wpisz captchę:
                 <input

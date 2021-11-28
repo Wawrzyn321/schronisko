@@ -11,9 +11,15 @@ export function validateVoluneeringFormFetch(props: VolunteeringFormFetch) {
 }
 
 export type VAdoptionFormFetch = {
-
+    fullName: string;
+    vCaretakerName: string;
+    email: string;
+    additionalMessage: string;
+    animalId: string;
+    animalName: string;
+    animalRefNo: string;
 }
 
 export function validateVAdoptionFormFetch(props: VAdoptionFormFetch) {
-    return 2;
+    return Boolean(props.fullName && props.vCaretakerName && props.email && props.animalId && props.animalName && props.animalRefNo);
 }

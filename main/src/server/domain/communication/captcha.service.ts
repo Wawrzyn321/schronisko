@@ -30,10 +30,8 @@ export class CaptchaService {
         const captcha = await this.prisma.captcha.findUnique({ where: { id } });
         if (captcha && captcha.text === text) {
             await this.prisma.captcha.delete({ where: { id } });
-            console.log('ok')
             return true;
         } else {
-            console.log('nie ok')
             return false;
         }
     }

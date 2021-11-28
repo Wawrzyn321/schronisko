@@ -1,12 +1,14 @@
 import { fetchCaptcha, FetchError } from 'api/api';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 export type ReceivedCaptcha = {
   id: string;
   uri: string;
 };
 
-export function Captcha({ onGenerate }: { onGenerate: (id: string) => any }) {
+export function useCaptcha(
+  onGenerate: (id: string) => any,
+): [() => any, JSX.Element] {
   const [captcha, setCaptcha] = useState<ReceivedCaptcha>(null);
   const [error, setError] = useState<FetchError>(null);
   const [loading, setLoading] = useState(true);
@@ -27,5 +29,8 @@ export function Captcha({ onGenerate }: { onGenerate: (id: string) => any }) {
     loadCaptcha();
   }, []);
 
-  return captcha && <img src={captcha.uri} alt="captcha" />;
+  const refetch = () => loadCaptcha();
+  const Captcha = captcha && <img src={captcha.uri} alt="captcha" />;
+
+  return [refetch, Captcha];
 }

@@ -4,24 +4,27 @@ import { PrismaService } from '../../prisma-connect/prisma.service';
 
 @Injectable()
 export class CaptchaService {
-    captcha: any;
-
     constructor(private prisma: PrismaService) {
-        this.captcha = captchagen.create({ height: 60, width: 180 });
     }
+
+    generateCaptchaImage(): { text: string, uri: string } {
+        const captchaGenerator = captchagen.create({ height: 60, width: 180 });
+        captchaGenerator.generate();
+        return { text: captchaGenerator.options.text, uri: captchaGenerator.uri() };
+    };
 
     async generateCaptcha() {
         await this.cleanup();
-        this.captcha.generate();
-        const text = this.captcha.options.text;
-        const uri = this.captcha.uri();
+
+        const { text, uri } = this.generateCaptchaImage();
+
         const captcha = await this.prisma.captcha.create({ data: { text, timestamp: new Date() } });
+
         return { id: captcha.id, uri };
     }
 
     async validateCaptcha(id: string, text: string) {
         if (!id || !text) {
-            console.log('false bo tak')
             return false;
         }
 
@@ -30,10 +33,8 @@ export class CaptchaService {
         const captcha = await this.prisma.captcha.findUnique({ where: { id } });
         if (captcha && captcha.text === text) {
             await this.prisma.captcha.delete({ where: { id } });
-            console.log('ok')
             return true;
         } else {
-            console.log('nie ok')
             return false;
         }
     }

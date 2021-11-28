@@ -1,5 +1,5 @@
 import { fetchVolunteeringForm } from 'api/api';
-import { Captcha } from 'components/Captcha/Captcha';
+import { useCaptcha } from 'components/Captcha/useCapcha';
 import { LayoutWrapper } from 'components/LayoutWrapper';
 import { useState } from 'react';
 import { FormCaptcha } from 'types';
@@ -14,6 +14,10 @@ export function VolunteeringForm() {
   const [about, setAbout] = useState('');
   const [captcha, setCaptcha] = useState<FormCaptcha>({ id: '', text: '' });
 
+  const [refetchCaptcha, captchaElement] = useCaptcha((id) =>
+    setCaptcha({ ...captcha, id }),
+  );
+
   const sendForm = async () => {
     try {
       await fetchVolunteeringForm(captcha, {
@@ -24,7 +28,15 @@ export function VolunteeringForm() {
         about,
       });
     } catch (e) {
-      console.log(e);
+      if (e.statusCode === 400) {
+        alert('Nieprawidłowa captcha! Spróbuj ponownie.');
+        refetchCaptcha();
+      } else {
+        console.warn(e);
+        alert(
+          'Ups... coś poszło nie tak. Jeśli sytuacja będzie się powtarzać, wyślij aplikację bezpośrednio pod adres Wawrzyn321@gmail.com.',
+        );
+      }
     }
   };
 
@@ -43,7 +55,7 @@ export function VolunteeringForm() {
             </div>
             <About value={about} setValue={setAbout} />
             <div className="form-grid-3">
-              <Captcha onGenerate={(id) => setCaptcha({ ...captcha, id })} />
+              {captchaElement}
               <label>
                 Wpisz captchę:
                 <input
@@ -63,9 +75,4 @@ export function VolunteeringForm() {
       </Form>
     </LayoutWrapper>
   );
-}
-{
-  /* data urodzenia
-nr tel
-kilka słów o sobie  */
 }

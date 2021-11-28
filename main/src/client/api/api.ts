@@ -1,5 +1,5 @@
 import { AnimalListResult, FormCaptcha, VolunteeringFormFetch, VAdoptionFormFetch } from './../types';
-import { ReceivedCaptcha } from '../components/Captcha/Captcha';
+import { ReceivedCaptcha } from '../components/Captcha/useCapcha';
 import { NewsListElement } from 'types';
 import { AnimalCategory, AnimalType, News } from '.prisma/client';
 import { AnimalImage, Page as PageModel, Animal, VirtualCaretakerType, Settings } from '@prisma/client';
@@ -43,6 +43,10 @@ async function throwingFetch(input: string, init: RequestInit = null): Promise<a
     }
     const error = await response.json();
     throw new FetchError(error.message, error.statusCode);
+}
+
+async function throwingPOST(url: string, body: any) {
+    return await throwingFetch(url, { method: 'POST', body: JSON.stringify(body), headers: { 'Content-Type': 'application/json' } });
 }
 
 async function genericFetch<T>(url: string, init: RequestInit = null): Promise<FetchResult<T>> {
@@ -116,12 +120,12 @@ export async function fetchCaptcha(): Promise<FetchResult<ReceivedCaptcha>> {
 
 export async function fetchVolunteeringForm(captcha: FormCaptcha, props: VolunteeringFormFetch): Promise<FetchResult<void>> {
     const url = BACKEND_URL + `/api/comms/volunteer?id=${captcha.id}&text=${captcha.text}`;
-    return genericFetch(url, { method: 'POST', body: JSON.stringify(props) });
+    return throwingPOST(url, props);
 }
 
 export async function fetchVAdoptionForm(captcha: FormCaptcha, props: VAdoptionFormFetch): Promise<FetchResult<void>> {
     const url = BACKEND_URL + `/api/comms/v-adoption?id=${captcha.id}&text=${captcha.text}`;
-    return genericFetch(url, { method: 'POST', body: JSON.stringify(props) });
+    return throwingPOST(url, props);
 }
 
 export async function fetchDogVolunteeringPage(

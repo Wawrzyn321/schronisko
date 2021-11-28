@@ -21,34 +21,36 @@ export class CommunicationService {
     }
 
     async sendVolunteering(id: string, text: string, props: VolunteeringFormFetch) {
-        if (!validateVoluneeringFormFetch(props)) {
-            return new BadRequestException("Brak wszystkich danych.")
-        }
+        const validateInput = () => validateVoluneeringFormFetch(props);
+        const onValidated = async () => await this.mailService.send(
+            "Nowa osoba chce dołączyć do wolontariatu",
+            `Tu podaję dane:
+        kto: ${props.fullName}
+        email: ${props.email}
+        telefon: ${props.telNumber}
+        data urodzenia: ${props.birthDate}
+        coś więcej?: ${props.about}
+      `,
+        );
 
-        if (await this.captchaService.validateCaptcha(id, text)) {
-            this.mailService.send(
-                "Nowa osoba chce dołączyć do wolontariatu",
-                `Tu podaję dane:
-            kto: ${props.fullName}
-            email: ${props.email}
-            telefon: ${props.telNumber}
-            data urodzenia: ${props.birthDate}
-            coś więcej?: ${props.about}
-          `,
-            );
-        } else {
-            return new BadRequestException("Brzydka captcha")
-        }
+        await this.send(id, text, validateInput, onValidated);
     }
     async sendVAdoption(id: string, text: string, props: VAdoptionFormFetch) {
-        if (!validateVAdoptionFormFetch(props)) {
-            return new BadRequestException("Brak wszystkich danych.")
+        const validateInput = () => validateVAdoptionFormFetch(props);
+        const onValidated = async () => await this.mailService.send("Ktoś będzie adoptował wirtualnie", 'todo');
+
+        await this.send(id, text, validateInput, onValidated);
+    }
+
+    async send(id: string, text: string, validateInput: () => boolean, onValidated: () => Promise<any>) {
+        if (!validateInput()) {
+            throw new BadRequestException("Brak wszystkich danych.")
         }
 
         if (await this.captchaService.validateCaptcha(id, text)) {
-            this.mailService.send("Ktoś będzie adoptował wirtualnie", 'todo');
+            await onValidated();
         } else {
-            return new BadRequestException("Brzydka captcha")
+            throw new BadRequestException("Brzydka captcha")
         }
     }
 }
