@@ -1,8 +1,6 @@
-maile
+maile (sendgrid już jest zainstalowany)
 
-captche nie są losowe
-
-layout do captchów i form!
+layout do captchów i form! - po prostu napiszesz do Poli
 
 po deployu zmień link na backoffice z https://www.schronisko.sosnowiec.pl/ na ten nowy
 

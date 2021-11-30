@@ -35,6 +35,7 @@ export class CommunicationService {
 
         await this.send(id, text, validateInput, onValidated);
     }
+    
     async sendVAdoption(id: string, text: string, props: VAdoptionFormFetch) {
         const validateInput = () => validateVAdoptionFormFetch(props);
         const onValidated = async () => await this.mailService.send("Ktoś będzie adoptował wirtualnie", 'todo');
