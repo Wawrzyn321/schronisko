@@ -8,6 +8,7 @@ import _animals from './adminGallery.json';
 import _pictures from './pictures.json';
 import { decode } from 'html-entities';
 
+// todo
 const galleryPath = '/Users/i515358/Desktop/schronisko_sosnowiec_pl/public_html/gallery/';
 const thumbsPath = galleryPath + 'thumbs/';
 const targetAnimalsPath = '/Users/i515358/Nauka/schronisko/prisma/db-import/animals/animals/';

@@ -4,7 +4,7 @@
 }
 
 .animal-details--description {
-  max-width: 60em;
+  max-width: var(--page-content-width);
   font-weight: 100;
   text-align: justify;
 }

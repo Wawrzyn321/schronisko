@@ -30,9 +30,9 @@
   onMount(async () => {
     loading = true;
     try {
-      animals = await animalsService.getInitial();
-      loading = false;
+      // animals = await animalsService.getInitial();
       animals = await animalsService.getAll();
+      loading = false;
     } catch (e) {
       notifyError({
         message: 'Błąd pobierania zwierząt: ' + e.message,

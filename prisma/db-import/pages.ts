@@ -82,7 +82,7 @@ export async function seedPages(prisma: PrismaClient) {
         "<p>Wolontariat w naszym Schronisku prowadzi Stowarzyszenie “Nadzieja Na Dom”. Obecnie prowadzimy nabór i jest fajnie.",
     },
     { title: "Koci wolontariat", id: "wolontariat-kot", content: "miauuu" },
-    { title: "Formlarz adopcji wirtualnej", id: "formularz-adopcji-wirtualnej", content: "Tu opiszemy o co chodzi, jak to działa, z czym się to je i z czym trawi" },
+    { title: "Formularz adopcji wirtualnej", id: "formularz-adopcji-wirtualnej", content: "Tu opiszemy o co chodzi, jak to działa, z czym się to je i z czym trawi" },
     { title: "Modal adopcji wirtualnej", id: "modal-adopcji-wirtualnej", content: "Podziękowania, info co dać w tytule przelewu itd" },
     {
       id: "jak-pomoc",

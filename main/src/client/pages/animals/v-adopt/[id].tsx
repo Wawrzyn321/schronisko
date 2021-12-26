@@ -36,7 +36,6 @@ function VAdoptionDetails({ animal }: { animal: Animal }) {
       <Page
         id="formularz-adopcji-wirtualnej"
         ssrPage={null}
-        showTitle={false}
       />
       <VAdoptionForm animal={animal} />
     </>

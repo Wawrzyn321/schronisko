@@ -43,7 +43,7 @@ export const ERROR_ANIMAL_LIST: ErrorProps = {
 export const ERROR_VOLUNTEERING_FORM: ErrorProps = {
   content: 'Tak że tego, coś poszło nie tak.',
   title: 'Błąd ładowania formularza wolontariatu',
-}
+};
 
 type ErrorWrapperProps = {
   isLoaded: boolean;
@@ -60,19 +60,15 @@ export function ErrorWrapper({
   errorGeneric,
   error404,
 }: ErrorWrapperProps): JSX.Element {
-  const withLayoutWrapper = (children: React.ReactChild) => (
-    <LayoutWrapper>{children}</LayoutWrapper>
-  );
-
   if (error) {
     if (error.statusCode === 404 && error404) {
-      return withLayoutWrapper(<Article {...error404} />);
+      return <Article {...error404} />;
     } else {
-      return withLayoutWrapper(<Article {...errorGeneric} />);
+      return <Article {...errorGeneric} />;
     }
   } else if (!isLoaded) {
-    return withLayoutWrapper('Ładowanie...');
+    return <p>'Ładowanie...'</p>;
   } else {
-    return withLayoutWrapper(children);
+    return children;
   }
 }

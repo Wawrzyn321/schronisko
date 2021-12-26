@@ -6,26 +6,31 @@ export function Form({
   children,
 }: {
   handleSubmit: () => any;
-  children: (valid: boolean) => React.ReactNode;
+  children: (triedSubmitCounter: number) => React.ReactNode;
 }) {
   const formRef = useRef(null);
-  const [valid, setValid] = useState(false);
-
-  const onChange = () => setValid(formRef.current.checkValidity());
+  const [triedSubmit, setTriedSubmit] = useState(0);
 
   const onSubmit = (e: { preventDefault: () => any }) => {
     e.preventDefault();
-    handleSubmit();
+    if (formRef.current.checkValidity()) {
+      handleSubmit();
+      setTriedSubmit(0);
+    } else {
+      setTriedSubmit(triedSubmit + 1);
+    }
+    return false;
   };
 
   return (
     <form
       className={styles['form']}
       ref={formRef}
-      onChange={onChange}
       onSubmit={onSubmit}
+      noValidate
     >
-      {children(valid)}
+      <p className={styles['form-required-data-info']}>* Wymagane informacje</p>
+      {children(triedSubmit)}
     </form>
   );
 }

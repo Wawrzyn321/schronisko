@@ -2,14 +2,15 @@
   import { onMount } from 'svelte';
   import { querystring, push } from 'svelte-spa-router';
   import { get } from 'svelte/store';
-  import { Button } from 'svelma';
+  import { Button, Input } from 'svelma';
   import { pageService } from '../services/PageService';
   import EditorTabs from '../components/shared/EditorTabs.svelte';
   import type { Page } from '.prisma/client';
   import { notifyError, notifySuccess } from '../contexts/notification.context';
   import Loader from '../components/shared/Loader.svelte';
   import type { FileMap } from '../components/shared/Editor/FileMap';
-import AboutSubstitutions from '../components/AboutSubstitutions.svelte';
+  import AboutSubstitutions from '../components/AboutSubstitutions.svelte';
+  import Field from '../components/shared/Field.svelte';
 
   export let params: { id: string };
 
@@ -34,7 +35,7 @@ import AboutSubstitutions from '../components/AboutSubstitutions.svelte';
   });
 
   async function savePage() {
-    if (isSaving || page.content === editedContent) return;
+    if (isSaving || !page.title) return;
 
     try {
       isSaving = true;
@@ -60,7 +61,7 @@ import AboutSubstitutions from '../components/AboutSubstitutions.svelte';
         <span>ID: <em>{page.id}</em></span>
         <Button
           type="is-primary"
-          disabled={isSaving || page.content === editedContent}
+          disabled={isSaving || !page.title}
           loading={isSaving}
           on:click={savePage}
         >
@@ -68,7 +69,14 @@ import AboutSubstitutions from '../components/AboutSubstitutions.svelte';
         </Button>
       </div>
     </header>
-    <AboutSubstitutions />
+    <div style="display: flex; justify-content: space-between">
+      <div style="width: 300px; margin-right: 16px">
+        <Field label="Tytuł">
+          <Input required bind:value={page.title} placeholder="Tytuł strony" />
+        </Field>
+      </div>
+      <AboutSubstitutions />
+    </div>
     <EditorTabs
       title={page.title}
       contentForPreview={editedContent}

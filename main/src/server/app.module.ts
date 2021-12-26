@@ -16,6 +16,7 @@ import { LogsModule } from './domain/logs/logs.module';
 import { SettingsModule } from './domain/settings/settings.module';
 import { ViewModule } from './domain/view/view.module'
 import { CommunicationModule } from './domain/communication/communication.module';
+import { ConfigModule } from '@nestjs/config';
 
 const STATIC_FILES_PATH = '/img/';
 export const LOCAL_STATIC_FILES_PATH = 'src/client/public' + STATIC_FILES_PATH;
@@ -44,7 +45,8 @@ const JwtGuard = {
 @Module({
   imports: [...domainModules,
     ViewModule,
-    ServeStatic],
+    ServeStatic,
+  ConfigModule.forRoot()],
   controllers: [AppController,],
   providers: [PrismaService, JwtGuard]
 })

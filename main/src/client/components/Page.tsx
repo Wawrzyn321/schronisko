@@ -10,7 +10,7 @@ type PageProps = {
   ssrPage: PageModel;
   showTitle?: boolean;
   fetchFn?: PageFetchFn;
-}
+};
 
 export function Page({
   id,

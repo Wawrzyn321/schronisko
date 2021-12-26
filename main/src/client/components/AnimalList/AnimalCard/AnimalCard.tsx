@@ -8,7 +8,7 @@ type AnimalCardProps = {
   animal: Animal;
   showOverlay: boolean;
   openModal: (animal: Animal) => any;
-}
+};
 
 export function AnimalCard({
   animal,

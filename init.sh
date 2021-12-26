@@ -14,8 +14,8 @@ echo 'npm i client'
 npm i --prefix=main/src/client
 echo 'replacing "DEV = 1" with "DEV = 0" in main/src/server/app.module.ts'
 sed -i "s/DEV = 1/DEV = 0/" main/src/server/app.module.ts
-echo 'replacing "DEV = 1" with "DEV = 0" in main/src/client/api.ts'
-sed -i "s/DEV = 1/DEV = 0/" main/src/client/api.ts
+echo 'replacing "DEV = 1" with "DEV = 0" in main/src/client/api/config.ts'
+sed -i "s/DEV = 1/DEV = 0/" main/src/client/api/config.ts
 echo 'replacing "DEV = 1" with "DEV = 0" in main/src/server/main.ts'
 sed -i "s/DEV = 1/DEV = 0/" main/src/server/main.ts
 echo 'restart svc'

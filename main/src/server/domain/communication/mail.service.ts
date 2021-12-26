@@ -1,26 +1,25 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
-import * as nodemailer from "nodemailer";
+import * as sendGridClient from "@sendgrid/mail";
 
 @Injectable()
 export class MailService {
-  transporter: nodemailer.Transporter;
 
   constructor() {
-    this.transporter = nodemailer.createTransport({
-      sendmail: true,
-      newline: "unix",
-      path: "/usr/sbin/sendmail",
-    });
+    sendGridClient.setApiKey(
+      process.env.SENDGRID_API_KEY
+    );
   }
 
   async send(subject: string, text: string) {
+    console.log('sent')
+    const msg = {
+      to: "Wawrzyn321@gmail.com",
+      from: "Wawrzyn321@oto-jest-wawrzyn.pl",
+      subject,
+      text,
+    };
     try {
-      this.transporter.sendMail({
-        from: "info@schrowysoko.com",
-        to: "Wawrzyn321@gmail.com",
-        subject,
-        text,
-      });
+      await sendGridClient.send(msg);
       return "OK";
     } catch (e) {
       return new InternalServerErrorException()

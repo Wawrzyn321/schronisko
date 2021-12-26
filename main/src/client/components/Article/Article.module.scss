@@ -1,13 +1,13 @@
 .article {
   font-weight: 100;
-  max-width: 60em;
+  max-width: var(--page-content-width);
 
   li {
     list-style-image: url('./pawprint.svg');
   }
 
   img {
-    max-width: 60em;
+    max-width: var(--page-content-width);
     border-radius: 50px;
   }
 

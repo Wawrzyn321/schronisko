@@ -1,8 +1,6 @@
 import { fetchVolunteeringForm } from 'api/api';
 import { useCaptcha } from 'components/Captcha/useCapcha';
-import { LayoutWrapper } from 'components/LayoutWrapper';
 import { useState } from 'react';
-import { FormCaptcha } from 'types';
 import { Form } from '../Form/Form';
 import { Email, FullName, Tel, BirthDate, About } from '../Form/FormComponents';
 
@@ -12,21 +10,21 @@ export function VolunteeringForm() {
   const [telNumber, setTelNumber] = useState('');
   const [birthDate, setBirthDate] = useState('');
   const [about, setAbout] = useState('');
-  const [captcha, setCaptcha] = useState<FormCaptcha>({ id: '', text: '' });
 
-  const [refetchCaptcha, captchaElement] = useCaptcha((id) =>
-    setCaptcha({ ...captcha, id }),
-  );
+  const { refetchCaptcha, captchaElement, captchaInput, captchaValue } =
+    useCaptcha();
 
   const sendForm = async () => {
     try {
-      await fetchVolunteeringForm(captcha, {
+      await fetchVolunteeringForm(captchaValue, {
         fullName,
         email,
         telNumber,
         birthDate,
         about,
       });
+      //todo
+      alert('Udało się, jeszcze jakoś uładnimy tą wiadomość.');
     } catch (e) {
       if (e.statusCode === 400) {
         alert('Nieprawidłowa captcha! Spróbuj ponownie.');
@@ -41,38 +39,45 @@ export function VolunteeringForm() {
   };
 
   return (
-    <LayoutWrapper>
-      <Form handleSubmit={sendForm}>
-        {(valid: boolean) => (
-          <>
-            <div className="form-grid-2">
-              <FullName value={fullName} setValue={setFullName} />
-              <Tel value={telNumber} setValue={setTelNumber} />
-            </div>
-            <div className="form-grid-2">
-              <Email value={email} setValue={setEmail} />
-              <BirthDate value={birthDate} setValue={setBirthDate} />
-            </div>
-            <About value={about} setValue={setAbout} />
-            <div className="form-grid-3">
-              {captchaElement}
-              <label>
-                Wpisz captchę:
-                <input
-                  required
-                  value={captcha.text}
-                  onChange={(e) =>
-                    setCaptcha({ ...captcha, text: e.target.value })
-                  }
-                />
-              </label>
-              <button className="form--button" disabled={!valid}>
-                Wyślij
-              </button>
-            </div>
-          </>
-        )}
-      </Form>
-    </LayoutWrapper>
+    <Form handleSubmit={sendForm}>
+      {(triedSubmitCounter: number) => (
+        <>
+          <div className="form-grid-2">
+            <FullName
+              value={fullName}
+              setValue={setFullName}
+              triedSubmitCounter={triedSubmitCounter}
+            />
+            <Tel
+              value={telNumber}
+              setValue={setTelNumber}
+              triedSubmitCounter={triedSubmitCounter}
+            />
+          </div>
+          <div className="form-grid-2">
+            <Email
+              value={email}
+              setValue={setEmail}
+              triedSubmitCounter={triedSubmitCounter}
+            />
+            <BirthDate
+              value={birthDate}
+              setValue={setBirthDate}
+              triedSubmitCounter={triedSubmitCounter}
+            />
+          </div>
+          <About
+            value={about}
+            setValue={setAbout}
+            triedSubmitCounter={triedSubmitCounter}
+          />
+          <div className="form-grid-3">
+            {captchaElement}
+            {captchaInput(triedSubmitCounter)}
+            <button className="form--button">Wyślij</button>
+          </div>
+        </>
+      )}
+    </Form>
   );
 }

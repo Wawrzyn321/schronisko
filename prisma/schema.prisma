@@ -58,13 +58,12 @@ model User {
   firstName    String
   lastName     String
   isActive     Boolean           @default(true)
-  // sessions     Session[]
   permissions  UserPermissions[]
 }
 
 model Page {
   id      String @id
-  title   String @unique
+  title   String
   content String
 }
 

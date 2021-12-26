@@ -8,7 +8,7 @@ export class CaptchaService {
     constructor(private prisma: PrismaService) { }
 
     generateCaptchaImage(): { text: string, uri: string } {
-        const captchaGenerator = captchagen.create({ height: 60, width: 180 });
+        const captchaGenerator = captchagen.create({ height: 60, width: 270 });
         captchaGenerator.generate();
         return { text: captchaGenerator.options.text, uri: captchaGenerator.uri() };
     };
@@ -17,7 +17,6 @@ export class CaptchaService {
         await this.cleanup();
 
         const { text, uri } = this.generateCaptchaImage();
-        console.log(text, uri.substring(100, 110));
 
         const captcha = await this.prisma.captcha.create({ data: { text, timestamp: new Date() } });
 

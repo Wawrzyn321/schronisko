@@ -6,7 +6,7 @@ import styles from './Nav.module.scss';
 type SubListItem = {
   name: string;
   path: string;
-}
+};
 
 function LinkBorder({ to }: { to: string }) {
   const router = useRouter();

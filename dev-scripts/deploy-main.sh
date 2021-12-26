@@ -10,6 +10,7 @@ RSYNC_RSH='ssh -p 60022' rsync \
     --exclude "dist" \
     --exclude "backoffice" \
     --exclude "main/src/client/public/img/animals" \
+    --exclude "prisma/db-import/animals/animals" \
     --progress \
     -r ./ ubuntu@217.182.74.200:svc/schronisko
 

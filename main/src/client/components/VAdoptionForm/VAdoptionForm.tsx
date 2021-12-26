@@ -6,12 +6,11 @@ import { usePrefetchVAdoptionModalQueries } from './VAdoptionModalContent/usePre
 import {
   FullName,
   Email,
-  VCaretaker,
+  VCaretakerName,
   AdditionalMessage,
 } from '../Form/FormComponents';
 import { Form } from '../Form/Form';
 import { useCaptcha } from 'components/Captcha/useCapcha';
-import { FormCaptcha } from 'types';
 import { fetchVAdoptionForm } from 'api/api';
 
 export function VAdoptionForm({ animal }: { animal: Animal }) {
@@ -21,17 +20,15 @@ export function VAdoptionForm({ animal }: { animal: Animal }) {
   const [vCaretakerName, setVCaretakerName] = useState('');
   const [email, setEmail] = useState('');
   const [additionalMessage, setAdditionalMessage] = useState('');
-  const [captcha, setCaptcha] = useState<FormCaptcha>({ id: '', text: '' });
 
   const [showAdoptionModal, setShowAdoptionModal] = useState(false);
 
-  const [refetchCaptcha, captchaElement] = useCaptcha((id) =>
-    setCaptcha({ ...captcha, id }),
-  );
+  const { refetchCaptcha, captchaElement, captchaInput, captchaValue } =
+    useCaptcha();
 
   const onSubmit = async () => {
     try {
-      await fetchVAdoptionForm(captcha, {
+      await fetchVAdoptionForm(captchaValue, {
         fullName,
         vCaretakerName,
         email,
@@ -57,7 +54,7 @@ export function VAdoptionForm({ animal }: { animal: Animal }) {
   return (
     <>
       <Form handleSubmit={onSubmit}>
-        {(valid: boolean) => (
+        {(triedSubmitCounter: number) => (
           <>
             <div className="form-grid-2">
               <label>
@@ -70,29 +67,30 @@ export function VAdoptionForm({ animal }: { animal: Animal }) {
               </label>
             </div>
             <div className="form-grid-2">
-              <FullName value={fullName} setValue={setFullName} />
-              <Email value={email} setValue={setEmail} />
+              <FullName
+                value={fullName}
+                setValue={setFullName}
+                triedSubmitCounter={triedSubmitCounter}
+              />
+              <Email
+                value={email}
+                setValue={setEmail}
+                triedSubmitCounter={triedSubmitCounter}
+              />
             </div>
-            <VCaretaker value={vCaretakerName} setValue={setVCaretakerName} />
+            <VCaretakerName
+              value={vCaretakerName}
+              setValue={setVCaretakerName}
+              triedSubmitCounter={triedSubmitCounter}
+            />
             <AdditionalMessage
               value={additionalMessage}
               setValue={setAdditionalMessage}
             />
             <div className="form-grid-3">
               {captchaElement}
-              <label>
-                Wpisz captchę:
-                <input
-                  required
-                  value={captcha.text}
-                  onChange={(e) =>
-                    setCaptcha({ ...captcha, text: e.target.value })
-                  }
-                />
-              </label>
-              <button className="form--button" disabled={!valid}>
-                Zatwierdź
-              </button>
+              {captchaInput(triedSubmitCounter)}
+              <button className="form--button">Wyślij</button>
             </div>
           </>
         )}

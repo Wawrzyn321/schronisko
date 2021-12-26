@@ -16,7 +16,7 @@ export function AnimalImages({ id }: { id: string }) {
       setImages(data);
     };
 
-    if (!images) {
+    if (!images?.length) {
       loadImages();
     }
   }, []);

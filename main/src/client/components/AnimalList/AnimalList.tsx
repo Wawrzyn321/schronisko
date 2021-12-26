@@ -27,7 +27,7 @@ type AnimalListProps = {
   vCaretakerType?: VirtualCaretakerType;
   type?: AnimalType;
   withCategoryOverlay?: boolean;
-}
+};
 
 export function AnimalList({
   categories = [],
