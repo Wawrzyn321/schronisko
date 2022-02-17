@@ -6,7 +6,7 @@ import { PageFetchFn } from 'types';
 import { Article } from './Article/Article';
 
 type PageProps = {
-  id: string;
+  id?: string;
   ssrPage: PageModel;
   showTitle?: boolean;
   fetchFn?: PageFetchFn;
@@ -28,7 +28,7 @@ export function Page({
       setError(error);
     };
 
-    if (!ssrPage) {
+    if (!ssrPage && !!id) {
       loadPage();
     }
   }, []);

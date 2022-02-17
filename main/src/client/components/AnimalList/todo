@@ -1,5 +1,8 @@
+
 maile (sendgrid już jest zainstalowany)
 
 po deployu zmień link na backoffice z https://www.schronisko.sosnowiec.pl/ na ten nowy
 
 playwright
+
+przetestuj restart vpsa

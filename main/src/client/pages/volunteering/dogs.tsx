@@ -6,8 +6,6 @@ import { Page } from 'components/Page';
 import React from 'react';
 import { DogVolunteeringWrapper } from '../../components/DogVolunteeringWrapper';
 
-const ID = ''; //todo
-
 type VolunteerDogsProps = {
   ssrPage: PageModel;
   ssrSettings: Settings[];
@@ -27,7 +25,9 @@ export default function VolunteerDogs({
 }
 
 function VolunteerDogsPage({ ssrPage }: { ssrPage: PageModel }) {
-  return <Page id={ID} ssrPage={ssrPage} fetchFn={fetchDogVolunteeringPage} />;
+  return (
+    <Page id={null} ssrPage={ssrPage} fetchFn={fetchDogVolunteeringPage} />
+  );
 }
 
 export async function getServerSideProps(): Promise<{
@@ -35,7 +35,7 @@ export async function getServerSideProps(): Promise<{
 }> {
   return {
     props: {
-      ssrPage: (await fetchDogVolunteeringPage(ID)).data,
+      ssrPage: (await fetchDogVolunteeringPage()).data,
       ssrSettings: (await fetchSettings()).data,
     },
   };

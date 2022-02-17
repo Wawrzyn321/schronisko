@@ -11,7 +11,6 @@ export class MailService {
   }
 
   async send(subject: string, text: string) {
-    console.log('sent')
     const msg = {
       to: "Wawrzyn321@gmail.com",
       from: "Wawrzyn321@oto-jest-wawrzyn.pl",

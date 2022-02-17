@@ -12,6 +12,8 @@ import {
 import { Form } from '../Form/Form';
 import { useCaptcha } from 'components/Captcha/useCapcha';
 import { fetchVAdoptionForm } from 'api/api';
+import { useBadCaptchaModal, useSimpleModal } from '../SimpleModal/useModal';
+import ilu_kot from 'public/site/ilu kot.png';
 
 export function VAdoptionForm({ animal }: { animal: Animal }) {
   const adoptionModalProps = usePrefetchVAdoptionModalQueries();
@@ -22,6 +24,18 @@ export function VAdoptionForm({ animal }: { animal: Animal }) {
   const [additionalMessage, setAdditionalMessage] = useState('');
 
   const [showAdoptionModal, setShowAdoptionModal] = useState(false);
+  const [badCaptchaModal, showBadCaptchaModal] = useBadCaptchaModal();
+  const [errorModal, showErrorModal] = useSimpleModal({
+    title: 'Upsss...',
+    image: ilu_kot,
+    text: (
+      <>
+        Coś poszło nie tak.
+        <br />
+        Spróbuj ponownie.
+      </>
+    ),
+  });
 
   const { refetchCaptcha, captchaElement, captchaInput, captchaValue } =
     useCaptcha();
@@ -40,13 +54,11 @@ export function VAdoptionForm({ animal }: { animal: Animal }) {
       setShowAdoptionModal(true);
     } catch (e) {
       if (e.statusCode === 400) {
-        alert('Nieprawidłowa captcha! Spróbuj ponownie.');
+        showBadCaptchaModal();
         refetchCaptcha();
       } else {
         console.warn(e);
-        alert(
-          'Ups... coś poszło nie tak. Jeśli sytuacja będzie się powtarzać, wyślij aplikację bezpośrednio pod adres Wawrzyn321@gmail.com.',
-        );
+        showErrorModal();
       }
     }
   };
@@ -101,6 +113,8 @@ export function VAdoptionForm({ animal }: { animal: Animal }) {
       >
         <VAdoptionModalContent {...adoptionModalProps} />
       </Modal>
+      {badCaptchaModal}
+      {errorModal}
     </>
   );
 }

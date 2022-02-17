@@ -18,13 +18,13 @@ export async function seedPages(prisma: PrismaClient) {
       title: "Psy",
       id: "psy-do-adopcji",
       content:
-        "<p>To właśnie tutaj znajdziesz swojego pupila. Psy z tego działu są gotowe do adopcji i czekają na swojego człowieka. Wystarczy, że zadzwonisz pod podany numer telefonu, aby dograć szczegóły poznania zwierzaka i jego adopcji! Nie zapomnij, że nie wszystkie zwierzaki przebywają w naszym schronisku – informacje o ich miejscu pobytu znajdziesz tuż pod zdjęciem.</p><p><br></p><p>Pamiętaj, że nasi podopieczni posiadają książeczkę zdrowia, a także są odrobaczeni, odpchleni, zaszczepieni, wykastrowani oraz zachipowani; a opłata adopcyjna wynosi 50zł (należy ją uiścić na konto MZUK, a potwierdzenie wręczyć pracownikowi schroniska przy podpisywaniu umowy adopcyjnej. Aby adoptować kota należy mieć ze sobą transporter oraz dowód osobisty.</p>",
+        "<p>To właśnie tutaj możesz znaleźć swojego pupila.&nbsp;</p><p>Psy z tego działu są gotowe do adopcji i czekają na swojego człowieka. Wystarczy, że zadzwonisz pod podany numer telefonu, aby dograć szczegóły poznania zwierzaka i jego adopcji!&nbsp;</p><p>Nie zapomnij, że nie wszystkie psy ze strony internetowej przebywają w naszym schronisku – informacje o ich miejscu pobytu znajdziesz tuż pod zdjęciem.</p><p><br></p><p>Nasi podopieczni posiadają książeczkę zdrowia, są odrobaczeni, odpchleni, zaszczepieni, wykastrowani oraz zachipowani.</p><p>W przypadku psów obowiązuje wizyta przed i poadopcyjna, spacer zapoznawczy, podpisanie umowy adopcyjnej oraz uiszczenie opłaty schroniskowej (80zł).</p>"
     },
     {
       id: "koty-do-adopcji",
       title: "Koty do adopcji",
       content:
-        "<p>To właśnie tutaj znajdziesz swojego mruczącego pupila. Koty z tego działu są gotowe do adopcji i szczekają na swojego człowieka. Wystarczy, że zadzwonisz pod podany przy kocie numer telefonu, aby dograć szczegóły poznania zwierzaka i jego adopcji! Nie zapomnij, że nie wszystkie zwierzaki przebywają w naszym schronisku – informacje o ich miejscu pobytu znajdziesz tuż pod zdjęciem.</p><p><br></p><p>Pamiętaj, że nasi podopieczni posiadają książeczkę zdrowia, a także są odrobaczeni, odpchleni, zaszczepieni, wykastrowani oraz zachipowani; a opłata adopcyjna wynosi 50zł (należy ją uiścić na konto MZUK, a potwierdzenie wręczyć pracownikowi schroniska przy podpisywaniu umowy adopcyjnej. Aby adoptować kota należy mieć ze sobą transporter oraz dowód osobisty.</p>",
+        "<p>To właśnie tutaj możesz znaleźć swojego mruczącego przyjaciela. Koty z tego działu są gotowe do adopcji i czekają na swojego człowieka. Wystarczy, że zadzwonisz pod podany przy kocie numer telefonu, aby dograć szczegóły poznania zwierzaka i jego adopcji! Nie zapomnij, że nie wszystkie zwierzaki przebywają w naszym schronisku – informacje o ich miejscu pobytu znajdziesz tuż pod zdjęciem. </p><p><br></p><p>Nasi podopieczni posiadają książeczkę zdrowia, a także są odrobaczeni, odpchleni, zaszczepieni, wykastrowani, zachipowani i posiadają testy na białaczkę.</p><p>Obowiązuje podpisanie umowy adopcyjnej, wyrażenie zgody na wizytę poadopcyjną&nbsp;oraz uiszczenie opłaty schroniskowej (50zł).</p>"
     },
     {
       id: "zwierzeta-znalezione",
@@ -82,7 +82,7 @@ export async function seedPages(prisma: PrismaClient) {
         "<p>Wolontariat w naszym Schronisku prowadzi Stowarzyszenie “Nadzieja Na Dom”. Obecnie prowadzimy nabór i jest fajnie.",
     },
     { title: "Koci wolontariat", id: "wolontariat-kot", content: "miauuu" },
-    { title: "Formularz adopcji wirtualnej", id: "formularz-adopcji-wirtualnej", content: "Tu opiszemy o co chodzi, jak to działa, z czym się to je i z czym trawi" },
+    { title: "Dziękujemy!", id: "formularz-adopcji-wirtualnej", content: "Tu opiszemy o co chodzi, jak to działa, z czym się to je i z czym trawi" },
     { title: "Modal adopcji wirtualnej", id: "modal-adopcji-wirtualnej", content: "Podziękowania, info co dać w tytule przelewu itd" },
     {
       id: "jak-pomoc",

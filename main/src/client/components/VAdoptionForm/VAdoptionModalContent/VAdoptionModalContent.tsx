@@ -47,17 +47,19 @@ export function VAdoptionModalContent({ data, error }: AdoptionModalProps) {
   }
 
   return (
-    <>
-      <Page id="modal-adopcji-wirtualnej" showTitle={false} ssrPage={page} />
+    <div className={styles['v-adoption-modal-content']}>
+      <Page id="modal-adopcji-wirtualnej" ssrPage={page} />
       <p className={styles['para']}>
         Numer konta: <strong>{accountNo}</strong>
       </p>
-      <button
-        className={styles['copy-button']}
-        onClick={() => copyToClipboard(accountNo)}
-      >
-        Kopiuj numer konta
-      </button>
-    </>
+      <div className={styles['copy-button-wrapper']}>
+        <button
+          className={`${styles['copy-button']} button-link`}
+          onClick={() => copyToClipboard(accountNo)}
+        >
+          Kopiuj numer konta
+        </button>
+      </div>
+    </div>
   );
 }

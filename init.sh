@@ -7,7 +7,7 @@ echo 'npm i prisma'
 npm i --prefix=prisma
 echo 'prisma push, seed'
 npm run push --prefix=prisma
-npm run seed --prefix=prisma
+npm run seed-local --prefix=prisma
 echo 'npm i main'
 npm i --prefix=main
 echo 'npm i client'

@@ -4,7 +4,6 @@ import styles from './Pagination.module.scss';
 import arrow from 'public/site/green arrow.svg';
 
 const makePartitions = (currentPage: number, pagesCount: number) => {
-  // todo czy to działa?
   const radius = 3;
   return new Array(pagesCount)
     .fill(0)

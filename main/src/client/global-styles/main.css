@@ -89,3 +89,16 @@ main > footer {
   margin-bottom: 0px;
   font-weight: lighter;
 }
+
+.ReactModal__Content {
+  border-radius: 100px !important;
+  border-width: 2px !important;
+  border-color: var(--text-color) !important;
+}
+
+.button-link {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-weight: bolder;
+}

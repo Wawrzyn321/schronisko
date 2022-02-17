@@ -129,7 +129,6 @@ export async function fetchVAdoptionForm(captcha: FormCaptcha, props: VAdoptionF
 }
 
 export async function fetchDogVolunteeringPage(
-    _dummyId: string,
 ): Promise<FetchResult<PageModel>> {
     const url = (getBackendUrl()) + '/api/c/pages/dog-volunteering';
     return genericFetch(url);
