@@ -1,7 +1,6 @@
-
-maile (sendgrid już jest zainstalowany)
-
-po deployu zmień link na backoffice z https://www.schronisko.sosnowiec.pl/ na ten nowy
+po deployu:
+    * zmień link na backoffice z https://www.schronisko.sosnowiec.pl/ na ten nowy
+    * maile
 
 playwright
 

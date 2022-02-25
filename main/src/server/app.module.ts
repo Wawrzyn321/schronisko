@@ -14,7 +14,7 @@ import { AnimalsModule } from './domain/animals/animals.module';
 import { AnimalImagesModule } from './domain/animal-images/animal-images.module';
 import { LogsModule } from './domain/logs/logs.module';
 import { SettingsModule } from './domain/settings/settings.module';
-import { ViewModule } from './domain/view/view.module'
+// import { ViewModule } from './domain/view/view.module'
 import { CommunicationModule } from './domain/communication/communication.module';
 import { ConfigModule } from '@nestjs/config';
 
@@ -44,7 +44,7 @@ const JwtGuard = {
 
 @Module({
   imports: [...domainModules,
-    ViewModule,
+    // ViewModule,
     ServeStatic,
   ConfigModule.forRoot()],
   controllers: [AppController,],
