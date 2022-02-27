@@ -1,5 +1,5 @@
-import { Injectable, OnModuleInit } from '@nestjs/common'
-import next from 'next'
+import { Injectable, OnModuleInit } from '@nestjs/common';
+import next from 'next';
 import { NextServer } from 'next/dist/server/next';
 
 @Injectable()

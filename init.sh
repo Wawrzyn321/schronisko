@@ -1,6 +1,6 @@
 set -e
-echo 'replacing i515358 with postgres in prisma/.env'
-sed -i s/i515358/postgres/ prisma/.env
+echo 'replacing I515358 with postgres in prisma/.env'
+sed -i s/I515358/postgres/ prisma/.env
 echo 'npm i '
 npm i
 echo 'npm i prisma'

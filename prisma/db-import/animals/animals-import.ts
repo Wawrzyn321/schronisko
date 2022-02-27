@@ -9,9 +9,9 @@ import _pictures from './pictures.json';
 import { decode } from 'html-entities';
 
 // todo
-const galleryPath = '/Users/i515358/Desktop/schronisko_sosnowiec_pl/public_html/gallery/';
+const galleryPath = '/Users/I515358/Desktop/schronisko_sosnowiec_pl/public_html/gallery/';
 const thumbsPath = galleryPath + 'thumbs/';
-const targetAnimalsPath = '/Users/i515358/Nauka/schronisko/prisma/db-import/animals/animals/';
+const targetAnimalsPath = '/Users/I515358/dev/schronisko/prisma/db-import/animals/animals/';
 const targetAnimalImagesPath = targetAnimalsPath + 'pics/';
 
 function mapCategoryId(categoryId: string) {
@@ -157,7 +157,7 @@ async function seedAnimalImages(prisma: PrismaClient, animals: any[], count: num
         if (animals[i].category === AnimalCategory.ZaTeczowymMostem || animals[i].category === AnimalCategory.ZnalazlyDom) {
             continue;
         }
-        const picsForAnimalI = pictures.filter(p => p.adminGalleryId === animals[i].id);
+        const picsForAnimalI = pictures.filter((p: any) => p.adminGalleryId === animals[i].id);
         for (let j = 0; j < picsForAnimalI.length; j++) {
             const pic = picsForAnimalI[j];
             let ok = false;

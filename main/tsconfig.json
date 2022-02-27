@@ -11,7 +11,8 @@
     "outDir": "./dist",
     "incremental": true,
     "jsx": "preserve",
-    "lib": ["es2021"]
+    "lib": ["es2021"],
+    "skipLibCheck": true
   },
   "include": ["src/server/**/*.ts", "src/main/**/*.ts"]
 }

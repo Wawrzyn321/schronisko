@@ -5,3 +5,9 @@ po deployu:
 playwright
 
 przetestuj restart vpsa
+
+ogarnięcie ładowania pliczków do bazy - może weź z VPSa?
+
+przenieść na vpsa node 16
+
+sendgrid key
