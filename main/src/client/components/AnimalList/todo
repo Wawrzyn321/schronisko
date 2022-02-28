@@ -1,13 +1,5 @@
 po deployu:
     * zmień link na backoffice z https://www.schronisko.sosnowiec.pl/ na ten nowy
-    * maile
-
-playwright
+    * maile (sendgrid key)
 
 przetestuj restart vpsa
-
-ogarnięcie ładowania pliczków do bazy - może weź z VPSa?
-
-przenieść na vpsa node 16
-
-sendgrid key

@@ -1,5 +1,5 @@
 {
-  "name": "learn-starter",
+  "name": "schronisko-client",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -15,6 +15,7 @@
   "devDependencies": {
     "@types/node": "^16.10.1",
     "@types/react": "^17.0.24",
+    "eslint": "^7.32.0",
     "typescript": "^4.4.3"
   }
 }
