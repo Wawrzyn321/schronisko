@@ -10,4 +10,4 @@ import { SettingsService } from './../settings/settings.service';
   exports: [NewsService],
   controllers: [NewsController, NewsPublicController],
 })
-export class NewsModule { }
+export class NewsModule {}

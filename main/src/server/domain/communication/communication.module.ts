@@ -10,4 +10,4 @@ import { CommunicationController } from './communication.controller';
   exports: [CommunicationService],
   controllers: [CommunicationController],
 })
-export class CommunicationModule { }
+export class CommunicationModule {}

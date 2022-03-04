@@ -1,8 +1,8 @@
-import { Controller, Get, Res, Req } from '@nestjs/common'
+import { Controller, Get, Res, Req } from '@nestjs/common';
 import { Public } from '../auth/public.decorator';
-import { Request, Response } from 'express'
+import { Request, Response } from 'express';
 
-import { ViewService } from './view.service'
+import { ViewService } from './view.service';
 
 @Controller('/')
 export class ViewController {

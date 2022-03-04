@@ -20,4 +20,4 @@ import { BcryptService } from './bcrypt/bcrypt.service';
   providers: [AuthService, JwtStrategy, BcryptService],
   exports: [AuthService],
 })
-export class AuthModule { }
+export class AuthModule {}

@@ -34,8 +34,9 @@
     <th>Nazwisko</th>
     <th>Login</th>
     <th class="g-text-align-center">
-      <input type="checkbox" bind:checked={showActive} />
-      Aktywny
+    <label>
+      Aktywny<input type="checkbox" bind:checked={showActive} />
+    </label>
     </th>
     <th class="g-table-actions" />
   </tr>
@@ -48,6 +49,7 @@
       <td class="g-text-align-right g-table-actions">
         <Button
           type="is-primary"
+          aria-label="Edytuj"
           on:click={() => {
             if (isSelf(user)) {
               editSelfModalVisible = true;
@@ -61,6 +63,7 @@
         </Button>
         <Button
           type="is-primary"
+          aria-label="Zmień hasło"
           on:click={() => {
             if (isSelf(user)) {
               edifSelfPasswordVisible = true;
@@ -74,6 +77,7 @@
         </Button>
         <Button
           type="is-danger"
+          aria-label="Usuń"
           disabled={isSelf(user)}
           on:click={() => {
             selectedUser = user;

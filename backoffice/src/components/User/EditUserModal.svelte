@@ -56,7 +56,7 @@
   disabledConfirm={loading}
 >
   <form>
-    {#if permissions.length}
+    {#if !loading}
       <label>
         <input
           checked={isActive}

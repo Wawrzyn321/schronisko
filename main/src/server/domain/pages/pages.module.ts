@@ -10,4 +10,4 @@ import { SettingsService } from '../settings/settings.service';
   exports: [PagesService],
   controllers: [PagesController, PagesPublicController],
 })
-export class PagesModule { }
+export class PagesModule {}

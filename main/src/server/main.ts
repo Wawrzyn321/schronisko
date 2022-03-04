@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-const fs = require('fs');
+import fs from 'fs';
 
 import * as bodyParser from 'body-parser';
 
@@ -14,8 +14,8 @@ if (!DEV) {
   options = {
     httpsOptions: {
       key: fs.readFileSync('/var/svc/certs/privkey.pem'),
-      cert: fs.readFileSync('/var/svc/certs/cert.pem')
-    }
+      cert: fs.readFileSync('/var/svc/certs/cert.pem'),
+    },
   };
 }
 

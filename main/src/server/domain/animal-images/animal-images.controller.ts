@@ -1,48 +1,61 @@
 import { Public } from './../auth/public.decorator';
 import { AnimalImagesService, UpsertParams } from './animal-images.service';
 import { RequirePermission } from '../auth/Permissions.decorator';
-import { Controller, Get, UseGuards, Param, Patch, Body, Post, Delete, Put } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  UseGuards,
+  Param,
+  Body,
+  Delete,
+  Put,
+} from '@nestjs/common';
 import { Permission } from '@prisma/client';
 import { PermissionsGuard } from '../auth/Permissions.guard';
 
 export type AnimalImageParams = {
-    data: string;
-    order: number;
-    visible: boolean;
-}
+  data: string;
+  order: number;
+  visible: boolean;
+};
 
 @Public()
 @Controller('api/c/animal-images')
 export class AnimalImagesPublicController {
-    constructor(private animalImagesService: AnimalImagesService) { }
+  constructor(private animalImagesService: AnimalImagesService) {}
 
-    @Get(':id')
-    getImages(@Param("id") animalId: string) {
-        return this.animalImagesService.get(animalId, true);
-    }
+  @Get(':id')
+  getImages(@Param('id') animalId: string) {
+    return this.animalImagesService.get(animalId, true);
+  }
 }
 
 @Controller('api/animal-images')
 export class AnimalImagesController {
-    constructor(private animalImagesService: AnimalImagesService) { }
+  constructor(private animalImagesService: AnimalImagesService) {}
 
-    @RequirePermission(Permission.ANIMAL)
-    @Get(':id')
-    getImages(@Param("id") animalId: string) {
-        return this.animalImagesService.get(animalId);
-    }
+  @RequirePermission(Permission.ANIMAL)
+  @Get(':id')
+  getImages(@Param('id') animalId: string) {
+    return this.animalImagesService.get(animalId);
+  }
 
-    @RequirePermission(Permission.ANIMAL)
-    @Put(':id')
-    @UseGuards(PermissionsGuard)
-    upsertImages(@Param("id") animalId: string, @Body() images: UpsertParams[]) {
-        return this.animalImagesService.upsert(decodeURIComponent(animalId), images);
-    }
+  @RequirePermission(Permission.ANIMAL)
+  @Put(':id')
+  @UseGuards(PermissionsGuard)
+  upsertImages(@Param('id') animalId: string, @Body() images: UpsertParams[]) {
+    return this.animalImagesService.upsert(
+      decodeURIComponent(animalId),
+      images,
+    );
+  }
 
-    @RequirePermission(Permission.ANIMAL)
-    @Delete(':id')
-    @UseGuards(PermissionsGuard)
-    deleteImages(@Param("id") animalId: string) {
-        return this.animalImagesService.deleteByAnimal(decodeURIComponent(animalId));
-    }
+  @RequirePermission(Permission.ANIMAL)
+  @Delete(':id')
+  @UseGuards(PermissionsGuard)
+  deleteImages(@Param('id') animalId: string) {
+    return this.animalImagesService.deleteByAnimal(
+      decodeURIComponent(animalId),
+    );
+  }
 }

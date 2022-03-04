@@ -1,6 +1,16 @@
-import { UserDto, validateCreate, toUser, toUserUpdate, validateUpdate } from '../common/UserDto';
+import {
+  UserDto,
+  validateCreate,
+  toUser,
+  toUserUpdate,
+  validateUpdate,
+} from '../common/UserDto';
 import { UserViewModel } from './../auth/auth.service';
-import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { PrismaService } from '../../prisma-connect/prisma.service';
 import { Permission, User, UserPermissions } from '@prisma/client';
 import { BcryptService } from '../auth/bcrypt/bcrypt.service';
@@ -10,9 +20,13 @@ import { formattedDiff, havePermissionsChanged } from '../logs/diff';
 
 @Injectable()
 export class UsersService {
-  constructor(private prisma: PrismaService, private bcryptService: BcryptService, private logsService: LogsService) { }
+  constructor(
+    private prisma: PrismaService,
+    private bcryptService: BcryptService,
+    private logsService: LogsService,
+  ) {}
 
-  async findByLogin(login: string = ''): Promise<User | undefined> {
+  async findByLogin(login = ''): Promise<User | undefined> {
     return await this.prisma.user.findUnique({ where: { login } });
   }
 
@@ -30,9 +44,9 @@ export class UsersService {
     if (!validateCreate(userDatta)) {
       throw new BadRequestException();
     }
-    const createdUser = await this.prisma.user.create(
-      { data: await toUser(userDatta, this.bcryptService.hashData) }
-    );
+    const createdUser = await this.prisma.user.create({
+      data: await toUser(userDatta, this.bcryptService.hashData),
+    });
     await this.logsService.log({
       message: `dodał użytkownika ${createdUser.firstName} ${createdUser.lastName} (${createdUser.login})`,
       permission: Permission.USER,
@@ -41,8 +55,15 @@ export class UsersService {
     return this.toViewModel(createdUser);
   }
 
-  async update(id: number, user: UserDto, loggedInUser: LoggedInUser): Promise<UserViewModel> {
-    if (!loggedInUser.permissions.includes(Permission.USER) && id !== loggedInUser.id) {
+  async update(
+    id: number,
+    user: UserDto,
+    loggedInUser: LoggedInUser,
+  ): Promise<UserViewModel> {
+    if (
+      !loggedInUser.permissions.includes(Permission.USER) &&
+      id !== loggedInUser.id
+    ) {
       throw new UnauthorizedException();
     }
     if (!validateUpdate(id, user)) {
@@ -50,15 +71,14 @@ export class UsersService {
     }
     const prevUser = await this.findById(user.id);
     if (prevUser.id !== id) {
-      throw new BadRequestException(id, "id musi się zgadzać");
+      throw new BadRequestException(id, 'id musi się zgadzać');
     }
     const prevPermissions = await this.getPermissions(id);
 
-    await this.prisma.userPermissions.deleteMany({ where: { userId: id } })
+    await this.prisma.userPermissions.deleteMany({ where: { userId: id } });
 
     const data = toUserUpdate(user);
-    const updatedUser = await this.prisma.user.update(
-      { where: { id }, data });
+    const updatedUser = await this.prisma.user.update({ where: { id }, data });
 
     // add passwordHash to satisfy the types
     const diff = formattedDiff(prevUser, { ...user, passwordHash: null }, [
@@ -75,27 +95,37 @@ export class UsersService {
       ANIMAL: 'Zwierzęta',
     };
 
-    const permissionsDiff = havePermissionsChanged(prevPermissions.map(p => p.permission), user.permissions) ? ` (Zmienione uprawnienia: ${user.permissions.map(p => permissionNames[p])})` : '';
+    const permissionsDiff = havePermissionsChanged(
+      prevPermissions.map((p) => p.permission),
+      user.permissions,
+    )
+      ? ` (Zmienione uprawnienia: ${user.permissions.map(
+          (p) => permissionNames[p],
+        )})`
+      : '';
 
     await this.logsService.log({
       message: `zaktualizował użytkownika ${prevUser.login} (id: ${prevUser.id}) ${diff}${permissionsDiff}`,
       permission: Permission.USER,
-      user,
+      user: loggedInUser,
     });
     return this.toViewModel(updatedUser);
   }
 
-  async delete(user: LoggedInUser, userId: number): Promise<UserViewModel> {
-    await this.prisma.userPermissions.deleteMany({ where: { userId } })
+  async delete(
+    loggedInUser: LoggedInUser,
+    userId: number,
+  ): Promise<UserViewModel> {
+    await this.prisma.userPermissions.deleteMany({ where: { userId } });
 
     const deletedUser = await this.prisma.user.delete({
       where: { id: userId },
-    })
+    });
 
     await this.logsService.log({
       message: `usunął użytkownika ${deletedUser.firstName} ${deletedUser.lastName} (${deletedUser.login})`,
       permission: Permission.USER,
-      user,
+      user: loggedInUser,
     });
 
     return this.toViewModel(deletedUser);
@@ -107,13 +137,15 @@ export class UsersService {
 
   async updatePassword(user: UserViewModel, password: string) {
     const passwordHash = await this.bcryptService.hashData(password);
-    return await this.prisma.user.update(
-      { where: { id: user.id }, data: { ...user, passwordHash } }
-    ).then(this.toViewModel);
+    return await this.prisma.user
+      .update({ where: { id: user.id }, data: { ...user, passwordHash } })
+      .then(this.toViewModel);
   }
 
   toViewModel(user: User): UserViewModel {
-    const { passwordHash, ...u }: { passwordHash: string } & UserViewModel = user;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { passwordHash, ...u }: { passwordHash: string } & UserViewModel =
+      user;
     return u;
   }
 }
