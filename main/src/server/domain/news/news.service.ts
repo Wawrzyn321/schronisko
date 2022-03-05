@@ -171,14 +171,14 @@ export class NewsService {
   }
 
   async delete(user: LoggedInUser, id: string): Promise<News> {
-    const post = await this.prisma.news.findUnique({ where: { id } });
+    const news = await this.prisma.news.findUnique({ where: { id } });
     try {
-      await deleteImage('news/', post.imageName);
+      await deleteImage('news/', news.imageName);
     } catch (e: unknown) {
       console.warn(e);
     }
 
-    await deleteImagesInContent(post.content);
+    await deleteImagesInContent(news.content);
 
     const deletedNews = await this.prisma.news.delete({
       where: { id },

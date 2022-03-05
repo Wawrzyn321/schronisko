@@ -17,6 +17,7 @@
       <Button
         style="margin: 0 4px"
         type="is-primary"
+        aria-label="Dodaj zwierzę"
         on:click={() => push('/animals-add')}
       >
         <strong>+</strong>

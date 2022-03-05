@@ -52,7 +52,7 @@
       notifySuccess({ message: 'Dane zwierzęcia zostały zapisane.' });
     } catch (e) {
       notifyError({
-        message: 'Nie możnac zapisać danych zwierzęcia : ' + e.message,
+        message: 'Nie możnac zapisać danych zwierzęcia: ' + e.message,
       });
     } finally {
       isSaving = false;
@@ -67,6 +67,7 @@
       {updateAnimal}
       {isValid}
       {animal}
+      {images}
       {isSaving}
       {prevCategory}
       bind:isPublic={animal.isPublic}

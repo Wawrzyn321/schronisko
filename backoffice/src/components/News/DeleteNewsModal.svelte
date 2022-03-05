@@ -16,7 +16,7 @@
       await newsService.delete(news.id);
       onNewsDeleted(news);
     } catch (e) {
-      notifyError({ message: 'Nie można usunąć posta: ' + e.message });
+      notifyError({ message: 'Nie można usunąć newsa: ' + e.message });
     }
     loading = false;
   }

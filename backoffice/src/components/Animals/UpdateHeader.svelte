@@ -9,11 +9,13 @@
   import DeleteAnimalModal from './DeleteAnimalModal.svelte';
   import { changedToReadonly } from './Form/animal-readonly';
   import FormTooltipMessageWrapper from './Form/FormTooltipMessageWrapper.svelte';
+  import type { AnimalImageParams } from '../../services/AnimalImagesService';
 
   export let isPublic: boolean;
   export let timestamp: Date;
   export let isValid: boolean;
   export let animal: Animal;
+  export let images: AnimalImageParams[];
   export let isSaving: boolean;
   export let updateAnimal: () => any;
   export let prevCategory: AnimalCategory;
@@ -45,7 +47,7 @@
       />
       Widoczny na stronie
     </label>
-    <FormTooltipMessageWrapper {isValid} animalData={animal}>
+    <FormTooltipMessageWrapper {isValid} animalData={animal} images={images}>
       <Button
         type="is-primary"
         on:click={() => {
@@ -56,6 +58,7 @@
           }
         }}
         disabled={!isValid || isSaving}
+        aria-label="Zapisz zwierzę"
       >
         Zapisz
       </Button>
@@ -64,6 +67,7 @@
       type="is-danger"
       on:click={() => (deleteModalVisible = true)}
       style="margin-left: 8px"
+      aria-label="Usuń zwierzę"
     >
       Usuń
     </Button>

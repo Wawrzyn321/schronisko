@@ -14,7 +14,7 @@
         bind:value={searchPhrase}
         style="margin-right: 10px"
       />
-      <Button type="is-primary" on:click={() => push('/news-add')}
+      <Button type="is-primary" on:click={() => push('/news-add')} aria-label="Dodaj newsa"
         ><strong>+</strong></Button
       >
     </div>

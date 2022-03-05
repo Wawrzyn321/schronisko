@@ -73,7 +73,12 @@ export class AnimalImagesService {
 
     for (const { image, handled } of imagesAlready) {
       if (!handled) {
-        await this.deleteImage(image.id);
+        try {
+          await this.deleteImage(image.id);
+        } catch (e) {
+          console.warn("Error while deleting image of id', iamge.id");
+          console.warn(e);
+        }
       }
     }
 

@@ -47,6 +47,7 @@
       type="is-danger"
       on:click={() => (deleteModalVisible = true)}
       style="margin-left: 8px"
+      aria-label="Usuń newsa"
     >
       Usuń
     </Button>

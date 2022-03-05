@@ -457,3 +457,7 @@ input[type=search] {
   font-weight: 300;
   font-style: italic;
 }
+
+.tabs a:hover {
+  text-decoration: none;
+}

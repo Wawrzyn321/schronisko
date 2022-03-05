@@ -72,7 +72,6 @@ export class AuthService {
     params: ChangePasswordParams,
     loggedInUser: LoggedInUser,
   ): Promise<UserViewModel> {
-    console.log('a');
     const user = await this.usersService.findById(loggedInUser.id);
     if (!user) {
       throw new NotFoundException();

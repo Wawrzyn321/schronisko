@@ -36,8 +36,8 @@
 </script>
 
 <div class="number-input">
-  <Field label={name}>
-    <Input bind:value={newValue} />
+  <Field label={name} labelFor={name}>
+    <Input bind:value={newValue} id={name}/>
     <p class="control">
       <Button
         type="is-primary"

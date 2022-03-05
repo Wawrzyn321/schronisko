@@ -59,6 +59,7 @@
   <CreateAnimalHeader
     {createAnimal}
     {isValid}
+    {images}
     {isCreating}
     {animalData}
     bind:isPublic={animalData.isPublic}

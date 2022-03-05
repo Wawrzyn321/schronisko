@@ -6,13 +6,14 @@
   export let gender: AnimalGender;
 </script>
 
-<Field label="Płeć" style="grid-area: gender">
+<Field label="Płeć" style="grid-area: gender" labelFor="płeć">
   <Select
     placeholder="Wybierz płeć"
     required
     expanded
     nativeSize={1}
     bind:selected={gender}
+    id="płeć"
   >
     {#each animalGenders as gender}
       <option value={gender}>{animalGendersMap[gender]}</option>

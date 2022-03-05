@@ -1,4 +1,10 @@
-import { PrismaClient } from "@prisma/client";
+import {
+  AnimalCategory,
+  AnimalGender,
+  AnimalType,
+  PrismaClient,
+  VirtualCaretakerType,
+} from "@prisma/client";
 import { hashData } from "./common";
 
 const prisma = new PrismaClient();
@@ -12,6 +18,7 @@ async function clearDb(prisma: PrismaClient) {
   await prisma.userPermissions.deleteMany();
   await prisma.logs.deleteMany();
   await prisma.user.deleteMany();
+  await prisma.settings.deleteMany();
   console.log("done!");
 }
 
@@ -101,6 +108,36 @@ const TEST_PAGE = {
   },
 };
 
+const NON_PUBLIC_NEWS = {
+  where: { id: "non-public-news" },
+  update: {},
+  create: {
+    id: "non-public-news",
+    title: "niepubliczny",
+    description: "np-opis",
+    content: "np-content",
+    isPublished: false,
+    imageName: "",
+  },
+};
+
+const TEST_ANIMAL = {
+  where: { id: "test-animal-id" },
+  update: {},
+  create: {
+    id: "test-animal-id",
+    refNo: "",
+    name: "test-animal",
+    type: AnimalType.DOG,
+    description: "test-animal-desc",
+    category: AnimalCategory.NiedawnoZnalezione,
+    virtualCaretakerType: VirtualCaretakerType.NiePrzypisany,
+    contactInfo: "test-animal-contact-info",
+    gender: AnimalGender.MALE,
+    isPublic: false,
+  },
+};
+
 async function seed(prisma: PrismaClient) {
   console.log("seeding DB...");
   await prisma.user.upsert(await ADMIN_USER());
@@ -108,6 +145,8 @@ async function seed(prisma: PrismaClient) {
   await prisma.user.upsert(await CHANGE_DATA_USER());
   await prisma.user.upsert(await NO_PERMISSIONS_USER());
   await prisma.page.upsert(TEST_PAGE);
+  await prisma.news.upsert(NON_PUBLIC_NEWS);
+  await prisma.animal.upsert(TEST_ANIMAL);
   console.log("done!");
 }
 

@@ -20,7 +20,7 @@
 </script>
 
 <Dropdown>
-  <Button slot="trigger" type="is-primary" style="width: 40px">
+  <Button slot="trigger" type="is-primary" style="width: 40px" aria-label="Otwórz filtry">
     <FilterIcon size="1.0x" />
   </Button>
   <div slot="content" class="dropdown-content">

@@ -35,7 +35,7 @@
 
 <Field {label} {message} noStar={!label} {required}>
   <div style="display: flex">
-    <Input type="file" accept="image/png, image/jpeg" on:input={onFileChange} />
+    <Input type="file" accept="image/png, image/jpeg" on:input={onFileChange} aria-label="Wybierz obraz"/>
     <Button on:click={openResizeModal} disabled={!file}>Przytnij</Button>
     <Button
       type="is-danger"

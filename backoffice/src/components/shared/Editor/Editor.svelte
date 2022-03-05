@@ -117,7 +117,7 @@
 <!-- {#if requestMayBeTooLarge()}
   <div class="warning-container">
     <Notification type="is-warning">
-      Rozmiar posta może przewyższać 10MB - zapisanie go może się nie udać!
+      Rozmiar zawartości może przewyższać 10MB - zapisanie go może się nie udać!
     </Notification>
   </div>
 {/if} -->

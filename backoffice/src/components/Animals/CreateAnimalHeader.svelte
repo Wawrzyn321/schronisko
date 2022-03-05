@@ -1,10 +1,12 @@
 <script lang="ts">
   import { Button } from 'svelma';
   import type { AnimalData } from '../../services/AnimalsService';
+  import type { AnimalImageParams } from '../../services/AnimalImagesService';
   import FormTooltipMessageWrapper from './Form/FormTooltipMessageWrapper.svelte';
 
   export let isPublic: boolean;
   export let isValid: boolean;
+  export let images: AnimalImageParams[];
   export let isCreating: boolean;
   export let createAnimal: () => any;
   export let animalData: AnimalData;
@@ -24,11 +26,12 @@
       />
       Widoczny na stronie
     </label>
-    <FormTooltipMessageWrapper {isValid} {animalData}>
+    <FormTooltipMessageWrapper {isValid} {animalData} {images}>
       <Button
         type="is-primary"
         disabled={!isValid || isCreating}
         on:click={createAnimal}
+        aria-label="Dodaj zwierzę"
       >
         Dodaj
       </Button>

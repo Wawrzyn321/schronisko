@@ -1,16 +1,12 @@
 import { expect, Page } from "@playwright/test";
 import { ADMIN_LOGIN, STORAGE_STATE_JSON } from "./config";
-import { closeSync, existsSync, openSync, unlinkSync } from "fs";
+import { closeSync, openSync } from "fs";
+import { contains } from "./../helpers";
+
+export * from "./../helpers";
 
 export const navTo = async (page: Page, str: string) =>
   await contains(page, str, "a").click();
-
-export const contains = (page: Page, text: string | RegExp, tag = "*") =>
-  page
-    .locator(tag, {
-      hasText: text,
-    })
-    .last();
 
 export const login = async (
   page: Page,

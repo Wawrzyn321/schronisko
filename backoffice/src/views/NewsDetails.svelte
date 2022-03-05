@@ -78,7 +78,7 @@
     >
       <Tab label="Dane">
         <NewsForm
-          {news}
+          bind:news
           bind:imageData
           setFormValid={(valid) => (isValid = valid)}
         />

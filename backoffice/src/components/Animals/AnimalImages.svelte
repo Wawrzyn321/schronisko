@@ -60,7 +60,7 @@
       disabled={images.length >= MAX_IMAGES}
       type="is-primary"
     >
-      <strong style="margin-right: 0.5em">+</strong> Dodaj
+      <strong style="margin-right: 0.5em" aria-label="Dodaj zdjęcie">+</strong> Dodaj
     </Button>
   </div>
   <ul class="animal-images-list">

@@ -21,6 +21,7 @@
   let fileMap: FileMap = [];
   let imageData = '';
 
+
   async function createNews() {
     try {
       const { id } = await newsService.create(
@@ -32,9 +33,9 @@
         imageData
       );
       push(`/news/${id}`);
-      notifySuccess({ message: 'Post został utworzony.' });
+      notifySuccess({ message: 'News został utworzony.' });
     } catch (e) {
-      notifyError({ message: 'Nie można utworzyć posta: ' + e.message });
+      notifyError({ message: 'Nie można utworzyć newsa: ' + e.message });
     }
   }
 </script>
@@ -59,7 +60,7 @@
     <Tab label="Dane">
       <NewsForm
         bind:imageData
-        {news}
+        bind:news
         setFormValid={(valid) => (isValid = valid)}
       />
     </Tab>

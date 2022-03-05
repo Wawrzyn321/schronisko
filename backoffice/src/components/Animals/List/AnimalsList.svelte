@@ -91,7 +91,7 @@
       {/if}
       {#if columnParams.showLocation}
         <td>
-          {animalLocationsMap[animal.location]}
+          {animalLocationsMap[animal.location] || '-'}
           {#if animal.locationDescription}
             ({animal.locationDescription})
           {/if}
@@ -131,12 +131,14 @@
       <td class="g-text-align-right g-table-actions">
         <Button
           type="is-primary"
+          aria-label={"Edytuj zwierzę " + animal.name}
           on:click={() => push(`/animals/${animal.id}`)}
         >
           <Edit2Icon size="1.0x" />
         </Button>
         <Button
           type="is-danger"
+          aria-label={"Usuń zwierzę " + animal.name}
           on:click={() => {
             selectedAnimal = animal;
             deleteModalVisible = true;

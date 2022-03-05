@@ -106,8 +106,10 @@
     <th class="g-table-ellipsis">Notatka</th>
   {/if}
   <th class="is-public-column">
-    <input type="checkbox" bind:checked={filteringParams.showOnlyPublic} />
-    Widoczny na stronie
+    <label>
+      Widoczny na stronie
+      <input type="checkbox" bind:checked={filteringParams.showOnlyPublic} />
+    </label>
   </th>
   <th class="g-text-align-right g-table-actions" />
 </tr>
