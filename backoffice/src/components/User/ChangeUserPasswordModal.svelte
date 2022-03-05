@@ -33,7 +33,7 @@
   title={`Zmień hasło użytkownika ${user?.login}`}
   confirmText="Zatwierdź"
   onConfirm={updateUserPassword}
-  disabledConfirm={loading}
+  disabledConfirm={loading || !password.trim()}
   loadingConfirm={loading}
 >
   <form>

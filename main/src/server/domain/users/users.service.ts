@@ -70,7 +70,7 @@ export class UsersService {
       throw new BadRequestException();
     }
     const prevUser = await this.findById(user.id);
-    if (prevUser.id !== id) {
+    if (prevUser?.id !== id) {
       throw new BadRequestException(id, 'id musi się zgadzać');
     }
     const prevPermissions = await this.getPermissions(id);
@@ -105,7 +105,7 @@ export class UsersService {
       : '';
 
     await this.logsService.log({
-      message: `zaktualizował użytkownika ${prevUser.login} (id: ${prevUser.id}) ${diff}${permissionsDiff}`,
+      message: `zaktualizował użytkownika ${prevUser.login} (id: ${prevUser.id}) Dane: ${diff}${permissionsDiff}`,
       permission: Permission.USER,
       user: loggedInUser,
     });

@@ -29,10 +29,10 @@
   <div>
     <div>
       <Field label="Tytuł" required>
-        <Input required bind:value={news.title} placeholder="Tytuł" />
+        <Input required bind:value={news.title} placeholder="Tytuł" pattern=".*\S+.*" />
       </Field>
       <Field label="Opis">
-        <Input bind:value={news.description} placeholder="Opis" />
+        <Input bind:value={news.description} placeholder="Opis" pattern=".*\S+.*" />
       </Field>
       <ResizableImageInput
         label="Tło"

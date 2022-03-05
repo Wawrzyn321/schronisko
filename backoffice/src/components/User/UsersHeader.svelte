@@ -14,7 +14,7 @@
   <h1>Użytkownicy</h1>
   <div style="display: flex">
     <input placeholder="Szukaj..." type="search" style="margin-right: 10px" bind:value={searchPhrase} />
-    <Button type="is-primary" on:click={showCreateModal}><strong>+</strong></Button>
+    <Button type="is-primary" aria-label="Dodaj użytkownika" on:click={showCreateModal}><strong>+</strong></Button>
   </div>
 </header>
 <AddUserModal bind:modalVisible={createModalVisible} {onUserAdded} />

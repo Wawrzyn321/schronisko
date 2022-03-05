@@ -31,14 +31,15 @@
 <Tab label="Dane">
   <div id="animal-data-form">
     <Field label="Imię" required style="grid-area: name">
-      <Input required bind:value={animal.name} placeholder="Imię zwierzęcia" />
+      <Input required bind:value={animal.name} placeholder="Imię zwierzęcia" pattern=".*\S+.*" />
     </Field>
     <AnimalTypeSelect bind:type={animal.type} />
-    <Field label="Numer ewidencyjny" required style="grid-area: ref">
+    <Field label="Numer ewidencyjny" required style="grid-area: ref" >
       <Input
         required
         bind:value={animal.refNo}
         placeholder="Numer ewidencyjny"
+        pattern=".*\S+.*" 
       />
     </Field>
     <AnimalLocationSelect bind:location={animal.location} type={animal.type} />
@@ -47,6 +48,7 @@
         required
         bind:value={animal.contactInfo}
         placeholder="Np. osoba, numer telefonu, e-mail"
+        pattern=".*\S+.*"
       />
     </Field>
     <AnimalVirtualCaretakerSelect
@@ -58,15 +60,18 @@
       virtualCaretakerType={animal.virtualCaretakerType}
       onChange={onCategoryChange}
     />
-    <Field label="Dodatkowy opis miejsca" style="grid-area: location-desc">
+    <Field label="Dodatkowy opis miejsca" style="grid-area: location-desc" >
       <Input
         bind:value={animal.locationDescription}
         placeholder="Informacja gdzie przebywa zwierzę"
+        pattern=".*\S+.*" 
       />
     </Field>
     {#if animal.virtualCaretakerType === VirtualCaretakerType.Znalazl}
       <Field label="Moim wirtualnym opiekunem jest" style="grid-area: v-c-name">
-        <Input bind:value={animal.virtualCaretakerName} />
+        <Input bind:value={animal.virtualCaretakerName} 
+        pattern=".*\S+.*" 
+      />
       </Field>
     {/if}
   </div>

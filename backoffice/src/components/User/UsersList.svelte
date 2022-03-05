@@ -49,7 +49,7 @@
       <td class="g-text-align-right g-table-actions">
         <Button
           type="is-primary"
-          aria-label="Edytuj"
+          aria-label={"Edytuj " + user.login}
           on:click={() => {
             if (isSelf(user)) {
               editSelfModalVisible = true;
@@ -63,7 +63,7 @@
         </Button>
         <Button
           type="is-primary"
-          aria-label="Zmień hasło"
+          aria-label={"Zmień hasło " + user.login}
           on:click={() => {
             if (isSelf(user)) {
               edifSelfPasswordVisible = true;
@@ -77,7 +77,7 @@
         </Button>
         <Button
           type="is-danger"
-          aria-label="Usuń"
+          aria-label={"Usuń " + user.login}
           disabled={isSelf(user)}
           on:click={() => {
             selectedUser = user;

@@ -72,7 +72,7 @@
     <div style="display: flex; justify-content: space-between">
       <div style="width: 300px; margin-right: 16px">
         <Field label="Tytuł">
-          <Input required bind:value={page.title} placeholder="Tytuł strony" />
+          <Input required bind:value={page.title} placeholder="Tytuł strony" pattern=".*\S+.*" />
         </Field>
       </div>
       <AboutSubstitutions />

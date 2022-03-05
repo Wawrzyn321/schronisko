@@ -46,13 +46,13 @@
 >
   <form bind:this={form} on:input={() => (isFormValid = form.checkValidity())}>
     <Field label="Login" required>
-      <Input required bind:value={user.login} placeholder="Login" />
+      <Input required bind:value={user.login} placeholder="Login" pattern=".*\S+.*" />
     </Field>
     <Field label="Imię" required>
-      <Input required bind:value={user.firstName} placeholder="Imię" />
+      <Input required bind:value={user.firstName} placeholder="Imię" pattern=".*\S+.*" />
     </Field>
     <Field label="Nazwisko" required>
-      <Input required bind:value={user.lastName} placeholder="Nazwisko" />
+      <Input required bind:value={user.lastName} placeholder="Nazwisko" pattern=".*\S+.*" />
     </Field>
   </form>
 </Modal>

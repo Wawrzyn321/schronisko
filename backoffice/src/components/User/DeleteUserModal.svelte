@@ -34,7 +34,7 @@
 >
   {#if !!user}
     <p>
-      Czy na pewno chceesz usunąć użytkownika
+      Czy na pewno chcesz usunąć użytkownika
       <strong>
         {user.firstName}
         {' '}

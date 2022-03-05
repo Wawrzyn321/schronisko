@@ -13,6 +13,7 @@
   <Button
     type="is-primary"
     id="edit-self-button"
+    aria-label="Zmień swoje dane"
     on:click={() => (editSelfModalVisible = true)}
   >
     <Edit2Icon size="0.5x" />

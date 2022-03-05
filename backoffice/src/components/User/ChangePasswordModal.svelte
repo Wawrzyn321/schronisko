@@ -37,7 +37,7 @@
 <Modal
   bind:isOpen={modalVisible}
   title="Zmień hasło"
-  confirmText="Potwierdź"
+  confirmText="Zatwierdź"
   onConfirm={changePassword}
   disabledConfirm={!isFormValid || loading}
   loadingConfirm={loading}

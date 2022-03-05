@@ -1,0 +1,20 @@
+{
+  "name": "e2e",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test:backoffice": "npm run setup-db && npx playwright test backoffice/",
+    "test:backoffice:dev": "npm run setup-db && npx playwright test backoffice/ --headed --debug",
+    "test:main": "npm run setup-db && npx playwright test main/",
+    "test:main:dev": "npm run setup-db && npx playwright test backoffice/ --headed  --debug",
+    "report": "npx playwright show-report",
+    "setup-db": "npm run test:setup --prefix=./../prisma && npm run test:seed --prefix=./../prisma"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.19.2"
+  }
+}

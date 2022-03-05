@@ -46,6 +46,7 @@
       type="textarea"
       placeholder="Opis zwierzęcia"
       disabled={isReadonly}
+      pattern=".*\S+.*" 
     />
   </Tooltip>
   <br />
@@ -56,6 +57,7 @@
         bind:value={animal.note}
         type="textarea"
         placeholder="Notatka"
+        pattern=".*\S+.*"
       />
     </Tooltip>
   </Field>

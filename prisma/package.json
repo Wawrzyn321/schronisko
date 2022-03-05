@@ -8,7 +8,9 @@
     "seed:local": "ts-node seed-local.ts",
     "mv-img": "mv db-import/animals/animals ../main/src/client/public/img/",
     "ts-node": "ts-node --compiler-options '{\"module\":\"CommonJS\"}'",
-    "push": "../node_modules/.bin/prisma generate && ../node_modules/.bin/prisma db push"
+    "push": "../node_modules/.bin/prisma generate && ../node_modules/.bin/prisma db push",
+    "test:setup": "dotenv -e .env.test -- npx prisma db push",
+    "test:seed": "dotenv -e .env.test -- ts-node seed-test.ts"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +19,7 @@
     "@types/bcryptjs": "^2.4.2",
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
+    "dotenv-cli": "^5.0.0",
     "html-entities": "^2.3.2",
     "ts-node": "^9.1.1"
   }

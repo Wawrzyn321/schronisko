@@ -15,7 +15,7 @@
 <Modal
   bind:isOpen={modalVisible}
   title="Czy na pewno chcesz zmienić kategorię?"
-  confirmText="Potwierdź"
+  confirmText="Zatwierdź"
   onConfirm={doUpdateAnimal}
 >
   <p>

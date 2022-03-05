@@ -1,3 +1,6 @@
+echo 'formatting server...'
+sudo npm run lint:fix
+
 echo 'formatting client...'
 sudo npm run lint:fix --prefix=main/src/client
 

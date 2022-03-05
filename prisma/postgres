@@ -5,4 +5,5 @@ sudo -u i515358 psql schronisko
 sudo -u postgres psql schronisko
 
 NA ROOCIE, hasło postgres
-sudo -u postgres psql
+cd / && sudo -u postgres psql schronisko
+cd / && sudo -u postgres psql schronisko-test

@@ -20,7 +20,7 @@
 
 <Modal
   bind:isOpen={modalVisible}
-  title="Usuń użytkownika"
+  title="Usuń logi"
   confirmText="Usuń"
   onConfirm={deleteLogs}
   disabledConfirm={loading}

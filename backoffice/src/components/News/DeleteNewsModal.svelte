@@ -32,7 +32,7 @@
 >
   {#if !!news}
     <p>
-      Czy na pewno chceesz usunąć news <strong> {news.title}</strong>? Pamiętaj,
+      Czy na pewno chcesz usunąć news <strong> {news.title}</strong>? Pamiętaj,
       że zawsze możesz określić go jako niepubliczny.
     </p>
   {/if}

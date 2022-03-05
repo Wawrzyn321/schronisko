@@ -1,27 +1,7 @@
 import { Permission, PrismaClient } from '@prisma/client';
-import { genSalt, hash } from "bcryptjs";
+import { hashData } from '../../common';
 // @ts-ignore
 import adminUsers from './adminUsers.json';
-
-const _generateSalt = (rounds = 10): Promise<string> => {
-    return new Promise((resolve, reject) => {
-        return genSalt(rounds, (error: Error, salt: string) => {
-            if (error) reject(error);
-            resolve(salt);
-        });
-    });
-}
-
-const hashData = (data: string, rounds = 10): Promise<string> => {
-    return new Promise((resolve, reject) => {
-        _generateSalt(rounds).then(salt => {
-            return hash(data, salt, (error: Error, hash: string) => {
-                if (error) reject(error);
-                resolve(hash);
-            });
-        });
-    });
-}
 
 export async function seedUsers(prisma: PrismaClient) {
     await prisma.user.upsert({
