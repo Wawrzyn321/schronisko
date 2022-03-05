@@ -22,7 +22,6 @@
   async function save() {
     isSaving = true;
     try {
-      console.log('halo');
       await settingsService.upsert(settingsKey, newValue);
       notifySuccess({ message: 'Zapisano ustawienie.' });
       settingValue = newValue;

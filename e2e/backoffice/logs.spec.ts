@@ -1,33 +1,33 @@
-// import { test, expect, chromium } from "@playwright/test";
-// import { contains, login, navTo, expectSuccessPopups, removeStorageState } from "./helpers";
+import { test, expect, chromium } from "@playwright/test";
+import { contains, login, navTo, expectSuccessPopups, removeStorageState } from "./helpers";
 
-// import { BACKOFFICE_URL, } from "./config";
+import { BACKOFFICE_URL, } from "./config";
 
-// test.describe("Logs: ", () => {
-//   test.beforeAll(removeStorageState);
+test.describe("Logs: ", () => {
 
-//   test("Delete logs", async ({ page }) => {
-//     await page.goto(BACKOFFICE_URL);
+  test("Delete logs", async ({ page }) => {
+    removeStorageState();
+    await page.goto(BACKOFFICE_URL);
 
-//     await login(page);
+    await login(page);
 
-//     await navTo(page, "Logi");
+    await navTo(page, "Logi");
 
-//     await contains(page, "Ukryj własne logi").click();
+    await contains(page, "Ukryj własne logi").click();
 
-//     await expect(contains(page, "ADMIN_LOGIN usunął logi.")).not.toBeVisible();
+    await expect(contains(page, "ADMIN_LOGIN usunął logi.")).not.toBeVisible();
 
-//     await contains(page, "Usuń logi", "button").click();
+    await contains(page, "Usuń logi", "button").click();
 
-//     await expect(contains(page, "Usuń logi", "header")).toBeVisible();
+    await expect(contains(page, "Usuń logi", "header")).toBeVisible();
 
-//     await contains(page, "Usuń", "button").click();
+    await contains(page, "Usuń", "button").click();
 
-//     await expectSuccessPopups(page, {
-//       okText: "Logi zostały usunięte",
-//       errorText: "Nie udało się usunąć logów: ",
-//     });
+    await expectSuccessPopups(page, {
+      okText: "Logi zostały usunięte",
+      errorText: "Nie udało się usunąć logów: ",
+    });
 
-//     await expect(contains(page, "ADMIN_LOGIN usunął logi.")).toBeVisible();
-//   });
-// });
+    await expect(contains(page, "ADMIN_LOGIN usunął logi.")).toBeVisible();
+  });
+});

@@ -1,37 +1,21 @@
-import { test, expect } from "@playwright/test";
-import {
-  contains,
-  login,
-  navTo,
-  expectSuccessPopups,
-  removeStorageState,
-} from "./helpers";
+import { test, expect, Page } from "@playwright/test";
+import { contains, login, navTo, expectSuccessPopups } from "./helpers";
 
-import { BACKOFFICE_URL, STORAGE_STATE_JSON } from "./config";
+import { BACKOFFICE_URL } from "./config";
 
-test.describe("No permissions: Get auth data", () => {
-  test.beforeAll(removeStorageState);
-  test("Login as NO_PERMISSIONS user", async ({ page }) => {
-    await page.goto(BACKOFFICE_URL);
-    await login(page, {
-      firstName: "IMIE_4",
-      lastName: "NAZWISKO_4",
-      login: "NO_PERMISSIONS_LOGIN",
-      password: "NO_PERMISSIONS_PASSWORD",
-    });
-    await page.context().storageState({ path: STORAGE_STATE_JSON });
+const loginBeforeEach = async (page: Page) => {
+  await page.goto(BACKOFFICE_URL);
+  await login(page, {
+    firstName: "IMIE_4",
+    lastName: "NAZWISKO_4",
+    login: "NO_PERMISSIONS_LOGIN",
+    password: "NO_PERMISSIONS_PASSWORD",
   });
-});
+};
 
 test.describe("No permissions:", () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto(BACKOFFICE_URL);
-  });
-  test.use({ storageState: STORAGE_STATE_JSON });
   test("After login", async ({ page }) => {
-    const str = `Jesteś zalogowany jako ${"IMIE_4"} ${"NAZWISKO_4"} (${"NO_PERMISSIONS_LOGIN"}).`;
-    await expect(contains(page, str)).toBeVisible();
-
+    await loginBeforeEach(page);
     // permissions
     for (const perm of [
       "Zarządzanie użytkownikami",
@@ -60,6 +44,7 @@ test.describe("No permissions:", () => {
   });
 
   test("Navigate by URL, no permissions", async ({ page }) => {
+    await loginBeforeEach(page);
     await page.goto(BACKOFFICE_URL + "#/users");
 
     const str =
@@ -67,26 +52,22 @@ test.describe("No permissions:", () => {
     await expect(contains(page, str)).toBeVisible();
   });
 
-  test("Can edit own data", async ({ page }) => {
+  test("Can edit own data & password", async ({ page }) => {
+    await loginBeforeEach(page);
+
+    // data
     await page.locator('[aria-label="Zmień swoje dane"]').click();
-
-    await page
-      .locator("[placeholder=Login]")
-      .fill("STILL_NO_PERMISSIONS_LOGIN");
-
+    await page.locator("[placeholder=Imię]").fill("SMUTNY");
     await contains(page, "Zatwierdź", "button").click();
 
     await expectSuccessPopups(page, {
       okText: "Twoje dane zostały zapisane",
       errorText: "Błąd zapisywania danych: ",
     });
+    await expect(contains(page, "SMUTNY")).toBeVisible();
 
-    await expect(contains(page, "STILL_NO_PERMISSIONS_LOGIN")).toBeVisible();
-  });
-
-  test("Can change password", async ({ page }) => {
+    // password
     await contains(page, "Zmień hasło", "button").click();
-
     await page
       .locator("[placeholder='Obecne hasło']")
       .fill("NO_PERMISSIONS_PASSWORD");
@@ -96,12 +77,21 @@ test.describe("No permissions:", () => {
     await page
       .locator("[placeholder='Potwierdź nowe hasło']")
       .fill("NO_PERMISSIONS_PASSWORD_2");
-
     await contains(page, "Zatwierdź", "button").click();
 
     await expectSuccessPopups(page, {
       okText: "Hasło zostało zmienione",
       errorText: "Nie udało się zmienić hasła: ",
     });
+
+    await login(page, {
+      firstName: "SMUTNY",
+      lastName: "NAZWISKO_4",
+      login: "NO_PERMISSIONS_LOGIN",
+      password: "NO_PERMISSIONS_PASSWORD_2",
+    });
+
+    const str = `Jesteś zalogowany jako ${"SMUTNY"} ${"NAZWISKO_4"} (${"NO_PERMISSIONS_LOGIN"}).`;
+    await expect(contains(page, str)).toBeVisible();
   });
 });

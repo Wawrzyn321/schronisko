@@ -26,7 +26,6 @@ export class CaptchaService {
 
   async validateCaptcha(id: string, text: string) {
     if (!id || !text) {
-      console.log('false bo tak');
       return false;
     }
 

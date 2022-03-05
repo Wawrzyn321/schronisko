@@ -66,14 +66,14 @@ const INACTIVE_NON_ADMIN_USER: any = async () => ({
 });
 
 const CHANGE_DATA_USER: any = async () => ({
-  where: { login: "CHANGE_DATA" },
+  where: { login: "CHANGE_LOGIN" },
   update: {},
   create: {
     firstName: "IMIE_3",
     lastName: "NAZWISKO_3",
     isActive: true,
-    login: "CHANGE_DATA",
-    passwordHash: await hashData("CHANGE_DATA"),
+    login: "CHANGE_LOGIN",
+    passwordHash: await hashData("CHANGE_PASSWORD"),
     permissions: {},
   },
 });

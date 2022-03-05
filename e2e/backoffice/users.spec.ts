@@ -1,262 +1,267 @@
-// import { test, expect } from "@playwright/test";
-// import { contains, login, navTo, expectSuccessPopups, removeStorageState } from "./helpers";
+import { test, expect } from "@playwright/test";
+import {
+  contains,
+  login,
+  navTo,
+  expectSuccessPopups,
+  removeStorageState,
+} from "./helpers";
 
-import { CHANGE_LOGIN } from "./config";
+import {
+  BACKOFFICE_URL,
+  INACTIVE_LOGIN,
+  ADMIN_LOGIN,
+  NEW_USER,
+  CHANGE_LOGIN,
+  STORAGE_STATE_JSON,
+} from "./config";
 
-// import {
-//   BACKOFFICE_URL,
-//   INACTIVE_LOGIN,
-//   ADMIN_LOGIN,
-//   NEW_USER,
-//   CHANGE_LOGIN,
-//   STORAGE_STATE_JSON,
-// } from "./config";
+test.describe("Users: ", () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto(BACKOFFICE_URL);
+  });
 
-// test.describe("Users: ", () => {
-//   test.beforeAll(removeStorageState);
+  test.describe("Login - inactive", () => {
+    test("Inactive user can't login", async ({ page }) => {
+      removeStorageState();
+      await page.locator("[placeholder=Login]").fill(INACTIVE_LOGIN);
+      await page.locator("[placeholder=Hasło]").fill("HASLO_2");
 
-//   test.beforeEach(async ({ page }) => {
-//     await page.goto(BACKOFFICE_URL);
-//   });
+      await page.locator("button", { hasText: "Zaloguj" }).press("Enter");
 
-//   test.describe("Login - inactive", () => {
-//     test("Inactive user can't login", async ({ page }) => {
-//       await page.locator("[placeholder=Login]").fill(INACTIVE_LOGIN);
-//       await page.locator("[placeholder=Hasło]").fill("HASLO_2");
+      await expect(
+        contains(page, "Wygląda na to, że wprowadzone dane są nieprawidłowe. ")
+      ).toBeVisible();
+    });
+  });
 
-//       await page.locator("button", { hasText: "Zaloguj" }).press("Enter");
+  test.describe("Login - admin", () => {
+    test("Login as admin", async ({ page }) => {
+      await login(page);
 
-//       await expect(
-//         contains(page, "Wygląda na to, że wprowadzone dane są nieprawidłowe. ")
-//       ).toBeVisible();
-//     });
-//   });
+      // permissions
+      for (const perm of [
+        "Zarządzanie użytkownikami",
+        "Zarządzanie newsami",
+        "Zarządzanie stronami",
+        "Zarządzanie zwierzętami",
+      ]) {
+        await expect(contains(page, perm)).toBeVisible();
+      }
 
-//   test.describe("Login - admin", () => {
-//     test("Login as admin", async ({ page }) => {
-//       await login(page);
+      // nav
+      for (const str of [
+        "Użytkownicy",
+        "Logi",
+        "Strony",
+        "Newsy",
+        "Zwierzęta",
+        "Dodatkowe ustawienia",
+        "IMIE NAZWISKO",
+      ]) {
+        await expect(contains(page, str, "nav")).toBeVisible();
+      }
 
-//       // permissions
-//       for (const perm of [
-//         "Zarządzanie użytkownikami",
-//         "Zarządzanie newsami",
-//         "Zarządzanie stronami",
-//         "Zarządzanie zwierzętami",
-//       ]) {
-//         await expect(contains(page, perm)).toBeVisible();
-//       }
+      await page.context().storageState({ path: STORAGE_STATE_JSON });
 
-//       // nav
-//       for (const str of [
-//         "Użytkownicy",
-//         "Logi",
-//         "Strony",
-//         "Newsy",
-//         "Zwierzęta",
-//         "Dodatkowe ustawienia",
-//         "IMIE NAZWISKO",
-//       ]) {
-//         await expect(contains(page, str, "nav")).toBeVisible();
-//       }
+      //logout
+      await contains(page, "Wyloguj się").click();
+      await expect(
+        contains(page, "Zarządzanie użytkownikami")
+      ).not.toBeVisible();
+      await expect(page.locator("[placeholder=Login]")).toBeVisible();
+    });
+  });
 
-//       await page.context().storageState({ path: STORAGE_STATE_JSON });
+  test.describe("Admin", () => {
+    test.use({ storageState: STORAGE_STATE_JSON });
+    test("Inspect users list", async ({ page }) => {
+      await navTo(page, "Użytkownicy");
 
-//       //logout
-//       await contains(page, "Wyloguj się").click();
-//       await expect(
-//         contains(page, "Zarządzanie użytkownikami")
-//       ).not.toBeVisible();
-//       await expect(page.locator("[placeholder=Login]")).toBeVisible();
-//     });
-//   });
+      await expect(contains(page, "Użytkownicy", "h1")).toBeVisible();
 
-//   test.describe("Admin", () => {
-//     test.use({ storageState: STORAGE_STATE_JSON });
-//     test("Inspect users list", async ({ page }) => {
-//       await navTo(page, "Użytkownicy");
+      // table elements - inactive hidden
+      await expect(contains(page, ADMIN_LOGIN)).toBeVisible();
+      await expect(contains(page, CHANGE_LOGIN)).toBeVisible();
+      await expect(contains(page, INACTIVE_LOGIN)).not.toBeVisible();
 
-//       await expect(contains(page, "Użytkownicy", "h1")).toBeVisible();
+      await contains(page, "Aktywny").click();
 
-//       // table elements - inactive hidden
-//       await expect(contains(page, ADMIN_LOGIN)).toBeVisible();
-//       await expect(contains(page, CHANGE_LOGIN)).toBeVisible();
-//       await expect(contains(page, INACTIVE_LOGIN)).not.toBeVisible();
+      // table elements - all
+      await expect(contains(page, ADMIN_LOGIN)).toBeVisible();
+      await expect(contains(page, CHANGE_LOGIN)).toBeVisible();
+      await expect(contains(page, INACTIVE_LOGIN)).toBeVisible();
+    });
 
-//       await contains(page, "Aktywny").click();
+    test("Edit CHANGE_LOGIN user", async ({ page }) => {
+      await navTo(page, "Użytkownicy");
+      // data
+      await page.locator(`[aria-label="Edytuj ${CHANGE_LOGIN}"]`).click();
+      await contains(page, "Zwierzęta", "abbr").click();
+      await contains(page, "Zatwierdź", "button").click();
 
-//       // table elements - all
-//       await expect(contains(page, ADMIN_LOGIN)).toBeVisible();
-//       await expect(contains(page, CHANGE_LOGIN)).toBeVisible();
-//       await expect(contains(page, INACTIVE_LOGIN)).toBeVisible();
-//     });
+      await expectSuccessPopups(page, {
+        okText: "Zaktualizowano dane użytkownika",
+        errorText: "Nie udało się zaktualizować użytkownika",
+      });
 
-//     test("Edit CHANGE_LOGIN user", async ({ page }) => {
-//       await navTo(page, "Użytkownicy");
-//       // data
-//       await page.locator(`[aria-label="Edytuj ${CHANGE_LOGIN}"]`).click();
-//       await contains(page, "Zwierzęta", "abbr").click();
-//       await contains(page, "Zatwierdź", "button").click();
+      // password
+      await page.locator(`[aria-label="Zmień hasło ${CHANGE_LOGIN}"]`).click();
+      await expect(
+        contains(page, `Zmień hasło użytkownika ${CHANGE_LOGIN}`)
+      ).toBeVisible();
+      await page.locator("[placeholder=Hasło]").fill("HASLO_CHANGED");
+      await contains(page, "Zatwierdź", "button").click();
+      await expectSuccessPopups(page, {
+        okText: "Zmieniono hasło",
+        errorText: "Błąd zmiany hasła",
+      });
 
-//       await expectSuccessPopups(page, {
-//         okText: "Zaktualizowano dane użytkownika",
-//         errorText: "Nie udało się zaktualizować użytkownika",
-//       });
+      // check logs
+      await navTo(page, "Logi");
+      await contains(page, "Ukryj własne logi").click();
+      await expect(
+        contains(
+          page,
+          `${ADMIN_LOGIN} zaktualizował użytkownika ${CHANGE_LOGIN}`
+        )
+      ).toBeVisible();
+      await expect(
+        contains(page, "Zmienione uprawnienia: Zwierzęta")
+      ).toBeVisible();
+    });
 
-//       // password
-// await expect(contains(page, "Zmień hasło użytkownika CHANGE_LOGIN")).toBeVisible();
-//       await page.locator(`[aria-label="Zmień hasło ${CHANGE_LOGIN}"]`).click();
-//       await page.locator("[placeholder=Hasło]").fill("HASLO_CHANGED");
-//       await contains(page, "Zatwierdź", "button").click();
-//       await expectSuccessPopups(page, {
-//         okText: "Zmieniono hasło",
-//         errorText: "Błąd zmiany hasła",
-//       });
+    test("Delete INACTIVE_LOGIN user", async ({ page }) => {
+      await navTo(page, "Użytkownicy");
 
-//       // check logs
-//       await navTo(page, "Logi");
-//       await contains(page, "Ukryj własne logi").click();
-//       await expect(
-//         contains(
-//           page,
-//           `${ADMIN_LOGIN} zaktualizował użytkownika ${CHANGE_LOGIN}`
-//         )
-//       ).toBeVisible();
-//       await expect(
-//         contains(page, "Zmienione uprawnienia: Zwierzęta")
-//       ).toBeVisible();
-//     });
+      await contains(page, "Aktywny").click();
 
-//     test("Delete INACTIVE_LOGIN user", async ({ page }) => {
-//       await navTo(page, "Użytkownicy");
+      await page.locator(`[aria-label="Usuń ${INACTIVE_LOGIN}"]`).click();
 
-//       await contains(page, "Aktywny").click();
+      await expect(
+        contains(
+          page,
+          "Czy na pewno chcesz usunąć użytkownika IMIE_2 NAZWISKO_2"
+        )
+      ).toBeVisible();
 
-//       await page.locator(`[aria-label="Usuń ${INACTIVE_LOGIN}"]`).click();
+      // modal
+      await contains(page, "Usuń", "button").click();
 
-//       await expect(
-//         contains(
-//           page,
-//           "Czy na pewno chcesz usunąć użytkownika IMIE_2 NAZWISKO_2"
-//         )
-//       ).toBeVisible();
+      await expectSuccessPopups(page, {
+        okText: "Usunięto użytkownika",
+        errorText: "Nie udało się usunąć użytkownika",
+      });
 
-//       // modal
-//       await contains(page, "Usuń", "button").click();
+      await expect(contains(page, "Aktywny")).not.toBeChecked();
+      await expect(contains(page, INACTIVE_LOGIN)).not.toBeVisible();
+    });
 
-//       await expectSuccessPopups(page, {
-//         okText: "Usunięto użytkownika",
-//         errorText: "Nie udało się usunąć użytkownika",
-//       });
+    test("Add NEW_LOGIN user", async ({ page }) => {
+      await navTo(page, "Użytkownicy");
 
-//       await expect(contains(page, "Aktywny")).not.toBeChecked();
-//       await expect(contains(page, INACTIVE_LOGIN)).not.toBeVisible();
-//     });
+      await page.locator(`[aria-label="Dodaj użytkownika"]`).click();
 
-//     test("Add NEW_LOGIN user", async ({ page }) => {
-//       await navTo(page, "Użytkownicy");
+      await page.locator("[placeholder=Login]").fill(NEW_USER.login);
+      await page.locator("[placeholder=Imię]").fill(NEW_USER.firstName);
+      await page.locator("[placeholder=Nazwisko]").fill(NEW_USER.lastName);
+      await page.locator("[placeholder=Hasło]").fill(NEW_USER.password);
 
-//       await page.locator(`[aria-label="Dodaj użytkownika"]`).click();
+      await contains(page, "Newsy", "abbr").click();
 
-//       await page.locator("[placeholder=Login]").fill(NEW_USER.login);
-//       await page.locator("[placeholder=Imię]").fill(NEW_USER.firstName);
-//       await page.locator("[placeholder=Nazwisko]").fill(NEW_USER.lastName);
-//       await page.locator("[placeholder=Hasło]").fill(NEW_USER.password);
+      await contains(page, "Dodaj", "button").click();
 
-//       await contains(page, "Newsy", "abbr").click();
+      await expect(contains(page, NEW_USER.login)).toBeVisible();
+    });
+  });
 
-//       await contains(page, "Dodaj", "button").click();
+  test.describe("Login - new user", () => {
+    test("Login as new user", async ({ page }) => {
+      await login(page, NEW_USER);
 
-//       await expect(contains(page, NEW_USER.login)).toBeVisible();
-//     });
-//   });
+      // nav
+      for (const str of [
+        "Zwierzęta",
+        "Newsy",
+        NEW_USER.firstName + " " + NEW_USER.lastName,
+      ]) {
+        await expect(contains(page, str, "nav")).toBeVisible();
+      }
 
-//   test.describe("Login - new user", () => {
-//     test("Login as new user", async ({ page }) => {
-//       await login(page, NEW_USER);
+      for (const str of ["Użytkownicy", "Logi", "Dodatkowe ustawienia"]) {
+        await expect(contains(page, str, "nav")).not.toBeVisible();
+      }
+    });
 
-//       // nav
-//       for (const str of [
-//         "Zwierzęta",
-//         "Newsy",
-//         NEW_USER.firstName + " " + NEW_USER.lastName,
-//       ]) {
-//         await expect(contains(page, str, "nav")).toBeVisible();
-//       }
+    test("Edit own data", async ({ page }) => {
+      await login(page, NEW_USER);
 
-//       for (const str of ["Użytkownicy", "Logi", "Dodatkowe ustawienia"]) {
-//         await expect(contains(page, str, "nav")).not.toBeVisible();
-//       }
-//     });
+      await page.locator('[aria-label="Zmień swoje dane"]').click();
 
-//     test("Edit own data", async ({ page }) => {
-//       await login(page, NEW_USER);
+      const loginField = page.locator("[placeholder=Login]");
+      await expect(loginField).toHaveValue(NEW_USER.login);
+      await loginField.fill(NEW_USER.login + NEW_USER.login);
 
-//       await page.locator('[aria-label="Zmień swoje dane"]').click();
+      const firstNameField = page.locator("[placeholder=Imię]");
+      await expect(firstNameField).toHaveValue(NEW_USER.firstName);
+      await firstNameField.fill(NEW_USER.firstName + NEW_USER.firstName);
 
-//       const loginField = page.locator("[placeholder=Login]");
-//       await expect(loginField).toHaveValue(NEW_USER.login);
-//       await loginField.fill(NEW_USER.login + NEW_USER.login);
+      const lastNameField = page.locator("[placeholder=Nazwisko]");
+      await expect(lastNameField).toHaveValue(NEW_USER.lastName);
+      await lastNameField.fill(NEW_USER.lastName + NEW_USER.lastName);
 
-//       const firstNameField = page.locator("[placeholder=Imię]");
-//       await expect(firstNameField).toHaveValue(NEW_USER.firstName);
-//       await firstNameField.fill(NEW_USER.firstName + NEW_USER.firstName);
+      await contains(page, "Zatwierdź", "button").click();
 
-//       const lastNameField = page.locator("[placeholder=Nazwisko]");
-//       await expect(lastNameField).toHaveValue(NEW_USER.lastName);
-//       await lastNameField.fill(NEW_USER.lastName + NEW_USER.lastName);
+      await expectSuccessPopups(page, {
+        okText: "Twoje dane zostały zapisane",
+        errorText: "Błąd zapisywania danych: ",
+      });
 
-//       await contains(page, "Zatwierdź", "button").click();
+      await expect(
+        contains(
+          page,
+          `Jesteś zalogowany jako ${NEW_USER.firstName + NEW_USER.firstName} ${
+            NEW_USER.lastName + NEW_USER.lastName
+          } (${NEW_USER.login + NEW_USER.login}).`
+        )
+      ).toBeVisible();
 
-//       await expectSuccessPopups(page, {
-//         okText: "Twoje dane zostały zapisane",
-//         errorText: "Błąd zapisywania danych: ",
-//       });
+      await expect(
+        contains(
+          page,
+          NEW_USER.firstName +
+            NEW_USER.firstName +
+            " " +
+            NEW_USER.lastName +
+            NEW_USER.lastName,
+          "nav"
+        )
+      ).toBeVisible();
+    });
+  });
 
-//       await expect(
-//         contains(
-//           page,
-//           `Jesteś zalogowany jako ${NEW_USER.firstName + NEW_USER.firstName} ${
-//             NEW_USER.lastName + NEW_USER.lastName
-//           } (${NEW_USER.login + NEW_USER.login}).`
-//         )
-//       ).toBeVisible();
+  test.describe("Login - changed user", () => {
+    test("Login as changed user", async ({ page }) => {
+      await login(page, {
+        login: "CHANGE_LOGIN",
+        password: "HASLO_CHANGED",
+        firstName: "IMIE_3",
+        lastName: "NAZWISKO_3",
+      });
 
-//       await expect(
-//         contains(
-//           page,
-//           NEW_USER.firstName +
-//             NEW_USER.firstName +
-//             " " +
-//             NEW_USER.lastName +
-//             NEW_USER.lastName,
-//           "nav"
-//         )
-//       ).toBeVisible();
-//     });
-//   });
-
-//   test.describe("Login - changed user", () => {
-//     test("Login as changed user", async ({ page }) => {
-//       await login(page, {
-//         login: "CHANGE_DATA",
-//         password: "HASLO_CHANGED",
-//         firstName: "IMIE_3",
-//         lastName: "NAZWISKO_3",
-//       });
-
-//       // nav
-//       for (const str of ["Zwierzęta", "IMIE_3 NAZWISKO_3"]) {
-//         await expect(contains(page, str, "nav")).toBeVisible();
-//       }
-//       for (const str of [
-//         "Użytkownicy",
-//         "Logi",
-//         "Strony",
-//         "Newsy",
-//         "Dodatkowe ustawienia",
-//       ]) {
-//         await expect(contains(page, str, "nav")).not.toBeVisible();
-//       }
-//     });
-//   });
-// });
+      // nav
+      for (const str of ["Zwierzęta", "IMIE_3 NAZWISKO_3"]) {
+        await expect(contains(page, str, "nav")).toBeVisible();
+      }
+      for (const str of [
+        "Użytkownicy",
+        "Logi",
+        "Strony",
+        "Newsy",
+        "Dodatkowe ustawienia",
+      ]) {
+        await expect(contains(page, str, "nav")).not.toBeVisible();
+      }
+    });
+  });
+});
