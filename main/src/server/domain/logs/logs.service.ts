@@ -30,7 +30,7 @@ export class LogsService {
   }
 
   async log({ user, permission, message }: LogData) {
-    await this.prisma.logs.create({
+    return await this.prisma.logs.create({
       data: {
         userId: user.id,
         login: user.login,

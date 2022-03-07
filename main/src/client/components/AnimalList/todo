@@ -5,4 +5,4 @@ po deployu:
 przetestuj restart vpsa
 
 tests in main/module
-animal-images   animals         auth             communication   logs            news            pages                   users
+animal-images   animals         auth             communication               news            pages                   users
