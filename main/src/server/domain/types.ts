@@ -1,4 +1,4 @@
-import { allPermissions } from './../auth/permissions';
+import { allPermissions } from './auth/permissions';
 import type { Permission } from '@prisma/client';
 
 export type UserPermissionsWrapper = {

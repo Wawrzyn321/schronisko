@@ -1,4 +1,4 @@
-import { UserDto } from './../common/UserDto';
+import { UserDto } from '../types';
 import { RequirePermission } from '../auth/Permissions.decorator';
 import { PermissionsGuard } from '../auth/Permissions.guard';
 import { UsersService } from './users.service';

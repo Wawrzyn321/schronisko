@@ -3,3 +3,6 @@ po deployu:
     * maile (sendgrid key)
 
 przetestuj restart vpsa
+
+tests in main/module
+animal-images   animals         auth             communication   logs            news            pages                   users

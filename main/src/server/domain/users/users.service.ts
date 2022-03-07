@@ -4,7 +4,7 @@ import {
   toUser,
   toUserUpdate,
   validateUpdate,
-} from '../common/UserDto';
+} from '../types';
 import { UserViewModel } from './../auth/auth.service';
 import {
   BadRequestException,
