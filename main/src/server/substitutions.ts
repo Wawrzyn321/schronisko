@@ -11,12 +11,13 @@ export function subsitute(source: string, settings: Settings[]) {
   }
 
   settings.forEach((setting) => {
-    const entry = Object.values(subsitutions).find((v) => v === setting.id);
-    if (entry) {
-      const [toSubsitute, settingsKey] = entry;
-      const subsitution = settings.find((s) => s.id === settingsKey)?.value;
-      source = source.replace(new RegExp(toSubsitute, 'g'), subsitution || '');
-    }
+    const subsitutionForSetting = Object.entries(subsitutions).find(
+      ([, v]) => v === setting.id,
+    );
+    if (!subsitutionForSetting) return;
+
+    const [toSubsitute] = subsitutionForSetting;
+    source = source.replace(new RegExp(toSubsitute, 'g'), setting.value || '');
   });
 
   return source;
