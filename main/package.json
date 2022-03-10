@@ -11,6 +11,7 @@
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start:nest": "nest start",
     "dev": "nest start --watch",
+    "dev:test": "dotenv -e ../prisma/.env.test -- nest start --watch",
     "lint:fix": "eslint \"src/server/**/*.ts\" --fix",
     "test": "DATABASE_URL='postgres://DONT USE IT' jest"
   },

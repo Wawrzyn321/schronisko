@@ -5,7 +5,7 @@
 
   var Link = Quill.import('formats/link');
   class MyLink extends Link {
-    static create(value) {
+    static create(value: any) {
       const node = super.create(value);
       node.removeAttribute('target');
       return node;

@@ -35,7 +35,6 @@ export class AuthService {
         });
     }
 
-
     async changeUserPassword(user: UserViewModel, password: string): Promise<UserViewModel> {
         return await throwingFetch(`${baseUrl}/change-user-password`, {
             method: 'POST',
