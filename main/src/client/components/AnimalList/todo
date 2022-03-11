@@ -6,3 +6,5 @@ przetestuj restart vpsa
 
 tests in main/module
 animal-images   animals         auth             communication               news            pages                   users
+
+zakomentowałeś tsconfig json w serverze

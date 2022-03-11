@@ -15,7 +15,7 @@ import {
 import { Permission } from '@prisma/client';
 import { PermissionsGuard } from '../auth/Permissions.guard';
 import { Query } from '@nestjs/common';
-import { ImageData } from '../../img-fs';
+import { ImageData } from 'img-fs';
 
 @Controller('api/c/pages')
 export class PagesPublicController {

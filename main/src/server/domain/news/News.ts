@@ -1,4 +1,4 @@
-import { ImageData } from './../../img-fs';
+import { ImageData } from 'img-fs';
 
 export type NewsCreateInput = {
   title: string;

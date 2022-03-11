@@ -11,7 +11,7 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { PrismaService } from '../../prisma-connect/prisma.service';
+import { PrismaService } from 'prisma-connect/prisma.service';
 import { Permission, User, UserPermissions } from '@prisma/client';
 import { BcryptService } from '../auth/bcrypt/bcrypt.service';
 import { LoggedInUser } from '../auth/types';

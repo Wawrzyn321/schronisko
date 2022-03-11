@@ -1,4 +1,4 @@
-import { PrismaService } from '../../prisma-connect/prisma.service';
+import { PrismaService } from 'prisma-connect/prisma.service';
 import { Module } from '@nestjs/common';
 import { SettingsService } from './settings.service';
 import { SettingsController } from './settings.controller';

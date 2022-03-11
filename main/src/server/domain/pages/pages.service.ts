@@ -4,7 +4,7 @@ import {
   NotFoundException,
   BadRequestException,
 } from '@nestjs/common';
-import { PrismaService } from '../../prisma-connect/prisma.service';
+import { PrismaService } from 'prisma-connect/prisma.service';
 import type { Page } from '.prisma/client';
 import { PageListElement } from './Page';
 import { LoggedInUser } from '../auth/types';
@@ -14,7 +14,7 @@ import {
   deleteImagesInContent,
   ImageData,
   saveImagesFromContentModyfyingIt,
-} from '../../img-fs';
+} from 'img-fs';
 import { SettingsService } from '../settings/settings.service';
 import { containsSubsitution, subsitute } from './../../substitutions';
 

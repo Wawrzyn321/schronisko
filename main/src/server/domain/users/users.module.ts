@@ -1,4 +1,4 @@
-import { PrismaService } from '../../prisma-connect/prisma.service';
+import { PrismaService } from 'prisma-connect/prisma.service';
 import { Module } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { BcryptService } from '../auth/bcrypt/bcrypt.service';

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import * as captchagen from 'captchagen';
-import { PrismaService } from '../../prisma-connect/prisma.service';
+import { PrismaService } from 'prisma-connect/prisma.service';
 
 @Injectable()
 export class CaptchaService {

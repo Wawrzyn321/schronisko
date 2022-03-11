@@ -1,5 +1,5 @@
 import { LoggedInUser } from './types';
-import { PrismaService } from '../../prisma-connect/prisma.service';
+import { PrismaService } from 'prisma-connect/prisma.service';
 import {
   Injectable,
   CanActivate,
