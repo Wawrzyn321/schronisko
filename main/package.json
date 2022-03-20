@@ -8,11 +8,10 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "lint:fix": "prettier --write \"src/**/*.ts\"",
     "start:nest": "nest start",
     "dev": "nest start --watch",
     "dev:test": "dotenv -e ../prisma/.env.test -- nest start --watch",
-    "lint:fix": "eslint \"src/server/**/*.ts\" --fix",
     "test": "SENDGRID_API_KEY=SG. DATABASE_URL='postgres://DONT USE IT' jest"
   },
   "dependencies": {
