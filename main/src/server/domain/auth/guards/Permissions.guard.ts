@@ -1,5 +1,5 @@
-import { LoggedInUser } from './types';
-import { PrismaService } from '../../prisma-connect/prisma.service';
+import { LoggedInUser } from '../types';
+import { PrismaService } from '../../../prisma-connect/prisma.service';
 import {
   Injectable,
   CanActivate,
@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Permission } from '@prisma/client';
-import { PERMISSIONS_KEY } from './Permissions.decorator';
+import { PERMISSIONS_KEY } from '../decorators/Permissions.decorator';
 
 @Injectable()
 export class PermissionsGuard implements CanActivate {

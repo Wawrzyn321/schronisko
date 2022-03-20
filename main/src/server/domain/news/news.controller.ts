@@ -1,8 +1,8 @@
-import { Public } from './../auth/public.decorator';
+import { Public } from './../auth/decorators/public.decorator';
 import { LoggedInUser } from './../auth/types';
 import { NewsModifyParams, NewsCreateInput, NewsUpdateInput } from './News';
 import { NewsService } from './news.service';
-import { RequirePermission } from '../auth/Permissions.decorator';
+import { RequirePermission } from '../auth/decorators/Permissions.decorator';
 import {
   Controller,
   Get,
@@ -17,7 +17,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { Permission } from '@prisma/client';
-import { PermissionsGuard } from '../auth/Permissions.guard';
+import { PermissionsGuard } from '../auth/guards/Permissions.guard';
 
 @Public()
 @Controller('api/c/news')

@@ -1,7 +1,7 @@
-import { Public } from './../auth/public.decorator';
+import { Public } from './../auth/decorators/public.decorator';
 import { LoggedInUser } from '../auth/types';
 import { SettingsService } from './settings.service';
-import { RequirePermission } from '../auth/Permissions.decorator';
+import { RequirePermission } from '../auth/decorators/Permissions.decorator';
 import {
   Controller,
   Get,
@@ -11,7 +11,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { Permission } from '@prisma/client';
-import { PermissionsGuard } from '../auth/Permissions.guard';
+import { PermissionsGuard } from '../auth/guards/Permissions.guard';
 
 @Controller('api/settings')
 export class SettingsController {

@@ -1,6 +1,6 @@
 import { VAdoptionFormFetch, VolunteeringFormFetch } from './common';
 import { CommunicationService } from './communication.service';
-import { Public } from '../auth/public.decorator';
+import { Public } from '../auth/decorators/public.decorator';
 import { Controller, Post, Query, Body } from '@nestjs/common';
 
 @Public()

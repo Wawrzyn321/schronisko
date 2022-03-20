@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
-import { BcryptService } from '../auth/bcrypt/bcrypt.service';
+import { BcryptService } from './bcrypt.service';
 
 import type { Permission, User } from '@prisma/client';
 

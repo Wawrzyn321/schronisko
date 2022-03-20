@@ -7,10 +7,10 @@ import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './constants';
 import { APP_GUARD } from '@nestjs/core';
 
-import { BcryptService } from './bcrypt/bcrypt.service';
+import { BcryptService } from './bcrypt.service';
 import { AuthController } from './auth.controller';
 import { PrismaService } from 'prisma-connect/prisma.service';
-import { JwtAuthGuard } from './jwt-auth.guard';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
 const JwtGuard = {
   provide: APP_GUARD,

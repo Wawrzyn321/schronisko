@@ -1,5 +1,5 @@
 import { LoggedInUser } from './types';
-import { PermissionsGuard } from './Permissions.guard';
+import { PermissionsGuard } from './guards/Permissions.guard';
 import { Controller, Post, Body, Request, UseGuards } from '@nestjs/common';
 import {
   AuthService,
@@ -7,7 +7,7 @@ import {
   UserLoginParams,
   UserViewModel,
 } from './auth.service';
-import { Public } from './public.decorator';
+import { Public } from './decorators/public.decorator';
 
 @Controller()
 export class AuthController {

@@ -1,6 +1,6 @@
-import { Public } from './../auth/public.decorator';
+import { Public } from './../auth/decorators/public.decorator';
 import { AnimalImagesService, UpsertParams } from './animal-images.service';
-import { RequirePermission } from '../auth/Permissions.decorator';
+import { RequirePermission } from '../auth/decorators/Permissions.decorator';
 import {
   Controller,
   Get,
@@ -11,7 +11,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { Permission } from '@prisma/client';
-import { PermissionsGuard } from '../auth/Permissions.guard';
+import { PermissionsGuard } from '../auth/guards/Permissions.guard';
 
 export type AnimalImageParams = {
   data: string;

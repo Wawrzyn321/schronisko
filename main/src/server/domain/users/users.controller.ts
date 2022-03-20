@@ -1,6 +1,6 @@
 import { UserDto } from '../types';
-import { RequirePermission } from '../auth/Permissions.decorator';
-import { PermissionsGuard } from '../auth/Permissions.guard';
+import { RequirePermission } from '../auth/decorators/Permissions.decorator';
+import { PermissionsGuard } from '../auth/guards/Permissions.guard';
 import { UsersService } from './users.service';
 import {
   Controller,

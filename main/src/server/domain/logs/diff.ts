@@ -1,5 +1,5 @@
 import { Permission } from '@prisma/client';
-import { allPermissions } from '../auth/permissions';
+import { allPermissions } from '../auth/constants';
 
 type DiffableProperty = string | number | boolean;
 

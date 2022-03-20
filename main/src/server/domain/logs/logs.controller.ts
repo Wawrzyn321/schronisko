@@ -1,6 +1,6 @@
 import { LoggedInUser } from './../auth/types';
 import { LogsService } from './logs.service';
-import { RequirePermission } from '../auth/Permissions.decorator';
+import { RequirePermission } from '../auth/decorators/Permissions.decorator';
 import {
   Controller,
   Get,
@@ -10,7 +10,7 @@ import {
   Request,
 } from '@nestjs/common';
 import { Permission } from '@prisma/client';
-import { PermissionsGuard } from '../auth/Permissions.guard';
+import { PermissionsGuard } from '../auth/guards/Permissions.guard';
 
 @Controller('api/logs')
 export class LogsController {

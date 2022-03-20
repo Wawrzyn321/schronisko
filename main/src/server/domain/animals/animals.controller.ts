@@ -3,10 +3,10 @@ import {
   AnimalType,
   VirtualCaretakerType,
 } from '.prisma/client';
-import { Public } from './../auth/public.decorator';
+import { Public } from './../auth/decorators/public.decorator';
 import { LoggedInUser } from './../auth/types';
 import { AnimalsService, AnimalData } from './animals.service';
-import { RequirePermission } from '../auth/Permissions.decorator';
+import { RequirePermission } from '../auth/decorators/Permissions.decorator';
 import {
   Controller,
   Get,
@@ -20,7 +20,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { Permission } from '@prisma/client';
-import { PermissionsGuard } from '../auth/Permissions.guard';
+import { PermissionsGuard } from '../auth/guards/Permissions.guard';
 
 @Public()
 @Controller('api/c/animals')
