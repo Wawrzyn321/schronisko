@@ -1,8 +1,4 @@
-import { PrismaService } from './prisma-connect/prisma.service';
 import { Module } from '@nestjs/common';
-import { APP_GUARD } from '@nestjs/core';
-import { AppController } from './app.controller';
-import { JwtAuthGuard } from './domain/auth/jwt-auth.guard';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 
@@ -36,6 +32,7 @@ const domainModules = [
   LogsModule,
   SettingsModule,
   CommunicationModule,
+  ViewModule,
 ];
 const ServeStatic = ServeStaticModule.forRoot({
   rootPath: join(__dirname, '..', LOCAL_STATIC_FILES_PATH),
@@ -43,17 +40,8 @@ const ServeStatic = ServeStaticModule.forRoot({
     index: false,
     extensions: ['.png', '.jpeg', '.jpg', '.gif'],
   },
-  //exclude: ['/api*'],
 });
-
-const JwtGuard = {
-  provide: APP_GUARD,
-  useClass: JwtAuthGuard,
-};
-
 @Module({
-  imports: [...domainModules, ViewModule, ServeStatic, ConfigModule.forRoot()],
-  controllers: [AppController],
-  providers: [PrismaService, JwtGuard],
+  imports: [...domainModules, ServeStatic, ConfigModule.forRoot()],
 })
 export class AppModule {}
