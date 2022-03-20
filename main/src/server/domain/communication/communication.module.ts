@@ -1,4 +1,4 @@
-import { PrismaService } from 'prisma-connect/prisma.service';
+import { PrismaService } from '../../prisma-connect/prisma.service';
 import { Module } from '@nestjs/common';
 import { MailService } from './mail.service';
 import { CaptchaService } from './captcha.service';

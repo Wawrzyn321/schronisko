@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { Permission, Settings } from '@prisma/client';
 import { LogsService } from './../../../domain/logs/logs.service';
-import { PrismaService } from 'prisma-connect/prisma.service';
+import { PrismaService } from '../../../prisma-connect/prisma.service';
 import { SettingsController } from './../settings.controller';
 import { SettingsService } from './../settings.service';
 import { LoggedInUser } from '../../auth/types';

@@ -1,4 +1,4 @@
-import { PrismaService } from 'prisma-connect/prisma.service';
+import { PrismaService } from './prisma-connect/prisma.service';
 import { Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 import { AppController } from './app.controller';

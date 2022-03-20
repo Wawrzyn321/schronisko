@@ -13,14 +13,14 @@ import {
   BadRequestException,
   NotFoundException,
 } from '@nestjs/common';
-import { PrismaService } from 'prisma-connect/prisma.service';
+import { PrismaService } from '../../prisma-connect/prisma.service';
 import { v4 as uuid } from 'uuid';
 import {
   saveImage,
   deleteImage,
   saveImagesFromContentModyfyingIt,
   deleteImagesInContent,
-} from 'img-fs';
+} from '../../img-fs';
 import { validateNewsCreate, validateNewsUpdate } from './helpers';
 import { LogsService } from '../logs/logs.service';
 import { formattedDiff } from '../logs/diff';

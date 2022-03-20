@@ -13,7 +13,7 @@
     "dev": "nest start --watch",
     "dev:test": "dotenv -e ../prisma/.env.test -- nest start --watch",
     "lint:fix": "eslint \"src/server/**/*.ts\" --fix",
-    "test": "DATABASE_URL='postgres://DONT USE IT' jest"
+    "test": "SENDGRID_API_KEY=SG. DATABASE_URL='postgres://DONT USE IT' jest"
   },
   "dependencies": {
     "@nestjs/common": "^8.0.0",

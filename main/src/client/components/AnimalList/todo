@@ -4,7 +4,12 @@ po deployu:
 
 przetestuj restart vpsa
 
-tests in main/module
-animal-images   animals         auth             communication               news            pages                   users
+ładnie sformatuj wiadomości w mailach, szczególnie tą do v-adopcji
 
-zakomentowałeś tsconfig json w serverze
+animal-images-private
+animals-private
+auth
+news-private           
+pages-private
+users
+
