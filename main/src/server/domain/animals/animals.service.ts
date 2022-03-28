@@ -42,11 +42,7 @@ export type AnimalData = {
   contactInfo: string;
 };
 
-function validateAnimalCreate(animal: AnimalData): boolean {
-  return validateAnimalUpdate(animal);
-}
-
-function validateAnimalUpdate(animal: AnimalData): boolean {
+function validateAnimalCreateOrUpdate(animal: AnimalData): boolean {
   return !!animal.name && !!animal.refNo;
 }
 
@@ -157,24 +153,21 @@ export class AnimalsService {
     return animal;
   }
 
-  async add(user: LoggedInUser, animal: AnimalData): Promise<Animal> {
-    if (!validateAnimalCreate(animal)) {
-      throw new BadRequestException(null, 'Brak nazwy, id lub zdjęcia.');
+  async add(animal: AnimalData, user: LoggedInUser): Promise<Animal> {
+    if (!validateAnimalCreateOrUpdate(animal)) {
+      throw new BadRequestException('Brak nazwy lub numeru referencyjnego.');
     }
     if (
       !animal.virtualCaretakerName &&
       animal.virtualCaretakerType === VirtualCaretakerType.Znalazl
     ) {
-      throw new BadRequestException(null, 'Brak nazwy wirtualnego opiekuna.');
+      throw new BadRequestException('Brak nazwy wirtualnego opiekuna.');
     }
     const existingAnimal = await this.prisma.animal.findUnique({
       where: { id: animal.id },
     });
     if (!!existingAnimal) {
-      throw new ConflictException(
-        animal,
-        'Zwierzę o podanym numerze już istnieje.',
-      );
+      throw new ConflictException('Conflict Exception');
     }
 
     const id = uuid();
@@ -205,12 +198,18 @@ export class AnimalsService {
   }
 
   async update(
-    user: LoggedInUser,
     id: string,
     animal: AnimalData,
+    user: LoggedInUser,
   ): Promise<Animal> {
-    if (!validateAnimalUpdate(animal)) {
-      throw new BadRequestException(id, 'Brak nazwy lub id.');
+    if (!validateAnimalCreateOrUpdate(animal)) {
+      throw new BadRequestException('Brak nazwy lub numeru referencyjnego.');
+    }
+    if (
+      !animal.virtualCaretakerName &&
+      animal.virtualCaretakerType === VirtualCaretakerType.Znalazl
+    ) {
+      throw new BadRequestException('Brak nazwy wirtualnego opiekuna.');
     }
     const prevAnimal = await this.prisma.animal.findUnique({ where: { id } });
     if (!prevAnimal) {
@@ -218,7 +217,7 @@ export class AnimalsService {
     }
 
     if (prevAnimal.id !== animal.id) {
-      throw new BadRequestException(id, 'Identyfikator musi się zgadzać.');
+      throw new BadRequestException('Identyfikator musi się zgadzać.');
     }
 
     if (animal.imageData) {
@@ -297,33 +296,36 @@ export class AnimalsService {
     return updatedAnimal;
   }
 
-  async delete(user: LoggedInUser, id: string): Promise<Animal> {
-    const animal = await this.prisma.animal.findUnique({ where: { id } });
-    if (!animal) {
-      throw new NotFoundException();
-    }
+  async delete(id: string, user: LoggedInUser): Promise<Animal> {
+    const animal = await this.get(id, false);
+
     await this.animalImagesService.deleteByAnimal(id);
+    let imageDeleteFailed = false;
     if (animal.imageName) {
       try {
         await deleteImage(IMAGES_PATH, animal.imageName);
       } catch (e: unknown) {
         console.warn(e);
-        await this.logsService.log({
-          message: `usunał zwierzę ${animal.name}, ale nie udało się usunąć jego zdjęcia.`,
-          permission: Permission.ANIMAL,
-          user,
-        });
+        imageDeleteFailed = true;
       }
     }
 
     const deletedAnimal = await this.prisma.animal.delete({
       where: { id },
     });
-    await this.logsService.log({
-      message: `usunał zwierzę ${animal.name}`,
-      permission: Permission.ANIMAL,
-      user,
-    });
+    if (imageDeleteFailed) {
+      await this.logsService.log({
+        message: `usunał zwierzę ${animal.name}, ale nie udało się usunąć jego zdjęcia.`,
+        permission: Permission.ANIMAL,
+        user,
+      });
+    } else {
+      await this.logsService.log({
+        message: `usunał zwierzę ${animal.name}`,
+        permission: Permission.ANIMAL,
+        user,
+      });
+    }
     return deletedAnimal;
   }
 }

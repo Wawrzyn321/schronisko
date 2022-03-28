@@ -68,7 +68,7 @@ export class AuthService {
     }
   }
 
-  async changeSelfPassword(
+  async changePassword(
     params: ChangePasswordParams,
     loggedInUser: LoggedInUser,
   ): Promise<UserViewModel> {
@@ -77,18 +77,17 @@ export class AuthService {
       throw new NotFoundException();
     }
     if (
-      user.isActive &&
-      (await this.bcryptService.compareHash(
+      await this.bcryptService.compareHash(
         params.currentPassword,
         user.passwordHash,
-      ))
+      )
     ) {
       return this.usersService.updatePassword(user, params.newPassword);
     }
     throw new ForbiddenException();
   }
 
-  async changePassword(
+  async changeUserPassword(
     user: UserViewModel,
     password: string,
   ): Promise<UserViewModel> {

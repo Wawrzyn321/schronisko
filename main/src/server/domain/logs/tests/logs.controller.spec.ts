@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { Permission } from '@prisma/client';
+import { allPermissions } from '../../../domain/auth/constants';
 import { LogsService } from '../../../domain/logs/logs.service';
 import { PrismaService } from '../../../prisma-connect/prisma.service';
 import { LoggedInUser } from '../../auth/types';
-import { allPermissions } from '../../../domain/auth/permissions';
 import { LogsController } from '../logs.controller';
 
 const mockAdminUser: LoggedInUser = {

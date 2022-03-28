@@ -38,9 +38,7 @@ describe('PagesPublicController', () => {
   });
 
   it('GET with invalid id returns a 404', async () => {
-    prismaServiceMock.page.findUnique = jest
-      .fn()
-      .mockImplementation(() => null);
+    prismaServiceMock.page.findUnique = jest.fn().mockReturnValue(null);
 
     await expect(pagesController.getPage('page-id')).rejects.toThrowError(
       /Not Found/,
@@ -52,24 +50,21 @@ describe('PagesPublicController', () => {
       id: 'V_ADOPTION_ACCOUNT_NUMBER',
       value: 'SUBSTITUTED',
     };
-    const mockPages: Page[] = [
-      {
-        id: 'page-id',
-        title: 'some-title',
-        content: 'this is %KONTO%',
-      },
-    ];
-    prismaServiceMock.page.findUnique = jest
-      .fn()
-      .mockImplementation(({ where: { id } }) =>
-        mockPages.find((p) => p.id === id),
-      );
+    const mockPage: Page = {
+      id: 'page-id',
+      title: 'some-title',
+      content: 'this is %KONTO%',
+    };
+    const findPageMock = jest.fn().mockReturnValue(mockPage);
 
+    prismaServiceMock.page.findUnique = findPageMock;
     settingsService.getAll = jest.fn().mockReturnValue([mockSetting]);
 
     const result = await pagesController.getPage('page-id');
     expect(result.id).toBe('page-id');
     expect(result.content).toBe('this is SUBSTITUTED');
+    expect(settingsService.getAll).toHaveBeenCalled();
+    expect(findPageMock).toHaveBeenCalledWith({ where: { id: 'page-id' } });
   });
 
   it('GET dog-volunteering returns a doggy-on page if setting is true', async () => {

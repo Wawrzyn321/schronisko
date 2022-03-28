@@ -3,7 +3,7 @@ import { Permission } from '@prisma/client';
 import { LogsService } from './../../../domain/logs/logs.service';
 import { PrismaService } from '../../../prisma-connect/prisma.service';
 import { LoggedInUser } from '../../auth/types';
-import { allPermissions } from '../../../domain/auth/permissions';
+import { allPermissions } from '../../../domain/auth/constants';
 
 const mockAdminUser: LoggedInUser = {
   id: -1,

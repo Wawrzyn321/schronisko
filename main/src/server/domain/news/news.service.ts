@@ -121,6 +121,9 @@ export class NewsService {
     id: string,
     params: NewsModifyParams<NewsUpdateInput>,
   ): Promise<NewsListElement> {
+    if (id !== params?.news?.id) {
+      throw new BadRequestException();
+    }
     if (!validateNewsUpdate(params.news)) {
       throw new BadRequestException(id, 'Brak tytułu.');
     }
@@ -128,9 +131,6 @@ export class NewsService {
       filterPublic: false,
       useSubstitution: false,
     });
-    if (prevNews.id !== id) {
-      throw new BadRequestException(id, 'id musi się zgadzać');
-    }
 
     if (params.imageData) {
       await saveImage('news/', params.news.imageName, params.imageData, 'News');
@@ -172,6 +172,9 @@ export class NewsService {
 
   async delete(user: LoggedInUser, id: string): Promise<News> {
     const news = await this.prisma.news.findUnique({ where: { id } });
+    if (!news) {
+      throw new NotFoundException();
+    }
     try {
       await deleteImage('news/', news.imageName);
     } catch (e: unknown) {

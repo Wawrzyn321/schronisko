@@ -139,7 +139,7 @@ describe('AnimalsPublicController', () => {
       '20',
     );
 
-    expect(result.animals).toStrictEqual([{ animal: true }]);
+    expect(result.animals).toEqual([{ animal: true }]);
     expect(result.totalCount).toBe(10);
     expect(findAnimalsMock).toHaveBeenCalledWith({
       take: 20,
@@ -171,7 +171,7 @@ describe('AnimalsPublicController', () => {
       'e',
     );
 
-    expect(result.animals).toStrictEqual([{ animal: true }]);
+    expect(result.animals).toEqual([{ animal: true }]);
     expect(result.totalCount).toBe(10);
     expect(findAnimalsMock).toHaveBeenCalledWith({
       take: 27,

@@ -40,23 +40,9 @@ describe('AnimalImagesPublicController', () => {
         visible: true,
       },
       {
-        id: '2',
-        order: 2,
-        animalId: ANIMAL_ID,
-        imageName: 'img-name',
-        visible: false,
-      },
-      {
         id: '3',
         order: 3,
         animalId: ANIMAL_ID,
-        imageName: 'img-name',
-        visible: true,
-      },
-      {
-        id: '4',
-        order: 4,
-        animalId: 'id-2',
         imageName: 'img-name',
         visible: true,
       },
@@ -67,11 +53,7 @@ describe('AnimalImagesPublicController', () => {
 
     prismaServiceMock.animalImage.findMany = jest
       .fn()
-      .mockImplementation(({ where: { animalId, visible } }) =>
-        mockAnimalImages.filter(
-          (i) => i.animalId === animalId && i.visible === visible,
-        ),
-      );
+      .mockReturnValue(mockAnimalImages);
 
     const result = await animalImagesController.getImages(ANIMAL_ID);
     expect(result).toHaveLength(2);

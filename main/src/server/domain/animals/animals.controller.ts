@@ -112,7 +112,7 @@ export class AnimalsController {
   @Post()
   @UseGuards(PermissionsGuard)
   addAnimal(@Body() body: AnimalData, @Request() req: { user: LoggedInUser }) {
-    return this.animalsService.add(req.user, body);
+    return this.animalsService.add(body, req.user);
   }
 
   @RequirePermission(Permission.ANIMAL)
@@ -124,9 +124,9 @@ export class AnimalsController {
     @Request() req: { user: LoggedInUser },
   ) {
     return this.animalsService.update(
-      req.user,
       decodeURIComponent(animalId),
       body,
+      req.user,
     );
   }
 
@@ -137,6 +137,6 @@ export class AnimalsController {
     @Param('id') animalId: string,
     @Request() req: { user: LoggedInUser },
   ) {
-    return this.animalsService.delete(req.user, decodeURIComponent(animalId));
+    return this.animalsService.delete(decodeURIComponent(animalId), req.user);
   }
 }

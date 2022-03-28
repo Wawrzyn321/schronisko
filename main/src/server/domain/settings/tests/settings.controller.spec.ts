@@ -5,7 +5,7 @@ import { PrismaService } from '../../../prisma-connect/prisma.service';
 import { SettingsController } from './../settings.controller';
 import { SettingsService } from './../settings.service';
 import { LoggedInUser } from '../../auth/types';
-import { allPermissions } from '../../../domain/auth/permissions';
+import { allPermissions } from '../../../domain/auth/constants';
 
 const mockAdminUser: LoggedInUser = {
   id: -1,
@@ -69,9 +69,12 @@ describe('SettingsController', () => {
     expect(result).toMatchObject(mockSetting);
     expect(settingCreateMock).toHaveBeenCalledWith({ data: mockSetting });
     expect(logsServiceLogMock).toHaveBeenCalledWith({
-      message: `dodał ustawienie ${mockSetting.id} o wartości ${mockSetting.value}`,
+      message: expect.any(String),
       permission: Permission.USER,
       user: mockAdminUser,
     });
+    expect(logsServiceLogMock.mock.calls[0][0].message).toMatchInlineSnapshot(
+      `"dodał ustawienie SETTING_ID o wartości SETTING_VALUE"`,
+    );
   });
 });

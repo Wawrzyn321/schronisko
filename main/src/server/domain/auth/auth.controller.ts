@@ -9,30 +9,30 @@ import {
 } from './auth.service';
 import { Public } from './decorators/public.decorator';
 
-@Controller()
+@Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Public()
-  @Post('auth/login')
+  @Post('login')
   async login(@Body() user: UserLoginParams) {
     return this.authService.login(user);
   }
 
   @UseGuards(PermissionsGuard)
-  @Post('auth/change-password')
-  async changeSelfPassword(
+  @Post('change-password')
+  async changePassword(
     @Body() params: ChangePasswordParams,
     @Request() req: { user: LoggedInUser },
   ) {
-    return this.authService.changeSelfPassword(params, req.user);
+    return this.authService.changePassword(params, req.user);
   }
 
   @UseGuards(PermissionsGuard)
-  @Post('auth/change-user-password')
-  async changePassword(
+  @Post('change-user-password')
+  async changeUserPassword(
     @Body() params: { user: UserViewModel; password: string },
   ) {
-    return this.authService.changePassword(params.user, params.password);
+    return this.authService.changeUserPassword(params.user, params.password);
   }
 }

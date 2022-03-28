@@ -33,12 +33,11 @@
   async function updateUser() {
     try {
       loading = true;
-      const updatedUser = await userService.updateUser({
-        ...user,
+      const updatedData = await userService.updateUser(user.id, {
         permissions,
         isActive,
       });
-      onUserEdited(updatedUser);
+      onUserEdited({ ...user, ...updatedData });
     } catch (e) {
       notifyError({
         message: 'Nie udało się zaktualizować użytkownika: ' + e.message,

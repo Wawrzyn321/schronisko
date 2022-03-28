@@ -11,13 +11,20 @@ import { AnimalImage } from '@prisma/client';
 
 const IMAGES_PATH = 'animals/pics/';
 
-export interface UpsertParams extends AnimalImageParams, AnimalImage {}
+export type UpsertParams = {
+  id?: string;
+  order: number;
+  animalId: string;
+  imageName?: string;
+  data?: string;
+  visible: boolean;
+};
 
 @Injectable()
 export class AnimalImagesService {
   constructor(private prisma: PrismaService) {}
 
-  async get(animalId: string, filterPublic?: boolean): Promise<AnimalImage[]> {
+  async get(animalId: string, filterPublic = false): Promise<AnimalImage[]> {
     if (
       !this.prisma.animal.findFirst({
         where: { id: animalId, isPublic: filterPublic ? true : undefined },
@@ -53,7 +60,7 @@ export class AnimalImagesService {
         const img = imagesAlready.find(
           (i) => i.image.imageName == image.imageName,
         );
-        if (!img) throw new BadRequestException('');
+        if (!img) throw new BadRequestException('Image not found in post');
         img.handled = true;
       } else {
         const imageName = `${uuid()}.png`;
@@ -82,7 +89,11 @@ export class AnimalImagesService {
       }
     }
 
-    return images;
+    return images.map((i) => ({
+      data: i.data,
+      order: i.order,
+      visible: i.visible,
+    }));
   }
 
   async deleteByAnimal(animalId: string): Promise<void> {

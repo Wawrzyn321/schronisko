@@ -83,9 +83,6 @@ export class NewsController {
     @Body() body: NewsModifyParams<NewsUpdateInput>,
     @Request() req: { user: LoggedInUser },
   ) {
-    if (newsId !== body?.news?.id) {
-      throw new BadRequestException();
-    }
     return this.newsService.update(req.user, newsId, body);
   }
 

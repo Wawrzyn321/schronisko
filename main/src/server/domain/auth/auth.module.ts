@@ -9,7 +9,7 @@ import { APP_GUARD } from '@nestjs/core';
 
 import { BcryptService } from './bcrypt.service';
 import { AuthController } from './auth.controller';
-import { PrismaService } from 'prisma-connect/prisma.service';
+import { PrismaService } from '../../prisma-connect/prisma.service';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
 const JwtGuard = {

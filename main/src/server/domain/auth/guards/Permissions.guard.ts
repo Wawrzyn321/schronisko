@@ -23,7 +23,7 @@ export class PermissionsGuard implements CanActivate {
       .getRequest();
 
     if (!user) {
-      return false;
+      throw new ForbiddenException();
     }
 
     try {

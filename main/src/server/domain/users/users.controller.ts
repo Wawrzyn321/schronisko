@@ -1,4 +1,8 @@
-import { UserDto } from '../types';
+import {
+  FrontendUserCreateDto,
+  FrontendSelfUpdateDto,
+  FrontendUpdateOtherUserDto,
+} from './types';
 import { RequirePermission } from '../auth/decorators/Permissions.decorator';
 import { PermissionsGuard } from '../auth/guards/Permissions.guard';
 import { UsersService } from './users.service';
@@ -30,17 +34,28 @@ export class UsersController {
   @RequirePermission(Permission.USER)
   @Post()
   @UseGuards(PermissionsGuard)
-  createUser(@Body() body: UserDto, @Request() req: { user: LoggedInUser }) {
+  createUser(
+    @Body() body: FrontendUserCreateDto,
+    @Request() req: { user: LoggedInUser },
+  ) {
     return this.usersService.create(req.user, body);
   }
 
-  @Patch(':id')
+  @Patch()
   updateUser(
-    @Param('id') userId: string,
-    @Body() body: UserDto,
+    @Body() body: FrontendSelfUpdateDto,
     @Request() req: { user: LoggedInUser },
   ) {
-    return this.usersService.update(parseInt(userId), body, req.user);
+    return this.usersService.updateSelf(body, req.user);
+  }
+
+  @Patch('update-other/:id')
+  updateOtherUser(
+    @Param('id') userId: string,
+    @Body() body: FrontendUpdateOtherUserDto,
+    @Request() req: { user: LoggedInUser },
+  ) {
+    return this.usersService.updateOther(parseInt(userId), body, req.user);
   }
 
   @RequirePermission(Permission.USER)
