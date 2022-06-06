@@ -1,6 +1,4 @@
 
-edytowanie zwierzęcia usuwa zdjęcie
-
 po deployu:
     * zmień link na backoffice z https://www.schronisko.sosnowiec.pl/ na ten nowy
     * maile (sendgrid key)

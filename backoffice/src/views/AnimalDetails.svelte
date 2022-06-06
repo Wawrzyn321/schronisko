@@ -47,9 +47,11 @@
   async function updateAnimal() {
     try {
       isSaving = true;
-      await animalsService.update(animal, images);
+      const updatedAnimal = await animalsService.update(animal, images);
       prevCategory = animal.category;
       notifySuccess({ message: 'Dane zwierzęcia zostały zapisane.' });
+      animalData.imageData = null;
+      animalData.imageName = updatedAnimal.imageName;
     } catch (e) {
       notifyError({
         message: 'Nie możnac zapisać danych zwierzęcia: ' + e.message,

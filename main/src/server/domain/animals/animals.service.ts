@@ -231,7 +231,8 @@ export class AnimalsService {
         'Animal Miniature',
       );
     } else {
-      if (prevAnimal.imageName !== null && !animal.imageData) {
+      // previous image exist, next doesn't
+      if (!animal.imageName && prevAnimal.imageName) {
         try {
           await deleteImage(IMAGES_PATH, prevAnimal.imageName);
         } catch (e) {
