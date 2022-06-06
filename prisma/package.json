@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "seed": "ts-node seed.ts",
-    "seed:local": "ts-node seed-local.ts",
+    "seed": "dotenv -e .env -- ts-node seed.ts",
+    "seed:vps": "ts-node seed-vps.ts",
     "mv-img": "mv db-import/animals/animals ../main/src/client/public/img/",
     "ts-node": "ts-node --compiler-options '{\"module\":\"CommonJS\"}'",
     "push": "../node_modules/.bin/prisma generate && ../node_modules/.bin/prisma db push",

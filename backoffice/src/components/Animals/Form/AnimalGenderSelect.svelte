@@ -4,6 +4,7 @@
   import { animalGenders, animalGendersMap } from '../animalMetadata';
 
   export let gender: AnimalGender;
+  export let disabled: boolean;
 </script>
 
 <Field label="Płeć" style="grid-area: gender" labelFor="płeć">
@@ -13,7 +14,7 @@
     expanded
     nativeSize={1}
     bind:selected={gender}
-    id="płeć"
+    {disabled}
   >
     {#each animalGenders as gender}
       <option value={gender}>{animalGendersMap[gender]}</option>

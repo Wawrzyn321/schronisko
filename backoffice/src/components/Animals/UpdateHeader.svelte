@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Animal, AnimalCategory } from '.prisma/client';
+  import { Animal, AnimalCategory, Permission } from '.prisma/client';
 
   import { Button } from 'svelma';
   import { push } from 'svelte-spa-router';
@@ -10,6 +10,7 @@
   import { changedToReadonly } from './Form/animal-readonly';
   import FormTooltipMessageWrapper from './Form/FormTooltipMessageWrapper.svelte';
   import type { AnimalImageParams } from '../../services/AnimalImagesService';
+  import { auth } from '../../contexts/auth.context';
 
   export let isPublic: boolean;
   export let timestamp: Date;
@@ -22,6 +23,8 @@
 
   let isWarningModalVisible = false;
   let deleteModalVisible = false;
+
+  const canEditAnimals = $auth.user.permissions.includes(Permission.ANIMAL);
 
   function onAnimalDeleted() {
     notifySuccess({ message: 'Zwierzę zostało usunięte.' });
@@ -44,10 +47,11 @@
         checked={isPublic}
         type="checkbox"
         on:change={() => (isPublic = !isPublic)}
+        disabled={!canEditAnimals}
       />
       Widoczny na stronie
     </label>
-    <FormTooltipMessageWrapper {isValid} animalData={animal} images={images}>
+    <FormTooltipMessageWrapper {isValid} animalData={animal} {images}>
       <Button
         type="is-primary"
         on:click={() => {
@@ -57,7 +61,7 @@
             updateAnimal();
           }
         }}
-        disabled={!isValid || isSaving}
+        disabled={!isValid || isSaving || !canEditAnimals}
         aria-label="Zapisz zwierzę"
       >
         Zapisz
@@ -68,6 +72,7 @@
       on:click={() => (deleteModalVisible = true)}
       style="margin-left: 8px"
       aria-label="Usuń zwierzę"
+      disabled={!canEditAnimals}
     >
       Usuń
     </Button>

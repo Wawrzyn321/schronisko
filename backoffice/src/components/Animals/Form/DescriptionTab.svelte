@@ -7,6 +7,7 @@
   export let revalidateForm: () => any;
   export let animal: AnimalData;
   export let isReadonly: boolean;
+  export let disabled: boolean;
 
   const descriptionTemplate =
     descriptionTemplates[animal.category]?.[animal.gender];
@@ -22,6 +23,7 @@
           animal.description = descriptionTemplate;
           revalidateForm();
         }}
+        {disabled}
       >
         Użyj szablonu
       </Button>
@@ -45,8 +47,8 @@
       bind:value={animal.description}
       type="textarea"
       placeholder="Opis zwierzęcia"
-      disabled={isReadonly}
-      pattern=".*\S+.*" 
+      disabled={isReadonly || disabled}
+      pattern=".*\S+.*"
     />
   </Tooltip>
   <br />
@@ -58,6 +60,7 @@
         type="textarea"
         placeholder="Notatka"
         pattern=".*\S+.*"
+        {disabled}
       />
     </Tooltip>
   </Field>

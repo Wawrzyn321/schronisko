@@ -11,6 +11,7 @@
   export let width: number;
   export let height: number;
   export let required = true;
+  export let disabled: boolean;
 
   let file = null;
   let resizeModalVisible = false;
@@ -35,8 +36,16 @@
 
 <Field {label} {message} noStar={!label} {required}>
   <div style="display: flex">
-    <Input type="file" accept="image/png, image/jpeg" on:input={onFileChange} aria-label="Wybierz obraz"/>
-    <Button on:click={openResizeModal} disabled={!file}>Przytnij</Button>
+    <Input
+      type="file"
+      accept="image/png, image/jpeg"
+      on:input={onFileChange}
+      aria-label="Wybierz obraz"
+      {disabled}
+    />
+    <Button on:click={openResizeModal} disabled={!file || disabled}
+      >Przytnij</Button
+    >
     <Button
       type="is-danger"
       on:click={() => {
@@ -44,7 +53,7 @@
         imageName = '';
         file = null;
       }}
-      disabled={!(file || imageData || imageName)}
+      disabled={!(file || imageData || imageName) || disabled}
     >
       Usuń
     </Button>

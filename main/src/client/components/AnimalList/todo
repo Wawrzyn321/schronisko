@@ -1,3 +1,6 @@
+
+edytowanie zwierzęcia usuwa zdjęcie
+
 po deployu:
     * zmień link na backoffice z https://www.schronisko.sosnowiec.pl/ na ten nowy
     * maile (sendgrid key)
@@ -5,5 +8,3 @@ po deployu:
 przetestuj restart vpsa
 
 ładnie sformatuj wiadomości w mailach, szczególnie tą do v-adopcji
-
-animals-private

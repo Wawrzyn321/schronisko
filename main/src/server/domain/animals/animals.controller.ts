@@ -94,7 +94,7 @@ export class AnimalsPublicController {
 export class AnimalsController {
   constructor(private animalsService: AnimalsService) {}
 
-  @RequirePermission(Permission.ANIMAL)
+  @RequirePermission(Permission.ANIMAL_VIEW_ONLY)
   @Get()
   getAnimals(@Query('take') takeStr: string, @Query('skip') skipStr: string) {
     const take = parseInt(takeStr) || undefined;
@@ -102,7 +102,7 @@ export class AnimalsController {
     return this.animalsService.getAll(take, skip);
   }
 
-  @RequirePermission(Permission.ANIMAL)
+  @RequirePermission(Permission.ANIMAL_VIEW_ONLY)
   @Get(':id')
   getAnimal(@Param('id') animalId: string) {
     return this.animalsService.get(animalId);

@@ -6,6 +6,7 @@
   export let virtualCaretakerType: VirtualCaretakerType;
   export let category: AnimalCategory;
   export let onChange: (category: AnimalCategory) => any;
+  export let disabled: boolean;
 
   function computeWarning(
     type: VirtualCaretakerType,
@@ -52,6 +53,7 @@
     nativeSize={1}
     bind:selected={category}
     on:input={onInput}
+    {disabled}
   >
     {#each animalCategories as category}
       <option value={category}>{animalCategoriesMap[category]}</option>

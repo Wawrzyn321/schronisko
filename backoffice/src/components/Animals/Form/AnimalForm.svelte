@@ -9,12 +9,15 @@
   import DescriptionTab from './DescriptionTab.svelte';
   import DataTab from './DataTab.svelte';
   import { isReadonly } from './animal-readonly';
+  import { auth } from '../../../contexts/auth.context';
+  import { Permission } from '@prisma/client';
 
   export let animal: AnimalData;
   export let images: AnimalImageParams[] = [];
   export let setFormValid: (valid: boolean) => any;
 
   const mode = new URLSearchParams(get(querystring)).get('mode');
+  const canEditAnimals = $auth.user.permissions.includes(Permission.ANIMAL);
 
   let form: HTMLFormElement;
 
@@ -29,17 +32,18 @@
 
 <form bind:this={form} on:input={revalidateForm} on:change={revalidateForm}>
   <Tabs mapping={['data', 'description', 'photos']} currentTab={mode}>
-    <DataTab bind:animal {revalidateForm} />
+    <DataTab bind:animal {revalidateForm} disabled={!canEditAnimals} />
     <DescriptionTab
       bind:animal
       {revalidateForm}
       isReadonly={isReadonly(animal.category)}
+      disabled={!canEditAnimals}
     />
     <Tab label="Zdjęcia">
       {#if isReadonly(animal.category)}
         Nie można dodać zdjęć do zwierząt w tej kategorii.
       {:else}
-        <AnimalImages bind:images {revalidateForm} />
+        <AnimalImages bind:images {revalidateForm} disabled={!canEditAnimals} />
       {/if}
     </Tab>
   </Tabs>

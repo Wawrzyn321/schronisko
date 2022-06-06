@@ -8,39 +8,39 @@
 
   type NavigationRoute = {
     name: string;
-    requiredPermission: Permission;
+    requiredPermissions: Permission[];
     path: string;
-  }
+  };
 
   const navigationRoutes: NavigationRoute[] = [
     {
       name: 'Użytkownicy',
-      requiredPermission: Permission.USER,
+      requiredPermissions: [Permission.USER],
       path: '/users',
     },
     {
       name: 'Logi',
-      requiredPermission: Permission.USER,
+      requiredPermissions: [Permission.USER],
       path: '/logs',
     },
     {
       name: 'Strony',
-      requiredPermission: Permission.PAGE,
+      requiredPermissions: [Permission.PAGE],
       path: '/pages',
     },
     {
       name: 'Newsy',
-      requiredPermission: Permission.NEWS,
+      requiredPermissions: [Permission.NEWS],
       path: '/news',
     },
     {
       name: 'Zwierzęta',
-      requiredPermission: Permission.ANIMAL,
+      requiredPermissions: [Permission.ANIMAL, Permission.ANIMAL_VIEW_ONLY],
       path: '/animals',
     },
     {
       name: 'Dodatkowe ustawienia',
-      requiredPermission: Permission.USER,
+      requiredPermissions: [Permission.USER],
       path: '/settings',
     },
   ];
@@ -54,7 +54,7 @@
   {#if $auth}
     <ul>
       {#each navigationRoutes as route}
-        {#if $auth.user.permissions.includes(route.requiredPermission)}
+        {#if $auth.user.permissions.find( (p) => route.requiredPermissions.includes(p) )}
           <li>
             <a use:link use:active={`${route.path}.*`} href={`${route.path}`}>
               {route.name}

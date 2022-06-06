@@ -6,6 +6,7 @@
 
   export let animal: AnimalData;
   export let revalidateForm: () => any;
+  export let disabled: boolean;
 
   function revertImage() {
     animal.imageData = null;
@@ -22,13 +23,10 @@
       width={1300}
       height={975}
       required={false}
+      {disabled}
     />
   </Tooltip>
-  <AnimalImagePreview
-    {animal}
-    {revertImage}
-    animalType={animal.type}
-  />
+  <AnimalImagePreview {animal} {revertImage} animalType={animal.type} />
 </div>
 
 <style lang="scss">

@@ -45,8 +45,24 @@ export class PermissionsGuard implements CanActivate {
     if (!requiredPermissions) {
       return true;
     }
-    return requiredPermissions.some((permission) =>
-      user.permissions?.includes(permission),
+    return (
+      requiredPermissions.some((permission) =>
+        user.permissions?.includes(permission),
+      ) || checkAnimalPermissions(requiredPermissions, user.permissions)
     );
   }
+}
+
+function checkAnimalPermissions(
+  requiredPermissions: Permission[],
+  userPermissions: Permission[],
+): boolean {
+  const isAnimalViewOnlyRequired = requiredPermissions.find(
+    (p) => p === Permission.ANIMAL_VIEW_ONLY,
+  );
+  if (!isAnimalViewOnlyRequired) {
+    return false;
+  }
+  // if user has ANIMAL, they already have ANIMAL_VIEW_ONLY
+  return userPermissions.includes(Permission.ANIMAL);
 }

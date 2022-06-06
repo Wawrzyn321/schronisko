@@ -14,6 +14,7 @@
 
   export let images: AnimalImageParams[];
   export let revalidateForm: () => any;
+  export let disabled: boolean;
 
   const MAX_IMAGES = 8;
 
@@ -57,7 +58,7 @@
     </p>
     <Button
       on:click={addImage}
-      disabled={images.length >= MAX_IMAGES}
+      disabled={images.length >= MAX_IMAGES || disabled}
       type="is-primary"
     >
       <strong style="margin-right: 0.5em" aria-label="Dodaj zdjęcie">+</strong> Dodaj
@@ -83,6 +84,7 @@
           label=""
           width={1333}
           height={1000}
+          {disabled}
         />
         <div>
           <div class="eye-tooltip">
@@ -92,6 +94,7 @@
               <Button
                 type="is-primary"
                 on:click={() => (image.visible = !image.visible)}
+                {disabled}
               >
                 {#if image.visible}
                   <EyeIcon size="1.0x" />
@@ -105,18 +108,22 @@
           <Button
             type="is-primary"
             on:click={() => moveBack(i)}
-            disabled={i === 0}
+            disabled={i === 0 || disabled}
           >
             <ChevronUpIcon size="1.0x" />
           </Button>
           <Button
             type="is-primary"
             on:click={() => moveFront(i)}
-            disabled={i === images.length - 1}
+            disabled={i === images.length - 1 || disabled}
           >
             <ChevronDownIcon size="1.0x" />
           </Button>
-          <Button type="is-danger" on:click={() => removeImage(image)}>
+          <Button
+            type="is-danger"
+            on:click={() => removeImage(image)}
+            {disabled}
+          >
             <Trash2Icon size="1.0x" />
           </Button>
         </div>

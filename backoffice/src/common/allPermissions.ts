@@ -1,8 +1,9 @@
 import { Permission } from '@prisma/client';
 
 export const allPermissions: Permission[] = [
-    Permission.USER,
-    Permission.PAGE,
-    Permission.NEWS,
-    Permission.ANIMAL,
+  Permission.USER,
+  Permission.PAGE,
+  Permission.NEWS,
+  Permission.ANIMAL,
+  Permission.ANIMAL_VIEW_ONLY,
 ];

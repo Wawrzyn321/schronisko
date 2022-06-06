@@ -1,7 +1,7 @@
 <script lang="ts">
-  import type { Permission } from '.prisma/client';
+  import { Permission } from '.prisma/client';
   import { Field } from 'svelma';
-import { allPermissions } from '../../common/allPermissions';
+  import { allPermissions } from '../../common/allPermissions';
 
   import {
     permissionNames,
@@ -13,7 +13,15 @@ import { allPermissions } from '../../common/allPermissions';
 
   const switchPermission = (permission: Permission) => (e: any) => {
     if (e.target.checked) {
-      updatePermissions([...permissions, permission]);
+      if (permission === Permission.ANIMAL) {
+        updatePermissions(
+          [...permissions, permission].filter(
+            (p) => p !== Permission.ANIMAL_VIEW_ONLY
+          )
+        );
+      } else {
+        updatePermissions([...permissions, permission]);
+      }
     } else {
       updatePermissions(permissions.filter((p) => p !== permission));
     }
@@ -29,6 +37,8 @@ import { allPermissions } from '../../common/allPermissions';
             checked={permissions.includes(permission)}
             type="checkbox"
             on:change={switchPermission(permission)}
+            disabled={permission === Permission.ANIMAL_VIEW_ONLY &&
+              permissions.includes(Permission.ANIMAL)}
           />
           <abbr title={permissionDescriptions[permission]}>
             {permissionNames[permission]}

@@ -77,7 +77,7 @@ function createPermissions(login: string): { permission: Permission }[] {
     } else {
         return [
             {
-                permission: 'ANIMAL',
+                permission: 'ANIMAL_VIEW_ONLY',
             }
         ]
     }

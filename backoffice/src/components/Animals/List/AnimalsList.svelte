@@ -11,6 +11,7 @@
     Animal,
     AnimalCategory,
     AnimalType,
+    Permission,
     VirtualCaretakerType,
   } from '.prisma/client';
   import {
@@ -26,6 +27,7 @@
   import { STATIC_URL } from '../../../services/config';
   import EmptyListMessage from '../../shared/EmptyListMessage.svelte';
   import type { AnimalListElement } from '../../../common/types';
+  import { auth } from '../../../contexts/auth.context';
 
   export let animals: AnimalListElement[];
   export let loading: boolean;
@@ -36,6 +38,8 @@
 
   let deleteModalVisible = false;
   let selectedAnimal: AnimalListElement = null;
+
+  const canEditAnimals = $auth.user.permissions.includes(Permission.ANIMAL);
 
   function restrictStringLength(str: string, chars = 40): string {
     if (str.length <= chars) {
@@ -131,18 +135,20 @@
       <td class="g-text-align-right g-table-actions">
         <Button
           type="is-primary"
-          aria-label={"Edytuj zwierzę " + animal.name}
+          aria-label={'Edytuj zwierzę ' + animal.name}
           on:click={() => push(`/animals/${animal.id}`)}
+          disabled={!canEditAnimals}
         >
           <Edit2Icon size="1.0x" />
         </Button>
         <Button
           type="is-danger"
-          aria-label={"Usuń zwierzę " + animal.name}
+          aria-label={'Usuń zwierzę ' + animal.name}
           on:click={() => {
             selectedAnimal = animal;
             deleteModalVisible = true;
           }}
+          disabled={!canEditAnimals}
         >
           <Trash2Icon size="1.0x" />
         </Button>

@@ -2,7 +2,7 @@ import { PrismaClient } from '@prisma/client';
 import { seedUsers } from './db-import/users/users';
 import { seedNews } from './db-import/news/news-import';
 import { seedPages } from './db-import/pages';
-import { seedAnimals } from './db-import/animals/animals-import-local';
+import { seedAnimals } from './db-import/animals/animals-import-vps';
 
 const prisma = new PrismaClient()
 

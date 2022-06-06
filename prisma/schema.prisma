@@ -15,6 +15,7 @@ enum Permission {
   PAGE
   NEWS
   ANIMAL
+  ANIMAL_VIEW_ONLY
 }
 
 enum AnimalType {

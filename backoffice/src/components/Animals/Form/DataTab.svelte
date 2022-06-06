@@ -13,6 +13,7 @@
 
   export let animal: AnimalData;
   export let revalidateForm: () => any;
+  export let disabled: boolean;
 
   function onCategoryChange(category: AnimalCategory) {
     if (category === AnimalCategory.ZaTeczowymMostem) {
@@ -31,51 +32,68 @@
 <Tab label="Dane">
   <div id="animal-data-form">
     <Field label="Imię" required style="grid-area: name">
-      <Input required bind:value={animal.name} placeholder="Imię zwierzęcia" pattern=".*\S+.*" />
+      <Input
+        required
+        bind:value={animal.name}
+        placeholder="Imię zwierzęcia"
+        pattern=".*\S+.*"
+        {disabled}
+      />
     </Field>
-    <AnimalTypeSelect bind:type={animal.type} />
-    <Field label="Numer ewidencyjny" required style="grid-area: ref" >
+    <AnimalTypeSelect bind:type={animal.type} {disabled} />
+    <Field label="Numer ewidencyjny" required style="grid-area: ref">
       <Input
         required
         bind:value={animal.refNo}
         placeholder="Numer ewidencyjny"
-        pattern=".*\S+.*" 
+        pattern=".*\S+.*"
+        {disabled}
       />
     </Field>
-    <AnimalLocationSelect bind:location={animal.location} type={animal.type} />
+    <AnimalLocationSelect
+      bind:location={animal.location}
+      type={animal.type}
+      {disabled}
+    />
     <Field required label="Dane kontaktowe" style="grid-area: contact">
       <Input
         required
         bind:value={animal.contactInfo}
         placeholder="Np. osoba, numer telefonu, e-mail"
         pattern=".*\S+.*"
+        {disabled}
       />
     </Field>
     <AnimalVirtualCaretakerSelect
       bind:virtualCaretakerType={animal.virtualCaretakerType}
+      {disabled}
     />
-    <AnimalGenderSelect bind:gender={animal.gender} />
+    <AnimalGenderSelect bind:gender={animal.gender} {disabled} />
     <AnimalCategorySelect
       bind:category={animal.category}
       virtualCaretakerType={animal.virtualCaretakerType}
       onChange={onCategoryChange}
+      {disabled}
     />
-    <Field label="Dodatkowy opis miejsca" style="grid-area: location-desc" >
+    <Field label="Dodatkowy opis miejsca" style="grid-area: location-desc">
       <Input
         bind:value={animal.locationDescription}
         placeholder="Informacja gdzie przebywa zwierzę"
-        pattern=".*\S+.*" 
+        pattern=".*\S+.*"
+        {disabled}
       />
     </Field>
     {#if animal.virtualCaretakerType === VirtualCaretakerType.Znalazl}
       <Field label="Moim wirtualnym opiekunem jest" style="grid-area: v-c-name">
-        <Input bind:value={animal.virtualCaretakerName} 
-        pattern=".*\S+.*" 
-      />
+        <Input
+          bind:value={animal.virtualCaretakerName}
+          pattern=".*\S+.*"
+          {disabled}
+        />
       </Field>
     {/if}
   </div>
-  <AnimalMiniatureForm {revalidateForm} bind:animal />
+  <AnimalMiniatureForm {revalidateForm} bind:animal {disabled}/>
 </Tab>
 
 <style lang="scss">

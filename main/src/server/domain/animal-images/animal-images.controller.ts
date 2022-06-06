@@ -34,7 +34,7 @@ export class AnimalImagesPublicController {
 export class AnimalImagesController {
   constructor(private animalImagesService: AnimalImagesService) {}
 
-  @RequirePermission(Permission.ANIMAL)
+  @RequirePermission(Permission.ANIMAL_VIEW_ONLY)
   @Get(':id')
   getImages(@Param('id') animalId: string) {
     return this.animalImagesService.get(animalId);

@@ -5,6 +5,7 @@
 
   export let type: AnimalType;
   export let location: AnimalLocation;
+  export let disabled: boolean;
 </script>
 
 <Field
@@ -20,6 +21,7 @@
     expanded
     nativeSize={1}
     bind:selected={location}
+    {disabled}
   >
     {#each animalLocations as location}
       <option value={location}>{animalLocationsMap[location]}</option>
