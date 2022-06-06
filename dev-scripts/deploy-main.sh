@@ -15,6 +15,7 @@ RSYNC_RSH='ssh -p 60022' rsync \
     --exclude "coverage-ts" \
     --exclude "dist" \
     --exclude "backoffice" \
+    --exclude "e2e" \
     --exclude "main/src/client/public/img/animals" \
     --exclude "prisma/db-import/animals/animals" \
     --progress \
