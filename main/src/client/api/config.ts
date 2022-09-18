@@ -1,6 +1,6 @@
 import { AnimalType } from '.prisma/client';
 
-const DEV = 1;
+const DEV = process.env.NODE_ENV !== 'production';
 
 export const BACKEND_URL = DEV
   ? 'http://localhost:60045'

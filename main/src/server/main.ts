@@ -7,7 +7,7 @@ import * as bodyParser from 'body-parser';
 const MAX_REQUEST_SIZE = `${50}mb`;
 const PORT = 60045;
 
-const DEV = 1;
+const DEV = process.env.NODE_ENV !== 'production';
 
 if (!fs.existsSync('src/client/public/img/news/animals')) {
   fs.mkdirSync('src/client/public/img/news/animals');
