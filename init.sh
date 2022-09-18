@@ -1,4 +1,6 @@
 set -e
+echo 'copying filtered animals from ~/gotowe-animals to /var/svc/schronisko/main/src/client/public/img'
+cp -r ~/gotowe-animals /var/svc/schronisko/main/src/client/public/img/animals
 echo 'replacing I515358 with postgres in prisma/.env'
 sed -i s/I515358/postgres/ prisma/.env
 echo 'npm i '

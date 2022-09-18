@@ -9,9 +9,8 @@
     "prebuild": "rimraf dist",
     "build": "nest build",
     "lint:fix": "prettier --write \"src/**/*.ts\"",
-    "start:nest": "nest start",
+    "start:nest": "NODE_ENV=production nest start",
     "dev": "NODE_ENV=development nest start --watch",
-    "prod": "NODE_ENV=production nest start --watch",
     "dev:test": "dotenv -e ../prisma/.env.test -- nest start --watch",
     "test": "SENDGRID_API_KEY=SG. DATABASE_URL='postgres://DONT USE IT' jest"
   },

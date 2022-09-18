@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "seed": "dotenv -e .env -- ts-node seed.ts",
-    "seed:vps": "dotenv -e .env -- ts-node seed-vps.ts",
+    "seed": "NODE_ENV=dev dotenv -e .env -- ts-node seed.ts",
+    "seed:vps": "NODE_ENV=vps dotenv -e .env -- ts-node seed.ts",
     "mv-img": "mv db-import/animals/animals ../main/src/client/public/img/",
     "ts-node": "ts-node --compiler-options '{\"module\":\"CommonJS\"}'",
     "push": "../node_modules/.bin/prisma generate && ../node_modules/.bin/prisma db push",
