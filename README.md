@@ -9,3 +9,25 @@
     - `src/server` - backend app
 - `prisma/` - db stuff, bootstraping the database and seeding
 - `copy-vsp-images.sh`, `init-client.sh`, `init.sh` - scripts used on VPS.
+
+## Running backoffice
+
+At `backoffice/`:
+
+```bash
+npm run dev
+```
+
+## Running main site
+
+At `main/` - runs both backend and frontend.
+
+```bash
+npm run dev
+```
+
+## Versions
+
+- NodeJS: 16.14.2
+- NPM: 8.5.0
+- PostgresSQL 14.5
