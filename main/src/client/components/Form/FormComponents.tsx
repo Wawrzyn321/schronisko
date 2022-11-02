@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 
 type SimpleInputProps = {
   value: string;
@@ -8,7 +8,7 @@ type SimpleInputProps = {
 
 type ValidatedInputProps = {
   value: string;
-  onChange: (value: any) => any;
+  onChange: (value: ChangeEvent<HTMLInputElement>) => void;
   label: string;
   triedSubmitCounter: number;
   validationMessage: string;

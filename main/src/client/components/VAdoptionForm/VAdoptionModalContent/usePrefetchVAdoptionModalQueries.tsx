@@ -1,4 +1,4 @@
-import { Page as PageModel } from '.prisma/client';
+import { Page as PageModel, Settings } from '.prisma/client';
 import { FetchError, fetchPage, fetchSettings } from 'api/api';
 import { useEffect, useState } from 'react';
 import { AdoptionModalProps } from './VAdoptionModalContent';
@@ -14,7 +14,7 @@ export function usePrefetchVAdoptionModalQueries(): AdoptionModalProps {
       );
       const { data: settings, error: settingsError } = await fetchSettings();
 
-      const accountNoSetting = settings?.find(
+      const accountNoSetting: Settings | undefined = settings?.find(
         (s) => s.id === 'V_ADOPTION_ACCOUNT_NUMBER',
       );
 
