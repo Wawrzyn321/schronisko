@@ -32,7 +32,6 @@ function VAdoptionDetails({ animal }: { animal: Animal }) {
           </Link>,
         ]}
       />
-      {/* ttodo czy ssrPage null? */}
       <Page id="formularz-adopcji-wirtualnej" ssrPage={null} />
       <VAdoptionForm animal={animal} />
     </>
