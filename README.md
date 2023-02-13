@@ -31,3 +31,24 @@ npm run dev
 - NodeJS: 16.14.2
 - NPM: 8.5.0
 - PostgresSQL 14.5
+
+## `node-canvas` installation problems
+
+```bash
+npm install -g node-gyp
+brew install jpeg pkg-config cairo pango libpng jpeg giflib librsvg
+```
+
+## DB installation problems
+
+```bash
+brew services restart postgresql # if postgres is not up
+
+createdb #database "<USERNAME>" does not exist
+
+create database schronisko
+
+# change default password
+sudo -u <USERNAME>  psql schronisko
+\passwd <USERNAME>
+```
