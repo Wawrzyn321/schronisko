@@ -36,7 +36,7 @@ export function AnimalBreadcrumbs({ animal }: { animal: Animal }) {
     <Breadcrumbs
       items={[
         'Zwierzęta',
-        <Link key="last" href={href}>
+        <Link key="last" href={href} legacyBehavior>
           {name}
         </Link>,
       ]}

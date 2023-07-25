@@ -27,7 +27,11 @@ function VAdoptionDetails({ animal }: { animal: Animal }) {
           <Link key="last" href="/v-adoptions/to-adopt">
             Szukają opiekunów
           </Link>,
-          <Link key="last" href={`/animals/details/${animal.id}`}>
+          <Link
+            key="last"
+            href={`/animals/details/${animal.id}`}
+            legacyBehavior
+          >
             {animal.name}
           </Link>,
         ]}

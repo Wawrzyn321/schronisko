@@ -1,8 +1,5 @@
-echo 'formatting server...'
+echo 'formatting server & client...'
 sudo npm run lint:fix --prefix=main
-
-echo 'formatting client...'
-sudo npm run lint:fix --prefix=main/src/client
 
 echo 'running server tests...'
 npm run test --prefix=main

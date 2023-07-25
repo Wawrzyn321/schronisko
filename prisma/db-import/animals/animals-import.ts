@@ -15,10 +15,10 @@ import _pictures from "./pictures.json";
 import { decode } from "html-entities";
 
 const galleryPath =
-  "/Users/I515358/Desktop/schronisko_sosnowiec_pl/public_html/gallery/";
+  `/Users/${process.env.USER}/Desktop/schronisko_sosnowiec_pl/public_html/gallery/`;
 const thumbsPath = galleryPath + "thumbs/";
 const targetAnimalsPath =
-  "/Users/I515358/dev/schronisko/prisma/db-import/animals/animals/";
+  `/Users/${process.env.USER}/dev/schronisko/prisma/db-import/animals/animals/`;
 const targetAnimalImagesPath = targetAnimalsPath + "pics/";
 
 function mapCategoryId(categoryId: string) {
@@ -230,7 +230,7 @@ export async function seedAnimals(
   const animalsToExport = [];
 
   if (!fs.existsSync(targetAnimalsPath)) {
-    fs.mkdirSync(targetAnimalsPath);
+    fs.mkdirSync(targetAnimalsPath, { recursive: true });
   }
   if (!fs.existsSync(targetAnimalImagesPath)) {
     fs.mkdirSync(targetAnimalImagesPath);

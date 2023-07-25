@@ -15,7 +15,7 @@ export function AnimalHeader({ animal }: { animal: Animal }) {
       <div className={styles['animal-details--header']}>
         <h1>{animal.name}</h1>
         {canVAdopt && (
-          <Link href={vAdoptLink}>
+          <Link href={vAdoptLink} legacyBehavior>
             <span className={styles['animal-details--v-adopt-button']}>
               Adoptuj wirtualnie
             </span>

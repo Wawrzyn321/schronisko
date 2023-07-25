@@ -20,8 +20,8 @@ export function AnimalImage({ animal }: { animal: Animal }) {
   const canGoToDetails = !isReadonly(animal.category);
   if (canGoToDetails) {
     return (
-      <Link href={buildAnimalUrl(animal.id)}>
-        <a style={{ cursor: 'pointer' }}>{image}</a>
+      <Link href={buildAnimalUrl(animal.id)} style={{ cursor: 'pointer' }}>
+        {image}
       </Link>
     );
   } else {

@@ -28,9 +28,18 @@ npm run dev
 
 ## Versions
 
-- NodeJS: 16.14.2
-- NPM: 8.5.0
+- NodeJS: 16.19.0
+- NPM: 8.19.3
 - PostgresSQL 14.5
+
+
+## Services on VPS:
+
+Located at `/etc/systemd/system`:
+
+- schronisko-backend.service
+- schronisko-client-main.service
+
 
 ## `node-canvas` installation problems
 

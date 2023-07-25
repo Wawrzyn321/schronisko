@@ -1,10 +1,9 @@
 import { PrismaClient } from "@prisma/client";
 
-import animals from "./animals-for-vps.json";
-import animalPictures from "./animal-images-for-vps.json";
+import { readFileSync } from "fs";
 
 async function seedAnimalImages(prisma: PrismaClient) {
-  console.log("adding animals from animalPictures-for-vps.json");
+  const animalPictures = JSON.parse(readFileSync('./animal-images-for-vps.json', 'utf8'));
   for (const animalPicture of animalPictures as Array<any>) {
     await prisma.animalImage.upsert({
       where: { id: animalPicture.id! },
@@ -18,6 +17,7 @@ async function seedAnimalImages(prisma: PrismaClient) {
 
 export async function seedAnimals(prisma: PrismaClient) {
   console.log("adding animals from animals-for-vps.json");
+  const animals = JSON.parse(readFileSync('./animals-for-vps.json', 'utf8'));
   for (const animal of animals as Array<any>) {
     await prisma.animal.upsert({
       where: { id: animal.id! },

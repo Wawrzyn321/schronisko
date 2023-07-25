@@ -28,7 +28,9 @@ function SimpleLink({
 }) {
   return (
     <li>
-      <Link href={to}>{children}</Link>
+      <Link href={to} legacyBehavior>
+        {children}
+      </Link>
       <LinkBorder to={to} />
     </li>
   );
@@ -49,9 +51,7 @@ function ParentLink({
       <ul>
         {links.map((link: SubListItem) => (
           <li key={link.path}>
-            <Link href={to + link.path}>
-              <a>{link.name}</a>
-            </Link>
+            <Link href={to + link.path}>{link.name}</Link>
           </li>
         ))}
       </ul>

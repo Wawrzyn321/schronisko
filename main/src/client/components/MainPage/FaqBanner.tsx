@@ -6,9 +6,7 @@ export function FaqBanner() {
   return (
     <div style={{ marginBottom: '64px' }}>
       <Link href="/pages/faq">
-        <a>
-          <Image src={faqBanner} alt="najczęściej zadawane pytania" />
-        </a>
+        <Image src={faqBanner} alt="najczęściej zadawane pytania" />
       </Link>
     </div>
   );

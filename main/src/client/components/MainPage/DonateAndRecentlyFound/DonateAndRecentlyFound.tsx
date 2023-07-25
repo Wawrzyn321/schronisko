@@ -14,9 +14,7 @@ function ImageLink({
 }) {
   return (
     <div style={{ cursor: 'pointer' }}>
-      <Link href={href}>
-        <a>{children}</a>
-      </Link>
+      <Link href={href}>{children}</Link>
     </div>
   );
 }
