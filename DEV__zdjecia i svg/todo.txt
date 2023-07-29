@@ -7,3 +7,5 @@ po deployu:
 plik animals-for-vps jest już na vpsie i trzeba go kopiować - nie jest kopiowany rsynckiem, bo jest w gitingore
 
 this.server = createServer({ dev: true, dir: './src/client' }); -> dlaczego dev zawsze true
+
+testy nie wykrzaczają deploya - tryb CI?
