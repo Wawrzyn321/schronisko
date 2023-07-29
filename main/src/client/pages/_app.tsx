@@ -4,14 +4,9 @@ import { Header } from '../components/Header/Header';
 import { Footer } from '../components/Footer/Footer';
 import './../global-styles/font.css';
 import './../global-styles/main.css';
+import { AppProps } from 'next/app';
 
-export default function App({
-  Component,
-  pageProps,
-}: {
-  Component: React.FunctionComponent;
-  pageProps: any;
-}) {
+export default function App({ Component, pageProps }: AppProps) {
   return (
     <main>
       <Head>

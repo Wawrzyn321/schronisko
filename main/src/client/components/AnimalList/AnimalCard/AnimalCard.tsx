@@ -7,7 +7,7 @@ import { AnimalImage } from './AnimalImage';
 type AnimalCardProps = {
   animal: Animal;
   showOverlay: boolean;
-  openModal: (animal: Animal) => any;
+  openModal: (animal: Animal) => void;
 };
 
 export function AnimalCard({

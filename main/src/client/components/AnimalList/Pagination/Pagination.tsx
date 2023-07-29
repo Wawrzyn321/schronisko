@@ -46,7 +46,7 @@ export function Pagination({
 }: {
   currentPage: number;
   pagesCount: number;
-  setCurrentPage: (page: number) => any;
+  setCurrentPage: (page: number) => void;
 }) {
   const partitions = makePartitions(currentPage, pagesCount);
 

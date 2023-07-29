@@ -2,7 +2,7 @@ import { ChangeEvent, useEffect, useRef, useState } from 'react';
 
 type SimpleInputProps = {
   value: string;
-  setValue: (value: string) => any;
+  setValue: (value: string) => void;
   triedSubmitCounter?: number;
 };
 
@@ -12,7 +12,7 @@ type ValidatedInputProps = {
   label: string;
   triedSubmitCounter: number;
   validationMessage: string;
-  [x: string]: any;
+  [x: string]: unknown;
 };
 
 function ValidatedInput({
