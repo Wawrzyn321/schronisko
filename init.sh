@@ -1,10 +1,14 @@
 set -e
 
-echo 'copying filtered animals from ~/gotowe-animals to /var/svc/schronisko/main/src/client/public/img'
-cp -r ~/gotowe-animals /var/svc/schronisko/main/src/client/public/img/animals
+echo 'making a symlink from ~/www-data-stuff/gotowe-animals/ to static animals'
+ln -s ~/www-data-stuff/gotowe-animals/ /var/svc/schronisko/main/src/client/public/img/animals
 
-echo 'replacing I515358 with postgres in prisma/.env'
-sed -i s/I515358/postgres/ prisma/.env
+echo 'replacing pw with postgres in prisma/.env'
+sed -i s/pw/postgres/ prisma/.env
+
+echo 'copying import data from ~/'
+cp ~/animals-for-vps.json prisma/
+cp ~/animal-images-for-vps.json prisma/
 
 echo 'npm i '
 npm i

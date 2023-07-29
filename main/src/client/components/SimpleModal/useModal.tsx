@@ -4,6 +4,13 @@ import { useState } from 'react';
 import styles from './SimpleModal.module.scss';
 import ilu_kot from 'public/site/ilu kot.png';
 
+type StaticImageData = {
+  src: string;
+  height: number;
+  width: number;
+  blurDataURL?: string;
+};
+
 type useSimpleModalProps = {
   text: JSX.Element;
   image: StaticImageData;

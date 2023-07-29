@@ -54,8 +54,8 @@ export async function seedUsers(prisma: PrismaClient) {
                 }
             },
         });
-        console.log('user', user.login)
     }
+    console.log('users:', users.length, users.map(u => u.name))
 }
 
 function createPermissions(login: string): { permission: Permission }[] {

@@ -5,7 +5,7 @@ export function PageLink({
   children,
   href,
 }: {
-  children: React.ReactChildren | string;
+  children: string;
   href: string;
 }) {
   return (

@@ -99,6 +99,6 @@ export async function seedPages(prisma: PrismaClient) {
       update: page,
       create: page,
     });
-    console.log('page' + page.id)
   }
+  console.log('pages', pages.length, pages.map(m => m.title))
 }

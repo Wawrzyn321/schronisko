@@ -33,6 +33,6 @@ export async function seedNews(prisma: PrismaClient) {
             update: news,
             create: news,
         });
-        console.log('news', n.title)
     }
+    console.log('news', news.length, news.map(n => n.title));
 }

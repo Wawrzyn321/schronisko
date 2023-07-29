@@ -15,7 +15,7 @@ import _pictures from "./pictures.json";
 import { decode } from "html-entities";
 
 const galleryPath =
-  `/Users/${process.env.USER}/Desktop/schronisko_sosnowiec_pl/public_html/gallery/`;
+  `/Users/${process.env.USER}/schronisko/gallery/`;
 const thumbsPath = galleryPath + "thumbs/";
 const targetAnimalsPath =
   `/Users/${process.env.USER}/dev/schronisko/prisma/db-import/animals/animals/`;
@@ -238,6 +238,7 @@ export async function seedAnimals(
 
   //@ts-ignore
   let animals = _animals.find((e: any) => e.type === "table")!.data!;
+  console.log('liczba zwierząt: ', animals.length)
   if (count && animals.length !== count) {
     console.log("-------");
     console.log("");

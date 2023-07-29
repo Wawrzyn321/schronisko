@@ -33,7 +33,7 @@ export function paginate<T>(
 }
 
 function Arrow() {
-  const size = '10px';
+  const size = '10';
   return (
     <Image src={arrow} alt="poprzednia strona" width={size} height={size} />
   );

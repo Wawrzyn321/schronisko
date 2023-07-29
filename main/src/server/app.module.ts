@@ -14,14 +14,14 @@ import { ViewModule } from './domain/view/view.module';
 import { CommunicationModule } from './domain/communication/communication.module';
 import { ConfigModule } from '@nestjs/config';
 
-const STATIC_FILES_PATH = '/img/';
-export const LOCAL_STATIC_FILES_PATH = 'src/client/public' + STATIC_FILES_PATH;
+const STATIC_IMAGES_PATH = '/img/';
+export const LOCAL_STATIC_FILES_PATH = 'src/client/public' + STATIC_IMAGES_PATH;
 
 const DEV = process.env.NODE_ENV !== 'production';
 
 export const WEB_STATIC_FILES_PATH = DEV
-  ? 'http://localhost:60045' + STATIC_FILES_PATH
-  : 'https://schronisko-backend.oto-jest-wawrzyn.pl' + STATIC_FILES_PATH;
+  ? 'http://localhost:60045' + STATIC_IMAGES_PATH
+  : 'https://schronisko-backend.oto-jest-wawrzyn.pl' + STATIC_IMAGES_PATH;
 
 const domainModules = [
   AuthModule,
