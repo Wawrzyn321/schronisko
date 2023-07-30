@@ -10,4 +10,4 @@ this.server = createServer({ dev: true, dir: './src/client' }); -> dlaczego dev 
 
 testy nie wykrzaczają deploya - tryb CI?
 
-"o nas" wciąż nieuzupełnione
+"o nas" wciąż nieuzupełnione i inne też

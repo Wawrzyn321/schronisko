@@ -15,7 +15,7 @@ import { CommunicationModule } from './domain/communication/communication.module
 import { ConfigModule } from '@nestjs/config';
 
 const STATIC_IMAGES_PATH = '/img/';
-export const LOCAL_STATIC_FILES_PATH = 'src/client/public' + STATIC_IMAGES_PATH;
+export const LOCAL_STATIC_FILES_PATH = 'public' + STATIC_IMAGES_PATH;
 
 const DEV = process.env.NODE_ENV !== 'production';
 
