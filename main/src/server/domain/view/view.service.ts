@@ -1,4 +1,5 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
+import { DEV } from '../../app.module';
 import * as createServer from 'next';
 import { NextServer } from 'next/dist/server/next';
 
@@ -8,7 +9,7 @@ export class ViewService implements OnModuleInit {
 
   async onModuleInit(): Promise<void> {
     //@ts-ignore
-    this.server = createServer({ dev: true, dir: './src/client' });
+    this.server = createServer({ dev: DEV, dir: './src/client' });
     await this.server.prepare();
   }
 

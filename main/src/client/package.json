@@ -1,0 +1,12 @@
+{
+  "name": "schronisko-client",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint --no-cache",
+    "lint:fix": "next lint --fix --no-cache"
+  }
+}

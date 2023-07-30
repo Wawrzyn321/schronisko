@@ -9,7 +9,6 @@ export const SSR_BACKEND_URL = 'http://localhost:60045';
 
 export const SITE_IMAGES_URL = BACKEND_URL + '/site';
 export const OVERLAYS_URL = SITE_IMAGES_URL + '/overlays';
-export const MAIN_PAGE_IMAGES_URL = SITE_IMAGES_URL + '/main';
 export const IMAGES_URL = BACKEND_URL + '/img';
 export const ANIMAL_IMAGES_URL = IMAGES_URL + '/animals';
 export const ANIMAL_IMAGES_IMAGES_URL = ANIMAL_IMAGES_URL + '/pics';

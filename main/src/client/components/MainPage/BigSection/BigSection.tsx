@@ -1,10 +1,12 @@
-import { MAIN_PAGE_IMAGES_URL } from 'api/config';
 import styles from './BigSection.module.scss';
 import { NewsListElement } from 'types';
 import { Page as PageModel } from '.prisma/client';
 import { Article } from 'components/Article/Article';
 import { NewsCarousel } from './NewsCarousel/NewsCarousel';
 import { PageLink } from './PageLink/PageLink';
+import Image from 'next/image';
+import yellow from 'public/site/main/yellow.svg';
+import green from 'public/site/main/green.svg';
 
 type BigSectionProps = { recentNews: NewsListElement[]; mainPage: PageModel };
 
@@ -12,7 +14,7 @@ export function BigSection({ recentNews, mainPage }: BigSectionProps) {
   return (
     <div className={styles['layout-wrapper']}>
       <div className={styles['img-wrapper']} id={styles['yellow']}>
-        <img src={MAIN_PAGE_IMAGES_URL + '/yellow.svg'} alt="" />
+        <Image src={yellow} alt="" priority />
       </div>
       <div className={styles['flex-end']}>
         {recentNews && (
@@ -22,7 +24,7 @@ export function BigSection({ recentNews, mainPage }: BigSectionProps) {
         )}
       </div>
       <div className={styles['img-wrapper']} id={styles['green']}>
-        <img src={MAIN_PAGE_IMAGES_URL + '/green.svg'} alt="" />
+        <Image src={green} alt="" />
         {mainPage && (
           <div className={styles['article']}>
             <h1>Adopcje</h1>

@@ -100,6 +100,7 @@ export async function fetchAnimalImages(
 
 export async function fetchPage(id: string): Promise<FetchResult<PageModel>> {
   const url = getBackendUrl() + '/api/c/pages/' + id;
+  console.log('fetch page', url);
   return genericFetch(url);
 }
 

@@ -23,10 +23,18 @@ export function DonateAndRecentlyFound() {
   return (
     <div className={styles['donate-and-recently-found']}>
       <ImageLink href="/pages/dotacje">
-        <Image src={donate} alt="przekaż darowiznę" style={{ width: '100%', height: 'auto' }} />
+        <Image
+          src={donate}
+          alt="przekaż darowiznę"
+          style={{ width: '100%', height: 'auto' }}
+        />
       </ImageLink>
       <ImageLink href="/animals/recently-found">
-        <Image src={recentlyFound} alt="niedawno znalezione" style={{ width: '100%', height: 'auto' }} />
+        <Image
+          src={recentlyFound}
+          alt="niedawno znalezione"
+          style={{ width: '100%', height: 'auto' }}
+        />
       </ImageLink>
     </div>
   );

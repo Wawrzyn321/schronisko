@@ -1,12 +1,10 @@
 import Link from 'next/link';
 import styles from './AfterAdoptionAnimals.module.scss';
 import { AfterAdoptionAnimal } from 'types';
-import {
-  MAIN_PAGE_IMAGES_URL,
-  buildAnimalImageUrl,
-  buildAnimalUrl,
-} from 'api/config';
+import { buildAnimalImageUrl, buildAnimalUrl } from 'api/config';
 import { Animal } from '.prisma/client';
+import not_found_placeholder from 'public/site/main/404_placeholder.png';
+import Image from 'next/image';
 
 function AnimalImage({ animal }: { animal: AfterAdoptionAnimal }) {
   return (
@@ -35,10 +33,10 @@ export function AfterAdoptionAnimals({
         <AnimalImage key={animal.id} animal={animal} />
       ))}
       {placeholders.map((_: null, id) => (
-        <img
+        <Image
+          src={not_found_placeholder}
+          alt="nie znaleziono obrazka"
           key={id}
-          src={MAIN_PAGE_IMAGES_URL + '/404_placeholder.png'}
-          alt="404?"
         />
       ))}
     </div>

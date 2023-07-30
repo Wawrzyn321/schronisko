@@ -18,14 +18,11 @@ npm i --prefix=prisma
 
 echo 'prisma push'
 npm run push --prefix=prisma
-echo 'prisma seed'
+# echo 'prisma seed'
 # npm run seed:vps --prefix=prisma
 
 echo 'npm i main'
 npm i --prefix=main
-
-echo 'npm i client'
-npm i --prefix=main/src/client
 
 echo 'restart svc'
 sudo systemctl restart schronisko-backend.service
