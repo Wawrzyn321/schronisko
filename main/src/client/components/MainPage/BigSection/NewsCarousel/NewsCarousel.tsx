@@ -13,7 +13,7 @@ function CarouselControl({
 }: {
   index: number;
   total: number;
-  setIndex: (i: number) => any;
+  setIndex: (i: number) => void;
 }) {
   const inc = () => setIndex((index + 1) % total);
 

@@ -4,7 +4,7 @@ import kontakt from 'public/site/animal-details/kontakt.svg';
 import styles from './AnimalMetadata.module.scss';
 import { Animal } from '.prisma/client';
 
-const MiniIcon = ({ name, icon }: { icon: any; name: string }) => (
+const MiniIcon = ({ name, icon }: { icon: string; name: string }) => (
   <Image src={icon} alt={name} width="30" height="30" />
 );
 

@@ -17,3 +17,7 @@ RSYNC_RSH='ssh -p 60022' rsync \
     --exclude "prisma/db-import/animals/animals" \
     --progress \
     -r ./ ubuntu@217.182.74.200:svc/schronisko
+
+
+RSYNC_RSH='ssh -p 60022' rsync \
+    -r ./main/src/client/.next ubuntu@217.182.74.200:svc/schronisko

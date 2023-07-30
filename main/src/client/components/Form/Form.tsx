@@ -5,13 +5,13 @@ export function Form({
   handleSubmit,
   children,
 }: {
-  handleSubmit: () => any;
+  handleSubmit: () => void;
   children: (triedSubmitCounter: number) => React.ReactNode;
 }) {
   const formRef = useRef(null);
   const [triedSubmit, setTriedSubmit] = useState(0);
 
-  const onSubmit = (e: { preventDefault: () => any }) => {
+  const onSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     if (formRef.current.checkValidity()) {
       handleSubmit();

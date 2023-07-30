@@ -56,8 +56,8 @@ async function throwingFetch(
       return await response.text();
     }
   }
-  const error = await response.json();
-  throw new FetchError(error.message, error.statusCode);
+  const error = await response.text();
+  throw new FetchError(error, response.status);
 }
 
 async function throwingPOST(url: string, body: any) {

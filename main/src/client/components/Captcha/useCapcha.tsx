@@ -13,7 +13,7 @@ export type ReceivedCaptcha = {
 };
 
 export function useCaptcha(): {
-  refetchCaptcha: () => Promise<any>;
+  refetchCaptcha: () => Promise<void>;
   captchaElement: JSX.Element;
   captchaInput: (e: number) => JSX.Element;
   captchaValue: FormCaptcha;

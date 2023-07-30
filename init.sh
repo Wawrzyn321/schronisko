@@ -1,7 +1,7 @@
 set -e
 
-echo 'making a symlink from ~/www-data-stuff/gotowe-animals/ to static animals'
-ln -s ~/www-data-stuff/gotowe-animals/ /var/svc/schronisko/main/src/client/public/img/animals
+echo 'force making a symlink from ~/www-data-stuff/gotowe-animals/ to static animals'
+ln -sf ~/www-data-stuff/gotowe-animals/ /var/svc/schronisko/main/src/client/public/img
 
 echo 'replacing pw with postgres in prisma/.env'
 sed -i s/pw/postgres/ prisma/.env
@@ -16,9 +16,10 @@ npm i
 echo 'npm i prisma'
 npm i --prefix=prisma
 
-echo 'prisma push, seed'
+echo 'prisma push'
 npm run push --prefix=prisma
-npm run seed:vps --prefix=prisma
+echo 'prisma seed'
+# npm run seed:vps --prefix=prisma
 
 echo 'npm i main'
 npm i --prefix=main

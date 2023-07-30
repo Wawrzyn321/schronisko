@@ -1,7 +1,14 @@
 import styles from './Article.module.scss';
 
-function DateDisplay({ date }: { date: any }) {
-  const d = new Date(Date.parse(date));
+function DateDisplay({
+  dateOrStringDate,
+}: {
+  dateOrStringDate: Date | string;
+}) {
+  const dateActually =
+    typeof dateOrStringDate === 'string'
+      ? new Date(Date.parse(dateOrStringDate))
+      : dateOrStringDate;
 
   const dateFormatOptions: Intl.DateTimeFormatOptions = {
     year: 'numeric',
@@ -9,7 +16,7 @@ function DateDisplay({ date }: { date: any }) {
     day: 'numeric',
   };
 
-  return <em>{d.toLocaleDateString('pl-PL', dateFormatOptions)}</em>;
+  return <em>{dateActually.toLocaleDateString('pl-PL', dateFormatOptions)}</em>;
 }
 
 export type ArticleProps = {
@@ -29,7 +36,7 @@ export function Article({
   return (
     <div className={styles['article']}>
       {showTitle && <h1 className={styles['title']}>{title}</h1>}
-      {date && <DateDisplay date={date} />}
+      {date && <DateDisplay dateOrStringDate={date} />}
       <div dangerouslySetInnerHTML={{ __html: content }}></div>
     </div>
   );
