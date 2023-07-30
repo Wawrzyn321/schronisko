@@ -1,25 +1,26 @@
 set -e
 
-echo 'copying filtered animals from ~/gotowe-animals to /var/svc/schronisko/main/src/client/public/img'
-cp -r ~/gotowe-animals /var/svc/schronisko/main/src/client/public/img/animals
+echo 'force making a symlink from ~/www-data-stuff/gotowe-animals/ to static animals'
+ln -sf ~/www-data-stuff/gotowe-animals/ /var/svc/schronisko/main/src/client/public/img/animals
 
-echo 'replacing I515358 with postgres in prisma/.env'
-sed -i s/I515358/postgres/ prisma/.env
+echo 'replacing pw with postgres in prisma/.env'
+sed -i s/pw/postgres/ prisma/.env
 
-echo 'npm i '
+echo 'npm ci '
 npm i
 
-echo 'npm i prisma'
+echo 'npm ci prisma'
 npm i --prefix=prisma
 
-echo 'prisma push, seed'
+echo 'prisma push'
 npm run push --prefix=prisma
-npm run seed:vps --prefix=prisma
+# echo 'prisma seed'
+# npm run seed:vps --prefix=prisma
 
-echo 'npm i main'
+echo 'npm ci main'
 npm i --prefix=main
 
-echo 'npm i client'
+echo 'npm ci client'
 npm i --prefix=main/src/client
 
 echo 'restart svc'

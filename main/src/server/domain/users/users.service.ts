@@ -127,8 +127,8 @@ export class UsersService {
       body.permissions,
     )
       ? ` (Zmienione uprawnienia: ${body.permissions.map(
-          (p) => permissionNames[p],
-        )})`
+        (p) => permissionNames[p],
+      )})`
       : '';
 
     const diff = formattedDiff(
@@ -190,6 +190,7 @@ export class UsersService {
   async updatePassword(user: UserViewModel, password: string) {
     const passwordHash = await this.bcryptService.hashData(password);
     return await this.prisma.user
+      // @ts-ignore TODO
       .update({ where: { id: user.id }, data: { ...user, passwordHash } })
       .then(this.toViewModel);
   }
