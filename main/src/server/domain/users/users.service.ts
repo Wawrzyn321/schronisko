@@ -127,8 +127,8 @@ export class UsersService {
       body.permissions,
     )
       ? ` (Zmienione uprawnienia: ${body.permissions.map(
-        (p) => permissionNames[p],
-      )})`
+          (p) => permissionNames[p],
+        )})`
       : '';
 
     const diff = formattedDiff(

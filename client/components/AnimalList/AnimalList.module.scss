@@ -1,0 +1,12 @@
+.animals-list {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 0;
+}
+
+.not-found-message {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 48px 0;
+}

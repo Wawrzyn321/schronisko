@@ -1,0 +1,25 @@
+.v-adoption-modal-content {
+  margin: 24px 64px;
+
+  h1 {
+    margin: 0;
+    margin-bottom: 24px;
+  }
+}
+
+.para {
+  font-weight: 100;
+}
+
+.copy-button-wrapper {
+  display: flex;
+  width: 100%;
+}
+
+.copy-button {
+  text-transform: uppercase;
+  align-self: flex-end;
+  margin-top: 24px;
+  font-size: 120%;
+  letter-spacing: -1px;
+}

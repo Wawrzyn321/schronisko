@@ -1,0 +1,15 @@
+.footer-flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+.spacer {
+  border-top: 1px solid black;
+  margin-top: 6px;
+}
+
+.copyright {
+  margin: 6px 0;
+  color: var(--color-secondary);
+  font-weight: lighter;
+}

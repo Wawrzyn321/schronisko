@@ -1,5 +1,0 @@
-po deployu:
-    * zmień link na backoffice z https://www.schronisko.sosnowiec.pl/ na ten nowy
-    * maile (sendgrid key)
-
-ładnie sformatuj wiadomości w mailach, szczególnie tą do v-adopcji

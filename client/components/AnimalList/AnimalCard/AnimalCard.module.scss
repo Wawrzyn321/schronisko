@@ -1,0 +1,84 @@
+.animal-card {
+  --border-radius: 50px;
+
+  margin-bottom: 50px;
+  background-color: #f3f3f3;
+  border-radius: var(--border-radius);
+  width: 340px;
+
+  img {
+    object-fit: cover;
+    border-top-left-radius: var(--border-radius);
+    border-top-right-radius: var(--border-radius);
+  }
+
+  &:nth-child(3n + 1),
+  &:nth-child(3n + 2) {
+    margin-right: 90px;
+  }
+
+  * {
+    color: var(--text-secondary-color);
+  }
+}
+
+.img-wrapper {
+  position: relative;
+}
+
+.mag-glass {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+}
+
+.mag-glass:hover {
+  transform: scale(1.2);
+}
+
+.animal-ids {
+  display: flex;
+  justify-content: space-between;
+  margin: 8px 20px;
+}
+
+.animal-name {
+  font-size: 130%;
+}
+
+.animal-data {
+  display: grid;
+  grid-template-columns: 3fr 4fr;
+  width: 100%;
+  max-width: 340px;
+
+  dt {
+    font-weight: 100;
+    padding-left: 32px;
+  }
+
+  dd {
+    margin: 0;
+  }
+
+  dt,
+  dd {
+    padding-top: 4px;
+    padding-bottom: 4px;
+    font-size: 85%;
+    word-break: break-word;
+  }
+
+  dt:not(:last-of-type),
+  dd:not(:last-of-type) {
+    border-bottom: 1px solid grey;
+  }
+}
+
+.overlay {
+  object-fit: unset !important;
+  cursor: unset !important;
+  position: absolute;
+  height: 340px;
+  width: 79px;
+}

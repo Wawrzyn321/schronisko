@@ -1,0 +1,24 @@
+.animal-details--header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.animal-details--description {
+  max-width: var(--page-content-width);
+  font-weight: 100;
+  text-align: justify;
+}
+
+.animal-details--v-adopt-button {
+  background-color: var(--text-color);
+  text-transform: uppercase;
+  padding: 13px 27px;
+  border-radius: 16px;
+  margin-left: auto;
+  cursor: pointer;
+  float: right;
+  height: fit-content;
+  color: white;
+  font-size: 120%;
+  font-weight: 300;
+}

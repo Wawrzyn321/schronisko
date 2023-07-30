@@ -1,0 +1,9 @@
+.media-icons {
+  align-self: flex-end;
+  white-space: nowrap;
+
+  :global(a > *) {
+    width: 50px;
+    margin-left: 16px !important;
+  }
+}

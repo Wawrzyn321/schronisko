@@ -1,9 +1,9 @@
 import { PrismaClient } from "@prisma/client";
-import { seedUsers } from "./db-import/users/users";
-import { seedNews } from "./db-import/news/news-import";
-import { seedPages } from "./db-import/pages";
-import { seedAnimals } from "./db-import/animals/animals-import";
-import { seedAnimals as seedAnimalsVps } from "./db-import/animals/animals-import--vps";
+import { seedUsers } from "./db-import/users/seedUsers";
+import { seedNews } from "./db-import/news/seedNews";
+import { seedPages } from "./db-import/seedPages";
+import { seedAnimals } from "./db-import/animals/seedAnimals";
+import { seedAnimals as seedAnimalsVps } from "./db-import/animals/seedAnimalsVPS";
 
 const prisma = new PrismaClient();
 
@@ -13,7 +13,7 @@ async function main() {
   await seedUsers(prisma);
   switch (process.env.NODE_ENV) {
     case "dev":
-      await seedAnimals(prisma, null);
+      await seedAnimals(prisma);
       break;
     case "vps":
       await seedAnimalsVps(prisma);

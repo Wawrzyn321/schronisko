@@ -1,0 +1,22 @@
+.header-title {
+  display: flex;
+  
+  & > :global(*), :global(img) {
+    width: 130px;
+  }
+}
+
+.title {
+  align-self: center;
+  text-transform: uppercase;
+  margin-left: 8px;
+
+  p {
+    white-space: nowrap;
+    font-size: 110%;
+  }
+}
+
+.title * {
+  margin: 0;
+}

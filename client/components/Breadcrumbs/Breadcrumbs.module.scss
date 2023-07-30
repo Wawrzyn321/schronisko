@@ -1,0 +1,10 @@
+.breadcrumbs {
+  display: flex;
+  font-style: italic;
+  padding-left: 0;
+
+  li:not(:last-child)::after {
+    padding: 0 4px;
+    content: '/';
+  }
+}

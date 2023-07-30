@@ -1,0 +1,15 @@
+.page-link {
+  color: white;
+  font-size: 170%;
+  font-weight: 300;
+}
+
+.page-link-blob {
+  background-color: var(--text-color);
+  text-transform: uppercase;
+  padding: 12px 54px;
+  border-radius: 32px;
+  width: fit-content;
+  margin-right: 2vw;
+  cursor: pointer;
+}

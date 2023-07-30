@@ -118,5 +118,3 @@ coverage-ts/
 
 # prisma/db-import/animals/*
 e2e/storageState.json
-prisma/db-import/animals/animal-images-for-vps.json
-prisma/db-import/animals/animals-for-vps.json

@@ -1,0 +1,104 @@
+:root {
+  --text-color: #00491e;
+  --text-secondary-color: #034064;
+  --color-secondary: #729d88;
+  --page-content-width: 54em;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Roboto';
+  height: 100%;
+}
+
+body {
+  margin: 0 auto;
+  width: 1200px;
+}
+
+* {
+  box-sizing: border-box;
+  color: var(--text-color);
+}
+
+a {
+  text-decoration: none;
+  color: var(--text-color);
+}
+
+ul {
+  list-style-type: none;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+main > footer {
+  margin-top: auto;
+}
+
+#__next {
+  display: contents;
+}
+
+.form-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 32px;
+}
+
+.form-grid-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 32px;
+}
+
+.form--button {
+  background-color: var(--text-color);
+  color: white;
+
+  text-transform: uppercase;
+  font-size: 150%;
+
+  padding: 12px 54px;
+  border-radius: 32px;
+  margin-left: auto;
+  margin-top: 22px;
+
+  cursor: pointer;
+
+  height: 60px;
+  width: 100%;
+}
+
+.form--button:disabled {
+  cursor: not-allowed;
+  background-color: #7daf91;
+  float: right;
+}
+
+.validation-message {
+  color: red;
+  float: right;
+  margin-top: 4px;
+  margin-bottom: 0px;
+  font-weight: lighter;
+}
+
+.ReactModal__Content {
+  border-radius: 100px !important;
+  border-width: 2px !important;
+  border-color: var(--text-color) !important;
+}
+
+.button-link {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-weight: bolder;
+}

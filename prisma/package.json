@@ -6,8 +6,7 @@
   "scripts": {
     "seed": "NODE_ENV=dev dotenv -e .env -- ts-node seed.ts",
     "seed:vps": "NODE_ENV=vps dotenv -e .env -- ts-node seed.ts",
-    "mv-img": "mv db-import/animals/animals ../main/src/client/public/img/",
-    "ts-node": "ts-node --compiler-options '{\"module\":\"CommonJS\"}'",
+    "ts-node": "ts-node",
     "push": "../node_modules/.bin/prisma generate && ../node_modules/.bin/prisma db push",
     "test:setup": "dotenv -e .env.test -- npx prisma db push",
     "test:seed": "dotenv -e .env.test -- ts-node seed-test.ts"
@@ -15,11 +14,13 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "@types/bcryptjs": "^2.4.2",
-    "bcrypt": "^5.0.1",
-    "bcryptjs": "^2.4.3",
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.1",
+    "fs-extra": "^11.1.1",
     "html-entities": "^2.3.2",
     "ts-node": "^9.1.1"
+  },
+  "dependencies": {
+    "zod": "^3.21.4"
   }
 }
