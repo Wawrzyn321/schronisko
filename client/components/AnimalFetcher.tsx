@@ -25,7 +25,7 @@ export function AnimalFetcher({
     if (!ssrAnimal) {
       loadAnimal();
     }
-  }, []);
+  }, [id, ssrAnimal]);
 
   return (
     <ErrorWrapper

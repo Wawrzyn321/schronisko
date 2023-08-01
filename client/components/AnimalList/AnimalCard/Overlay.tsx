@@ -1,16 +1,21 @@
 import styles from './AnimalCard.module.scss';
 import { AnimalCategory } from '.prisma/client';
-import { OVERLAYS_URL } from 'api/config';
+
+function OverlayImage({ name }: { name: 'najdluzej-czekam' | 'pilnie-szukam-domu' }) {
+  const imageName = name == 'najdluzej-czekam' ? 'najdluzej czekam.svg' : 'pilnie szukam domu.svg';
+  const src = '/site/overlays/' + imageName;
+
+  return (
+    <img src={src} alt="" className={styles['overlay']} />
+  );
+}
 
 export function Overlay({ category }: { category: AnimalCategory }) {
-  const Img = ({ name }: { name: string }) => (
-    <img src={OVERLAYS_URL + '/' + name} alt="" className={styles['overlay']} />
-  );
 
   if (category === AnimalCategory.Weterani) {
-    return <Img name="najdluzej czekam.svg" />;
+    return <OverlayImage name="najdluzej-czekam" />;
   } else if (category === AnimalCategory.PilniePotrzebuja) {
-    return <Img name="pilnie szukam domu.svg" />;
+    return <OverlayImage name="pilnie-szukam-domu" />;
   } else {
     return null;
   }

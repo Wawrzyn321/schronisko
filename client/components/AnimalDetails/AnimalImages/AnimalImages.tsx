@@ -16,17 +16,17 @@ export function AnimalImages({ id }: { id: string }) {
       setImages(data);
     };
 
-    if (!images?.length) {
+    if (images.length === 0) {
       loadImages();
     }
-  }, []);
+  }, [id, images.length]);
 
   if (images) {
     return (
       <ul className={styles['animal-images']}>
         {images.map((i) => (
           <li key={i.id}>
-            <img src={ANIMAL_IMAGES_IMAGES_URL + '/' + i.imageName} />
+            <img src={ANIMAL_IMAGES_IMAGES_URL + '/' + i.imageName} alt={i.imageName} />
           </li>
         ))}
       </ul>

@@ -54,7 +54,7 @@ export function AnimalList({
     if (firstLoadHappened && currentPage > pagesCount) {
       setCurrentPage(0);
     }
-  }, [currentPage, animals]);
+  }, [currentPage, animals, totalCount, pagesCount]);
 
   useEffect(() => {
     const loadAnimals = async () => {
@@ -79,7 +79,7 @@ export function AnimalList({
     };
 
     loadAnimals();
-  }, [currentPage]);
+  }, [currentPage, categories, type, vCaretakerType]);
 
   useEffect(() => {
     const firstLoadHappened = !!totalCount;
@@ -90,7 +90,7 @@ export function AnimalList({
         window.location.pathname + '?page=' + (currentPage + 1),
       );
     }
-  }, [currentPage]);
+  }, [currentPage, totalCount]);
 
   if (animals) {
     return (

@@ -9,14 +9,6 @@ const PORT = 60045;
 
 const DEV = process.env.NODE_ENV !== 'production';
 
-// todo
-// if (!fs.existsSync('src/client/public/img/news/animals')) {
-//   fs.mkdirSync('src/client/public/img/news/animals', { recursive: true });
-// }
-// if (!fs.existsSync('src/client/public/img/news/animals/pics')) {
-//   fs.mkdirSync('src/client/public/img/news/animals/pics');
-// }
-
 let options = {};
 if (!DEV) {
   options = {

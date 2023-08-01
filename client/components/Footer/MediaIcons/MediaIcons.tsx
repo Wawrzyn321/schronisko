@@ -11,14 +11,14 @@ export function MediaIcons() {
         target="_blank"
         rel="noopener noreferrer"
       >
-        <Image src={fbLogo} alt="facebook link"></Image>
+        <Image src={fbLogo} alt="facebook link" />
       </a>
       <a
         href="https://www.instagram.com/schroniskososnowiec/"
         target="_blank"
         rel="noopener noreferrer"
       >
-        <Image src={instagramLogo} alt="instagram link"></Image>
+        <Image src={instagramLogo} alt="instagram link" />
       </a>
     </div>
   );

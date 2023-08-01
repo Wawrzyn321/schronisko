@@ -1,10 +1,12 @@
 set -e
 
-echo 'update permissions'
-sudo chown ubuntu:ubuntu /var/svc/schronisko/main/src/client -R
+echo 'npm ci client'
+npm i --prefix=client
 
-echo 'build client'
-sudo npm run build --prefix=main/src/client
+echo 'building client...';
+npm run build --prefix=client
 
-echo 'restart service'
+echo 'restart services'
 sudo systemctl restart schronisko-client-main.service
+
+echo 'RUN sudo journalctl -u schronisko-client-main.service --follow'

@@ -2,7 +2,6 @@
   "name": "schronisko",
   "version": "1.0.0",
   "scripts": {
-    "start": "concurrently \"npm run dev --prefix=backend\" \"npm run dev --prefix=backoffice\"",
     "ts-coverage": "npx typescript-coverage-report --ignore-files prisma/db-import/*.ts && open coverage-ts/index.html"
   },
   "keywords": [],
@@ -20,6 +19,7 @@
   "dependencies": {
     "@prisma/client": "^4.4.0-dev.43",
     "bcryptjs": "^2.4.3",
-    "dotenv-cli": "^5.0.0"
+    "dotenv-cli": "^5.0.0",
+    "uuid": "^9.0.0"
   }
 }

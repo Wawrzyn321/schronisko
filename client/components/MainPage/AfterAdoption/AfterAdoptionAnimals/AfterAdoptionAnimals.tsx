@@ -2,11 +2,12 @@ import Link from 'next/link';
 import styles from './AfterAdoptionAnimals.module.scss';
 import { AfterAdoptionAnimal } from 'types';
 import {
-  MAIN_PAGE_IMAGES_URL,
   buildAnimalImageUrl,
   buildAnimalUrl,
 } from 'api/config';
 import { Animal } from '.prisma/client';
+import Image from 'next/image';
+import placeholderImage from 'public/site/main/404_placeholder.png';
 
 function AnimalImage({ animal }: { animal: AfterAdoptionAnimal }) {
   return (
@@ -27,6 +28,7 @@ export function AfterAdoptionAnimals({
   afterAdoptionAnimals: AfterAdoptionAnimal[];
 }) {
   if (!afterAdoptionAnimals) return null;
+  
   const placeholders = new Array(3 - afterAdoptionAnimals.length).fill(null);
 
   return (
@@ -35,9 +37,9 @@ export function AfterAdoptionAnimals({
         <AnimalImage key={animal.id} animal={animal} />
       ))}
       {placeholders.map((_: null, id) => (
-        <img
+        <Image
           key={id}
-          src={MAIN_PAGE_IMAGES_URL + '/404_placeholder.png'}
+          src={placeholderImage}
           alt="404?"
         />
       ))}

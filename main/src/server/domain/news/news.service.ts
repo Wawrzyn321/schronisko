@@ -106,7 +106,12 @@ export class NewsService {
     );
 
     params.news.imageName = `${uuid()}.png`;
-    await saveImage('news/', params.news.imageName, params.imageData, 'News');
+    await saveImage({
+      subdir: 'news/',
+      name: params.news.imageName,
+      base64Data: params.imageData,
+      resizingPreset: 'News',
+    });
     const createdNews = await this.prisma.news.create({ data: params.news });
     await this.logsService.log({
       message: `dodał newsa ${createdNews.title}`,
@@ -133,7 +138,12 @@ export class NewsService {
     });
 
     if (params.imageData) {
-      await saveImage('news/', params.news.imageName, params.imageData, 'News');
+      await saveImage({
+        subdir: 'news/',
+        name: params.news.imageName,
+        base64Data: params.imageData,
+        resizingPreset: 'News',
+      });
     }
 
     await deleteImagesInContent(prevNews.content, params.news.content);

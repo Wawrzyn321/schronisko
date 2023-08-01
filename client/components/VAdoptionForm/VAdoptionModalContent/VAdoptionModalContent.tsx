@@ -43,7 +43,7 @@ export function VAdoptionModalContent({ data, error }: AdoptionModalProps) {
   const { page, accountNo } = data;
 
   if (error) {
-    return <p>'Ups... coś poszło nie tak.'</p>;
+    return <p>Ups... coś poszło nie tak.</p>;
   }
 
   return (

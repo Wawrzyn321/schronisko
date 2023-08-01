@@ -64,7 +64,12 @@ export class AnimalImagesService {
         img.handled = true;
       } else {
         const imageName = `${uuid()}.png`;
-        await saveImage(IMAGES_PATH, imageName, image.data, 'Animal Gallery');
+        await saveImage({
+          subdir: IMAGES_PATH,
+          name: imageName,
+          base64Data: image.data,
+          resizingPreset: 'Animal Gallery',
+        });
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { data, ...imageWithNoData } = image;
 

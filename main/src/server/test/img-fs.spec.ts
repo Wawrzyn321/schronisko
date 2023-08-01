@@ -32,11 +32,11 @@ describe('img-fs', () => {
 
       expect(mockUnlink).toHaveBeenNthCalledWith(
         1,
-        'src/client/public/img/lala',
+        '../images/img/lala',
       );
       expect(mockUnlink).toHaveBeenNthCalledWith(
         2,
-        'src/client/public/img/lele',
+        '../images/img/lele',
       );
     });
 
@@ -47,7 +47,7 @@ describe('img-fs', () => {
       await deleteImagesInContent(prevContent, newContent);
 
       expect(mockUnlink).toHaveBeenCalledTimes(1);
-      expect(mockUnlink).toHaveBeenLastCalledWith('src/client/public/img/lele');
+      expect(mockUnlink).toHaveBeenLastCalledWith('../images/img/lele');
     });
   });
 
@@ -70,12 +70,12 @@ describe('img-fs', () => {
       expect(mockWriteFile).toHaveBeenCalledTimes(2);
       expect(mockWriteFile).toHaveBeenNthCalledWith(
         1,
-        'src/client/public/img/subdir/subdir/name_lala',
+        '../images/img/subdir/subdir/name_lala',
         'mock file content base/lal',
       );
       expect(mockWriteFile).toHaveBeenNthCalledWith(
         2,
-        'src/client/public/img/subdir/subdir/name_lele',
+        '../images/img/subdir/subdir/name_lele',
         'mock file content base/lel',
       );
     });

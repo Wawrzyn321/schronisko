@@ -175,12 +175,12 @@ export class AnimalsService {
     let imageName = null;
     if (animal.imageData) {
       imageName = `${id}.png`;
-      await saveImage(
-        IMAGES_PATH,
-        imageName,
-        animal.imageData,
-        'Animal Miniature',
-      );
+      await saveImage({
+        subdir: IMAGES_PATH,
+        base64Data: animal.imageData,
+        name: imageName,
+        resizingPreset: 'Animal Miniature',
+      });
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -224,12 +224,12 @@ export class AnimalsService {
       if (!animal.imageName) {
         animal.imageName = `${uuid()}.png`;
       }
-      await saveImage(
-        IMAGES_PATH,
-        animal.imageName,
-        animal.imageData,
-        'Animal Miniature',
-      );
+      await saveImage({
+        subdir: IMAGES_PATH,
+        name: animal.imageName,
+        base64Data: animal.imageData,
+        resizingPreset: 'Animal Miniature',
+      });
     } else {
       // previous image exist, next doesn't
       if (!animal.imageName && prevAnimal.imageName) {

@@ -1,3 +1,6 @@
+# exit on error
+set -o errexit
+
 echo 'formatting server...'
 npm run lint:fix --prefix=main
 
@@ -5,7 +8,7 @@ echo 'formatting client...'
 npm run lint:fix --prefix=client
 
 echo 'running server tests...'
-npm run test --prefix=main
+npm run test --prefix=main -- --ci
 
 RSYNC_RSH='ssh -p 60022' rsync \
     --exclude '.git' \

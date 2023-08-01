@@ -24,7 +24,7 @@ function ActualNews({ id, ssrNews }: { id: string; ssrNews: NewsModel }) {
     if (!ssrNews) {
       loadPage();
     }
-  }, []);
+  }, [id, ssrNews]);
 
   return (
     <ErrorWrapper

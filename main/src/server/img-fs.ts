@@ -1,3 +1,4 @@
+import * as path from 'path';
 import { LOCAL_STATIC_FILES_PATH, WEB_STATIC_FILES_PATH } from './app.module';
 import { promises as fsp } from 'fs';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -26,15 +27,22 @@ const presetsMap: { [gender in ResizingPresets]: Size } = {
 };
 
 function createPath(name: string) {
-  return LOCAL_STATIC_FILES_PATH + name;
+  return path.join(LOCAL_STATIC_FILES_PATH, 'img', name);
 }
 
-export async function saveImage(
-  subdir: string,
-  name: string,
-  base64Data: string,
-  resizingPreset: ResizingPresets,
-) {
+type SaveImageArgs = {
+  subdir: string;
+  name: string;
+  base64Data: string;
+  resizingPreset: ResizingPresets;
+};
+
+export async function saveImage({
+  subdir,
+  name,
+  base64Data,
+  resizingPreset,
+}: SaveImageArgs) {
   base64Data = base64Data.replace(/^data:image\/png;base64,/, '');
   base64Data = base64Data.replace(/^data:image\/jpeg;base64,/, '');
   base64Data = base64Data.replace(/^data:image\/gif;base64,/, '');
@@ -45,7 +53,10 @@ export async function saveImage(
   };
   const resizeOptions = { ...preset, fit: 'cover', withoutEnlargement: true };
   const resized = await sharp(buf).resize(resizeOptions).toBuffer();
-  return await fsp.writeFile(createPath(subdir + name), resized);
+
+  console.log(path.join(subdir, name));
+  console.log(createPath(path.join(subdir, name)));
+  return await fsp.writeFile(createPath(path.join(subdir, name)), resized);
 }
 
 export async function deleteImage(subdir: string, name: string) {
@@ -86,7 +97,12 @@ export async function saveImagesFromContentModyfyingIt(
   subdir = '',
 ) {
   for (const { name, base64 } of images) {
-    await saveImage(subdir, getLocalPath(subdir + name), base64, null);
+    await saveImage({
+      subdir,
+      name: getLocalPath(subdir + name),
+      base64Data: base64,
+      resizingPreset: null,
+    });
     content = content.replace(name, WEB_STATIC_FILES_PATH + subdir + name);
   }
   return content;

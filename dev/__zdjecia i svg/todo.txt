@@ -3,3 +3,9 @@ po deployu:
     * maile (sendgrid key)
 
 ładnie sformatuj wiadomości w mailach, szczególnie tą do v-adopcji
+
+plik animals-for-vps jest już na vpsie i trzeba go kopiować - nie jest kopiowany rsynckiem, bo jest w gitingore
+
+testy nie wykrzaczają deploya - tryb CI?
+
+"o nas" wciąż nieuzupełnione i inne też

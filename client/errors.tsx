@@ -67,7 +67,7 @@ export function ErrorWrapper({
       return <Article {...errorGeneric} />;
     }
   } else if (!isLoaded) {
-    return <p>'Ładowanie...'</p>;
+    return <p>Ładowanie...</p>;
   } else {
     return children;
   }

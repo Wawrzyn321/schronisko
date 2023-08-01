@@ -168,7 +168,7 @@ export function About({
     if (triedSubmitCounter > 0) {
       setShowMessage(!value);
     }
-  }, [triedSubmitCounter]);
+  }, [triedSubmitCounter, value]);
 
   return (
     <label>

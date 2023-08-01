@@ -31,7 +31,7 @@ export function Page({
     if (!ssrPage && !!id) {
       loadPage();
     }
-  }, []);
+  }, [fetchFn, id, ssrPage]);
 
   return (
     <ErrorWrapper

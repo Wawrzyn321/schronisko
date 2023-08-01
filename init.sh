@@ -20,15 +20,7 @@ npm run push --prefix=prisma
 echo 'npm ci main'
 npm i --prefix=main
 
-echo 'npm ci client'
-npm i --prefix=client
-
-echo 'building client...';
-npm run build --prefix=client
-
 echo 'restart services'
 sudo systemctl restart schronisko-backend.service
-sudo systemctl restart schronisko-client-main.service
 
 echo 'RUN sudo journalctl -u schronisko-backend.service --follow'
-echo 'RUN sudo journalctl -u schronisko-client-main.service --follow'
