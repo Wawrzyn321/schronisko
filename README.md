@@ -4,9 +4,8 @@
 - `DEV__zdjecia i svg/` - temporary (for a long time) dir for dev stuff
 - `dev-scripts/` - scripts used for deploying the project
 - `e2e/` - e2e tests for backoffice and main site
-- `main/`:
-    - `src/client` - main frontend app
-    - `src/server` - backend app
+- `server/` - backend app
+- `client` - main frontend app
 - `prisma/` - db stuff, bootstraping the database and seeding
 - `copy-vsp-images.sh`, `init-client.sh`, `init.sh` - scripts used on VPS.
 
@@ -18,9 +17,17 @@ At `backoffice/`:
 npm run dev
 ```
 
-## Running main site
+## Running server site
 
-At `main/` - runs both backend and frontend.
+At `server/` - runs backend.
+
+```bash
+npm run dev
+```
+
+## Running client site
+
+At `client/` - runs client.
 
 ```bash
 npm run dev

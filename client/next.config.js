@@ -38,4 +38,8 @@ module.exports = {
   images: {
     domains: ['localhost', 'https://schronisko-backend.oto-jest-wawrzyn.pl'],
   },
+  i18n: {
+    locales: ['pl'],
+    defaultLocale: 'pl'
+  }
 };

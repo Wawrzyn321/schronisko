@@ -1,0 +1,14 @@
+[Unit]
+Description=Schronisko Backend Service
+After=network.target
+
+[Service]
+WorkingDirectory=/var/svc/schronisko/server
+#ProtectHome=true
+PrivateTmp=true
+ExecStart=/usr/local/bin/npm run start:nest
+Restart=on-failure
+User=ubuntu
+
+[Install]
+WantedBy=multi-user.target

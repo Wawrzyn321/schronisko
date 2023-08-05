@@ -6,8 +6,8 @@
   "scripts": {
     "test:backoffice": "npm run setup-db && npx playwright test backoffice/",
     "test:backoffice:dev": "npm run setup-db && npx playwright test backoffice/ --headed --debug",
-    "test:main": "npm run setup-db && npx playwright test main/",
-    "test:main:dev": "npm run setup-db && npx playwright test backoffice/ --headed  --debug",
+    "test:server": "npm run setup-db && npx playwright test main/",
+    "test:server:dev": "npm run setup-db && npx playwright test backoffice/ --headed  --debug",
     "report": "npx playwright show-report",
     "setup-db": "npm run test:setup --prefix=./../prisma && npm run test:seed --prefix=./../prisma"
   },
