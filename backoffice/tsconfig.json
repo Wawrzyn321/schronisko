@@ -3,6 +3,7 @@
   "include": ["src/**/*"],
   "exclude": ["node_modules/*", "__sapper__/*", "public/*"],
   "compilerOptions": {
-    "lib": ["es2020", "DOM"]
-  }
+    "lib": ["es2020", "DOM"],
+    "skipLibCheck": true
+  },
 }

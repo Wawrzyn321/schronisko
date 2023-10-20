@@ -11,8 +11,10 @@ const PORT = 60045;
 
 const DEV = process.env.NODE_ENV !== 'production';
 
+export const USE_HTTP = false;
+
 let options = {};
-if (!DEV) {
+if (!DEV && USE_HTTP) {
   options = {
     httpsOptions: {
       key: fs.readFileSync('/var/svc/certs/privkey.pem'),

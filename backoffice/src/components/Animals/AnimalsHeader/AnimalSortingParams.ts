@@ -3,19 +3,23 @@ import type { AnimalListElement } from '../../../common/types';
 import type { SortingOrder } from '../../shared/SortControl/SortControl';
 
 export type AnimalSortingParams = {
-    sortByName: SortingOrder;
-    sortByDate: SortingOrder;
+    order: SortingOrder;
+    sortBy: 'name' | 'modifiedAt' | 'addedAt'
 }
 
 export function applySorting(animals: AnimalListElement[], params: AnimalSortingParams) {
     const sorter = (a: Animal, b: Animal) => {
-        if (params.sortByName) {
-            const dir = params.sortByName === 'ASC' ? 1 : -1;
+        if (params.sortBy === 'name') {
+            const dir = params.order === 'ASC' ? 1 : -1;
             return a.name.localeCompare(b.name) * dir;
         }
-        if (params.sortByDate) {
-            const dir = params.sortByName === 'ASC' ? 1 : -1;
-            return (new Date(a.addedDate).getTime() - new Date(b.addedDate).getTime()) * dir;
+        else if (params.sortBy === 'modifiedAt') {
+            const dir = params.order === 'ASC' ? 1 : -1;
+            return (new Date(a.modifiedAt).getTime() - new Date(b.modifiedAt).getTime()) * dir;
+        }
+        else if (params.sortBy === 'addedAt') {
+            const dir = params.order === 'ASC' ? 1 : -1;
+            return (new Date(a.addedAt).getTime() - new Date(b.addedAt).getTime()) * dir;
         }
         return 1;
     }
@@ -25,7 +29,7 @@ export function applySorting(animals: AnimalListElement[], params: AnimalSorting
 
 export function createDefaultSortingParams(): AnimalSortingParams {
     return {
-        sortByName: 'ASC',
-        sortByDate: null,
+        sortBy: 'modifiedAt',
+        order: 'DESC',
     }
 }

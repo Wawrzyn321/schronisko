@@ -17,6 +17,14 @@
   export let columnParams: AnimalColumnParams;
   export let filteringParams: AnimalFilteringParams;
   export let sortingParams: AnimalSortingParams;
+
+  function setSortingOrder(
+    order: AnimalSortingParams['order'],
+    sortBy: AnimalSortingParams['sortBy']
+  ) {
+    sortingParams = { order, sortBy };
+  }
+
 </script>
 
 <tr>
@@ -25,8 +33,8 @@
   {/if}
   <th>
     <div style="display: flex">
-      Imię 
-      <!-- <SortControl bind:sortingOrder={sortingParams.sortByName} /> -->
+      Imię
+      <SortControl {sortingParams} type="name" setOrdering={setSortingOrder} />
     </div>
   </th>
   <th> Numer ewidencyjny </th>
@@ -38,7 +46,6 @@
       <span>Rodzaj</span>
       <FilteringDropdown
         bind:filteringParams
-        size="sm"
         values={animalTypes}
         valuesMap={animalTypesMap}
         filteringProperty="typeFilter"
@@ -51,7 +58,6 @@
         <span>Płeć</span>
         <FilteringDropdown
           bind:filteringParams
-          size="sm"
           values={animalGenders}
           valuesMap={animalGendersMap}
           filteringProperty="genderFilter"
@@ -65,7 +71,6 @@
         <span>Miejsce przebywania</span>
         <FilteringDropdown
           bind:filteringParams
-          size="bg"
           values={animalLocations}
           valuesMap={animalLocationsMap}
           filteringProperty="locationFilter"
@@ -79,7 +84,6 @@
         <span>Kategoria</span>
         <FilteringDropdown
           bind:filteringParams
-          size="bg"
           values={animalCategories}
           valuesMap={animalCategoriesMap}
           filteringProperty="categoryFilter"
@@ -93,11 +97,24 @@
   {#if columnParams.showVirtualCaretaker}
     <th>Opiekun wirtualny</th>
   {/if}
-  {#if columnParams.showAddedDate}
+  {#if columnParams.showAddedAt}
     <th>
       <div style="display: flex">
         Data dodania <SortControl
-          bind:sortingOrder={sortingParams.sortByDate}
+          {sortingParams}
+          type="addedAt"
+          setOrdering={setSortingOrder}
+        />
+      </div>
+    </th>
+  {/if}
+  {#if columnParams.showModifiedAt}
+    <th>
+      <div style="display: flex">
+        Ostatnia modyfikacja <SortControl
+          {sortingParams}
+          type="modifiedAt"
+          setOrdering={setSortingOrder}
         />
       </div>
     </th>

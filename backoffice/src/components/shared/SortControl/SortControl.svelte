@@ -1,31 +1,43 @@
 <script lang="ts">
   import { ChevronUpIcon, ChevronDownIcon } from 'svelte-feather-icons';
   import type { SortingOrder } from './SortControl';
+  import type { AnimalSortingParams } from '../../Animals/AnimalsHeader/AnimalSortingParams';
 
-  export let sortingOrder: SortingOrder;
+  export let sortingParams: AnimalSortingParams;
+  export let type: AnimalSortingParams['sortBy'];
+  export let setOrdering: (order: SortingOrder, type: AnimalSortingParams['sortBy']) => void; 
 
-  function setOrdering(order: SortingOrder) {
+  function buildOnClickHandler(order: SortingOrder) {
     return () => {
-      if (sortingOrder !== order) {
-        sortingOrder = order;
+      if (sortingParams.sortBy !== type) {
+        setOrdering(order, type);
+        return;
+      }
+
+      if (sortingParams.order !== order) {
+        setOrdering(order, type);
       } else {
-        sortingOrder = null;
+        setOrdering(null, type);
       }
     };
   }
 </script>
 
 <div class="sort-control">
-  <button class="g-button-transparent" on:click={setOrdering('ASC')}>
+  <button class="g-button-transparent" on:click={buildOnClickHandler('ASC')}>
     <ChevronUpIcon
       size="1.0x"
-      class={sortingOrder === 'ASC' ? 'selected' : ''}
+      class={sortingParams.sortBy === type && sortingParams.order === 'ASC'
+        ? 'selected'
+        : ''}
     />
   </button>
-  <button class="g-button-transparent" on:click={setOrdering('DESC')}>
+  <button class="g-button-transparent" on:click={buildOnClickHandler('DESC')}>
     <ChevronDownIcon
       size="1.0x"
-      class={sortingOrder === 'DESC' ? 'selected' : ''}
+      class={sortingParams.sortBy === type && sortingParams.order === 'DESC'
+        ? 'selected'
+        : ''}
     />
   </button>
 </div>
@@ -44,4 +56,5 @@
       padding: 0;
     }
   }
+
 </style>

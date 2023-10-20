@@ -1,12 +1,10 @@
 import { PrismaClient, Animal, AnimalImage } from "@prisma/client";
-
-import animals from "./animals-for-vps.json";
-import animalImages from "./animal-images-for-vps.json";
+import fs from "fs";
 
 async function seedAnimalImages(prisma: PrismaClient) {
   console.log("adding animals from animalPictures-for-vps.json");
 
-  const typedAnimalImages: AnimalImage[] = animalImages;
+  const typedAnimalImages: AnimalImage[] = JSON.parse(fs.readFileSync('db-import/animals/animal-images-for-vps.json').toString());
   for (const animalImage of typedAnimalImages) {
     await prisma.animalImage.upsert({
       where: { id: animalImage.id! },
@@ -21,8 +19,7 @@ async function seedAnimalImages(prisma: PrismaClient) {
 export async function seedAnimals(prisma: PrismaClient) {
   console.log("adding animals from animals-for-vps.json");
 
-  // TODO nie wiem czemu cast nie działa jak trzeba
-  const typedAnimals: Animal[] = animals as unknown as Animal[];
+  const typedAnimals: Animal[] =  JSON.parse(fs.readFileSync('db-import/animals/animals-for-vps.json').toString());
   for (const animal of typedAnimals) {
     
     await prisma.animal.upsert({

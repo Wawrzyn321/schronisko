@@ -22,7 +22,7 @@ const newsSchema = z.object({
 
 type ImportedNews = z.infer<typeof newsSchema>;
 
-export async function seedNews(prisma: PrismaClient) {
+function copyNewsImage() {
     if (!fs.existsSync(newsImagesPath)) {
         throw Error("No source dir for news images")
     }
@@ -31,6 +31,12 @@ export async function seedNews(prisma: PrismaClient) {
     }
 
     fse.copySync(newsImagesPath, targetNewsPath);
+}
+
+export async function seedNews(prisma: PrismaClient, updateFiles: boolean) {
+    if (updateFiles) {
+        copyNewsImage();
+    }
 
     const importedNews = findDataInTable<ImportedNews>(newsTable);
 

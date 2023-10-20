@@ -36,11 +36,3 @@
   </div>
 </Dropdown>
 
-<style lang="scss">
-  .dropdown-content {
-    transform: translateX(-125px);
-    width: 160px;
-    padding: 10px;
-    z-index: 1000;
-  }
-</style>

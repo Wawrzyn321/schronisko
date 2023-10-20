@@ -23,7 +23,8 @@ const mockAdminUser: LoggedInUser = {
 };
 
 const mockAnimal: Animal = {
-  addedDate: null,
+  addedAt: new Date(),
+  modifiedAt: new Date(),
   id: 'id',
   refNo: 'ref',
   name: 'name',
@@ -294,10 +295,10 @@ describe('AnimalsController', () => {
       user: mockAdminUser,
     });
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { addedDate, note, ...data } = mockAnimal;
+    const { note, addedAt, ...data } = mockAnimal;
     expect(prismaServiceMock.animal.update).toHaveBeenCalledWith({
       where: { id: 'id' },
-      data,
+      data: { ...data, modifiedAt: expect.any(Date) },
     });
     expect(logMock.mock.calls[0][0].message).toMatchInlineSnapshot(
       `"zaktualizował zwierzę name (id id, nr ref) (Notatka)"`,

@@ -4,7 +4,8 @@ export type AnimalColumnParams = {
     showGender: boolean;
     showLocation: boolean;
     showCategory: boolean;
-    showAddedDate: boolean;
+    showAddedAt: boolean;
+    showModifiedAt: boolean;
     showVirtualCaretaker: boolean;
     showNote: boolean;
     showContactInfo: boolean;
@@ -17,7 +18,8 @@ export function createDefaultColumnParams(): AnimalColumnParams {
         // showDescription: false,
         showGender: false,
         showLocation: true,
-        showAddedDate: false,
+        showModifiedAt: true,
+        showAddedAt: false,
         showVirtualCaretaker: false,
         showNote: false,
         showContactInfo: false,

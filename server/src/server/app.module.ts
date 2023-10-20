@@ -19,7 +19,7 @@ const DEV = process.env.NODE_ENV !== 'production';
 
 export const WEB_STATIC_FILES_PATH = DEV
   ? 'http://localhost:60045'
-  : 'https://schronisko-backend.oto-jest-wawrzyn.pl';
+  : 'http://schronisko-backend2.oto-jest-wawrzyn.pl';
 
 const animalsPath = path.join(LOCAL_STATIC_FILES_PATH, 'img/animals');
 const newsPath = path.join(LOCAL_STATIC_FILES_PATH, 'img/news');

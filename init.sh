@@ -22,6 +22,6 @@ echo 'npm ci server'
 npm i --prefix=server
 
 echo 'restart services'
-sudo systemctl restart schronisko-server.service
+sudo systemctl restart schronisko-backend.service
 
-echo 'RUN sudo journalctl -u schronisko-server.service --follow'
+echo 'RUN sudo journalctl -u schronisko-backend.service --follow'

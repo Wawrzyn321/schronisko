@@ -250,11 +250,12 @@ export class AnimalsService {
 
     const updatedAnimal = await this.prisma.animal.update({
       where: { id },
-      data: animalData,
+      data: { ...animalData, modifiedAt: new Date() },
     });
 
     const animalToDiff: Animal = {
-      addedDate: null,
+      addedAt: null,
+      modifiedAt: null,
       imageName: null,
       note: null,
       ...animal,

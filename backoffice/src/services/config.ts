@@ -2,7 +2,7 @@ const getApiUrl = () => {
     if (location.hostname === 'localhost') {
         return 'http://localhost:60045'
     } else {
-        return 'https://schronisko-backend.oto-jest-wawrzyn.pl';
+        return 'http://schronisko-backend2.oto-jest-wawrzyn.pl';
     }
 }
 

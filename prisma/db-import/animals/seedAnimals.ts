@@ -34,6 +34,7 @@ const animalSchema = z.object({
   status: z.string(),
   active: z.string(),
   hasVirtualGuardian: z.string().nullable(),
+  mod_time: z.string().nullable(),
 })
 
 const animalImageSchema = z.object({
@@ -236,14 +237,21 @@ async function seedAnimalImages(
   console.log('created animal-images-for-vps.json');
 }
 
-export async function seedAnimals(
-  prisma: PrismaClient,
-) {
+function ensurePaths() {
   if (!fs.existsSync(galleryPath) || !fs.existsSync(thumbsPath)) {
     throw Error("No source dir for animal images")
   }
   if (!fs.existsSync(targetAnimalImagesPath)) {
     fs.mkdirSync(targetAnimalImagesPath, { recursive: true });
+  }
+}
+
+export async function seedAnimals(
+  prisma: PrismaClient,
+  updateFiles: boolean
+) {
+  if (updateFiles) {
+    ensurePaths();
   }
 
   let animals = findDataInTable<ImportedAnimal>(animalsTable);
@@ -260,9 +268,12 @@ export async function seedAnimals(
 
     animalSchema.parse(importedAnimal);
 
-    copyMainAnimalImage(importedAnimal);
+    if (updateFiles) {
+      copyMainAnimalImage(importedAnimal);
+    }
 
     const animal: Animal = {
+      addedAt: new Date(),
       id: importedAnimal.id,
       refNo: importedAnimal.petId ?? '',
       name: importedAnimal.name,
@@ -270,7 +281,7 @@ export async function seedAnimals(
       category: mapCategoryId(importedAnimal.categoryId),
       description: decode(importedAnimal.descr),
       imageName: importedAnimal.fileName,
-      addedDate: new Date(Date.parse("2014-07-23 11:07:16")),
+      modifiedAt: importedAnimal.mod_time ? new Date(Date.parse(importedAnimal.mod_time)) : new Date(),
       isPublic: importedAnimal.status === "1",
       location: tryMapLocation(importedAnimal),
       note: "",

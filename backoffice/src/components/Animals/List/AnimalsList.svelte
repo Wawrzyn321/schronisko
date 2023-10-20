@@ -124,9 +124,14 @@
           {restrictStringLength(animal.note || '-')}
         </td>
       {/if}
-      {#if columnParams.showAddedDate}
+      {#if columnParams.showAddedAt}
         <td>
-          <DateFromTimestamp timestamp={animal.addedDate} />
+          <DateFromTimestamp timestamp={animal.addedAt} />
+        </td>
+      {/if}
+      {#if columnParams.showModifiedAt}
+        <td>
+          <DateFromTimestamp timestamp={animal.modifiedAt} />
         </td>
       {/if}
       <td class="is-public-column">

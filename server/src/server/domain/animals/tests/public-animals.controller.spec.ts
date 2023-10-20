@@ -14,7 +14,8 @@ import { AnimalsPublicController } from '../animals.controller';
 import { AnimalsService } from '../animals.service';
 
 const makeAnimal = (id: string): Animal => ({
-  addedDate: null,
+  addedAt: new Date(),
+  modifiedAt: new Date(),
   id,
   refNo: 'ref',
   name: 'name',

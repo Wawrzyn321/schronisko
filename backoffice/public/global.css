@@ -89,6 +89,7 @@ video {
   font: inherit;
   vertical-align: baseline;
 }
+
 /* HTML5 display-role reset for older browsers */
 article,
 aside,
@@ -103,13 +104,16 @@ nav,
 section {
   display: block;
 }
+
 body {
   line-height: 1;
 }
+
 blockquote,
 q {
   quotes: none;
 }
+
 blockquote:before,
 blockquote:after,
 q:before,
@@ -117,6 +121,7 @@ q:after {
   content: '';
   content: none;
 }
+
 table {
   border-collapse: collapse;
   border-spacing: 0;
@@ -276,7 +281,7 @@ header h1 {
   border-radius: 50px;
 }
 
-.preview p > img {
+.preview p>img {
   background: red;
 }
 
@@ -326,7 +331,8 @@ nav.tabs {
   margin-bottom: 0 !important;
 }
 
-.tab-content, .tab {
+.tab-content,
+.tab {
   width: 100%;
   margin-top: 8px;
 }
@@ -353,7 +359,7 @@ nav.tabs {
 }
 
 .g-table-actions button {
- padding: 12px;
+  padding: 12px;
 }
 
 .g-flex-between-100 {
@@ -460,4 +466,16 @@ input[type=search] {
 
 .tabs a:hover {
   text-decoration: none;
+}
+
+.dropdown-content {
+  transform: translateX(-100%);
+  width: max-content;
+  padding: 20px 16px;
+  z-index: 1000;
+  box-shadow: 2px 2px 10px gray;
+}
+
+.dropdown-content > * + * {
+  margin-top: 10px;
 }

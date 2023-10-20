@@ -6,7 +6,7 @@
 
   export let params: AnimalColumnParams;
 
-  const dataRows: { caption: string; property: string }[] = [
+  const dataRows: { caption: string; property: keyof AnimalColumnParams }[] = [
     { caption: 'Miniaturka', property: 'showImage' },
     // { caption: 'Opis', property: 'showDescription' },
     { caption: 'Płeć', property: 'showGender' },
@@ -14,13 +14,20 @@
     { caption: 'Kategoria', property: 'showCategory' },
     { caption: 'Dane kontaktowe', property: 'showContactInfo' },
     { caption: 'Opiekun wirtualny', property: 'showVirtualCaretaker' },
-    { caption: 'Data dodania', property: 'showAddedDate' },
+    { caption: 'Data dodania', property: 'showAddedAt' },
+    { caption: 'Ostatnia modyfikacja', property: 'showModifiedAt' },
     { caption: 'Notatka', property: 'showNote' },
   ];
+
 </script>
 
 <Dropdown>
-  <Button slot="trigger" type="is-primary" style="width: 40px" aria-label="Otwórz filtry">
+  <Button
+    slot="trigger"
+    type="is-primary"
+    style="width: 40px"
+    aria-label="Otwórz filtry"
+  >
     <FilterIcon size="1.0x" />
   </Button>
   <div slot="content" class="dropdown-content">
@@ -36,12 +43,3 @@
     {/each}
   </div>
 </Dropdown>
-
-<style lang="scss">
-  .dropdown-content {
-    transform: translateX(-130px);
-    width: 170px;
-    padding: 10px;
-    z-index: 1000;
-  }
-</style>

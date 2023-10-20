@@ -4,10 +4,10 @@ const DEV = process.env.NODE_ENV !== 'production';
 
 export const BACKEND_URL = DEV
   ? 'http://localhost:60045'
-  : 'https://schronisko-backend.oto-jest-wawrzyn.pl';
+  : 'http://schronisko-backend2.oto-jest-wawrzyn.pl';
 export const SSR_BACKEND_URL = DEV
   ? 'http://localhost:60045'
-  : 'https://schronisko-backend.oto-jest-wawrzyn.pl';
+  : 'http://schronisko-backend2.oto-jest-wawrzyn.pl';
 
 export const IMAGES_URL = BACKEND_URL + '/img';
 export const ANIMAL_IMAGES_URL = IMAGES_URL + '/animals';

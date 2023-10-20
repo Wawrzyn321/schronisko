@@ -92,7 +92,8 @@ model Animal {
   virtualCaretakerName String?
   isPublic             Boolean
   images               AnimalImage[]
-  addedDate            DateTime             @default(now())
+  addedAt            DateTime             @default(now())
+  modifiedAt         DateTime             @default(now())
   imageName            String?
   note                 String?
   contactInfo          String

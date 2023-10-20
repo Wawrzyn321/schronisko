@@ -7,13 +7,17 @@ import { seedAnimals as seedAnimalsVps } from "./db-import/animals/seedAnimalsVP
 
 const prisma = new PrismaClient();
 
-async function main() {
+const UPDATE_FILES = false;
+
+async function main(updateFiles: boolean) {
+  console.log('UPDATE_FILES is ', updateFiles)
+
   await seedPages(prisma);
-  await seedNews(prisma);
+  await seedNews(prisma, updateFiles);
   await seedUsers(prisma);
   switch (process.env.NODE_ENV) {
     case "dev":
-      await seedAnimals(prisma);
+      await seedAnimals(prisma, updateFiles);
       break;
     case "vps":
       await seedAnimalsVps(prisma);
@@ -24,7 +28,7 @@ async function main() {
       );
   }
 }
-main()
+main(UPDATE_FILES)
   .catch((e: Error) => {
     console.error(e);
     process.exit(1);

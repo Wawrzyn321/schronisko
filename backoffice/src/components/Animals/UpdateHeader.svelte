@@ -13,7 +13,6 @@
   import { auth } from '../../contexts/auth.context';
 
   export let isPublic: boolean;
-  export let timestamp: Date;
   export let isValid: boolean;
   export let animal: Animal;
   export let images: AnimalImageParams[];
@@ -30,6 +29,7 @@
     notifySuccess({ message: 'Zwierzę zostało usunięte.' });
     push('/animals');
   }
+
 </script>
 
 <header class="g-flex-between-100">
@@ -39,7 +39,9 @@
   </h1>
   <span>
     Dodany:
-    <DateFromTimestamp {timestamp} />
+    <DateFromTimestamp timestamp={animal.addedAt} />
+    , zmodyfikowany
+    <DateFromTimestamp timestamp={animal.modifiedAt} />
   </span>
   <div>
     <label>
@@ -98,4 +100,5 @@
   label {
     margin-right: 16px;
   }
+
 </style>

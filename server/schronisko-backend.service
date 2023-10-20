@@ -3,10 +3,10 @@ Description=Schronisko Backend Service
 After=network.target
 
 [Service]
-WorkingDirectory=/var/svc/schronisko/server
+WorkingDirectory=/var/svc/schronisko/main
 #ProtectHome=true
 PrivateTmp=true
-ExecStart=/usr/local/bin/npm run start:nest
+ExecStart=/home/ubuntu/.nvm/versions/node/v16.19.0/bin/npm run start:nest
 Restart=on-failure
 User=ubuntu
 

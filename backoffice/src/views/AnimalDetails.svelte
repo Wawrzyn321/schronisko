@@ -65,7 +65,6 @@
 <main>
   {#if !!animal}
     <UpdateHeader
-      timestamp={animal.addedDate}
       {updateAnimal}
       {isValid}
       {animal}

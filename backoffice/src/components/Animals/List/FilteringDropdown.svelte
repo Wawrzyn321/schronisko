@@ -17,7 +17,6 @@
   }
 
   export let filteringParams: AnimalFilteringParams;
-  export let size: 'sm' | 'bg';
   export let values: any[];
   export let valuesMap: any;
   export let filteringProperty:
@@ -29,13 +28,14 @@
   // wtf typescript
   let a: any[];
   $: a = filteringParams[filteringProperty];
+
 </script>
 
 <Dropdown>
   <button slot="trigger" class="g-button-transparent">
     <FilterIcon size="0.8x" />
   </button>
-  <div slot="content" class={`dropdown-content dropdown-content-${size}`}>
+  <div slot="content" class="dropdown-content">
     {#each values as value}
       <label>
         <input
@@ -49,20 +49,3 @@
   </div>
 </Dropdown>
 
-<style lang="scss">
-  .dropdown-content {
-    &-sm {
-      transform: translateX(-75px);
-      width: 130px;
-      padding: 10px;
-      z-index: 1000;
-    }
-
-    &-bg {
-      transform: translateX(-175px);
-      width: 220px;
-      padding: 10px;
-      z-index: 1000;
-    }
-  }
-</style>
