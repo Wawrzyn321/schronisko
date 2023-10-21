@@ -1,4 +1,4 @@
-import Link from 'next/link';
+// import Link from 'next/link';
 import { Animal } from '.prisma/client';
 import { fetchAnimal } from 'api/api';
 import { IdWrapper } from 'components/IdWrapper';
@@ -24,12 +24,12 @@ function VAdoptionDetails({ animal }: { animal: Animal }) {
       <Breadcrumbs
         items={[
           'Adopcje wirtualne',
-          <Link key="last" href="/v-adoptions/to-adopt">
+          <a key="last" href="/v-adoptions/to-adopt">
             Szukają opiekunów
-          </Link>,
-          <Link key="last" href={`/animals/details/${animal.id}`}>
+          </a>,
+          <a key="last" href={`/animals/details/${animal.id}`}>
             {animal.name}
-          </Link>,
+          </a>,
         ]}
       />
       <Page id="formularz-adopcji-wirtualnej" ssrPage={null} />

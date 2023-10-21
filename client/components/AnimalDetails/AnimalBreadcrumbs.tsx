@@ -1,4 +1,4 @@
-import Link from 'next/link';
+// import Link from 'next/link';
 import { Animal, AnimalCategory, AnimalType } from '.prisma/client';
 import React from 'react';
 import { Breadcrumbs } from 'components/Breadcrumbs/Breadcrumbs';
@@ -36,9 +36,9 @@ export function AnimalBreadcrumbs({ animal }: { animal: Animal }) {
     <Breadcrumbs
       items={[
         'Zwierzęta',
-        <Link key="last" href={href}>
+        <a key="last" href={href}>
           {name}
-        </Link>,
+        </a>,
       ]}
     />
   );

@@ -1,4 +1,4 @@
-import Link from 'next/link';
+// import Link from 'next/link';
 import { buildAnimalImageUrl, buildAnimalUrl } from 'api/config';
 import { Animal, AnimalCategory } from '.prisma/client';
 import { isReadonly } from '../isReadonly';
@@ -20,9 +20,9 @@ export function AnimalImage({ animal }: { animal: Animal }) {
   const canGoToDetails = !isReadonly(animal.category);
   if (canGoToDetails) {
     return (
-      <Link href={buildAnimalUrl(animal.id)}>
+      <a href={buildAnimalUrl(animal.id)}>
         <a style={{ cursor: 'pointer' }}>{image}</a>
-      </Link>
+      </a>
     );
   } else {
     return image;

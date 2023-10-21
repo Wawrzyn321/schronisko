@@ -1,4 +1,4 @@
-import Link from 'next/link';
+// import Link from 'next/link';
 import styles from './PageLink.module.scss';
 
 export function PageLink({
@@ -9,10 +9,10 @@ export function PageLink({
   href: string;
 }) {
   return (
-    <Link href={href} passHref>
-      <div className={styles['page-link-blob']}>
-        <a className={styles['page-link']}>{children}</a>
-      </div>
-    </Link>
+    <a href={href}>
+      <span className={styles['page-link-blob']}>
+        <span className={styles['page-link']}>{children}</span>
+      </span>
+    </a>
   );
 }

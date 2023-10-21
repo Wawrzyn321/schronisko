@@ -7,8 +7,3 @@ po deployu:
 ładnie sformatuj wiadomości w mailach, szczególnie tą do v-adopcji
 
 test na update daty - a raczej zmień podejście, za dużo mockowania
-
-cofanie w przeglądarce nie działa - strona głó∑na
-https://schronisko-backoffice.oto-jest-wawrzyn.pl/#/animals/9600?mode=description - tu też
-
-używaj hidden zamiast display.none

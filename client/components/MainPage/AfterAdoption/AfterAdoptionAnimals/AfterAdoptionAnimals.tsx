@@ -1,4 +1,4 @@
-import Link from 'next/link';
+// import Link from 'next/link';
 import styles from './AfterAdoptionAnimals.module.scss';
 import { AfterAdoptionAnimal } from 'types';
 import {
@@ -15,7 +15,7 @@ function AnimalImage({ animal }: { animal: AfterAdoptionAnimal }) {
       <div className={styles['animal-image']}>
         <img src={buildAnimalImageUrl(animal)} alt={animal.imageName} />
         <div className={styles['animal-image__link']}>
-          <Link href={buildAnimalUrl(animal.id)}>Dowiedz się więcej</Link>
+          <a href={buildAnimalUrl(animal.id)}>Dowiedz się więcej</a>
         </div>
       </div>
     </div>

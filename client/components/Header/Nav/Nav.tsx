@@ -1,5 +1,5 @@
 import React from 'react';
-import Link from 'next/link';
+// import Link from 'next/link';
 import { useRouter } from 'next/router';
 import styles from './Nav.module.scss';
 
@@ -28,7 +28,7 @@ function SimpleLink({
 }) {
   return (
     <li>
-      <Link href={to}>{children}</Link>
+      <a href={to}>{children}</a>
       <LinkBorder to={to} />
     </li>
   );
@@ -49,9 +49,9 @@ function ParentLink({
       <ul>
         {links.map((link: SubListItem) => (
           <li key={link.path}>
-            <Link href={to + link.path}>
-              <a>{link.name}</a>
-            </Link>
+            <a href={to + link.path}>
+              <span>{link.name}</span>
+            </a>
           </li>
         ))}
       </ul>

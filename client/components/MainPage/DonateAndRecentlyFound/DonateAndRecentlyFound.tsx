@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
+// import Link from 'next/link';
 import donate from 'public/site/main/donate.png';
 import recentlyFound from 'public/site/main/recently-found.png';
 import styles from './DonateAndRecentlyFound.module.scss';
@@ -14,9 +14,9 @@ function ImageLink({
 }) {
   return (
     <div style={{ cursor: 'pointer' }}>
-      <Link href={href}>
-        <a>{children}</a>
-      </Link>
+      <a href={href}>
+        {children}
+      </a>
     </div>
   );
 }
