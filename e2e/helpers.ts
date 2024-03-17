@@ -1,8 +1,8 @@
 import { Page } from "@playwright/test";
 
-export const contains = (page: Page, text: string | RegExp, tag = "*") =>
+export const contains = (page: Page, text: string | RegExp, selector = "*") =>
   page
-    .locator(tag, {
+    .locator(selector, {
       hasText: text,
     })
     .last();

@@ -2,7 +2,7 @@ import type { Permission } from '@prisma/client';
 import type { UserCreateParams } from './../components/User/UserCreateParams';
 import { throwingFetch } from './throwingFetch';
 import { API_URL } from './config';
-import type { UserViewModel } from '../common/UserViewModel';
+import type { UserData, UserViewModel } from '../common/UserViewModel';
 import { setUser } from '../contexts/auth.context';
 
 const baseUrl = `${API_URL}/api/users`;
@@ -35,13 +35,13 @@ export class UserService {
     });
   }
 
-  async updateSelf(user: UserViewModel): Promise<UserViewModel> {
-    const updatedUser = await await throwingFetch(baseUrl, {
+  async updateSelf(prevSelf: UserViewModel, updatedData: UserData): Promise<UserViewModel> {
+    const updatedUser = await throwingFetch(baseUrl, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(user),
+      body: JSON.stringify(updatedData),
     });
-    setUser({ ...updatedUser, permissions: user.permissions });
+    setUser({ ...prevSelf, ...updatedUser, permissions: prevSelf.permissions });
     return updatedUser;
   }
 

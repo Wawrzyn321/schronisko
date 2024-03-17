@@ -103,9 +103,9 @@ test.describe("News: ", () => {
     await page.locator('[aria-label="Usuń newsa"]').click();
 
     await expect(
-      contains(page, "Czy na pewno chcesz usunąć news news-title-2?")
+      contains(page, /Czy na pewno chcesz usunąć news news-title-2?/)
     ).toBeVisible();
-    await contains(page, "Usuń", "modal-confirm").click();
+    await contains(page, "Usuń", ".modal-confirm").click();
 
     await expectSuccessPopups(page, {
       okText: "News został usunięty.",

@@ -2,6 +2,7 @@ po deployu:
     * zmień link na backoffice z https://www.schronisko.sosnowiec.pl/ na ten nowy
     * maile (sendgrid key)
     * usuń admina
+    * dodaj https!
 "o nas" wciąż nieuzupełnione i inne też
 
 ładnie sformatuj wiadomości w mailach, szczególnie tą do v-adopcji
@@ -12,4 +13,5 @@ nieważne:
 * test na update daty - a raczej zmień podejście, za dużo mockowania
 * używam "a" zamiast "Link" - bez tego nie działa cofanie w przeglądarce
 
-`server/src` jest niepotrzebny, starczy samo `server`
+popraw tytuł na sliderze bo wygląda głupio
+dodaj POM do testów e2e

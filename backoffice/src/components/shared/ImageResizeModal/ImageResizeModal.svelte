@@ -73,6 +73,7 @@
   }
 
   function onMouseZoom(e: WheelEvent) {
+    e.preventDefault(); // stop page from scrolling
     zoom(Math.sign(e.deltaY) * 0.01);
   }
 

@@ -97,7 +97,7 @@ test.describe("Users: ", () => {
       await navTo(page, "Użytkownicy");
       // data
       await page.locator(`[aria-label="Edytuj ${CHANGE_LOGIN}"]`).click();
-      await contains(page, "Zwierzęta", "abbr").click();
+      await contains(page, /^Zwierzęta$/, "abbr").click();
       await contains(page, "Zatwierdź", "button").click();
 
       await expectSuccessPopups(page, {

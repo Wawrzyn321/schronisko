@@ -91,7 +91,7 @@ test.describe("No permissions:", () => {
       password: "NO_PERMISSIONS_PASSWORD_2",
     });
 
-    const str = `Jesteś zalogowany jako ${"SMUTNY"} ${"NAZWISKO_4"} (${"NO_PERMISSIONS_LOGIN"}).`;
+    const str = `Jesteś zalogowany jako SMUTNY NAZWISKO_4 (NO_PERMISSIONS_LOGIN).`;
     await expect(contains(page, str)).toBeVisible();
   });
 });

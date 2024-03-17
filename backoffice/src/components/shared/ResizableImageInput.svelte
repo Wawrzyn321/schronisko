@@ -34,7 +34,7 @@
   }
 </script>
 
-<Field {label} {message} noStar={!label} {required}>
+<Field {label} {message} noStar={!label} {required} class="aaaa">
   <div style="display: flex">
     <Input
       type="file"
@@ -71,3 +71,12 @@
   defaultWidth={width}
   defaultHeight={height}
 />
+
+<style lang="scss">
+  :global(.aaaa) {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin: unset !important;
+  }
+</style>

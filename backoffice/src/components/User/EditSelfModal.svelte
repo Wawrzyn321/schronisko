@@ -2,7 +2,7 @@
   import Field from './../shared/Field.svelte';
   import Modal from '../shared/Modal.svelte';
   import { Input } from 'svelma';
-  import type { UserViewModel } from '../../common/UserViewModel';
+  import type { UserData, UserViewModel } from '../../common/UserViewModel';
   import { auth } from '../../contexts/auth.context';
   import { userService } from './../../services/UserService';
   import {
@@ -10,23 +10,29 @@
     notifySuccess,
   } from '../../contexts/notification.context';
 
-  export let onSelfEdited: (u: UserViewModel, notify?: boolean) => void = undefined;
+  export let onSelfEdited: (u: UserViewModel, notify?: boolean) => void =
+    undefined;
   export let modalVisible: boolean;
 
   let form: HTMLFormElement;
   let isFormValid = false;
   let loading = false;
 
-  let user: UserViewModel;
+  let userUpdateData: UserData;
 
   $: if (modalVisible) {
-    if (!user) user = { ...$auth.user };
+    if (!userUpdateData)
+      userUpdateData = {
+        firstName: $auth.user.firstName,
+        lastName: $auth.user.lastName,
+        login: $auth.user.login,
+      };
   }
 
   async function updateSelf() {
     try {
       loading = true;
-      const updatedUser = await userService.updateSelf(user);
+      const updatedUser = await userService.updateSelf($auth.user, userUpdateData);
       onSelfEdited && onSelfEdited(updatedUser, false);
       notifySuccess({ message: 'Twoje dane zostały zapisane.' });
     } catch (e) {
@@ -34,6 +40,7 @@
     }
     loading = false;
   }
+
 </script>
 
 <Modal
@@ -46,13 +53,28 @@
 >
   <form bind:this={form} on:input={() => (isFormValid = form.checkValidity())}>
     <Field label="Login" required>
-      <Input required bind:value={user.login} placeholder="Login" pattern=".*\S+.*" />
+      <Input
+        required
+        bind:value={userUpdateData.login}
+        placeholder="Login"
+        pattern=".*\S+.*"
+      />
     </Field>
     <Field label="Imię" required>
-      <Input required bind:value={user.firstName} placeholder="Imię" pattern=".*\S+.*" />
+      <Input
+        required
+        bind:value={userUpdateData.firstName}
+        placeholder="Imię"
+        pattern=".*\S+.*"
+      />
     </Field>
     <Field label="Nazwisko" required>
-      <Input required bind:value={user.lastName} placeholder="Nazwisko" pattern=".*\S+.*" />
+      <Input
+        required
+        bind:value={userUpdateData.lastName}
+        placeholder="Nazwisko"
+        pattern=".*\S+.*"
+      />
     </Field>
   </form>
 </Modal>

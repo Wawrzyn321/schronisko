@@ -86,7 +86,7 @@
           height={1000}
           {disabled}
         />
-        <div>
+        <div class="actions">
           <div class="eye-tooltip">
             <Tooltip
               label="Określa czy zdjęcie jest widoczne na stronie głównej."
@@ -148,5 +148,11 @@
     width: 140px;
     display: block;
     border: 1px solid black;
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
   }
 </style>

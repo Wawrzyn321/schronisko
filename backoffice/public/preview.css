@@ -1,0 +1,95 @@
+.preview {
+    padding-left: 16px;
+    padding-right: 16px;
+    max-width: 60em;
+}
+
+.preview .ql-indent-1 {
+    margin-left: 3em;
+}
+
+.preview .ql-indent-2 {
+    margin-left: 6em;
+}
+
+.preview .ql-indent-3 {
+    margin-left: 9em;
+}
+
+.preview .ql-indent-4 {
+    margin-left: 12em;
+}
+
+.preview .ql-indent-5 {
+    margin-left: 15em;
+}
+
+.preview .ql-indent-6 {
+    margin-left: 21em;
+}
+
+.preview h1 {
+    font-size: 2em;
+}
+
+.preview h2 {
+    font-size: 1.5em;
+}
+
+.preview h3 {
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+}
+
+.preview blockquote {
+    margin-bottom: 5px;
+    margin-top: 5px;
+    padding-left: 16px;
+    font-style: italic;
+}
+
+.preview li {
+    list-style-image: url('img/pawprint.svg');
+}
+
+.preview img {
+    max-width: 100%;
+    border-radius: 50px;
+}
+
+.preview p>img {
+    background: red;
+}
+
+.preview {
+    font-family: 'Roboto';
+}
+
+.preview * {
+    all: revert;
+    margin: 0;
+}
+
+.preview :not(strong) {
+    font-weight: 100;
+}
+
+.preview em {
+    font-style: italic;
+}
+
+.preview .ql-align-center {
+    text-align: center;
+}
+
+.preview .ql-align-left {
+    text-align: left;
+}
+
+.preview .ql-align-right {
+    text-align: right;
+}
+
+.preview .ql-align-justify {
+    text-align: justify;
+}

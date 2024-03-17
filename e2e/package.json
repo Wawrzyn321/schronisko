@@ -5,9 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test:backoffice": "npm run setup-db && npx playwright test backoffice/",
-    "test:backoffice:dev": "npm run setup-db && npx playwright test backoffice/ --headed --debug",
-    "test:server": "npm run setup-db && npx playwright test main/",
-    "test:server:dev": "npm run setup-db && npx playwright test backoffice/ --headed  --debug",
+    "test:backoffice:dev": "npm run setup-db && npx playwright test backoffice/ --headed",
+    "test:backoffice:dev:debug": "npm run setup-db && npx playwright test backoffice/ --headed --debug",
     "report": "npx playwright show-report",
     "setup-db": "npm run test:setup --prefix=./../prisma && npm run test:seed --prefix=./../prisma"
   },
@@ -15,6 +14,6 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@playwright/test": "^1.19.2"
+    "@playwright/test": "^1.42.1"
   }
 }
