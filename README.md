@@ -9,6 +9,14 @@
 - `prisma/` - db stuff, bootstraping the database and seeding
 - `copy-vsp-images.sh`, `init-client.sh`, `init.sh` - scripts used on VPS.
 
+## Running all packages
+
+At root:
+
+```bash
+npm run dev
+```
+
 ## Running backoffice
 
 At `backoffice/`:

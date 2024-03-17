@@ -5,7 +5,7 @@ const subsitutions = {
   '%KRS%': 'KRS_NUMBER',
 };
 
-export function subsitute(source: string, settings: Settings[]) {
+export function substitute(source: string, settings: Settings[]) {
   if (!settings) {
     return source;
   }

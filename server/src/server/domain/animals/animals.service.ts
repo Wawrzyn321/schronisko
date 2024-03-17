@@ -115,7 +115,7 @@ export class AnimalsService {
     virtualCaretakerType?: VirtualCaretakerType,
     categories?: AnimalCategory[],
     type?: AnimalType,
-    filterPublic?: boolean,
+    onlyPublic?: boolean,
   ): Promise<AnimalListElement[]> {
     const animals = await this.prisma.animal.findMany({
       take,
@@ -124,7 +124,7 @@ export class AnimalsService {
         category: categories?.length ? { in: categories } : undefined,
         type,
         virtualCaretakerType,
-        isPublic: filterPublic ? true : undefined,
+        isPublic: onlyPublic ? true : undefined,
       },
     });
     return animals.map((animal: Animal) => {
@@ -143,9 +143,9 @@ export class AnimalsService {
     return getDailyRandom(results, count);
   }
 
-  async get(id: string, filterPublic?: boolean): Promise<Animal> {
+  async get(id: string, onlyPublic?: boolean): Promise<Animal> {
     const animal = await this.prisma.animal.findFirst({
-      where: { id, isPublic: filterPublic ? true : undefined },
+      where: { id, isPublic: onlyPublic ? true : undefined },
     });
     if (!animal) {
       throw new NotFoundException();

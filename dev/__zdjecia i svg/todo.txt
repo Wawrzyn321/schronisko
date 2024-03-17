@@ -7,3 +7,9 @@ po deployu:
 ładnie sformatuj wiadomości w mailach, szczególnie tą do v-adopcji
 
 test na update daty - a raczej zmień podejście, za dużo mockowania
+
+nieważne:
+* test na update daty - a raczej zmień podejście, za dużo mockowania
+* używam "a" zamiast "Link" - bez tego nie działa cofanie w przeglądarce
+
+`server/src` jest niepotrzebny, starczy samo `server`

@@ -1,4 +1,4 @@
-import { containsSubsitution, subsitute } from '../../substitutions';
+import { containsSubsitution, substitute } from '../../substitutions';
 import { Permission } from '@prisma/client';
 import { LoggedInUser } from '../auth/types';
 import {
@@ -25,6 +25,7 @@ import { validateNewsCreate, validateNewsUpdate } from './helpers';
 import { LogsService } from '../logs/logs.service';
 import { formattedDiff } from '../logs/diff';
 import { SettingsService } from '../settings/settings.service';
+import { CacheService } from '../cache/cache.service';
 
 const imageListElementFields = {
   title: true,
@@ -36,7 +37,7 @@ const imageListElementFields = {
 };
 
 type GetProps = {
-  filterPublic: boolean;
+  onlyPublic: boolean;
   useSubstitution: boolean;
 };
 
@@ -46,20 +47,20 @@ export class NewsService {
     private prisma: PrismaService,
     private logsService: LogsService,
     private settingsService: SettingsService,
+    private cacheService: CacheService,
   ) {}
 
   toListElement(news: News): NewsListElement {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { content, ...listElement } = news;
     return listElement;
   }
 
   async getAll(
     takeTop?: number,
-    filterPublic?: boolean,
+    onlyPublic?: boolean,
   ): Promise<NewsListElement[]> {
     return await this.prisma.news.findMany({
-      where: { isPublished: filterPublic ? true : undefined },
+      where: { isPublished: onlyPublic ? true : undefined },
       select: imageListElementFields,
       take: takeTop,
       orderBy: [{ title: 'asc' }],
@@ -76,8 +77,21 @@ export class NewsService {
   }
 
   async get(id: string, props: GetProps): Promise<News> {
+    const cache = await this.cacheService.useArticleCache(
+      'news',
+      id,
+      props.useSubstitution,
+    );
+
+    if (cache && cache.value) {
+      const cachedValue = JSON.parse(cache.value) as News | null;
+      if (cachedValue && (cachedValue.isPublished || !props.onlyPublic)) {
+        return cachedValue;
+      }
+    }
+
     const news = await this.prisma.news.findFirst({
-      where: { id, isPublished: props.filterPublic ? true : undefined },
+      where: { id, isPublished: props.onlyPublic ? true : undefined },
     });
     if (!news) {
       throw new NotFoundException();
@@ -85,8 +99,10 @@ export class NewsService {
 
     if (props.useSubstitution && containsSubsitution(news.content)) {
       const settings = await this.settingsService.getAll();
-      news.content = subsitute(news.content, settings);
+      news.content = substitute(news.content, settings);
     }
+
+    cache.set(JSON.stringify(news));
 
     return news;
   }
@@ -126,6 +142,8 @@ export class NewsService {
     id: string,
     params: NewsModifyParams<NewsUpdateInput>,
   ): Promise<NewsListElement> {
+    const cache = await this.cacheService.useArticleCache('news', id);
+
     if (id !== params?.news?.id) {
       throw new BadRequestException();
     }
@@ -133,7 +151,7 @@ export class NewsService {
       throw new BadRequestException(id, 'Brak tytułu.');
     }
     const prevNews = await this.get(id, {
-      filterPublic: false,
+      onlyPublic: false,
       useSubstitution: false,
     });
 
@@ -177,6 +195,9 @@ export class NewsService {
       permission: Permission.NEWS,
       user,
     });
+
+    await cache.clear();
+
     return this.toListElement(updatedNews);
   }
 

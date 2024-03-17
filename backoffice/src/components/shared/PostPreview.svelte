@@ -3,7 +3,7 @@
 
   import { notifyError } from '../../contexts/notification.context';
   import { settingsService } from '../../services/SettingsService';
-  import { containsSubsitution, subsitute } from '../../services/substitutions';
+  import { containsSubsitution, substitute } from '../../services/substitutions';
 
   export let title: string;
   export let source: string;
@@ -29,7 +29,7 @@
 
 <div class="preview">
   <h1 class="title">{title}</h1>
-  {@html subsitute(source, settings)}
+  {@html substitute(source, settings)}
 </div>
 
 <style lang="scss">

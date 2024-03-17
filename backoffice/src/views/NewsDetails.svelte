@@ -27,6 +27,7 @@
     try {
       news = await newsService.get(params.id);
       editedContent = news.content;
+      editedContent = '<p>haha</p>'
     } catch (e) {
       notifyError({ message: 'Nie można pobrać newsa: ' + e.message });
       if (e.status === 404) {

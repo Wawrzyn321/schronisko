@@ -12,6 +12,7 @@ import { LogsModule } from './domain/logs/logs.module';
 import { SettingsModule } from './domain/settings/settings.module';
 import { CommunicationModule } from './domain/communication/communication.module';
 import { ConfigModule } from '@nestjs/config';
+import { CacheModule } from './domain/cache/cache.module';
 
 export const LOCAL_STATIC_FILES_PATH = '../images/';
 
@@ -32,6 +33,7 @@ if (!fs.existsSync(newsPath)) {
 
 const domainModules = [
   AuthModule,
+  CacheModule,
   UsersModule,
   PagesModule,
   NewsModule,

@@ -24,17 +24,17 @@ export type UpsertParams = {
 export class AnimalImagesService {
   constructor(private prisma: PrismaService) {}
 
-  async get(animalId: string, filterPublic = false): Promise<AnimalImage[]> {
+  async get(animalId: string, onlyPublic = false): Promise<AnimalImage[]> {
     if (
       !this.prisma.animal.findFirst({
-        where: { id: animalId, isPublic: filterPublic ? true : undefined },
+        where: { id: animalId, isPublic: onlyPublic ? true : undefined },
       })
     ) {
       throw new NotFoundException();
     }
 
     return await this.prisma.animalImage.findMany({
-      where: { animalId, visible: filterPublic ? true : undefined },
+      where: { animalId, visible: onlyPublic ? true : undefined },
     });
   }
 

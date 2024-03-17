@@ -16,7 +16,8 @@ import {
   saveImagesFromContentModyfyingIt,
 } from '../../img-fs';
 import { SettingsService } from '../settings/settings.service';
-import { containsSubsitution, subsitute } from '../../substitutions';
+import { containsSubsitution, substitute } from '../../substitutions';
+import { CacheService } from '../cache/cache.service';
 
 @Injectable()
 export class PagesService {
@@ -24,6 +25,7 @@ export class PagesService {
     private prisma: PrismaService,
     private settingsService: SettingsService,
     private logsService: LogsService,
+    private cacheService: CacheService,
   ) {}
 
   async getAll(takeTop?: number): Promise<PageListElement[]> {
@@ -54,6 +56,16 @@ export class PagesService {
   }
 
   async get(id: string, useSubstitution: boolean): Promise<Page> {
+    const cache = await this.cacheService.useArticleCache(
+      'page',
+      id,
+      useSubstitution,
+    );
+
+    if (cache && cache.value) {
+      return JSON.parse(cache.value);
+    }
+
     const page = await this.prisma.page.findUnique({ where: { id } });
     if (!page) {
       throw new NotFoundException();
@@ -61,8 +73,14 @@ export class PagesService {
 
     if (useSubstitution && containsSubsitution(page.content)) {
       const settings = await this.settingsService.getAll();
-      page.content = subsitute(page.content, settings);
+      page.content = substitute(page.content, settings);
+      console.log(page.content, settings);
     }
+
+    if (cache) {
+      cache.set(JSON.stringify(page));
+    }
+
     return page;
   }
 
@@ -72,6 +90,7 @@ export class PagesService {
     page: Page,
     images: ImageData[],
   ): Promise<Page> {
+    const cache = await this.cacheService.useArticleCache('page', id);
     const prevPage = await this.get(id, false);
     if (prevPage.id !== id) {
       throw new BadRequestException(id, 'id musi się zgadzać');
@@ -94,6 +113,9 @@ export class PagesService {
       permission: Permission.PAGE,
       user,
     });
+
+    await cache.clear();
+
     return updatedPage;
   }
 }

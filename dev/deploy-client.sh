@@ -1,15 +1,8 @@
 # exit on error
 set -o errexit
 
-echo 'formatting server...'
-npm run lint:fix --prefix=server
-
 echo 'formatting client...'
 npm run lint:fix --prefix=client
-
-echo 'running server tests...'
-npm run test --prefix=server -- --ci
-
 
 rsync \
     --exclude '.git' \
@@ -19,8 +12,9 @@ rsync \
     --exclude "coverage-ts" \
     --exclude "dist" \
     --exclude "backoffice" \
+    --exclude "server" \
+    --exclude "prisma" \
     --exclude "e2e" \
-    --exclude "prisma/db-import/animals/animals" \
     --progress \
     -r ./ ubuntu@146.59.32.93:schronisko
 
@@ -32,7 +26,8 @@ rsync \
 #     --exclude "coverage-ts" \
 #     --exclude "dist" \
 #     --exclude "backoffice" \
+    # --exclude "server" \
+    # --exclude "prisma" \
 #     --exclude "e2e" \
-#     --exclude "prisma/db-import/animals/animals" \
 #     --progress \
 #     -r ./ ubuntu@217.182.74.200:svc/schronisko

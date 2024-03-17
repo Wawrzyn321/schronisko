@@ -51,7 +51,7 @@ describe('AnimalImagesController', () => {
       animalImagesController.getImages('some-id'),
     ).rejects.toThrowError(/Not Found/);
     expect(prismaServiceMock.animal.findFirst).toHaveBeenCalledWith({
-      where: { id: 'some-id', filterPublic: undefined },
+      where: { id: 'some-id', onlyPublic: undefined },
     });
   });
 
@@ -64,7 +64,7 @@ describe('AnimalImagesController', () => {
     const result = await animalImagesController.getImages('some-id');
     expect(result).toBe('animal-images');
     expect(prismaServiceMock.animalImage.findMany).toHaveBeenCalledWith({
-      where: { animalId: 'some-id', filterPublic: undefined },
+      where: { animalId: 'some-id', onlyPublic: undefined },
     });
   });
 

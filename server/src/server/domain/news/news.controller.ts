@@ -39,7 +39,7 @@ export class NewsPublicController {
   @Get(':id')
   getSingleNews(@Param('id') newsId: string) {
     return this.newsService.get(newsId, {
-      filterPublic: true,
+      onlyPublic: true,
       useSubstitution: true,
     });
   }
@@ -60,7 +60,7 @@ export class NewsController {
   @Get(':id')
   getSingleNews(@Param('id') newsId: string) {
     return this.newsService.get(newsId, {
-      filterPublic: false,
+      onlyPublic: false,
       useSubstitution: false,
     });
   }

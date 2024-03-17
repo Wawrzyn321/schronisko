@@ -2,6 +2,8 @@
   "name": "schronisko",
   "version": "1.0.0",
   "scripts": {
+    "dev": "check-node-version --node '= 16' && node ./dev/dev.js",
+    "check-and-format": "npm run check --prefix=backoffice && npm run lint:fix --prefix=client && npm run lint:fix --prefix=server",
     "ts-coverage": "npx typescript-coverage-report --ignore-files prisma/db-import/*.ts && open coverage-ts/index.html"
   },
   "keywords": [],
@@ -11,6 +13,8 @@
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
     "@types/node": "^14.14.35",
+    "check-node-version": "^4.2.1",
+    "concurrently": "^6.3.0",
     "prisma": "^4.4.0-dev.43",
     "ts-node": "^9.1.1",
     "type-coverage": "^2.17.5",

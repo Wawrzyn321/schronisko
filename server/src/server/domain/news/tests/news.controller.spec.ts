@@ -254,7 +254,7 @@ describe('NewsController', () => {
       where: { id: mockNewsUpdate.news.id },
     });
     expect(mockGetNews).toHaveBeenCalledWith(mockNewsUpdate.news.id, {
-      filterPublic: false,
+      onlyPublic: false,
       useSubstitution: false,
     });
     expect(logMock).toHaveBeenCalledWith({

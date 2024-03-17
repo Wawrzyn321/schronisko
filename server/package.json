@@ -10,7 +10,8 @@
     "build": "nest build",
     "lint:fix": "prettier --write \"src/**/*.ts\"",
     "start:nest": "NODE_ENV=production nest start",
-    "dev": "NODE_ENV=development nest start --watch",
+    "dev": "REDIS_URL=redis://127.0.0.1:6379 NODE_ENV=development nest start --watch --preserveWatchOutput",
+    "redis": "redis-server",
     "dev:test": "dotenv -e ../prisma/.env.test -- nest start --watch",
     "test": "SENDGRID_API_KEY=SG. DATABASE_URL='postgres://DONT USE IT' jest"
   },
@@ -29,6 +30,7 @@
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "random-seed": "^0.3.0",
+    "redis": "^4.6.12",
     "sharp": "^0.30.1"
   },
   "devDependencies": {

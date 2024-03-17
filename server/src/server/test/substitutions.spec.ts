@@ -1,5 +1,5 @@
 import { Settings } from '@prisma/client';
-import { containsSubsitution, subsitute } from '../substitutions';
+import { containsSubsitution, substitute } from '../substitutions';
 
 describe('subsitutions', () => {
   describe('containsSubsitution', () => {
@@ -11,7 +11,7 @@ describe('subsitutions', () => {
     });
   });
 
-  describe('subsitute', () => {
+  describe('substitute', () => {
     it('subsitutes', () => {
       const mockSettings: Settings[] = [
         {
@@ -24,7 +24,7 @@ describe('subsitutions', () => {
         },
       ];
       const str = `test %KONTO% %KONTO% %NOT_FOUND%`;
-      expect(subsitute(str, mockSettings)).toMatchInlineSnapshot(
+      expect(substitute(str, mockSettings)).toMatchInlineSnapshot(
         `"test VACN VACN %NOT_FOUND%"`,
       );
     });
