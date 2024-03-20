@@ -5,16 +5,18 @@ import {
   navTo,
   expectSuccessPopups,
   removeStorageState,
-} from "./helpers";
+} from "../helpers";
 
-import { BACKOFFICE_URL, STORAGE_STATE_JSON } from "./config";
+import { BACKOFFICE_URL } from "../config";
+
+const STORAGE_STATE_PATH = 'storage/news.storage.json'
 
 test.describe("News: Get auth data", () => {
   test("Login as admin", async ({ page }) => {
-    removeStorageState();
+    removeStorageState(STORAGE_STATE_PATH);
     await page.goto(BACKOFFICE_URL);
     await login(page);
-    await page.context().storageState({ path: STORAGE_STATE_JSON });
+    await page.context().storageState({ path: STORAGE_STATE_PATH });
   });
 });
 
@@ -23,7 +25,7 @@ test.describe("News: ", () => {
     await page.goto(BACKOFFICE_URL);
   });
 
-  test.use({ storageState: STORAGE_STATE_JSON });
+  test.use({ storageState: STORAGE_STATE_PATH });
 
   test("List news", async ({ page }) => {
     await navTo(page, "Newsy");

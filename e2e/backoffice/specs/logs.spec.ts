@@ -1,12 +1,14 @@
-import { test, expect, chromium } from "@playwright/test";
-import { contains, login, navTo, expectSuccessPopups, removeStorageState } from "./helpers";
+import { test, expect } from "@playwright/test";
+import { contains, login, navTo, expectSuccessPopups, removeStorageState } from "../helpers";
 
-import { BACKOFFICE_URL, } from "./config";
+import { BACKOFFICE_URL, } from "../config";
 
 test.describe("Logs: ", () => {
 
+  const STORAGE_STATE_PATH = 'storage/logs.storage.json'
+
   test("Delete logs", async ({ page }) => {
-    removeStorageState();
+    removeStorageState(STORAGE_STATE_PATH);
     await page.goto(BACKOFFICE_URL);
 
     await login(page);

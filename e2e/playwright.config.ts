@@ -10,7 +10,7 @@ const config: PlaywrightTestConfig = {
     timeout: 3000,
   },
   // tests are much more stable
-  workers: 1,
+  // workers: 1,
   maxFailures: process.env.CI ? 5 : undefined,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,

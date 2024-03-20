@@ -5,9 +5,11 @@ import {
   navTo,
   expectSuccessPopups,
   removeStorageState,
-} from "./helpers";
+} from "../helpers";
 
-import { BACKOFFICE_URL, STORAGE_STATE_JSON } from "./config";
+import { BACKOFFICE_URL } from "../config";
+
+const STORAGE_STATE_PATH = 'storage/additional-settings.storage.json'
 
 const expectSuccessPopup = async (page: Page) => {
   await expectSuccessPopups(page, {
@@ -18,10 +20,10 @@ const expectSuccessPopup = async (page: Page) => {
 
 test.describe("Additional settings: Get auth data", () => {
   test("Login as admin", async ({ page }) => {
-    removeStorageState();
+    removeStorageState(STORAGE_STATE_PATH);
     await page.goto(BACKOFFICE_URL);
     await login(page);
-    await page.context().storageState({ path: STORAGE_STATE_JSON });
+    await page.context().storageState({ path: STORAGE_STATE_PATH });
   });
 });
 
@@ -31,7 +33,7 @@ test.describe("Additional settings:", () => {
     await navTo(page, "Dodatkowe ustawienia");
   });
 
-  test.use({ storageState: STORAGE_STATE_JSON });
+  test.use({ storageState: STORAGE_STATE_PATH });
 
   test("Check Psi Wolontariat", async ({ page }) => {
     const psiCheckbox = contains(page, "Psi wolontariat możliwy");

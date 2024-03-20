@@ -7,6 +7,4 @@ export const NEW_USER = {
   firstName: "NEW_FIRST",
   lastName: "NEW_LAST",
 };
-export const STORAGE_STATE_JSON = "storageState.json";
-
 export * from './../config';

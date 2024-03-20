@@ -5,7 +5,7 @@ import {
   navTo,
   expectSuccessPopups,
   removeStorageState,
-} from "./helpers";
+} from "../helpers";
 
 import {
   BACKOFFICE_URL,
@@ -13,8 +13,9 @@ import {
   ADMIN_LOGIN,
   NEW_USER,
   CHANGE_LOGIN,
-  STORAGE_STATE_JSON,
-} from "./config";
+} from "../config";
+
+const STORAGE_STATE_PATH = 'storage/users.storage.json'
 
 test.describe("Users: ", () => {
   test.beforeEach(async ({ page }) => {
@@ -23,7 +24,7 @@ test.describe("Users: ", () => {
 
   test.describe("Login - inactive", () => {
     test("Inactive user can't login", async ({ page }) => {
-      removeStorageState();
+      removeStorageState(STORAGE_STATE_PATH);
       await page.locator("[placeholder=Login]").fill(INACTIVE_LOGIN);
       await page.locator("[placeholder=Hasło]").fill("HASLO_2");
 
@@ -62,7 +63,7 @@ test.describe("Users: ", () => {
         await expect(contains(page, str, "nav")).toBeVisible();
       }
 
-      await page.context().storageState({ path: STORAGE_STATE_JSON });
+      await page.context().storageState({ path: STORAGE_STATE_PATH });
 
       //logout
       await contains(page, "Wyloguj się").click();
@@ -74,7 +75,7 @@ test.describe("Users: ", () => {
   });
 
   test.describe("Admin", () => {
-    test.use({ storageState: STORAGE_STATE_JSON });
+    test.use({ storageState: STORAGE_STATE_PATH });
     test("Inspect users list", async ({ page }) => {
       await navTo(page, "Użytkownicy");
 

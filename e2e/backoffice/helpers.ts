@@ -1,12 +1,9 @@
 import { expect, Page } from "@playwright/test";
-import { ADMIN_LOGIN, STORAGE_STATE_JSON } from "./config";
+import { ADMIN_LOGIN } from "./config";
 import { closeSync, openSync } from "fs";
 import { contains } from "./../helpers";
 
 export * from "./../helpers";
-
-export const navTo = async (page: Page, str: string) =>
-  await contains(page, str, "a").click();
 
 export const login = async (
   page: Page,
@@ -42,9 +39,4 @@ export const expectSuccessPopups = async (
 ) => {
   await expect(contains(page, okText)).toBeVisible();
   await expect(contains(page, errorText)).not.toBeVisible();
-};
-
-export const removeStorageState = () => {
-  // 'w' overrides state
-  closeSync(openSync(STORAGE_STATE_JSON, "w"));
 };

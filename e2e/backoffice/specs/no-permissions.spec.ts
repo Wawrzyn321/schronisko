@@ -1,7 +1,7 @@
 import { test, expect, Page } from "@playwright/test";
-import { contains, login, navTo, expectSuccessPopups } from "./helpers";
+import { contains, login, navTo, expectSuccessPopups } from "../helpers";
 
-import { BACKOFFICE_URL } from "./config";
+import { BACKOFFICE_URL } from "../config";
 
 const loginBeforeEach = async (page: Page) => {
   await page.goto(BACKOFFICE_URL);
