@@ -20,6 +20,7 @@ type HomeProps = {
 export default function Home({ ssrData }: HomeProps) {
   return (
     <>
+      <button onClick={() => {(null as any).frontend}}>crash</button>
       <BigSection mainPage={ssrData.mainPage} recentNews={ssrData.recentNews} />
       <AfterAdoption afterAdoptionAnimals={ssrData.afterAdoptionAnimals} />
       <FaqBanner />
