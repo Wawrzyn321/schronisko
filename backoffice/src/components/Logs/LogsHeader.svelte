@@ -6,7 +6,7 @@
 
   let deleteLogsModalVisible = false;
 
-  export let onLogsDeleted: () => any;
+  export let onLogsDeleted: () => void;
   export let filteringParams: LogsFilteringParams;
 </script>
 

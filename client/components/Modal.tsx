@@ -15,7 +15,7 @@ ReactModal.setAppElement('#__next');
 
 type ModalProps = {
   isOpen: boolean;
-  onRequestClose: () => any;
+  onRequestClose: () => void;
   children: ReactChild;
 };
 

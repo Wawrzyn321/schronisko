@@ -34,7 +34,7 @@
   export let columnParams: AnimalColumnParams;
   export let filteringParams: AnimalFilteringParams;
   export let sortingParams: AnimalSortingParams;
-  export let onAnimalDeleted: (animal: Animal) => any;
+  export let onAnimalDeleted: (animal: Animal) => void;
 
   let deleteModalVisible = false;
   let selectedAnimal: AnimalListElement = null;

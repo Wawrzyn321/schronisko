@@ -10,7 +10,7 @@
     imageName?: string;
   };
   export let imageData: string;
-  export let setFormValid: (valid: boolean) => any;
+  export let setFormValid: (valid: boolean) => void;
 
   let form: HTMLFormElement;
 

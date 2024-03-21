@@ -74,7 +74,6 @@ export class PagesService {
     if (useSubstitution && containsSubsitution(page.content)) {
       const settings = await this.settingsService.getAll();
       page.content = substitute(page.content, settings);
-      console.log(page.content, settings);
     }
 
     if (cache) {

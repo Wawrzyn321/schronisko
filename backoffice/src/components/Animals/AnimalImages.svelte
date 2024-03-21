@@ -13,7 +13,7 @@
   import ResizableImageInput from '../shared/ResizableImageInput.svelte';
 
   export let images: AnimalImageParams[];
-  export let revalidateForm: () => any;
+  export let revalidateForm: () => void;
   export let disabled: boolean;
 
   const MAX_IMAGES = 8;

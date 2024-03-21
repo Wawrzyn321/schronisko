@@ -14,7 +14,7 @@
 
   export let animal: AnimalData;
   export let images: AnimalImageParams[] = [];
-  export let setFormValid: (valid: boolean) => any;
+  export let setFormValid: (valid: boolean) => void;
 
   const mode = new URLSearchParams(get(querystring)).get('mode');
   const canEditAnimals = $auth.user.permissions.includes(Permission.ANIMAL);

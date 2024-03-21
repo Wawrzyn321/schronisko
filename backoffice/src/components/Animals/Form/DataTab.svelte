@@ -12,7 +12,7 @@
   import AnimalMiniatureForm from './AnimalMiniatureForm.svelte';
 
   export let animal: AnimalData;
-  export let revalidateForm: () => any;
+  export let revalidateForm: () => void;
   export let disabled: boolean;
 
   function onCategoryChange(category: AnimalCategory) {

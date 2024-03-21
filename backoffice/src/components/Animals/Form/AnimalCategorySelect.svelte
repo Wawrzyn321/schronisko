@@ -5,7 +5,7 @@
 
   export let virtualCaretakerType: VirtualCaretakerType;
   export let category: AnimalCategory;
-  export let onChange: (category: AnimalCategory) => any;
+  export let onChange: (category: AnimalCategory) => void;
   export let disabled: boolean;
 
   function computeWarning(

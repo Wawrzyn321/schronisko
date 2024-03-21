@@ -11,7 +11,7 @@
   export let timestamp: Date;
   export let isValid: boolean;
   export let news: News;
-  export let updateNews: () => any;
+  export let updateNews: () => void;
   export let isSaving: boolean;
 
   let deleteModalVisible = false;

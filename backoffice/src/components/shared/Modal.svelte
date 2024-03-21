@@ -5,7 +5,7 @@
   export let title: string;
   export let confirmText: string = 'OK';
   export let id: string | undefined = undefined;
-  export let onConfirm: () => any;
+  export let onConfirm: () => Promise<boolean | undefined | void>;
   export let disabledConfirm: boolean = false;
   export let loadingConfirm: boolean = false;
   export let cancelText: string = 'Anuluj';
@@ -20,10 +20,11 @@
   };
 
   const confirm = async () => {
-    if ((await onConfirm()) !== false) {
+    if (await onConfirm() !== false) {
       close();
     }
   };
+
 </script>
 
 <svelte:window on:keydown={closeOnEsc} />
@@ -116,4 +117,5 @@
   :global(.modal-confirm) {
     margin-left: 8px;
   }
+
 </style>

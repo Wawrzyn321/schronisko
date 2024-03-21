@@ -8,7 +8,7 @@ import Image from 'next/image';
 type AnimalCardProps = {
   animal: Animal;
   showOverlay: boolean;
-  openModal: (animal: Animal) => any;
+  openModal: (animal: Animal) => void;
 };
 
 export function AnimalCard({

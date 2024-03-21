@@ -15,7 +15,7 @@
   let isActive: boolean;
   let loading = false;
 
-  const onShow = async (_: any) => {
+  const onShow = async () => {
     loading = true;
     permissions = [];
     if (!user) return;
@@ -28,7 +28,7 @@
     }
   };
 
-  $: onShow(user);
+  $: onShow();
 
   async function updateUser() {
     try {

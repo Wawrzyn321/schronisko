@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "check-node-version --node '= 16' && node ./dev/dev.js",
     "check-and-format": "npm run check --prefix=backoffice && npm run lint:fix --prefix=client && npm run lint:fix --prefix=server",
-    "ts-coverage": "npx typescript-coverage-report --ignore-files prisma/db-import/*.ts && open coverage-ts/index.html"
+    "ts-coverage": "npx typescript-coverage-report && open coverage-ts/index.html"
   },
   "keywords": [],
   "author": "",

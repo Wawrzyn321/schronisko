@@ -17,7 +17,7 @@
   export let animal: Animal;
   export let images: AnimalImageParams[];
   export let isSaving: boolean;
-  export let updateAnimal: () => any;
+  export let updateAnimal: () => Promise<boolean | undefined | void>;
   export let prevCategory: AnimalCategory;
 
   let isWarningModalVisible = false;

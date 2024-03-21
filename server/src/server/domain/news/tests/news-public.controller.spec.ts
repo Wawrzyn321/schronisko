@@ -5,13 +5,14 @@ import { PrismaService } from '../../../prisma-connect/prisma.service';
 import { NewsPublicController } from '../news.controller';
 import { NewsService } from '../news.service';
 import { News, Settings } from '@prisma/client';
-
+import { CacheService } from '../../cache/cache.service';
 describe('NewsPublicController', () => {
   let newsPublicController: NewsPublicController;
   let newsService: NewsService;
   let prismaServiceMock: PrismaService;
   let settingsService: SettingsService;
   let logsService: LogsService;
+  let cacheService: CacheService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -19,11 +20,17 @@ describe('NewsPublicController', () => {
     }).compile();
     prismaServiceMock = module.get<PrismaService>(PrismaService);
     logsService = new LogsService(prismaServiceMock);
-    settingsService = new SettingsService(prismaServiceMock, logsService);
+    cacheService = new CacheService();
+    settingsService = new SettingsService(
+      prismaServiceMock,
+      logsService,
+      cacheService,
+    );
     newsService = new NewsService(
       prismaServiceMock,
       logsService,
       settingsService,
+      cacheService,
     );
     newsPublicController = new NewsPublicController(newsService);
   });
@@ -60,10 +67,17 @@ describe('NewsPublicController', () => {
     settingsService.getAll = jest.fn().mockReturnValue([mockSetting]);
     prismaServiceMock.news.findFirst = jest.fn().mockReturnValue(mockNews);
 
+    const cacheSetMock = jest.fn();
+    cacheService.useArticleCache = jest
+      .fn()
+      .mockReturnValue({ set: cacheSetMock });
+
     const result = await newsPublicController.getSingleNews('news-id');
 
     expect(result.id).toBe('news-id');
     expect(result.content).toBe('that is SUBSTITUTED');
+
+    expect(cacheSetMock).toHaveBeenCalledWith(JSON.stringify(mockNews));
   });
 
   it('GET recent returns recent news', async () => {

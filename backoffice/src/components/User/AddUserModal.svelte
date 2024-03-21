@@ -10,7 +10,7 @@
   import { notifyError } from '../../contexts/notification.context';
 
   export let modalVisible: boolean;
-  export let onUserAdded: (user: UserViewModel) => any;
+  export let onUserAdded: (user: UserViewModel) => void;
 
   let form: HTMLFormElement;
   let isFormValid = false;

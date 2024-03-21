@@ -16,7 +16,7 @@
   export let modalVisible: boolean;
   export let file: File;
   export let title: string;
-  export let setImageData: (image: string) => any;
+  export let setImageData: (image: string) => void;
   export let forceRefresh: boolean;
 
   let imageCanvas: HTMLCanvasElement;
@@ -145,7 +145,7 @@
     img.src = URL.createObjectURL(file);
   }
 
-  function apply() {
+  async function apply() {
     const normalizedX = x / targetWidth;
     const normalizedY = y / targetHeight;
 

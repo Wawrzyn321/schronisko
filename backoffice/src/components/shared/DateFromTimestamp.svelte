@@ -1,5 +1,5 @@
 <script lang="ts">
-  export let timestamp: any;
+  export let timestamp: string | Date;
   export let showHour = false;
 
   const dateFormatOptions: Intl.DateTimeFormatOptions = {
@@ -12,4 +12,4 @@
   };
 </script>
 
-{new Date(Date.parse(timestamp)).toLocaleDateString('pl-PL', dateFormatOptions)}
+{(typeof timestamp === 'string' ? new Date(Date.parse(timestamp)) : timestamp).toLocaleDateString('pl-PL', dateFormatOptions)}

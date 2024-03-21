@@ -5,7 +5,7 @@
   import { notifyError } from '../../contexts/notification.context';
 
   export let modalVisible: boolean;
-  export let onUserDeleted: (user: UserViewModel) => any;
+  export let onUserDeleted: (user: UserViewModel) => void;
   export let user: UserViewModel;
 
   let loading = false;

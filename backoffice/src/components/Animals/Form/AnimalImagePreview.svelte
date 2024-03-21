@@ -5,7 +5,7 @@
   import ImagePreview from '../../News/ImagePreview.svelte';
 
   export let animal: AnimalData;
-  export let revertImage: () => any;
+  export let revertImage: () => void;
   export let animalType: AnimalType;
 </script>
 

@@ -2,7 +2,7 @@ import { ChangeEvent, useEffect, useRef, useState } from 'react';
 
 type SimpleInputProps = {
   value: string;
-  setValue: (value: string) => any;
+  setValue: (value: string) => void;
   triedSubmitCounter?: number;
 };
 

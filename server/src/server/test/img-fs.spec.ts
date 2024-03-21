@@ -10,8 +10,8 @@ jest.mock('fs', () => ({
   ...(jest.requireActual('fs') as object),
   promises: {
     ...jest.requireActual('fs').promises,
-    unlink: (...args: any) => mockUnlink(...args),
-    writeFile: (...args: any) => mockWriteFile(...args),
+    unlink: (...args: unknown[]) => mockUnlink(...args),
+    writeFile: (...args: unknown[]) => mockWriteFile(...args),
   },
 }));
 

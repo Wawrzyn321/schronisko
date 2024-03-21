@@ -32,7 +32,7 @@ describe('LogsService', () => {
     };
     prismaServiceMock.logs.create = jest
       .fn()
-      .mockImplementationOnce(({ data }: { data: any }) => data);
+      .mockImplementationOnce(({ data }: { data: unknown }) => data);
 
     const result = await logsService.log({
       message: 'jakas wiadomosc',

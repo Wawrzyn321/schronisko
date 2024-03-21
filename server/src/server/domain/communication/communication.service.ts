@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import * as nodemailer from 'nodemailer';
 import { CaptchaService } from './captcha.service';
 import {
@@ -61,14 +65,18 @@ export class CommunicationService {
     id: string,
     text: string,
     validateInput: () => boolean,
-    onValidated: () => Promise<any>,
+    sendEmail: () => Promise<'OK' | InternalServerErrorException>,
   ) {
     if (!validateInput()) {
       throw new BadRequestException('Brak wszystkich danych.');
     }
 
     if (await this.captchaService.validateCaptcha(id, text)) {
-      await onValidated();
+      const result = await sendEmail();
+      if (result !== 'OK') {
+        console.log(result);
+        throw new BadRequestException('Nie udało się wysłać maila.');
+      }
     } else {
       throw new BadRequestException('Brzydka captcha');
     }

@@ -5,7 +5,7 @@
   import type { AnimalData } from '../../../services/AnimalsService';
 
   export let animal: AnimalData;
-  export let revalidateForm: () => any;
+  export let revalidateForm: () => void;
   export let disabled: boolean;
 
   function revertImage() {

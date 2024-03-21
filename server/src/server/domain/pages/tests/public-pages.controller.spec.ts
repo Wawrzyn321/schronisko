@@ -5,13 +5,14 @@ import { PagesPublicController } from '../pages.controller';
 import { PagesService } from '../pages.service';
 import { SettingsService } from '../../settings/settings.service';
 import { Page, Settings } from '@prisma/client';
-
+import { CacheService } from '../../cache/cache.service';
 describe('PagesPublicController', () => {
   let pagesController: PagesPublicController;
   let pagesService: PagesService;
   let logsService: LogsService;
   let settingsService: SettingsService;
   let prismaServiceMock: PrismaService;
+  let cacheService: CacheService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -19,11 +20,17 @@ describe('PagesPublicController', () => {
     }).compile();
     prismaServiceMock = module.get<PrismaService>(PrismaService);
     logsService = new LogsService(prismaServiceMock);
-    settingsService = new SettingsService(prismaServiceMock, logsService);
+    cacheService = new CacheService();
+    settingsService = new SettingsService(
+      prismaServiceMock,
+      logsService,
+      cacheService,
+    );
     pagesService = new PagesService(
       prismaServiceMock,
       settingsService,
       logsService,
+      cacheService,
     );
     pagesController = new PagesPublicController(pagesService);
   });

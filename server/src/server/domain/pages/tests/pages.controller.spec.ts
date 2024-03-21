@@ -8,6 +8,7 @@ import { Page, Permission } from '@prisma/client';
 import { ImageData } from 'img-fs';
 import { LoggedInUser } from '../../auth/types';
 import { allPermissions } from '../../auth/constants';
+import { CacheService } from '../../cache/cache.service';
 
 const mockAdminUser: LoggedInUser = {
   id: -1,
@@ -48,6 +49,7 @@ describe('PagesController', () => {
   let logsService: LogsService;
   let settingsService: SettingsService;
   let prismaServiceMock: PrismaService;
+  let cacheService: CacheService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -55,11 +57,17 @@ describe('PagesController', () => {
     }).compile();
     prismaServiceMock = module.get<PrismaService>(PrismaService);
     logsService = new LogsService(prismaServiceMock);
-    settingsService = new SettingsService(prismaServiceMock, logsService);
+    cacheService = new CacheService();
+    settingsService = new SettingsService(
+      prismaServiceMock,
+      logsService,
+      cacheService,
+    );
     pagesService = new PagesService(
       prismaServiceMock,
       settingsService,
       logsService,
+      cacheService,
     );
     pagesController = new PagesController(pagesService);
   });
@@ -145,6 +153,12 @@ describe('PagesController', () => {
     prismaServiceMock.page.update = jest.fn().mockReturnValue(body.page);
     logsService.log = logMock;
 
+    const cacheClearMock = jest.fn();
+    const cacheSetMock = jest.fn();
+    cacheService.useArticleCache = jest
+      .fn()
+      .mockReturnValue({ clear: cacheClearMock, set: cacheSetMock });
+
     const result = await pagesController.updatePage(body.page.id, body, {
       user: mockAdminUser,
     });
@@ -162,5 +176,8 @@ describe('PagesController', () => {
       expect.stringContaining('/img/mock-image-name'),
       expect.stringContaining('mock file content'),
     );
+
+    expect(cacheClearMock).toHaveBeenCalled();
+    expect(cacheSetMock).toHaveBeenCalledWith(JSON.stringify(mockPage));
   });
 });

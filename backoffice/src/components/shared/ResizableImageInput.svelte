@@ -7,7 +7,7 @@
   export let imageName: string | null = null;
   export let label: string;
   export let message: string = null;
-  export let revalidateForm: () => any = null;
+  export let revalidateForm: () => void = null;
   export let width: number;
   export let height: number;
   export let required = true;

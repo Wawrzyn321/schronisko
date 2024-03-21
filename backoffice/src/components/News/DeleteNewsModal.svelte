@@ -5,7 +5,7 @@
   import { notifyError } from '../../contexts/notification.context';
 
   export let modalVisible: boolean;
-  export let onNewsDeleted: (news: NewsListElement) => any;
+  export let onNewsDeleted: (news: NewsListElement) => void;
   export let news: NewsListElement;
 
   let loading = false;

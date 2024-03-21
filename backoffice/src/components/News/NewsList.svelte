@@ -10,7 +10,7 @@
   import { STATIC_URL } from '../../services/config';
 
   export let news: NewsListElement[];
-  export let onNewsDeleted: (news: NewsListElement) => any;
+  export let onNewsDeleted: (news: NewsListElement) => void;
   export let loading: boolean;
 
   let deleteModalVisible = false;

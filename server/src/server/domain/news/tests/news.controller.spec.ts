@@ -8,7 +8,7 @@ import { News, Permission } from '@prisma/client';
 import { LoggedInUser } from '../../auth/types';
 import { allPermissions } from '../../auth/constants';
 import { NewsCreateInput, NewsModifyParams, NewsUpdateInput } from '../News';
-
+import { CacheService } from '../../cache/cache.service';
 const mockAdminUser: LoggedInUser = {
   id: -1,
   login: 'test-user-login',
@@ -80,6 +80,7 @@ describe('NewsController', () => {
   let prismaServiceMock: PrismaService;
   let settingsService: SettingsService;
   let logsService: LogsService;
+  let cacheService: CacheService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -87,11 +88,17 @@ describe('NewsController', () => {
     }).compile();
     prismaServiceMock = module.get<PrismaService>(PrismaService);
     logsService = new LogsService(prismaServiceMock);
-    settingsService = new SettingsService(prismaServiceMock, logsService);
+    cacheService = new CacheService();
+    settingsService = new SettingsService(
+      prismaServiceMock,
+      logsService,
+      cacheService,
+    );
     newsService = new NewsService(
       prismaServiceMock,
       logsService,
       settingsService,
+      cacheService,
     );
     newsController = new NewsController(newsService);
   });
@@ -114,12 +121,19 @@ describe('NewsController', () => {
   it('GET one with valid id returns news with unsubsituted content', async () => {
     prismaServiceMock.news.findFirst = jest.fn().mockReturnValue(mockNews);
 
+    const cacheSetMock = jest.fn();
+    cacheService.useArticleCache = jest
+      .fn()
+      .mockReturnValue({ set: cacheSetMock });
+
     const result = await newsController.getSingleNews('15');
 
     expect(result).toMatchObject(mockNews);
     expect(prismaServiceMock.news.findFirst).toHaveBeenCalledWith({
       where: { id: '15' },
     });
+
+    expect(cacheSetMock).toHaveBeenCalledWith(JSON.stringify(mockNews));
   });
 
   it('GET one returns 404 on invalid id', async () => {
@@ -235,6 +249,12 @@ describe('NewsController', () => {
     prismaServiceMock.news.update = mockNewsUpdateFn;
     newsService.get = mockGetNews;
 
+    const cacheClearMock = jest.fn();
+    const cacheSetMock = jest.fn();
+    cacheService.useArticleCache = jest
+      .fn()
+      .mockReturnValue({ clear: cacheClearMock, set: cacheSetMock });
+
     const result = await newsController.updateNews(
       mockNewsUpdate.news.id,
       mockNewsUpdate,
@@ -265,6 +285,9 @@ describe('NewsController', () => {
     expect(logMock.mock.calls[0][0].message).toMatchInlineSnapshot(
       `"zaktualizował newsa test-title (Opis: test-desc -> test-desc-2, Tytuł: test-news -> test-title, Upublicznienie: false -> true, Miniaturka)"`,
     );
+
+    expect(cacheClearMock).toHaveBeenCalled();
+    expect(cacheSetMock).not.toHaveBeenCalled();
   });
 
   it('DELETE with valid id deletes a news', async () => {

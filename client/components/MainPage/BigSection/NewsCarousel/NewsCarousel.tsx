@@ -1,42 +1,9 @@
 import { IMAGES_URL } from 'api/config';
-import Image from 'next/image';
-import whiteArrow from 'public/site/main/white arrow.svg';
 import styles from './NewsCarousel.module.scss';
 import { NewsListElement } from 'types';
 import { useState } from 'react';
 import { PageLink } from '../PageLink/PageLink';
-
-function CarouselControl({
-  index,
-  total,
-  setIndex,
-}: {
-  index: number;
-  total: number;
-  setIndex: (i: number) => any;
-}) {
-  const inc = () => setIndex((index + 1) % total);
-
-  const dec = () => setIndex(index - 1 < 0 ? total - 1 : index - 1);
-
-  return (
-    <>
-      <div className={styles['carousel__left-right']}>
-        <Image src={whiteArrow} alt="lewo" onClick={dec} />
-        <Image src={whiteArrow} alt="prawo" onClick={inc} />
-      </div>
-      <ul className={styles['carousel__bottom']}>
-        {new Array(total).fill(null).map((_: null, i) => (
-          <li
-            className={index === i ? styles['carousel--current'] : ''}
-            key={i}
-            onClick={() => setIndex(i)}
-          />
-        ))}
-      </ul>
-    </>
-  );
-}
+import { CarouselControl } from './CarouselControl/CarouselControl';
 
 export function NewsCarousel({
   recentNews,
@@ -56,7 +23,7 @@ export function NewsCarousel({
 
   const title = currentNews && (
     <div className={styles['carousel__title']}>
-      <PageLink href={'/news/' + currentNews.id}>{currentNews.title}</PageLink>
+      <PageLink href={'/news/' + currentNews.id} textClassName={styles['title-content']}>{currentNews.title}</PageLink>
     </div>
   );
 

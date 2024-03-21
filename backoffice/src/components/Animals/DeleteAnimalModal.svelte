@@ -7,7 +7,7 @@
   let loading = false;
 
   export let modalVisible: boolean;
-  export let onAnimalDeleted: (animal: AnimalListElement) => any;
+  export let onAnimalDeleted: (animal: AnimalListElement) => void;
   export let animal: AnimalListElement;
 
   async function deleteAnimal() {

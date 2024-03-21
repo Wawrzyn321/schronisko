@@ -3,7 +3,7 @@
   import Modal from '../components/shared/Modal.svelte';
 
   export let modalVisible: boolean;
-  export let doUpdateAnimal: () => any;
+  export let doUpdateAnimal: () => Promise<boolean | undefined | void>;
   export let category: AnimalCategory;
 
   $: categoryStr =

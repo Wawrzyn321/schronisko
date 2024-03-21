@@ -7,7 +7,7 @@
   export let imageData: string | null;
   export let imageName: string | null;
   export let subdir = '';
-  export let revertImage: () => any;
+  export let revertImage: () => void;
   export let placeholderPic: string | null;
 </script>
 

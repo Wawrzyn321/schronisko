@@ -5,7 +5,7 @@
 
   let loading = false;
 
-  export let onLogsDeleted: () => any;
+  export let onLogsDeleted: () => void;
   export let modalVisible: boolean;
 
   async function deleteLogs() {

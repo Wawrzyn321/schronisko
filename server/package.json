@@ -8,12 +8,12 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
-    "lint:fix": "prettier --write \"src/**/*.ts\"",
+    "lint:fix": "tsc && prettier --write \"src/**/*.ts\"",
     "start:nest": "NODE_ENV=production nest start",
     "dev": "REDIS_URL=redis://127.0.0.1:6379 NODE_ENV=development nest start --watch --preserveWatchOutput",
     "redis": "redis-server",
     "dev:test": "dotenv -e ../prisma/.env.test -- nest start --watch",
-    "test": "SENDGRID_API_KEY=SG. DATABASE_URL='postgres://DONT USE IT' jest"
+    "test": "REDIS_URL='DISABLED' SENDGRID_API_KEY=SG. DATABASE_URL='postgres://DONT USE IT' jest"
   },
   "dependencies": {
     "@nestjs/common": "^8.0.0",

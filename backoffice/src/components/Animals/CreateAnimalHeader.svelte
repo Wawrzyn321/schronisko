@@ -8,7 +8,7 @@
   export let isValid: boolean;
   export let images: AnimalImageParams[];
   export let isCreating: boolean;
-  export let createAnimal: () => any;
+  export let createAnimal: () => void;
   export let animalData: AnimalData;
 </script>
 

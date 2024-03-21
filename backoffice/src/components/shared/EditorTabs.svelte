@@ -7,11 +7,11 @@
 
   export let mapping: Array<string> | undefined = undefined;
   export let currentTab: string | undefined = undefined;
-  export let onChange: (content: string, fileMap: FileMap) => any;
+  export let onChange: (content: string, fileMap: FileMap) => void;
   export let contentForPreview: string;
   export let initialContent = '';
   export let title: string;
-  export let requestSave: () => any = null;
+  export let requestSave: () => void = null;
 </script>
 
 <Tabs {mapping} {currentTab}>

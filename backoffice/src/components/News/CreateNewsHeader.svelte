@@ -3,7 +3,7 @@
 
   export let isPublished: boolean;
   export let isValid: boolean;
-  export let createNews: () => any;
+  export let createNews: () => void;
 </script>
 
 <header class="g-flex-between-100">
