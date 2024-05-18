@@ -3,7 +3,6 @@ po deployu:
     * maile (sendgrid key)
     * usuń admina
     * dodaj https!
-
     
 "o nas" wciąż nieuzupełnione i inne też
 
@@ -11,11 +10,6 @@ po deployu:
 brakuje artykułów!
 
 test na update daty - a raczej zmień podejście, za dużo mockowania
-
-nieważne:
-* test na update daty - a raczej zmień podejście, za dużo mockowania
-* używam "a" zamiast "Link" - bez tego nie działa cofanie w przeglądarce
-sentry dla wysyłania maili
 
 lepszy sposób deployowania
 

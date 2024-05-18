@@ -5,8 +5,7 @@ echo 'formatting server...'
 npm run lint:fix --prefix=server
 
 echo 'running server tests...'
-# npm run test --prefix=server -- --ci
-
+npm run test --prefix=server -- --ci
 
 rsync \
     --exclude '.git' \

@@ -13,11 +13,11 @@
     "jsx": "preserve",
     "lib": ["es2021"],
     "paths": {
-      "prisma-connect/*": ["./src/server/prisma-connect/*"],
-      "img-fs": ["./src/server/img-fs"],
-      "domain": ["./src/server/domain"],
+      "prisma-connect/*": ["./src/prisma-connect/*"],
+      "img-fs": ["./src/img-fs"],
+      "domain": ["./src/domain"],
     },
     "skipLibCheck": true
   },
-  "include": ["src/server/**/*", "src/server/**/*"]
+  "include": ["src/**/*"]
 }
