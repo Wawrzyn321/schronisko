@@ -3,6 +3,8 @@ po deployu:
     * maile (sendgrid key)
     * usuń admina
     * dodaj https!
+
+    
 "o nas" wciąż nieuzupełnione i inne też
 
 ładnie sformatuj wiadomości w mailach, szczególnie tą do v-adopcji
@@ -15,10 +17,8 @@ nieważne:
 * używam "a" zamiast "Link" - bez tego nie działa cofanie w przeglądarce
 sentry dla wysyłania maili
 
-global error handler dla całej apki?
+lepszy sposób deployowania
 
+UPDATE paczek
 
-
-SENTRY
-POLA
-UPDATE
+testuj maile + dodaj handlowanie błędów

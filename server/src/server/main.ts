@@ -1,7 +1,13 @@
-import { NestFactory } from '@nestjs/core';
+import './sentry';
+import {
+  BaseExceptionFilter,
+  HttpAdapterHost,
+  NestFactory,
+} from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as fs from 'fs';
 import * as path from 'path';
+import * as Sentry from '@sentry/node';
 
 import * as bodyParser from 'body-parser';
 import { NestExpressApplication } from '@nestjs/platform-express';
@@ -35,6 +41,10 @@ async function bootstrap() {
   });
   app.use(bodyParser.urlencoded({ limit: MAX_REQUEST_SIZE, extended: true }));
   app.enableCors();
+
+  const { httpAdapter } = app.get(HttpAdapterHost);
+  Sentry.setupNestErrorHandler(app, new BaseExceptionFilter(httpAdapter));
+
   await app.listen(PORT);
 }
 bootstrap();

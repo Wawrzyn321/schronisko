@@ -1,0 +1,22 @@
+.get-involved {
+    display: flex;
+    justify-content: space-between;
+    column-gap: 32px;
+
+    width: 100%;
+    margin-bottom: 64px;
+}
+
+.get-involved__panel {
+    background: #e9ed54;
+    cursor: pointer;
+
+    font-size: 120%;
+    text-align: center;
+    text-transform: uppercase;
+
+    padding: 44px 64px;
+    border-radius: 72px;
+
+    width: 100%;
+}

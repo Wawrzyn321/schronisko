@@ -3,12 +3,9 @@
   import NotificationContext from '../contexts/NotificationContext.svelte';
   import Nav from '../routing/Nav.svelte';
   import { routes } from './../routing/routes';
-
-  let ann: any = null;
 </script>
 
 <NotificationContext>
-  <button type="button" on:click="{() => ann.tets}">Break the world</button>
   <Nav />
   <Router {routes} />
 </NotificationContext>

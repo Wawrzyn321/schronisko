@@ -1,5 +1,8 @@
 set -e
 
+echo 'flush redis'
+redis-cli FLUSHALL
+
 echo 'force making a symlink from ~/www-data-stuff/img/ to /var/svc/schronisko/images'
 rm -rf /var/svc/schronisko/images/img
 ln -sf ~/www-data-stuff/img/ /var/svc/schronisko/images

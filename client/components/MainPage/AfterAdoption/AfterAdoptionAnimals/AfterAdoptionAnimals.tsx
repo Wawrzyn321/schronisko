@@ -10,13 +10,16 @@ import Image from 'next/image';
 import placeholderImage from 'public/site/main/404_placeholder.png';
 
 function AnimalImage({ animal }: { animal: AfterAdoptionAnimal }) {
+  const imageSrc = buildAnimalImageUrl(animal);
+  const animalUrl = buildAnimalUrl(animal.id);
+  const linkText = `${animal.type === 'CAT' ? "Kot" : "Pies"} ${animal.name}`;
+
   return (
-    <div>
-      <div className={styles['animal-image']}>
-        <img src={buildAnimalImageUrl(animal)} alt={animal.imageName} />
-        <div className={styles['animal-image__link']}>
-          <a href={buildAnimalUrl(animal.id)}>Dowiedz się więcej</a>
-        </div>
+    <div className={styles['animal-image']}>
+      <img src={imageSrc} alt={animal.imageName} />
+
+      <div className={styles['animal-image__link']}>
+        <a href={animalUrl}>{linkText}</a>
       </div>
     </div>
   );
@@ -28,7 +31,7 @@ export function AfterAdoptionAnimals({
   afterAdoptionAnimals: AfterAdoptionAnimal[];
 }) {
   if (!afterAdoptionAnimals) return null;
-  
+
   const placeholders = new Array(3 - afterAdoptionAnimals.length).fill(null);
 
   return (

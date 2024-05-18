@@ -1,7 +1,7 @@
 import { Page as PageModel } from '.prisma/client';
 import { BigSection } from 'components/MainPage/BigSection/BigSection';
 import { AfterAdoption } from 'components/MainPage/AfterAdoption/AfterAdoption';
-import { FaqBanner } from 'components/MainPage/FaqBanner';
+import { GetInvolved } from 'components/MainPage/GetInvolved/GetInvolved';
 import { DonateAndRecentlyFound } from 'components/MainPage/DonateAndRecentlyFound/DonateAndRecentlyFound';
 
 import { fetchAfterAdoptionAnimals, fetchPage, fetchRecentNews } from 'api/api';
@@ -20,10 +20,9 @@ type HomeProps = {
 export default function Home({ ssrData }: HomeProps) {
   return (
     <>
-      <button onClick={() => {(null as any).frontend}}>crash</button>
       <BigSection mainPage={ssrData.mainPage} recentNews={ssrData.recentNews} />
       <AfterAdoption afterAdoptionAnimals={ssrData.afterAdoptionAnimals} />
-      <FaqBanner />
+      <GetInvolved />
       <DonateAndRecentlyFound />
     </>
   );

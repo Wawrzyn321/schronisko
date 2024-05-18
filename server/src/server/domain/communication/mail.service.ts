@@ -15,10 +15,10 @@ export class MailService {
       text,
     };
     try {
-      await sendGridClient.send(msg);
-      return 'OK';
+      const [_] = await sendGridClient.send(msg);
     } catch (e) {
-      return new InternalServerErrorException();
+      console.log(e);
+      throw new InternalServerErrorException();
     }
   }
 }
