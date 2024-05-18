@@ -16,3 +16,9 @@ nieważne:
 sentry dla wysyłania maili
 
 global error handler dla całej apki?
+
+
+
+SENTRY
+POLA
+UPDATE

@@ -17,7 +17,7 @@ async function main(updateFiles: boolean) {
   await seedUsers(prisma);
   switch (process.env.NODE_ENV) {
     case "dev":
-      await seedAnimals(prisma, updateFiles);
+      await seedAnimals(prisma, UPDATE_FILES);
       break;
     case "vps":
       await seedAnimalsVps(prisma);
