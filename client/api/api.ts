@@ -60,7 +60,7 @@ async function throwingFetch(
   throw new FetchError(error.message, error.statusCode);
 }
 
-async function throwingPOST(url: string, body: any) {
+async function throwingPOST(url: string, body: unknown) {
   return await throwingFetch(url, {
     method: 'POST',
     body: JSON.stringify(body),

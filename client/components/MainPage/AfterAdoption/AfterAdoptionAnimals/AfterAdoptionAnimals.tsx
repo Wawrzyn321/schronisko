@@ -39,9 +39,9 @@ export function AfterAdoptionAnimals({
       {afterAdoptionAnimals.map((animal: Animal) => (
         <AnimalImage key={animal.id} animal={animal} />
       ))}
-      {placeholders.map((_: null, id) => (
+      {placeholders.map((_: null, index) => (
         <Image
-          key={id}
+          key={index}
           src={placeholderImage}
           alt="404?"
         />

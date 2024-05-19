@@ -119,3 +119,4 @@ coverage-ts/
 # prisma/db-import/animals/*
 e2e/storageState.json
 server/dump.rdb
+e2e/pages.storage.json

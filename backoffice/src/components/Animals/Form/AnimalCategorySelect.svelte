@@ -1,7 +1,8 @@
 <script lang="ts">
   import { AnimalCategory, VirtualCaretakerType } from '@prisma-app/client';
-  import { Field, Select } from 'svelma';
+  import { Field } from 'svelma';
   import { animalCategories, animalCategoriesMap } from '../animalMetadata';
+  import Select from './../../shared/Select.svelte';
 
   export let virtualCaretakerType: VirtualCaretakerType;
   export let category: AnimalCategory;
@@ -45,8 +46,10 @@
   label="Kategoria"
   message={hasWarning ? 'Czy to na pewno właściwa kategoria?' : ''}
   style="grid-area: category"
+  labelFor="category-select"
 >
   <Select
+    id="category-select"
     placeholder="Wybierz kategorię..."
     required
     expanded

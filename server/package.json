@@ -6,7 +6,6 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "prebuild": "rimraf dist",
     "build": "nest build",
     "lint:fix": "tsc && prettier --write \"src/**/*.ts\"",
     "start:nest": "REDIS_URL=redis://127.0.0.1:6379 NODE_ENV=production nest start",

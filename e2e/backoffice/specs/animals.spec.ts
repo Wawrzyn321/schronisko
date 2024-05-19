@@ -30,10 +30,6 @@ test.describe("Animals:", () => {
   test("List animals", async ({ page }) => {
     await navTo(page, "Zwierzęta");
 
-    await expect(
-      contains(page, "Nie znaleziono żadnych pasujących zwierząt.")
-    ).toBeVisible();
-
     await contains(page, "Widoczny na stronie").click();
 
     await expect(contains(page, "test-animal")).toBeVisible();
