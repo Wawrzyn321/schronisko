@@ -1,4 +1,4 @@
-import { Page as PageModel } from '.prisma/client';
+import { Page as PageModel } from '@prisma-app/client';
 import { FetchError } from 'api/api';
 import { Page } from 'components/Page';
 import styles from './VAdoptionModalContent.module.scss';

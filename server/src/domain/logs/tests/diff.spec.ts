@@ -1,4 +1,4 @@
-import { Permission } from '@prisma/client';
+import { Permission } from '@prisma-app/client';
 import { diff, havePermissionsChanged, formattedDiff } from '../diff';
 
 type MockDiff = { f: number; t?: string };

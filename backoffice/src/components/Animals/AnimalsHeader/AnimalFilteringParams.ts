@@ -1,4 +1,4 @@
-import type { AnimalType, AnimalGender, AnimalLocation, AnimalCategory, Animal } from '.prisma/client';
+import type { AnimalType, AnimalGender, AnimalLocation, AnimalCategory, Animal } from '@prisma-app/client';
 import type { AnimalListElement } from './../../../common/types';
 
 export type AnimalFilteringParams = {
@@ -11,27 +11,27 @@ export type AnimalFilteringParams = {
 };
 
 const filterBySearchPhrase =
-    (params: AnimalFilteringParams) => (animal: Animal) =>
+    (params: AnimalFilteringParams) => (animal: AnimalListElement) =>
         !params.searchPhrase ||
         animal.name.toLowerCase().includes(params.searchPhrase.toLowerCase()) ||
         animal.refNo.toLowerCase().includes(params.searchPhrase.toLowerCase());
 
-const filterByPublic = (params: AnimalFilteringParams) => (animal: Animal) =>
+const filterByPublic = (params: AnimalFilteringParams) => (animal: AnimalListElement) =>
     !params.showOnlyPublic || animal.isPublic;
 
-const filterByType = (params: AnimalFilteringParams) => (animal: Animal) =>
+const filterByType = (params: AnimalFilteringParams) => (animal: AnimalListElement) =>
     !params.typeFilter.length || params.typeFilter.includes(animal.type);
 
-const filterByGender = (params: AnimalFilteringParams) => (animal: Animal) =>
+const filterByGender = (params: AnimalFilteringParams) => (animal: AnimalListElement) =>
     !params.genderFilter.length || params.genderFilter.includes(animal.gender);
 
 const filterByLocation =
-    (params: AnimalFilteringParams) => (animal: Animal) =>
+    (params: AnimalFilteringParams) => (animal: AnimalListElement) =>
         !params.locationFilter.length ||
-        params.locationFilter.includes(animal.location);
+        (animal.location && params.locationFilter.includes(animal.location));
 
 const filterByCategory =
-    (params: AnimalFilteringParams) => (animal: Animal) =>
+    (params: AnimalFilteringParams) => (animal: AnimalListElement) =>
         !params.categoryFilter.length ||
         params.categoryFilter.includes(animal.category);
 

@@ -1,5 +1,5 @@
-import { VirtualCaretakerType } from '@prisma/client';
-import { AnimalType, AnimalGender, AnimalLocation, AnimalCategory } from '.prisma/client';
+import { VirtualCaretakerType } from '@prisma-app/client';
+import { AnimalType, AnimalGender, AnimalLocation, AnimalCategory } from '@prisma-app/client';
 
 export const animalTypes = Object.values(AnimalType);
 export const animalTypesMap: { [type in AnimalType]: string } = {

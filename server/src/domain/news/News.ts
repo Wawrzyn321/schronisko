@@ -1,17 +1,12 @@
 import { ImageData } from '../../img-fs';
+import type { News } from '@prisma-app/client';
 
-export type NewsCreateInput = {
-  title: string;
-  description: string;
-  isPublished: boolean;
-  content: string;
-  imageName: string;
-};
+export type NewsCreateInput = Omit<News, 'id' | 'createdAt'>;
 
-export interface NewsUpdateInput extends NewsCreateInput {
+export type NewsUpdateInput = NewsCreateInput & {
   id: string;
   imagePath: string;
-}
+};
 
 export interface NewsModifyParams<TNewsInput> {
   news: TNewsInput;
@@ -19,11 +14,4 @@ export interface NewsModifyParams<TNewsInput> {
   imageData: string;
 }
 
-export type NewsListElement = {
-  id: string;
-  description: string;
-  title: string;
-  createdAt: Date;
-  isPublished: boolean;
-  imageName: string;
-};
+export type NewsListElement = Omit<News, 'content'>;

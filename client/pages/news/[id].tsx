@@ -1,7 +1,7 @@
 import { IdWrapper } from 'components/IdWrapper';
 import { FetchError, fetchNews } from 'api/api';
 import { useEffect, useState } from 'react';
-import { News as NewsModel } from '.prisma/client';
+import { News as NewsModel } from '@prisma-app/client';
 import { Article } from 'components/Article/Article';
 import { ErrorWrapper, ERROR_GENERIC, ERROR_NEWS_NOT_FOUND } from 'errors';
 import { getStaticPropsProps } from 'types';

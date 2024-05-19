@@ -1,10 +1,9 @@
-
 import { wrap } from 'svelte-spa-router/wrap';
 import { push } from 'svelte-spa-router';
 import { isLoggedIn } from '../contexts/auth.context';
 import type { SvelteComponent } from 'svelte';
 
-export const unauthorizedWrapper = (component: typeof SvelteComponent) =>
+export const unauthorizedWrapper = (component: typeof SvelteComponent<any>) =>
     wrap({
         component,
         conditions: [
@@ -18,7 +17,7 @@ export const unauthorizedWrapper = (component: typeof SvelteComponent) =>
         ],
     });
 
-export const loginWrapper = (component: typeof SvelteComponent) =>
+export const loginWrapper = (component: typeof SvelteComponent<any>) =>
     wrap({
         component,
         conditions: [
@@ -33,7 +32,7 @@ export const loginWrapper = (component: typeof SvelteComponent) =>
     });
 
 
-export const rootWrapper = (component: typeof SvelteComponent) =>
+export const rootWrapper = (component: typeof SvelteComponent<any>) =>
     wrap({
         component, // ignored anyway
         conditions: [

@@ -14,7 +14,7 @@
   let scale: number;
 
   export let modalVisible: boolean;
-  export let file: File;
+  export let file: File | null;
   export let title: string;
   export let setImageData: (image: string) => void;
   export let forceRefresh: boolean;
@@ -32,12 +32,20 @@
   $: {
     if (file && imageCanvas && frameCanvas && forceRefresh) {
       forceRefresh = false;
-      setupCanvas();
+      setupCanvas(file);
     }
   }
 
+  function getContext(canvas: HTMLCanvasElement) {
+    const ctx = canvas.getContext('2d');
+    if (!ctx) {
+      throw Error('Canvas context null');
+    }
+    return ctx;
+  }
+
   function drawFrame() {
-    const ctx = frameCanvas.getContext('2d');
+    const ctx = getContext(frameCanvas);
     ctx.clearRect(0, 0, frameCanvas.width, frameCanvas.height);
     ctx.strokeRect(x, y, targetWidth * scale, targetHeight * scale);
   }
@@ -107,9 +115,7 @@
     }
   }
 
-  function setupCanvas() {
-    const context = imageCanvas.getContext('2d');
-
+  function setupCanvas(file: File) {
     targetWidth = defaultWidth;
     targetHeight = defaultHeight;
     scale = 1;
@@ -139,7 +145,13 @@
       imageCanvas.style.width = imageWidth + 'px';
       frameCanvas.height = imageCanvas.height = imageHeight;
 
-      context.drawImage(img, 0, 0, imageCanvas.width, imageCanvas.height);
+      getContext(imageCanvas).drawImage(
+        img,
+        0,
+        0,
+        imageCanvas.width,
+        imageCanvas.height
+      );
       initFrame();
     };
     img.src = URL.createObjectURL(file);
@@ -152,9 +164,13 @@
     const originalSizeCanvas = document.createElement('canvas');
     originalSizeCanvas.width = originalWidth;
     originalSizeCanvas.height = originalHeight;
-    originalSizeCanvas
-      .getContext('2d')
-      .drawImage(img, 0, 0, originalWidth, originalHeight);
+    getContext(originalSizeCanvas).drawImage(
+      img,
+      0,
+      0,
+      originalWidth,
+      originalHeight
+    );
 
     const [fittedWidth, fittedHeight] = fit(
       originalWidth,
@@ -162,19 +178,17 @@
       targetWidth,
       targetHeight
     );
-    const imageData = originalSizeCanvas
-      .getContext('2d')
-      .getImageData(
-        normalizedX * fittedWidth,
-        normalizedY * fittedHeight,
-        scale * fittedWidth,
-        scale * fittedHeight
-      );
+    const imageData = getContext(originalSizeCanvas).getImageData(
+      normalizedX * fittedWidth,
+      normalizedY * fittedHeight,
+      scale * fittedWidth,
+      scale * fittedHeight
+    );
 
     const saveCanvas = document.createElement('canvas');
     saveCanvas.width = scale * fittedWidth;
     saveCanvas.height = scale * fittedHeight;
-    saveCanvas.getContext('2d').putImageData(imageData, 0, 0);
+    getContext(saveCanvas).putImageData(imageData, 0, 0);
     setImageData(saveCanvas.toDataURL());
   }
 </script>

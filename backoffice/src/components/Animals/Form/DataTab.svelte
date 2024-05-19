@@ -6,24 +6,24 @@
   import AnimalCategorySelect from './AnimalCategorySelect.svelte';
   import AnimalLocationSelect from './AnimalLocationSelect.svelte';
   import AnimalVirtualCaretakerSelect from './AnimalVirtualCaretakerSelect.svelte';
-  import type { AnimalData } from '../../../services/AnimalsService';
+  import type { AnimalFormData } from '../../../services/AnimalsService';
   import { notifyInfo } from '../../../contexts/notification.context';
-  import { AnimalCategory, VirtualCaretakerType } from '.prisma/client';
+  import { AnimalCategory, VirtualCaretakerType } from '@prisma-app/client';
   import AnimalMiniatureForm from './AnimalMiniatureForm.svelte';
 
-  export let animal: AnimalData;
+  export let animalFormData: AnimalFormData;
   export let revalidateForm: () => void;
   export let disabled: boolean;
 
   function onCategoryChange(category: AnimalCategory) {
     if (category === AnimalCategory.ZaTeczowymMostem) {
-      animal.virtualCaretakerType = VirtualCaretakerType.NiePrzypisany;
+      animalFormData.virtualCaretakerType = VirtualCaretakerType.NiePrzypisany;
       notifyInfo({ message: 'Zmieniono rodzaj wirtualnego opiekuna.' });
     } else if (
       category === AnimalCategory.ZnalazlyDom &&
-      animal.virtualCaretakerType === VirtualCaretakerType.Szuka
+      animalFormData.virtualCaretakerType === VirtualCaretakerType.Szuka
     ) {
-      animal.virtualCaretakerType = VirtualCaretakerType.NiePrzypisany;
+      animalFormData.virtualCaretakerType = VirtualCaretakerType.NiePrzypisany;
       notifyInfo({ message: 'Zmieniono rodzaj wirtualnego opiekuna.' });
     }
   }
@@ -34,66 +34,66 @@
     <Field label="Imię" required style="grid-area: name">
       <Input
         required
-        bind:value={animal.name}
+        bind:value={animalFormData.name}
         placeholder="Imię zwierzęcia"
         pattern=".*\S+.*"
         {disabled}
       />
     </Field>
-    <AnimalTypeSelect bind:type={animal.type} {disabled} />
+    <AnimalTypeSelect bind:type={animalFormData.type} {disabled} />
     <Field label="Numer ewidencyjny" required style="grid-area: ref">
       <Input
         required
-        bind:value={animal.refNo}
+        bind:value={animalFormData.refNo}
         placeholder="Numer ewidencyjny"
         pattern=".*\S+.*"
         {disabled}
       />
     </Field>
     <AnimalLocationSelect
-      bind:location={animal.location}
-      type={animal.type}
+      bind:location={animalFormData.location}
+      type={animalFormData.type}
       {disabled}
     />
     <Field required label="Dane kontaktowe" style="grid-area: contact">
       <Input
         required
-        bind:value={animal.contactInfo}
+        bind:value={animalFormData.contactInfo}
         placeholder="Np. osoba, numer telefonu, e-mail"
         pattern=".*\S+.*"
         {disabled}
       />
     </Field>
     <AnimalVirtualCaretakerSelect
-      bind:virtualCaretakerType={animal.virtualCaretakerType}
+      bind:virtualCaretakerType={animalFormData.virtualCaretakerType}
       {disabled}
     />
-    <AnimalGenderSelect bind:gender={animal.gender} {disabled} />
+    <AnimalGenderSelect bind:gender={animalFormData.gender} {disabled} />
     <AnimalCategorySelect
-      bind:category={animal.category}
-      virtualCaretakerType={animal.virtualCaretakerType}
+      bind:category={animalFormData.category}
+      virtualCaretakerType={animalFormData.virtualCaretakerType}
       onChange={onCategoryChange}
       {disabled}
     />
     <Field label="Dodatkowy opis miejsca" style="grid-area: location-desc">
       <Input
-        bind:value={animal.locationDescription}
+        bind:value={animalFormData.locationDescription}
         placeholder="Informacja gdzie przebywa zwierzę"
         pattern=".*\S+.*"
         {disabled}
       />
     </Field>
-    {#if animal.virtualCaretakerType === VirtualCaretakerType.Znalazl}
+    {#if animalFormData.virtualCaretakerType === VirtualCaretakerType.Znalazl}
       <Field label="Moim wirtualnym opiekunem jest" style="grid-area: v-c-name">
         <Input
-          bind:value={animal.virtualCaretakerName}
+          bind:value={animalFormData.virtualCaretakerName}
           pattern=".*\S+.*"
           {disabled}
         />
       </Field>
     {/if}
   </div>
-  <AnimalMiniatureForm {revalidateForm} bind:animal {disabled}/>
+  <AnimalMiniatureForm {revalidateForm} bind:animal={animalFormData} {disabled}/>
 </Tab>
 
 <style lang="scss">

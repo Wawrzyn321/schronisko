@@ -1,4 +1,4 @@
-import { PrismaClient, Animal, AnimalImage } from "@prisma/client";
+import { PrismaClient, Animal, AnimalImage } from "@prisma-app/client";
 import fs from "fs";
 
 async function seedAnimalImages(prisma: PrismaClient) {

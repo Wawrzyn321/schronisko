@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Settings } from '.prisma/client';
+  import type { Settings } from '@prisma-app/client';
   import {
     notifyError,
     notifySuccess,

@@ -2,7 +2,7 @@
   import { Button, Field, Input } from 'svelma';
   import { Trash2Icon } from 'svelte-feather-icons';
 
-  export let time: Date;
+  export let time: Date | null;
   export let label: string;
 </script>
 

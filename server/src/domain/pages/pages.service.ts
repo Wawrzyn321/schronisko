@@ -1,11 +1,11 @@
-import { Permission } from '@prisma/client';
+import { Permission } from '@prisma-app/client';
 import {
   Injectable,
   NotFoundException,
   BadRequestException,
 } from '@nestjs/common';
 import { PrismaService } from '../../prisma-connect/prisma.service';
-import type { Page } from '.prisma/client';
+import type { Page } from '@prisma-app/client';
 import { PageListElement } from './Page';
 import { LoggedInUser } from '../auth/types';
 import { LogsService } from '../logs/logs.service';

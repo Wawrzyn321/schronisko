@@ -1,4 +1,4 @@
-import { Animal, AnimalCategory } from '.prisma/client';
+import { Animal, AnimalCategory } from '@prisma-app/client';
 import { buildAnimalImageUrl } from 'api/config';
 import { Modal } from 'components/Modal';
 import styles from './AnimalModal.module.scss';

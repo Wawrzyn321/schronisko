@@ -6,12 +6,12 @@
   import Tabs from './Tabs.svelte';
 
   export let mapping: Array<string> | undefined = undefined;
-  export let currentTab: string | undefined = undefined;
+  export let currentTab: string;
   export let onChange: (content: string, fileMap: FileMap) => void;
   export let contentForPreview: string;
   export let initialContent = '';
   export let title: string;
-  export let requestSave: () => void = null;
+  export let requestSave: () => void = () => {};
 </script>
 
 <Tabs {mapping} {currentTab}>

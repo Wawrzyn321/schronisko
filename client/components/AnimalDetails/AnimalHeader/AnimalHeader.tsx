@@ -1,5 +1,5 @@
 // import Link from 'next/link';
-import { Animal, VirtualCaretakerType } from '.prisma/client';
+import { Animal, VirtualCaretakerType } from '@prisma-app/client';
 import styles from './AnimalHeader.module.scss';
 import { isReadonly } from 'components/AnimalList/isReadonly';
 

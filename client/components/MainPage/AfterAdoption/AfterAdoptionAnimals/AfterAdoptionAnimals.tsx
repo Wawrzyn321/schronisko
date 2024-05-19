@@ -5,7 +5,7 @@ import {
   buildAnimalImageUrl,
   buildAnimalUrl,
 } from 'api/config';
-import { Animal } from '.prisma/client';
+import { Animal } from '@prisma-app/client';
 import Image from 'next/image';
 import placeholderImage from 'public/site/main/404_placeholder.png';
 

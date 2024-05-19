@@ -6,7 +6,7 @@ import {
   VirtualCaretakerType,
   AnimalLocation,
   PrismaClient, Animal
-} from ".prisma/client";
+} from "@prisma-app/client";
 
 import fs from "fs";
 import animalsTable from "./adminGallery.json";

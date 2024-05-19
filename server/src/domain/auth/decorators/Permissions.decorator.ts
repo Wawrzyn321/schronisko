@@ -1,5 +1,5 @@
 import { SetMetadata } from '@nestjs/common';
-import { Permission } from '@prisma/client';
+import { Permission } from '@prisma-app/client';
 
 export const PERMISSIONS_KEY = 'permissions';
 export const RequirePermission = (...permissions: Permission[]) =>

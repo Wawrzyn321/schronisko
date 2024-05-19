@@ -11,16 +11,16 @@
     <p style="margin-bottom: 32px">
       Jesteś zalogowany jako
       <strong>
-        {$auth.user.firstName}
+        {$auth?.user.firstName}
         {''}
-        {$auth.user.lastName}
+        {$auth?.user.lastName}
       </strong>
-      ({$auth.user.login}).
+      ({$auth?.user.login}).
       <button class="link" on:click={() => (passwordModalVisible = true)}>
         Zmień hasło
       </button>
     </p>
-    {#if $auth.user.permissions.length}
+    {#if $auth?.user.permissions.length}
       <section>
         <p>Twoje uprawnienia:</p>
         <ul>

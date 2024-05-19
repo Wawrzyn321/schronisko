@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { Permission } from '@prisma/client';
+import { Permission } from '@prisma-app/client';
 import { LogsService } from '../logs.service';
 import { PrismaService } from '../../../prisma-connect/prisma.service';
 import { LoggedInUser } from '../../auth/types';

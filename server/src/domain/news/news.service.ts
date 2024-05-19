@@ -1,5 +1,5 @@
 import { containsSubsitution, substitute } from '../../substitutions';
-import { Permission } from '@prisma/client';
+import { Permission } from '@prisma-app/client';
 import { LoggedInUser } from '../auth/types';
 import {
   NewsCreateInput,
@@ -7,7 +7,7 @@ import {
   NewsModifyParams,
   NewsListElement,
 } from './News';
-import type { News } from '.prisma/client';
+import type { News } from '@prisma-app/client';
 import {
   Injectable,
   BadRequestException,
@@ -163,7 +163,6 @@ export class NewsService {
         resizingPreset: 'News',
       });
     }
-
     await deleteImagesInContent(prevNews.content, params.news.content);
 
     params.news.content = await saveImagesFromContentModyfyingIt(

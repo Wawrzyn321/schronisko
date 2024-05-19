@@ -2,7 +2,7 @@
   import { FilterIcon } from 'svelte-feather-icons';
   import { allPermissions } from '../../common/allPermissions';
   import { permissionNames } from '../../common/PermissionsInfo';
-  import type { Permission } from '@prisma/client';
+  import type { Permission } from '@prisma-app/client';
   import Dropdown from '../shared/Dropdown.svelte';
 
   function updateFilter(permission: Permission) {

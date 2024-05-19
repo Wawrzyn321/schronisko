@@ -10,9 +10,9 @@ import type {
   AnimalGender,
   AnimalLocation,
   AnimalType,
-} from '.prisma/client';
-import { AnimalCategory } from '.prisma/client';
-import { VirtualCaretakerType, Permission } from '@prisma/client';
+} from '@prisma-app/client';
+import { AnimalCategory } from '@prisma-app/client';
+import { VirtualCaretakerType, Permission } from '@prisma-app/client';
 import { v4 as uuid } from 'uuid';
 import { deleteImage, saveImage } from '../../img-fs';
 import { LogsService } from '../logs/logs.service';

@@ -179,11 +179,12 @@ input[type=search] {
   box-shadow: 2px 2px 10px gray;
 }
 
-.dropdown-content > * + * {
+.dropdown-content>*+* {
   margin-top: 10px;
 }
 
-.modal-content, .modal-card {
+.modal-content,
+.modal-card {
   /* prevent weird modal content overflow */
   margin: unset !important;
 }

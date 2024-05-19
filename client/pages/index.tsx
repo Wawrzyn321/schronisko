@@ -1,4 +1,4 @@
-import { Page as PageModel } from '.prisma/client';
+import { Page as PageModel } from '@prisma-app/client';
 import { BigSection } from 'components/MainPage/BigSection/BigSection';
 import { AfterAdoption } from 'components/MainPage/AfterAdoption/AfterAdoption';
 import { GetInvolved } from 'components/MainPage/GetInvolved/GetInvolved';

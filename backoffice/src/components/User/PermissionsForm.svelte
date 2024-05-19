@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Permission } from '.prisma/client';
+  import { Permission } from '@prisma-app/client';
   import { Field } from 'svelma';
   import { allPermissions } from '../../common/allPermissions';
 

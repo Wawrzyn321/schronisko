@@ -5,18 +5,18 @@
     AnimalGender,
     AnimalType,
     VirtualCaretakerType,
-  } from '.prisma/client';
+  } from '@prisma-app/client';
   import { push } from 'svelte-spa-router';
   import CreateAnimalHeader from '../components/Animals/CreateAnimalHeader.svelte';
   import AnimalForm from '../components/Animals/Form/AnimalForm.svelte';
   import { animalsService } from '../services/AnimalsService';
-  import type { AnimalData } from '../services/AnimalsService';
+  import type { AnimalFormData } from '../services/AnimalsService';
   import { notifyError, notifySuccess } from '../contexts/notification.context';
   import type { AnimalImageParams } from './../services/AnimalImagesService';
 
   let isValid: boolean = false;
   let isCreating: boolean = false;
-  let animalData: AnimalData = {
+  let animalFormData: AnimalFormData = {
     id: '',
     name: '',
     category: AnimalCategory.DoAdopcji,
@@ -28,6 +28,8 @@
     virtualCaretakerName: null,
     virtualCaretakerType: VirtualCaretakerType.Szuka,
     imageData: '',
+    imageName: '',
+    note: '',
     contactInfo: '',
     locationDescription: null,
     refNo: 'b/n',
@@ -37,7 +39,7 @@
   async function createAnimal() {
     try {
       isCreating = true;
-      const { id } = await animalsService.create(animalData, images);
+      const { id } = await animalsService.create(animalFormData, images);
       push(`/animals/${id}`);
       notifySuccess({ message: 'Zwierzę zostało dodane.' });
     } catch (e) {
@@ -61,12 +63,12 @@
     {isValid}
     {images}
     {isCreating}
-    {animalData}
-    bind:isPublic={animalData.isPublic}
+    {animalFormData}
+    bind:isPublic={animalFormData.isPublic}
   />
 
   <AnimalForm
-    bind:animal={animalData}
+    bind:animalFormData
     bind:images
     setFormValid={(valid) => (isValid = valid)}
   />

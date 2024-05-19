@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Tab } from 'svelma';
-  import type { AnimalData } from '../../../services/AnimalsService';
+  import type { AnimalFormData } from '../../../services/AnimalsService';
   import AnimalImages from './../AnimalImages.svelte';
   import type { AnimalImageParams } from '../../../services/AnimalImagesService';
   import { querystring } from 'svelte-spa-router';
@@ -10,20 +10,20 @@
   import DataTab from './DataTab.svelte';
   import { isReadonly } from './animal-readonly';
   import { auth } from '../../../contexts/auth.context';
-  import { Permission } from '@prisma/client';
+  import { Permission } from '@prisma-app/client';
 
-  export let animal: AnimalData;
+  export let animalFormData: AnimalFormData;
   export let images: AnimalImageParams[] = [];
   export let setFormValid: (valid: boolean) => void;
 
-  const mode = new URLSearchParams(get(querystring)).get('mode');
-  const canEditAnimals = $auth.user.permissions.includes(Permission.ANIMAL);
+  const mode = new URLSearchParams(get(querystring)).get('mode') ?? 'data';
+  const canEditAnimals = $auth?.user.permissions.includes(Permission.ANIMAL);
 
   let form: HTMLFormElement;
 
   function revalidateForm() {
     const imagesValid =
-      isReadonly(animal.category) ||
+      isReadonly(animalFormData.category) ||
       images.every((image) => !!image.data || !!image.imageName);
 
     setFormValid(form.checkValidity() && imagesValid);
@@ -32,15 +32,15 @@
 
 <form bind:this={form} on:input={revalidateForm} on:change={revalidateForm}>
   <Tabs mapping={['data', 'description', 'photos']} currentTab={mode}>
-    <DataTab bind:animal {revalidateForm} disabled={!canEditAnimals} />
+    <DataTab bind:animalFormData {revalidateForm} disabled={!canEditAnimals} />
     <DescriptionTab
-      bind:animal
+      bind:animalFormData
       {revalidateForm}
-      isReadonly={isReadonly(animal.category)}
+      isReadonly={isReadonly(animalFormData.category)}
       disabled={!canEditAnimals}
     />
     <Tab label="Zdjęcia">
-      {#if isReadonly(animal.category)}
+      {#if isReadonly(animalFormData.category)}
         Nie można dodać zdjęć do zwierząt w tej kategorii.
       {:else}
         <AnimalImages bind:images {revalidateForm} disabled={!canEditAnimals} />

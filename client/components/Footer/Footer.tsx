@@ -14,7 +14,7 @@ export function Footer() {
         </div>
       </div>
       <div className={styles.spacer} />
-      <p className={styles.copyright}>Copyright 2021 R</p>
+      <p className={styles.copyright}>Copyright 2024 R</p>
     </footer>
   );
 }

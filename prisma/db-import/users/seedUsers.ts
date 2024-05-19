@@ -1,4 +1,4 @@
-import { Permission, PrismaClient, User } from '@prisma/client';
+import { Permission, PrismaClient, User } from '@prisma-app/client';
 import { hashData } from '../../common';
 import adminUsersTable from './adminUsers.json';
 import { z } from "zod";

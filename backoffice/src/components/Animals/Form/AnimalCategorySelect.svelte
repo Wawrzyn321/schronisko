@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { AnimalCategory, VirtualCaretakerType } from '.prisma/client';
+  import { AnimalCategory, VirtualCaretakerType } from '@prisma-app/client';
   import { Field, Select } from 'svelma';
   import { animalCategories, animalCategoriesMap } from '../animalMetadata';
 

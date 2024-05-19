@@ -1,13 +1,12 @@
+import { API_URL } from "../config";
 import { throwingFetch } from "./throwingFetch";
-import { API_URL } from './config';
+import type { AnimalImage } from '@prisma-app/client';
 
 const baseUrl = `${API_URL}/api/animal-images`
 
-export type AnimalImageParams = {
+export type AnimalImageParams = Pick<AnimalImage, 'order' | 'visible'> & {
     data: string;
-    order: number;
     imageName?: string;
-    visible: boolean;
 }
 
 export class AnimalImagesService {

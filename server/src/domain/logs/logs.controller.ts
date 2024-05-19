@@ -9,7 +9,7 @@ import {
   Delete,
   Request,
 } from '@nestjs/common';
-import { Permission } from '@prisma/client';
+import { Permission } from '@prisma-app/client';
 import { PermissionsGuard } from '../auth/guards/Permissions.guard';
 
 @Controller('api/logs')

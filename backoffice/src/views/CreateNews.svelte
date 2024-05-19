@@ -5,15 +5,15 @@
   import CreateNewsHeader from '../components/News/CreateNewsHeader.svelte';
   import NewsForm from '../components/News/NewsForm.svelte';
   import { notifyError, notifySuccess } from '../contexts/notification.context';
-  import { newsService } from '../services/NewsService';
+  import { newsService, type NewsCreateParams } from '../services/NewsService';
   import type { FileMap } from '../components/shared/Editor/FileMap';
   import { get } from 'svelte/store';
 
-  const mode = new URLSearchParams(get(querystring)).get('mode');
+  const mode = new URLSearchParams(get(querystring)).get('mode') ?? 'data';
 
   let isValid: boolean = false;
   let content = '';
-  let news = {
+  let news: Omit<NewsCreateParams, 'content'> = {
     title: '',
     description: '',
     isPublished: false,

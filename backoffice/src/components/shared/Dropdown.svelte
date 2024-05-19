@@ -31,9 +31,9 @@
 
 <svelte:window on:keydown={windowKeyDown} />
 <div>
-  <div on:click={toggleDropdown}>
+  <button class="transparent-button" on:click={toggleDropdown}>
     <slot name="trigger" />
-  </div>
+  </button>
   {#if isOpen}
     <div bind:this={dropdownRef} class="dropdown">
       <slot name="content" />
@@ -46,5 +46,15 @@
     display: flex;
     flex-direction: column;
     position: absolute;
+  }
+
+  .transparent-button {
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
   }
 </style>

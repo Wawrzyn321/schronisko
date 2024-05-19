@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Animal, AnimalCategory, Permission } from '.prisma/client';
+  import { type Animal, AnimalCategory, Permission } from '@prisma-app/client';
 
   import { Button } from 'svelma';
   import { push } from 'svelte-spa-router';
@@ -11,10 +11,13 @@
   import FormTooltipMessageWrapper from './Form/FormTooltipMessageWrapper.svelte';
   import type { AnimalImageParams } from '../../services/AnimalImagesService';
   import { auth } from '../../contexts/auth.context';
+  import AnimalExternalLink from './AnimalExternalLink.svelte';
+  import type { AnimalFormData } from '../../services/AnimalsService';
 
   export let isPublic: boolean;
   export let isValid: boolean;
   export let animal: Animal;
+  export let animalFormData: AnimalFormData;
   export let images: AnimalImageParams[];
   export let isSaving: boolean;
   export let updateAnimal: () => Promise<boolean | undefined | void>;
@@ -23,13 +26,12 @@
   let isWarningModalVisible = false;
   let deleteModalVisible = false;
 
-  const canEditAnimals = $auth.user.permissions.includes(Permission.ANIMAL);
+  const canEditAnimals = $auth?.user.permissions.includes(Permission.ANIMAL);
 
   function onAnimalDeleted() {
     notifySuccess({ message: 'Zwierzę zostało usunięte.' });
     push('/animals');
   }
-
 </script>
 
 <header class="g-flex-between-100">
@@ -53,31 +55,33 @@
       />
       Widoczny na stronie
     </label>
-    <FormTooltipMessageWrapper {isValid} animalData={animal} {images}>
+    <div class="actions">
+      <FormTooltipMessageWrapper {isValid} animalFormData={animalFormData} {images}>
+        <Button
+          type="is-primary"
+          on:click={() => {
+            if (changedToReadonly(animal.category, prevCategory)) {
+              isWarningModalVisible = true;
+            } else {
+              updateAnimal();
+            }
+          }}
+          disabled={!isValid || isSaving || !canEditAnimals}
+          aria-label="Zapisz zwierzę"
+        >
+          Zapisz
+        </Button>
+      </FormTooltipMessageWrapper>
+      <AnimalExternalLink {animal} />
       <Button
-        type="is-primary"
-        on:click={() => {
-          if (changedToReadonly(animal.category, prevCategory)) {
-            isWarningModalVisible = true;
-          } else {
-            updateAnimal();
-          }
-        }}
-        disabled={!isValid || isSaving || !canEditAnimals}
-        aria-label="Zapisz zwierzę"
+        type="is-danger"
+        on:click={() => (deleteModalVisible = true)}
+        aria-label="Usuń zwierzę"
+        disabled={!canEditAnimals}
       >
-        Zapisz
+        Usuń
       </Button>
-    </FormTooltipMessageWrapper>
-    <Button
-      type="is-danger"
-      on:click={() => (deleteModalVisible = true)}
-      style="margin-left: 8px"
-      aria-label="Usuń zwierzę"
-      disabled={!canEditAnimals}
-    >
-      Usuń
-    </Button>
+    </div>
   </div>
 </header>
 <DeleteAnimalModal
@@ -101,4 +105,8 @@
     margin-right: 16px;
   }
 
+  .actions {
+    display: flex;
+    column-gap: 4px;
+  }
 </style>

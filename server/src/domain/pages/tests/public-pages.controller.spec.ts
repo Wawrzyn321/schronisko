@@ -4,7 +4,7 @@ import { PrismaService } from '../../../prisma-connect/prisma.service';
 import { PagesPublicController } from '../pages.controller';
 import { PagesService } from '../pages.service';
 import { SettingsService } from '../../settings/settings.service';
-import { Page, Settings } from '@prisma/client';
+import { Page, Settings } from '@prisma-app/client';
 import { CacheService } from '../../cache/cache.service';
 describe('PagesPublicController', () => {
   let pagesController: PagesPublicController;

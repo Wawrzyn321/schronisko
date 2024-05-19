@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { News } from '.prisma/client';
+  import type { News } from '@prisma-app/client';
   import { Tab } from 'svelma';
   import { push, querystring } from 'svelte-spa-router';
   import { onMount } from 'svelte';
@@ -14,7 +14,7 @@
 
   export let params: { id: string };
 
-  const mode = new URLSearchParams(get(querystring)).get('mode');
+  const mode = new URLSearchParams(get(querystring)).get('mode') ?? 'data';
 
   let news: News;
   let editedContent: string;

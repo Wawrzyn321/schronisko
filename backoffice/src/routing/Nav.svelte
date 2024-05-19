@@ -4,7 +4,8 @@
   import { link } from 'svelte-spa-router';
   import UserNavHeader from './UserNavHeader.svelte';
   import active from 'svelte-spa-router/active';
-  import { Permission } from '@prisma/client';
+  import { Permission } from '@prisma-app/client';
+  import { MAIN_PAGE_URL } from '../config';
 
   type NavigationRoute = {
     name: string;
@@ -47,14 +48,14 @@
 </script>
 
 <nav>
-  <a href="https://www.schronisko.sosnowiec.pl/" target="_blank">
+  <a href={MAIN_PAGE_URL} target="_blank">
     Strona schroniska
     <ExternalLinkIcon size="0.9x" />
   </a>
   {#if $auth}
     <ul>
       {#each navigationRoutes as route}
-        {#if $auth.user.permissions.find( (p) => route.requiredPermissions.includes(p) )}
+        {#if $auth?.user.permissions.find( (p) => route.requiredPermissions.includes(p) )}
           <li>
             <a use:link use:active={`${route.path}.*`} href={`${route.path}`}>
               {route.name}

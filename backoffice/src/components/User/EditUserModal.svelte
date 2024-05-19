@@ -3,19 +3,19 @@
   import type { UserViewModel } from '../../common/UserViewModel';
   import PermissionsForm from './PermissionsForm.svelte';
   import { userService } from '../../services/UserService';
-  import type { Permission } from '.prisma/client';
+  import type { Permission } from '@prisma-app/client';
   import { notifyError } from '../../contexts/notification.context';
   import Loader from '../shared/Loader.svelte';
 
   export let modalVisible: boolean;
   export let user: UserViewModel;
-  export let onUserEdited: (u: UserViewModel) => void;
+  export let onUserUpdated: (u: UserViewModel) => void;
 
   let permissions: Permission[];
   let isActive: boolean;
   let loading = false;
 
-  const onShow = async () => {
+  const onShow = async (user: UserViewModel) => {
     loading = true;
     permissions = [];
     if (!user) return;
@@ -28,7 +28,7 @@
     }
   };
 
-  $: onShow();
+  $: onShow(user);
 
   async function updateUser() {
     try {
@@ -37,7 +37,7 @@
         permissions,
         isActive,
       });
-      onUserEdited({ ...user, ...updatedData });
+      onUserUpdated({ ...user, ...updatedData });
     } catch (e) {
       notifyError({
         message: 'Nie udało się zaktualizować użytkownika: ' + e.message,

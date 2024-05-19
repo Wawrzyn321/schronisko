@@ -12,7 +12,7 @@
   import EmptyListMessage from '../shared/EmptyListMessage.svelte';
 
   export let onUserDeleted: (u: UserViewModel) => void;
-  export let onUserEdited: (u: UserViewModel, notify?: boolean) => void;
+  export let onUserUpdated: (u: UserViewModel, notify?: boolean) => void;
   export let users: UserViewModel[];
   export let loading: boolean;
 
@@ -103,12 +103,12 @@
 />
 <EditUserModal
   bind:modalVisible={editModalVisible}
-  {onUserEdited}
+  {onUserUpdated}
   user={selectedUser}
 />
 <EditSelfModal
   bind:modalVisible={editSelfModalVisible}
-  onSelfEdited={onUserEdited}
+  onSelfEdited={onUserUpdated}
 />
 <ChangeUserPasswordModal
   bind:modalVisible={changeUserPasswordModalVisible}

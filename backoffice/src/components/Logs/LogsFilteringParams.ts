@@ -1,14 +1,14 @@
 import { allPermissions } from './../../common/allPermissions';
-import type { Permission } from '@prisma/client';
-import type { Logs } from '@prisma/client';
+import type { Permission } from '@prisma-app/client';
+import type { Logs } from '@prisma-app/client';
 
 export type LogsFilteringParams = {
     userIdFilter: string,
     permissionFilter: Permission[],
     loginFilter: string,
     searchPhrase: string,
-    timeFrom?: Date,
-    timeEnd?: Date,
+    timeFrom: Date | null,
+    timeEnd: Date | null,
     hideSelf: boolean,
 };
 

@@ -4,7 +4,7 @@ import {
     AnimalType,
     PrismaClient,
     VirtualCaretakerType,
-  } from "@prisma/client";
+  } from "@prisma-app/client";
   import { hashData } from "./common";
   
   const prisma = new PrismaClient();

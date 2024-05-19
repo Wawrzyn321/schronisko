@@ -4,7 +4,7 @@
   import { newsService } from '../services/NewsService';
   import NewsHeader from '../components/News/NewsHeader.svelte';
   import NewsList from '../components/News/NewsList.svelte';
-  import type { News } from '.prisma/client';
+  import type { News } from '@prisma-app/client';
   import { notifyError, notifySuccess } from '../contexts/notification.context';
   import Pagination from '../components/shared/Pagination/Pagination.svelte';
   import { paginate } from '../components/shared/Pagination/pagination';
@@ -36,9 +36,9 @@
 
   $: paginatedNews = paginate(filteredNews, pageSize, currentPage);
 
-  function onNewsDeleted(n: News) {
-    news = news.filter((nn) => nn.id !== n.id);
-    notifySuccess({ message: `Usunięto newsa ${n.title}.` });
+  function onNewsDeleted(deletedNews: Pick<News, 'id' | 'title'>) {
+    news = news.filter((n) => n.id !== deletedNews.id);
+    notifySuccess({ message: `Usunięto newsa ${deletedNews.title}.` });
   }
 </script>
 

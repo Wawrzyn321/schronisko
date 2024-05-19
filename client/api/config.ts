@@ -1,4 +1,4 @@
-import { AnimalType } from '.prisma/client';
+import { AnimalType } from '@prisma-app/client';
 
 const DEV = process.env.NODE_ENV !== 'production';
 

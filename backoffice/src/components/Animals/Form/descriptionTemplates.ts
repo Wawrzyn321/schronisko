@@ -1,4 +1,4 @@
-import { AnimalCategory, AnimalGender } from '.prisma/client';
+import { AnimalCategory, AnimalGender } from '@prisma-app/client';
 
 const niedawnoZnalezioneTemplate = `W schronisku od (). Znajda z ().
 

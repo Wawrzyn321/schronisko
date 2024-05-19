@@ -10,6 +10,9 @@
   import EmptyListMessage from '../components/shared/EmptyListMessage.svelte';
   import Pagination from '../components/shared/Pagination/Pagination.svelte';
   import { paginate } from '../components/shared/Pagination/pagination';
+  import { ExternalLinkIcon } from 'svelte-feather-icons';
+  import { MAIN_PAGE_URL, PAGE_MAP } from '../config';
+  import PageExternalLink from '../components/Pages/PageExternalLink.svelte';
 
   let pages: PageListElement[] = [];
   let searchPhrase = '';
@@ -29,12 +32,12 @@
     }
   });
 
-  $: filteredPages = pages.filter(
-    (p: PageListElement) =>
-      !searchPhrase ||
-      p.title.toLowerCase().includes(searchPhrase.toLowerCase()) ||
-      p.id.toLowerCase().includes(searchPhrase.toLowerCase())
-  );
+  $: filteredPages = pages.filter((page: PageListElement) => {
+    const includes = (prop: string) =>
+      prop.toLowerCase().includes(searchPhrase.toLowerCase());
+
+    return !searchPhrase || includes(page.title) || includes(page.id);
+  });
 
   $: paginatedPages = paginate(filteredPages, pageSize, currentPage);
 </script>
@@ -71,6 +74,7 @@
           >
             <Edit2Icon size="1.0x" />
           </Button>
+          <PageExternalLink {page} />
         </td>
       </tr>
     {/each}

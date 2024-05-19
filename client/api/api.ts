@@ -6,14 +6,14 @@ import {
 } from './../types';
 import { ReceivedCaptcha } from '../components/Captcha/useCapcha';
 import { NewsListElement } from 'types';
-import { AnimalCategory, AnimalType, News } from '.prisma/client';
+import { AnimalCategory, AnimalType, News } from '@prisma-app/client';
 import {
   AnimalImage,
   Page as PageModel,
   Animal,
   VirtualCaretakerType,
   Settings,
-} from '@prisma/client';
+} from '@prisma-app/client';
 import { BACKEND_URL, getBackendUrl, isSSR, SSR_BACKEND_URL } from './config';
 
 export class FetchError extends Error {

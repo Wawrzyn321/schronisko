@@ -1,6 +1,6 @@
-import type { Logs } from '@prisma/client';
+import type { Logs } from '@prisma-app/client';
 import { throwingFetch } from "./throwingFetch";
-import { API_URL } from './config';
+import { API_URL } from '../config';
 
 const baseUrl = `${API_URL}/api/logs`;
 

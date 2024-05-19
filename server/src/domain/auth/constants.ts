@@ -1,4 +1,4 @@
-import type { Permission } from '@prisma/client';
+import type { Permission } from '@prisma-app/client';
 
 export const allPermissions: Permission[] = ['USER', 'PAGE', 'NEWS', 'ANIMAL'];
 

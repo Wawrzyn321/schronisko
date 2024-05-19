@@ -1,4 +1,4 @@
-import { Page as PageModel, Settings } from '.prisma/client';
+import { Page as PageModel, Settings } from '@prisma-app/client';
 import { fetchDogVolunteeringPage, fetchSettings } from 'api/api';
 import { Breadcrumbs } from 'components/Breadcrumbs/Breadcrumbs';
 import { LayoutWrapper } from 'components/LayoutWrapper';

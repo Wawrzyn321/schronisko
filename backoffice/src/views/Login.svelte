@@ -24,18 +24,9 @@
     }
   }
 
-  // function tryGetLogoutReason(queryString: string): NotifyParams | null {
-  //   try {
-  //     const reasonStr = new URLSearchParams(queryString).get('reason');
-  //     return JSON.parse(reasonStr);
-  //   } catch (_) {
-  //     return null;
-  //   }
-  // }
-
-  function tryGetLogoutReason():NotifyParams | null {
+  function tryGetLogoutReason(): NotifyParams | null {
     try {
-      const reasonStr = localStorage.getItem(LOGOUT_NOTIFY_PARAMS);
+      const reasonStr = localStorage.getItem(LOGOUT_NOTIFY_PARAMS) || 'null';
       localStorage.removeItem(LOGOUT_NOTIFY_PARAMS);
       return JSON.parse(reasonStr);
     } catch (_) {

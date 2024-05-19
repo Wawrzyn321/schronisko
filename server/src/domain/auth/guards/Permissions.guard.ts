@@ -7,7 +7,7 @@ import {
   ForbiddenException,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { Permission } from '@prisma/client';
+import { Permission } from '@prisma-app/client';
 import { PERMISSIONS_KEY } from '../decorators/Permissions.decorator';
 
 @Injectable()
@@ -30,6 +30,7 @@ export class PermissionsGuard implements CanActivate {
       const dbUser = await this.prismaService.user.findUnique({
         where: { id: user.id },
       });
+
       if (!dbUser || !dbUser.isActive) {
         throw new ForbiddenException();
       }

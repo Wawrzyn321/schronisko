@@ -1,15 +1,15 @@
 <script lang="ts">
   import Field from './../shared/Field.svelte';
+  import type { News } from '@prisma-app/client'
   import { Input } from 'svelma';
   import ResizableImageInput from '../shared/ResizableImageInput.svelte';
   import ImagePreview from './ImagePreview.svelte';
 
-  export let news: {
-    title: string;
-    description: string;
+  export let news: Pick<News, 'title' | 'description'> & {
     imageName?: string;
-  };
-  export let imageData: string;
+  }
+  
+  export let imageData: string | null;
   export let setFormValid: (valid: boolean) => void;
 
   let form: HTMLFormElement;

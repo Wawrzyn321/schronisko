@@ -17,7 +17,7 @@ import {
   Delete,
   Request,
 } from '@nestjs/common';
-import { Permission } from '@prisma/client';
+import { Permission } from '@prisma-app/client';
 import { LoggedInUser } from '../auth/types';
 
 @Controller('api/users')

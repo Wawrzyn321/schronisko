@@ -4,7 +4,7 @@ import { PrismaService } from '../../../prisma-connect/prisma.service';
 import { PagesController } from '../pages.controller';
 import { PagesService } from '../pages.service';
 import { SettingsService } from '../../settings/settings.service';
-import { Page, Permission } from '@prisma/client';
+import { Page, Permission } from '@prisma-app/client';
 import { ImageData } from 'img-fs';
 import { LoggedInUser } from '../../auth/types';
 import { allPermissions } from '../../auth/constants';

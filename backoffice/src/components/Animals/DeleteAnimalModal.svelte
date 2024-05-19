@@ -8,9 +8,12 @@
 
   export let modalVisible: boolean;
   export let onAnimalDeleted: (animal: AnimalListElement) => void;
-  export let animal: AnimalListElement;
+  export let animal: AnimalListElement | null;
 
   async function deleteAnimal() {
+    if (!animal) {
+      return;
+    }
     try {
       loading = true;
       await animalsService.delete(animal.id);

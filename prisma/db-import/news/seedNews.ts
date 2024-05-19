@@ -1,4 +1,4 @@
-import { PrismaClient, News } from '@prisma/client';
+import { PrismaClient, News } from '@prisma-app/client';
 import newsTable from './news.json';
 import { decode } from 'html-entities';
 import { z } from "zod";

@@ -1,4 +1,4 @@
-import { AnimalCategory } from '@prisma/client';
+import { AnimalCategory } from '@prisma-app/client';
 import { changedToReadonly } from '../readonly-animal';
 
 describe('changedToReadonly', () => {

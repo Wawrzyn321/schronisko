@@ -1,4 +1,4 @@
-import { Permission } from '@prisma/client';
+import { Permission } from '@prisma-app/client';
 
 export type LoggedInUser = {
   id: number;

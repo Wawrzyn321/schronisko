@@ -3,17 +3,17 @@
   import Field from './Field.svelte';
   import ImageResizeModal from './ImageResizeModal/ImageResizeModal.svelte';
 
-  export let imageData = '';
+  export let imageData: string | null = '';
   export let imageName: string | null = null;
   export let label: string;
-  export let message: string = null;
-  export let revalidateForm: () => void = null;
+  export let message: string | null= null;
+  export let revalidateForm: () => void = () => {};
   export let width: number;
   export let height: number;
   export let required = true;
-  export let disabled: boolean;
+  export let disabled = false;
 
-  let file = null;
+  let file: File | null = null;
   let resizeModalVisible = false;
   let forceRefresh = false;
 
@@ -23,8 +23,9 @@
 
   async function onFileChange(e: HtmlInputEvent) {
     if (!e.target) return;
-    file = e.target.files[0];
+    file = e.target.files?.[0] ?? null;
     openResizeModal();
+    // @ts-ignore
     e.target.value = null;
   }
 

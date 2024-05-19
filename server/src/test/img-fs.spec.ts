@@ -47,8 +47,8 @@ describe('img-fs', () => {
 
   describe('saveImagesFromContentModyfyingIt', () => {
     it('Saves the images and updates content', async () => {
-      const prevContent = `<img src="${WEB_STATIC_FILES_PATH}lala"><img src="lele">`;
-      const c = await saveImagesFromContentModyfyingIt(
+      const prevContent = `<img src="${WEB_STATIC_FILES_PATH}/lala"><img src="lele">`;
+      const result = await saveImagesFromContentModyfyingIt(
         prevContent,
         [
           { name: 'name_lala', base64: 'base_lala' },
@@ -57,19 +57,19 @@ describe('img-fs', () => {
         'subdir/',
       );
 
-      expect(c).toMatch(
-        `<img src="${WEB_STATIC_FILES_PATH}lala"><img src="lele">`,
+      expect(result).toEqual(
+        `<img src="${WEB_STATIC_FILES_PATH}/lala"><img src="lele">`,
       );
 
       expect(mockWriteFile).toHaveBeenCalledTimes(2);
       expect(mockWriteFile).toHaveBeenNthCalledWith(
         1,
-        '../images/img/subdir/subdir/name_lala',
+        '../images/img/subdir/name_lala',
         'mock file content base/lal',
       );
       expect(mockWriteFile).toHaveBeenNthCalledWith(
         2,
-        '../images/img/subdir/subdir/name_lele',
+        '../images/img/subdir/name_lele',
         'mock file content base/lel',
       );
     });

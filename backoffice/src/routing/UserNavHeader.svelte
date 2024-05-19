@@ -9,7 +9,7 @@
 
 <EditSelfModal bind:modalVisible={editSelfModalVisible} />
 <div class="user-panel">
-  <span>{$auth.user.firstName} {$auth.user.lastName}</span>
+  <span>{$auth?.user.firstName} {$auth?.user.lastName}</span>
   <Button
     type="is-primary"
     id="edit-self-button"

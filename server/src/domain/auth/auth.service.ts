@@ -9,7 +9,7 @@ import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { BcryptService } from './bcrypt.service';
 
-import type { Permission, User } from '@prisma/client';
+import type { Permission, User } from '@prisma-app/client';
 
 export interface UserViewModel extends Omit<User, 'passwordHash'> {
   permissions?: Permission[];

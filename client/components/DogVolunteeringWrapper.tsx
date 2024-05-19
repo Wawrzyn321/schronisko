@@ -1,4 +1,4 @@
-import { Settings } from '.prisma/client';
+import { Settings } from '@prisma-app/client';
 import { FetchError, fetchSettings } from 'api/api';
 import { Article } from 'components/Article/Article';
 import { VolunteeringForm } from 'components/VolunteeringForm/VolunteeringForm';

@@ -1,6 +1,6 @@
 import { LoggedInUser } from '../auth/types';
 import { Injectable } from '@nestjs/common';
-import { Logs, Permission } from '@prisma/client';
+import { Logs, Permission } from '@prisma-app/client';
 import { PrismaService } from '../../prisma-connect/prisma.service';
 
 type LogData = {

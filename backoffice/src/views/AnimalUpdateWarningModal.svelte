@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { AnimalCategory } from '@prisma/client';
+  import { AnimalCategory } from '@prisma-app/client';
   import Modal from '../components/shared/Modal.svelte';
 
   export let modalVisible: boolean;

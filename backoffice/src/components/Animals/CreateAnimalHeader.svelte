@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Button } from 'svelma';
-  import type { AnimalData } from '../../services/AnimalsService';
+  import type { AnimalFormData } from '../../services/AnimalsService';
   import type { AnimalImageParams } from '../../services/AnimalImagesService';
   import FormTooltipMessageWrapper from './Form/FormTooltipMessageWrapper.svelte';
 
@@ -9,7 +9,7 @@
   export let images: AnimalImageParams[];
   export let isCreating: boolean;
   export let createAnimal: () => void;
-  export let animalData: AnimalData;
+  export let animalFormData: AnimalFormData;
 </script>
 
 <header class="g-flex-between-100">
@@ -26,7 +26,7 @@
       />
       Widoczny na stronie
     </label>
-    <FormTooltipMessageWrapper {isValid} {animalData} {images}>
+    <FormTooltipMessageWrapper {isValid} {animalFormData} {images}>
       <Button
         type="is-primary"
         disabled={!isValid || isCreating}

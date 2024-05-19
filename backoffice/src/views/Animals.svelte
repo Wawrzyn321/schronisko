@@ -3,7 +3,7 @@
   import { animalsService } from '../services/AnimalsService';
   import AnimalsHeader from '../components/Animals/AnimalsHeader/AnimalsHeader.svelte';
   import AnimalsList from '../components/Animals/List/AnimalsList.svelte';
-  import type { Animal } from '.prisma/client';
+  import type { Animal } from '@prisma-app/client';
   import { createDefaultColumnParams } from '../components/Animals/AnimalsHeader/AnimalColumnParams';
   import {
     applyFiltering,
@@ -47,7 +47,7 @@
 
   $: paginatedAnimals = paginate(filteredAnimals, pageSize, currentPage);
 
-  function onAnimalDeleted(deletedAnimal: Animal) {
+  function onAnimalDeleted(deletedAnimal: Pick<Animal, 'id' | 'name'>) {
     animals = animals.filter((a) => a.id !== deletedAnimal.id);
     notifySuccess({ message: `Usunięto zwierzę ${deletedAnimal.name}.` });
   }

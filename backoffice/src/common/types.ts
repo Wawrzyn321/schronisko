@@ -1,3 +1,3 @@
-import type { Animal } from '@prisma/client';
+import type { Animal } from '@prisma-app/client';
 
 export type AnimalListElement = Omit<Animal, 'description'>;

@@ -1,5 +1,5 @@
 import { FetchResult } from './api/api';
-import { Animal, News, Page as PageModel } from '.prisma/client';
+import { Animal, News, Page as PageModel } from '@prisma-app/client';
 
 export type AfterAdoptionAnimal = Pick<
   Animal,

@@ -1,11 +1,12 @@
 <script lang="ts">
-  import type { News } from '.prisma/client';
+  import type { News } from '@prisma-app/client';
 
   import { Button } from 'svelma';
   import { push } from 'svelte-spa-router';
   import { notifySuccess } from '../../contexts/notification.context';
   import DateFromTimestamp from '../shared/DateFromTimestamp.svelte';
   import DeleteNewsModal from './DeleteNewsModal.svelte';
+  import NewsExternalLink from './NewsExternalLink.svelte';
 
   export let isPublished: boolean;
   export let timestamp: Date;
@@ -31,7 +32,7 @@
     Utworzony:
     <DateFromTimestamp {timestamp} />
   </span>
-  <div>
+  <div class="update-header__actions">
     <label>
       <input
         checked={isPublished}
@@ -40,13 +41,17 @@
       />
       Publiczny
     </label>
-    <Button type="is-primary" on:click={updateNews} disabled={!isValid || isSaving}>
+    <Button
+      type="is-primary"
+      on:click={updateNews}
+      disabled={!isValid || isSaving}
+    >
       Zapisz
     </Button>
+    <NewsExternalLink {news} />
     <Button
       type="is-danger"
       on:click={() => (deleteModalVisible = true)}
-      style="margin-left: 8px"
       aria-label="Usuń newsa"
     >
       Usuń
@@ -63,12 +68,13 @@
   header {
     margin-bottom: 16px;
   }
-  header > div {
-    display: flex;
-    justify-content: center;
-  }
 
   label {
     margin-right: 16px;
+  }
+
+  .update-header__actions {
+    display: flex;
+    column-gap: 4px;
   }
 </style>

@@ -1,5 +1,5 @@
 import { allPermissions } from '../auth/constants';
-import type { Permission } from '@prisma/client';
+import type { Permission } from '@prisma-app/client';
 
 // DATA FROM FRONTEND
 

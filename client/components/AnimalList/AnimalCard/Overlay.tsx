@@ -1,5 +1,5 @@
 import styles from './AnimalCard.module.scss';
-import { AnimalCategory } from '.prisma/client';
+import { AnimalCategory } from '@prisma-app/client';
 
 function OverlayImage({ name }: { name: 'najdluzej-czekam' | 'pilnie-szukam-domu' }) {
   const imageName = name == 'najdluzej-czekam' ? 'najdluzej czekam.svg' : 'pilnie szukam domu.svg';

@@ -6,11 +6,15 @@
 
   export let modalVisible: boolean;
   export let onNewsDeleted: (news: NewsListElement) => void;
-  export let news: NewsListElement;
+  export let news: NewsListElement | null;
 
   let loading = false;
 
   async function deleteNews() {
+    if (!news) {
+      return;
+    }
+
     try {
       loading = true;
       await newsService.delete(news.id);

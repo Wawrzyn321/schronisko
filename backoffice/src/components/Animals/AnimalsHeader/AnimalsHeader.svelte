@@ -4,10 +4,10 @@
   import { FilterIcon } from 'svelte-feather-icons';
   import type { AnimalColumnParams } from './AnimalColumnParams';
   import AnimalsHeaderFiltering from './AnimalsHeaderFiltering.svelte';
-  import { Permission } from '@prisma/client';
+  import { Permission } from '@prisma-app/client';
   import { auth } from '../../../contexts/auth.context';
 
-  const canEditAnimals = $auth.user.permissions.includes(Permission.ANIMAL);
+  const canEditAnimals = $auth?.user.permissions.includes(Permission.ANIMAL);
 
   export let columnParams: AnimalColumnParams;
   export let searchPhrase = '';

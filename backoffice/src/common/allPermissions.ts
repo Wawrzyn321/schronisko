@@ -1,4 +1,4 @@
-import { Permission } from '@prisma/client';
+import { Permission } from '@prisma-app/client';
 
 export const allPermissions: Permission[] = [
   Permission.USER,

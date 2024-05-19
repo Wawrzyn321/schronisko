@@ -9,8 +9,8 @@
   import { Trash2Icon } from 'svelte-feather-icons';
 
   import type { AnimalImageParams } from '../../services/AnimalImagesService';
-  import { STATIC_URL } from '../../services/config';
   import ResizableImageInput from '../shared/ResizableImageInput.svelte';
+  import { STATIC_URL } from '../../config';
 
   export let images: AnimalImageParams[];
   export let revalidateForm: () => void;

@@ -1,4 +1,5 @@
 <script lang="ts">
+  // @ts-nocheck TODO
   import Dropdown from '../../shared/Dropdown.svelte';
   import { FilterIcon } from 'svelte-feather-icons';
   import type { AnimalFilteringParams } from '../AnimalsHeader/AnimalFilteringParams';
@@ -28,7 +29,6 @@
   // wtf typescript
   let a: any[];
   $: a = filteringParams[filteringProperty];
-
 </script>
 
 <Dropdown>
@@ -48,4 +48,3 @@
     {/each}
   </div>
 </Dropdown>
-

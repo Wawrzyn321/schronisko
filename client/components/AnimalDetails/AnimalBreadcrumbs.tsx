@@ -1,5 +1,5 @@
 // import Link from 'next/link';
-import { Animal, AnimalCategory, AnimalType } from '.prisma/client';
+import { Animal, AnimalCategory, AnimalType } from '@prisma-app/client';
 import React from 'react';
 import { Breadcrumbs } from 'components/Breadcrumbs/Breadcrumbs';
 

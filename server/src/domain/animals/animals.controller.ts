@@ -2,7 +2,7 @@ import {
   AnimalCategory,
   AnimalType,
   VirtualCaretakerType,
-} from '.prisma/client';
+} from '@prisma-app/client';
 import { Public } from '../auth/decorators/public.decorator';
 import { LoggedInUser } from '../auth/types';
 import { AnimalsService, AnimalData } from './animals.service';
@@ -19,7 +19,7 @@ import {
   Request,
   Query,
 } from '@nestjs/common';
-import { Permission } from '@prisma/client';
+import { Permission } from '@prisma-app/client';
 import { PermissionsGuard } from '../auth/guards/Permissions.guard';
 
 @Public()

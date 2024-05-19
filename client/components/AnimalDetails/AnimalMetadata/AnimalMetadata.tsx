@@ -2,7 +2,7 @@ import Image from 'next/image';
 import opiekun from 'public/site/animal-details/opiekun.svg';
 import kontakt from 'public/site/animal-details/kontakt.svg';
 import styles from './AnimalMetadata.module.scss';
-import { Animal } from '.prisma/client';
+import { Animal } from '@prisma-app/client';
 
 const MiniIcon = ({ name, icon }: { icon: any; name: string }) => (
   <Image src={icon} alt={name} width="30px" height="30px" />

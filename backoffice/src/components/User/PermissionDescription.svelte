@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Permission } from '.prisma/client';
+  import type { Permission } from '@prisma-app/client';
   import {
     permissionDescriptions,
     permissionNames,

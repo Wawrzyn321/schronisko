@@ -1,4 +1,4 @@
-import { Page as PageModel } from '.prisma/client';
+import { Page as PageModel } from '@prisma-app/client';
 import { fetchPage } from 'api/api';
 import { LayoutWrapper } from 'components/LayoutWrapper';
 import { Page } from 'components/Page';

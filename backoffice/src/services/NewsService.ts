@@ -1,22 +1,16 @@
 import type { FileMap } from './../components/shared/Editor/FileMap';
 import { throwingFetch } from "./throwingFetch";
-import { API_URL } from './config';
-import type { News } from '.prisma/client';
+import type { News } from '@prisma-app/client';
 import { replaceContent } from "../components/shared/Editor/FileMap";
+import { API_URL } from '../config';
 
 const baseUrl = `${API_URL}/api/news`
 
-export type NewsListElement = Pick<News, 'id' | 'description' | 'title' | 'createdAt' | 'isPublished' | 'imageName'>;
-export type NewsCreateParams = {
-    title: string;
-    description: string;
-    isPublished: boolean;
-    content: string;
-}
+export type NewsListElement = Omit<News, 'content'>;
 
-export interface NewsUpdateParams extends NewsCreateParams {
-    id: string;
-}
+export type NewsUpdateParams = Pick<News, 'id' | 'title' | 'description' | 'isPublished' | 'content'>
+
+export type NewsCreateParams = Omit<NewsUpdateParams, 'id'>
 
 export class NewsService {
     async getInitial(): Promise<NewsListElement[]> {

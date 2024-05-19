@@ -4,7 +4,7 @@ import {
   AnimalCategory,
   AnimalType,
   VirtualCaretakerType,
-} from '.prisma/client';
+} from '@prisma-app/client';
 import { useEffect, useState } from 'react';
 import { AnimalCategoryLegend } from './AnimalCategoryLegend/AnimalCategoryLegend';
 import { AnimalCard } from './AnimalCard/AnimalCard';

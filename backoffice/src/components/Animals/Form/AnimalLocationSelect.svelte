@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { AnimalLocation, AnimalType } from '.prisma/client';
+  import { AnimalLocation, AnimalType } from '@prisma-app/client';
   import { Field, Select } from 'svelma';
   import { animalLocations, animalLocationsMap } from '../animalMetadata';
 
   export let type: AnimalType;
-  export let location: AnimalLocation;
+  export let location: AnimalLocation | null;
   export let disabled: boolean;
 </script>
 

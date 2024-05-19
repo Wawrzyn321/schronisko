@@ -1,15 +1,10 @@
 import type { FileMap } from '../components/shared/Editor/FileMap';
 import { throwingFetch } from "./throwingFetch";
-import { API_URL } from './config';
 import { replaceContent } from "../components/shared/Editor/FileMap";
-export type PageListElement = {
-    id: string;
-    title: string;
-}
+import { API_URL } from '../config';
+import type { Page } from '@prisma-app/client'
 
-export interface Page extends PageListElement {
-    content: string;
-}
+export type PageListElement = Pick<Page, 'id' | 'title'>
 
 const baseUrl = `${API_URL}/api/pages`
 

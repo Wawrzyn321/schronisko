@@ -2,9 +2,9 @@
   import AnimalImagePreview from './AnimalImagePreview.svelte';
   import ResizableImageInput from '../../shared/ResizableImageInput.svelte';
   import { Tooltip } from 'svelma';
-  import type { AnimalData } from '../../../services/AnimalsService';
+  import type { AnimalFormData } from '../../../services/AnimalsService';
 
-  export let animal: AnimalData;
+  export let animal: AnimalFormData;
   export let revalidateForm: () => void;
   export let disabled: boolean;
 

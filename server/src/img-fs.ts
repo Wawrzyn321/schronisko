@@ -97,7 +97,7 @@ export async function saveImagesFromContentModyfyingIt(
   for (const { name, base64 } of images) {
     await saveImage({
       subdir,
-      name: getLocalPath(subdir + name),
+      name: getLocalPath(name),
       base64Data: base64,
       resizingPreset: null,
     });

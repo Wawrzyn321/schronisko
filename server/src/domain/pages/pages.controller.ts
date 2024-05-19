@@ -12,7 +12,7 @@ import {
   Body,
   Request,
 } from '@nestjs/common';
-import { Permission } from '@prisma/client';
+import { Permission } from '@prisma-app/client';
 import { PermissionsGuard } from '../auth/guards/Permissions.guard';
 import { Query } from '@nestjs/common';
 import { ImageData } from '../../img-fs';

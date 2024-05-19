@@ -14,7 +14,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { PrismaService } from '../../prisma-connect/prisma.service';
-import { Permission, User, UserPermissions } from '@prisma/client';
+import { Permission, User, UserPermissions } from '@prisma-app/client';
 import { BcryptService } from '../auth/bcrypt.service';
 import { LoggedInUser } from '../auth/types';
 import { LogsService } from '../logs/logs.service';

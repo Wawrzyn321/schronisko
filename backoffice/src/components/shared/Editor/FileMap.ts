@@ -18,7 +18,7 @@ const generateFileName = (fileName: string) => {
 }
 
 export function replaceContent(content: string, fileMap: FileMap): ReplaceContentResult {
-    const map = [];
+    const map: ImageData[] = [];
     fileMap.forEach(([file, base64]) => {
         const name = generateFileName(file.name);
         if (content.includes(base64)) {

@@ -22,13 +22,17 @@
     loading = false;
   });
 
-  $: filteredUsers = users.filter(
-    (u: UserViewModel) =>
+  $: filteredUsers = users.filter((u: UserViewModel) => {
+    const includes = (prop: string) =>
+      prop.toLowerCase().includes(searchPhrase.toLowerCase());
+
+    return (
       !searchPhrase ||
-      u.firstName.toLowerCase().includes(searchPhrase.toLowerCase()) ||
-      u.lastName.toLowerCase().includes(searchPhrase.toLowerCase()) ||
-      u.login.toLowerCase().includes(searchPhrase.toLowerCase())
-  );
+      includes(u.firstName) ||
+      includes(u.lastName) ||
+      includes(u.login)
+    );
+  });
 
   function onUserAdded(u: UserViewModel) {
     users = insertInOrder(users, u, (u) => u.lastName);
@@ -42,13 +46,16 @@
     });
   }
 
-  function onUserEdited(u: UserViewModel, notify: boolean) {
-    const user = users.find((user) => user.id === u.id);
+  function onUserUpdated(updatedUser: UserViewModel, notify?: boolean) {
+    const user = users.find((user) => user.id === updatedUser.id);
+    if (!user) {
+      throw Error(`Brak użytkownika o ID ${updatedUser.id}`)
+    }
     const index = users.indexOf(user);
-    users = [...users.slice(0, index), u, ...users.slice(index + 1)];
+    users = [...users.slice(0, index), updatedUser, ...users.slice(index + 1)];
     if (notify !== false) {
       notifySuccess({
-        message: `Zaktualizowano dane użytkownika ${u.firstName} ${u.lastName}.`,
+        message: `Zaktualizowano dane użytkownika ${updatedUser.firstName} ${updatedUser.lastName}.`,
       });
     }
   }
@@ -56,5 +63,5 @@
 
 <main>
   <UsersHeader {onUserAdded} bind:searchPhrase />
-  <UsersList {onUserDeleted} {loading} {onUserEdited} users={filteredUsers} />
+  <UsersList {onUserDeleted} {loading} onUserUpdated={onUserUpdated} users={filteredUsers} />
 </main>

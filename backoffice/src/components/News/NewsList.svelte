@@ -7,14 +7,15 @@
   import DateFromTimestamp from '../shared/DateFromTimestamp.svelte';
   import Loader from '../shared/Loader.svelte';
   import EmptyListMessage from '../shared/EmptyListMessage.svelte';
-  import { STATIC_URL } from '../../services/config';
+  import NewsExternalLink from './NewsExternalLink.svelte';
+  import { STATIC_URL } from '../../config';
 
   export let news: NewsListElement[];
   export let onNewsDeleted: (news: NewsListElement) => void;
   export let loading: boolean;
 
   let deleteModalVisible = false;
-  let selectedNews: NewsListElement = null;
+  let selectedNews: NewsListElement | null = null;
 </script>
 
 <table class="table is-fullwidth">
@@ -59,6 +60,9 @@
         >
           <Edit2Icon size="1.0x" />
         </Button>
+
+        <NewsExternalLink news={singleNews} />
+
         <Button
           type="is-danger"
           on:click={() => {

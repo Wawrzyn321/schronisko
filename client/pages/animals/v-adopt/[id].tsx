@@ -1,5 +1,5 @@
 // import Link from 'next/link';
-import { Animal } from '.prisma/client';
+import { Animal } from '@prisma-app/client';
 import { fetchAnimal } from 'api/api';
 import { IdWrapper } from 'components/IdWrapper';
 import { SSRContext } from 'types';
@@ -32,7 +32,7 @@ function VAdoptionDetails({ animal }: { animal: Animal }) {
           </a>,
         ]}
       />
-      <Page id="formularz-adopcji-wirtualnej" ssrPage={null} />
+      <Page id="info-po-adopcji-wirtualnej" ssrPage={null} />
       <VAdoptionForm animal={animal} />
     </>
   );

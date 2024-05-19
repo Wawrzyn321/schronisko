@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AnimalImage } from '@prisma/client';
+import { AnimalImage } from '@prisma-app/client';
 import { PrismaService } from '../../../prisma-connect/prisma.service';
 import { AnimalImagesPublicController } from '../animal-images.controller';
 import { AnimalImagesService } from '../animal-images.service';

@@ -1,9 +1,9 @@
-import type { Permission } from '@prisma/client';
+import type { Permission } from '@prisma-app/client';
 import type { UserCreateParams } from './../components/User/UserCreateParams';
 import { throwingFetch } from './throwingFetch';
-import { API_URL } from './config';
 import type { UserData, UserViewModel } from '../common/UserViewModel';
-import { setUser } from '../contexts/auth.context';
+import { setUser as updateCurrentUser } from '../contexts/auth.context';
+import { API_URL } from '../config';
 
 const baseUrl = `${API_URL}/api/users`;
 
@@ -41,7 +41,7 @@ export class UserService {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(updatedData),
     });
-    setUser({ ...prevSelf, ...updatedUser, permissions: prevSelf.permissions });
+    updateCurrentUser({ ...prevSelf, ...updatedUser, permissions: prevSelf.permissions });
     return updatedUser;
   }
 

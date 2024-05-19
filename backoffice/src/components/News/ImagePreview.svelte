@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { STATIC_URL } from '../../services/config';
   import { RotateCcwIcon } from 'svelte-feather-icons';
+  import { STATIC_URL } from '../../config';
 
   export let width: number;
   export let height: number;
   export let imageData: string | null;
-  export let imageName: string | null;
+  export let imageName: string | null | undefined;
   export let subdir = '';
   export let revertImage: () => void;
   export let placeholderPic: string | null;

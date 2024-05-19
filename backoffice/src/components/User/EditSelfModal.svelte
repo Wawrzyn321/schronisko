@@ -10,8 +10,7 @@
     notifySuccess,
   } from '../../contexts/notification.context';
 
-  export let onSelfEdited: (u: UserViewModel, notify?: boolean) => void =
-    undefined;
+  export let onSelfEdited: (u: UserViewModel, notify?: boolean) => void = () => {};
   export let modalVisible: boolean;
 
   let form: HTMLFormElement;
@@ -23,16 +22,16 @@
   $: if (modalVisible) {
     if (!userUpdateData)
       userUpdateData = {
-        firstName: $auth.user.firstName,
-        lastName: $auth.user.lastName,
-        login: $auth.user.login,
+        firstName: $auth!.user.firstName,
+        lastName: $auth!.user.lastName,
+        login: $auth!.user.login,
       };
   }
 
   async function updateSelf() {
     try {
       loading = true;
-      const updatedUser = await userService.updateSelf($auth.user, userUpdateData);
+      const updatedUser = await userService.updateSelf($auth!.user, userUpdateData);
       onSelfEdited && onSelfEdited(updatedUser, false);
       notifySuccess({ message: 'Twoje dane zostały zapisane.' });
     } catch (e) {

@@ -7,7 +7,7 @@ import { UsersController } from '../users.controller';
 import { BcryptService } from '../../auth/bcrypt.service';
 import { allPermissions } from '../../auth/constants';
 import { UserViewModel } from '../../auth/auth.service';
-import { Permission, User } from '@prisma/client';
+import { Permission, User } from '@prisma-app/client';
 import {
   FrontendUpdateOtherUserDto,
   FrontendSelfUpdateDto,

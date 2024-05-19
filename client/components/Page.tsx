@@ -1,4 +1,4 @@
-import { Page as PageModel } from '.prisma/client';
+import { Page as PageModel } from '@prisma-app/client';
 import { FetchError, fetchPage } from 'api/api';
 import { ErrorWrapper, ERROR_PAGE, ERROR_PAGE_NOT_FOUND } from 'errors';
 import { useEffect, useState } from 'react';

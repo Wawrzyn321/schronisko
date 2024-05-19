@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { substitutionDescriptions } from '../services/substitutions';
+  import { substitutionDescriptions } from '../../services/substitutions';
 </script>
 
 <div>

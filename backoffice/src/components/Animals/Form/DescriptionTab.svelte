@@ -1,16 +1,17 @@
 <script lang="ts">
   import { Input, Tab, Tooltip, Button } from 'svelma';
-  import type { AnimalData } from '../../../services/AnimalsService';
+  import type { AnimalFormData } from '../../../services/AnimalsService';
   import Field from '../../shared/Field.svelte';
   import { descriptionTemplates } from './descriptionTemplates';
 
   export let revalidateForm: () => void;
-  export let animal: AnimalData;
+  export let animalFormData: AnimalFormData;
   export let isReadonly: boolean;
   export let disabled: boolean;
 
   const descriptionTemplate =
-    descriptionTemplates[animal.category]?.[animal.gender];
+    // @ts-ignore
+    descriptionTemplates[animalFormData.category]?.[animalFormData.gender];
 </script>
 
 <Tab label="Opis">
@@ -20,7 +21,7 @@
       <Button
         type="is-primary"
         on:click={() => {
-          animal.description = descriptionTemplate;
+          animalFormData.description = descriptionTemplate;
           revalidateForm();
         }}
         {disabled}
@@ -44,7 +45,7 @@
     <Input
       required
       maxlength="1500"
-      bind:value={animal.description}
+      bind:value={animalFormData.description}
       type="textarea"
       placeholder="Opis zwierzęcia"
       disabled={isReadonly || disabled}
@@ -56,7 +57,7 @@
     <Tooltip label="Notatka dla pracowników, niewidoczna na stronie głównej.">
       <Input
         maxlength="200"
-        bind:value={animal.note}
+        bind:value={animalFormData.note}
         type="textarea"
         placeholder="Notatka"
         pattern=".*\S+.*"

@@ -1,0 +1,14 @@
+server {
+ 	server_name schronisko-backend2.oto-jest-wawrzyn.pl;
+
+    	listen 80;
+    	listen [::]:80;
+
+	client_max_body_size 50M;
+
+
+	location / {
+		proxy_pass http://127.0.0.1:60045;
+	}
+
+}

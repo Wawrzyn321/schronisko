@@ -1,6 +1,6 @@
+import { API_URL } from '../config';
 import { throwingFetch } from './throwingFetch';
-import { API_URL } from './config';
-import type { Settings } from '@prisma/client';
+import type { Settings } from '@prisma-app/client';
 
 const baseUrl = `${API_URL}/api/settings`;
 

@@ -7,7 +7,7 @@
   let tabs: any;
 
   export let mapping: Array<string> | undefined = undefined;
-  export let currentTab: string | undefined = undefined;
+  export let currentTab: string;
 
   $: active !== undefined && tabs && tabs.setActive(active);
 

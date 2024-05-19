@@ -1,4 +1,4 @@
-import { Page as PageModel, Settings } from '.prisma/client';
+import { Page as PageModel, Settings } from '@prisma-app/client';
 import { FetchError, fetchPage, fetchSettings } from 'api/api';
 import { useEffect, useState } from 'react';
 import { AdoptionModalProps } from './VAdoptionModalContent';

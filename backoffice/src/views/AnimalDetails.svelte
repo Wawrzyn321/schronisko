@@ -8,13 +8,13 @@
   import { animalsService } from '../services/AnimalsService';
   import { animalImagesService } from '../services/AnimalImagesService';
   import type { AnimalImageParams } from '../services/AnimalImagesService';
-  import type { Animal, AnimalCategory } from '.prisma/client';
-  import type { AnimalData } from '../services/AnimalsService';
+  import type { Animal, AnimalCategory } from '@prisma-app/client';
+  import type { AnimalFormData } from '../services/AnimalsService';
 
   export let params: { id: string };
 
   let animal: Animal;
-  let animalData: AnimalData;
+  let animalFormData: AnimalFormData;
   let images: AnimalImageParams[];
   let isValid: boolean = true;
   let isSaving: boolean;
@@ -24,7 +24,7 @@
     const id = encodeURIComponent(params.id);
     try {
       animal = await animalsService.get(id);
-      animalData = animal as AnimalData;
+      animalFormData = { ...animal, imageData: '' };
       prevCategory = animal.category;
     } catch (e) {
       notifyError({
@@ -47,11 +47,11 @@
   async function updateAnimal() {
     try {
       isSaving = true;
-      const updatedAnimal = await animalsService.update(animal, images);
-      prevCategory = animal.category;
+      const updatedAnimal = await animalsService.update(animalFormData, images);
+      prevCategory = animalFormData.category;
       notifySuccess({ message: 'Dane zwierzęcia zostały zapisane.' });
-      animalData.imageData = null;
-      animalData.imageName = updatedAnimal.imageName;
+      animalFormData.imageData = null;
+      animalFormData.imageName = updatedAnimal.imageName;
     } catch (e) {
       notifyError({
         message: 'Nie możnac zapisać danych zwierzęcia: ' + e.message,
@@ -63,18 +63,19 @@
 </script>
 
 <main>
-  {#if !!animal}
+  {#if !!animalFormData}
     <UpdateHeader
       {updateAnimal}
       {isValid}
       {animal}
+      {animalFormData}
       {images}
       {isSaving}
       {prevCategory}
-      bind:isPublic={animal.isPublic}
+      bind:isPublic={animalFormData.isPublic}
     />
     <AnimalForm
-      bind:animal={animalData}
+      bind:animalFormData={animalFormData}
       bind:images
       setFormValid={(valid) => (isValid = valid)}
     />

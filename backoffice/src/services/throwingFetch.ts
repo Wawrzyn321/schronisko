@@ -24,8 +24,10 @@ export async function throwingFetch(input: RequestInfo, init?: RequestInitWithAu
     try {
         response = await fetch(input, fetchInit);
     } catch (e: unknown) {
-        console.warn(e);
-        throw { ...response, message: "Serwer jest nieosiągalny." };
+        if (e instanceof Error) {
+            throw { message: "Serwer jest nieosiągalny." };
+        }
+        throw e;
     }
     if (response.ok) {
         if (response.headers.get('content-type')?.includes('application/json')) {
@@ -34,12 +36,12 @@ export async function throwingFetch(input: RequestInfo, init?: RequestInitWithAu
             return null;
         }
     } else {
-        const map = {
+        const map: Record<string, string> = {
             401: "Brak uwierzytelnienia, zaloguj się ponownie.",
             403: "Nie masz uprawnień do wykonania tej akcji.",
             404: "Szukany obiekt nie istnieje."
         }
-        let message = map[response.status];
+        let message = map[response.status.toString()];
         if (!message) {
             console.warn(response);
             message = "Błąd wykonania na serwerze!";

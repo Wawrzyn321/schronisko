@@ -1,6 +1,6 @@
 import styles from './BigSection.module.scss';
 import { NewsListElement } from 'types';
-import { Page as PageModel } from '.prisma/client';
+import { Page as PageModel } from '@prisma-app/client';
 import { Article } from 'components/Article/Article';
 import { NewsCarousel } from './NewsCarousel/NewsCarousel';
 import { PageLink } from './PageLink/PageLink';

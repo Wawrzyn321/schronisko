@@ -1,4 +1,4 @@
-import { Page as PageModel } from '.prisma/client';
+import { Page as PageModel } from '@prisma-app/client';
 import { Page } from 'components/Page';
 import { Breadcrumbs } from 'components/Breadcrumbs/Breadcrumbs';
 import { fetchPage } from 'api/api';

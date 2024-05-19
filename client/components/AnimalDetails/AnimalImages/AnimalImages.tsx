@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ANIMAL_IMAGES_IMAGES_URL } from 'api/config';
-import { AnimalImage } from '.prisma/client';
+import { AnimalImage } from '@prisma-app/client';
 import styles from './AnimalImages.module.scss';
 import { Article } from 'components/Article/Article';
 import { ERROR_ANIMAL_IMAGES } from 'errors';

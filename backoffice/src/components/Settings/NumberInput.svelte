@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Button, Input } from 'svelma';
-  import type { Settings } from '.prisma/client';
+  import type { Settings } from '@prisma-app/client';
   import {
     notifyError,
     notifySuccess,

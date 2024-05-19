@@ -1,4 +1,4 @@
-import { Animal } from '.prisma/client';
+import { Animal } from '@prisma-app/client';
 import { Modal } from 'components/Modal';
 import { useState } from 'react';
 import { VAdoptionModalContent } from './VAdoptionModalContent/VAdoptionModalContent';

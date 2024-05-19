@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { AnimalType } from '@prisma/client';
+  import { AnimalType } from '@prisma-app/client';
 
-  import type { AnimalData } from '../../../services/AnimalsService';
+  import type { AnimalFormData } from '../../../services/AnimalsService';
   import ImagePreview from '../../News/ImagePreview.svelte';
 
-  export let animal: AnimalData;
+  export let animal: AnimalFormData;
   export let revertImage: () => void;
   export let animalType: AnimalType;
 </script>

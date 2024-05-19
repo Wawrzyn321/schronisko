@@ -1,6 +1,6 @@
 import { throwingFetch } from "./throwingFetch";
-import { API_URL } from './config';
 import type { UserViewModel } from "../common/UserViewModel";
+import { API_URL } from "../config";
 
 const baseUrl = `${API_URL}/auth`;
 

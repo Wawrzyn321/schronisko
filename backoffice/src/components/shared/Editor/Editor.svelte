@@ -27,7 +27,7 @@
   let fileMap: FileMap = [];
 
   export let onChange: (c: string, fileMap: FileMap) => void;
-  export let requestSave: () => void = null;
+  export let requestSave: () => void = () => {};
   export let initialContent: string;
 
   $: {

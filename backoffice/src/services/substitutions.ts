@@ -1,4 +1,4 @@
-import type { Settings } from '@prisma/client';
+import type { Settings } from '@prisma-app/client';
 
 const subsitutions = {
     '%KONTO%': 'V_ADOPTION_ACCOUNT_NUMBER',

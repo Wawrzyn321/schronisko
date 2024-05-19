@@ -12,7 +12,7 @@ import * as Sentry from '@sentry/node';
 import * as bodyParser from 'body-parser';
 import { NestExpressApplication } from '@nestjs/platform-express';
 
-const MAX_REQUEST_SIZE = `${50}mb`;
+const MAX_REQUEST_SIZE = '50mb';
 const PORT = 60045;
 
 const DEV = process.env.NODE_ENV !== 'production';
@@ -42,8 +42,10 @@ async function bootstrap() {
   app.use(bodyParser.urlencoded({ limit: MAX_REQUEST_SIZE, extended: true }));
   app.enableCors();
 
-  const { httpAdapter } = app.get(HttpAdapterHost);
-  Sentry.setupNestErrorHandler(app, new BaseExceptionFilter(httpAdapter));
+  if (!DEV) {
+    const { httpAdapter } = app.get(HttpAdapterHost);
+    Sentry.setupNestErrorHandler(app, new BaseExceptionFilter(httpAdapter));
+  }
 
   await app.listen(PORT);
 }

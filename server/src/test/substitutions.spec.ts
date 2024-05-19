@@ -1,4 +1,4 @@
-import { Settings } from '@prisma/client';
+import { Settings } from '@prisma-app/client';
 import { containsSubsitution, substitute } from '../substitutions';
 
 describe('subsitutions', () => {

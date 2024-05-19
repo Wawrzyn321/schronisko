@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Logs } from '@prisma/client';
+  import type { Logs } from '@prisma-app/client';
   import { onMount } from 'svelte';
   import { logsService } from '../services/LogsService';
   import { notifyError, notifySuccess } from '../contexts/notification.context';
@@ -43,7 +43,7 @@
     await loadLogs();
   };
 
-  $: filteredLogs = filterLogs(logs, filteringParams, $auth?.user?.login || '');
+  $: filteredLogs = filterLogs(logs, filteringParams, $auth!.user.login);
 
   $: paginatedLogs = paginate(filteredLogs, pageSize, currentPage);
 </script>

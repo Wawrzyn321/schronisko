@@ -8,12 +8,12 @@
   import AnimalsListHeader from './AnimalsListHeader.svelte';
   import Loader from '../../shared/Loader.svelte';
   import {
-    Animal,
+    type Animal,
     AnimalCategory,
     AnimalType,
     Permission,
     VirtualCaretakerType,
-  } from '.prisma/client';
+  } from '@prisma-app/client';
   import {
     animalGendersMap,
     animalLocationsMap,
@@ -24,22 +24,23 @@
   import type { AnimalColumnParams } from './../AnimalsHeader/AnimalColumnParams';
   import type { AnimalFilteringParams } from './../AnimalsHeader/AnimalFilteringParams';
   import type { AnimalSortingParams } from './../AnimalsHeader/AnimalSortingParams';
-  import { STATIC_URL } from '../../../services/config';
   import EmptyListMessage from '../../shared/EmptyListMessage.svelte';
   import type { AnimalListElement } from '../../../common/types';
   import { auth } from '../../../contexts/auth.context';
+  import AnimalExternalLink from '../AnimalExternalLink.svelte';
+  import { STATIC_URL } from '../../../config';
 
   export let animals: AnimalListElement[];
   export let loading: boolean;
   export let columnParams: AnimalColumnParams;
   export let filteringParams: AnimalFilteringParams;
   export let sortingParams: AnimalSortingParams;
-  export let onAnimalDeleted: (animal: Animal) => void;
+  export let onAnimalDeleted: (animal: Pick<Animal, 'id' | 'name'>) => void;
 
   let deleteModalVisible = false;
-  let selectedAnimal: AnimalListElement = null;
+  let selectedAnimal: AnimalListElement | null = null;
 
-  const canEditAnimals = $auth.user.permissions.includes(Permission.ANIMAL);
+  const canEditAnimals = $auth?.user.permissions.includes(Permission.ANIMAL);
 
   function restrictStringLength(str: string, chars = 40): string {
     if (str.length <= chars) {
@@ -95,7 +96,7 @@
       {/if}
       {#if columnParams.showLocation}
         <td>
-          {animalLocationsMap[animal.location] || '-'}
+          {(!!animal.location && animalLocationsMap[animal.location]) || '-'}
           {#if animal.locationDescription}
             ({animal.locationDescription})
           {/if}
@@ -146,6 +147,7 @@
         >
           <Edit2Icon size="1.0x" />
         </Button>
+        <AnimalExternalLink animal={animal}/>
         <Button
           type="is-danger"
           aria-label={'Usuń zwierzę ' + animal.name}

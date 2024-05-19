@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Select } from 'svelma';
-  import type { VirtualCaretakerType } from '@prisma/client';
+  import type { VirtualCaretakerType } from '@prisma-app/client';
   import {
     virtualCaretakerTypes,
     virtualCaretakerTypesMap,

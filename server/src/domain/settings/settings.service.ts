@@ -1,4 +1,4 @@
-import { Permission, Settings } from '@prisma/client';
+import { Permission, Settings } from '@prisma-app/client';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma-connect/prisma.service';
 import { LoggedInUser } from '../auth/types';

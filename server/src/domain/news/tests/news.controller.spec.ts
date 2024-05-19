@@ -4,7 +4,7 @@ import { LogsService } from '../../logs/logs.service';
 import { PrismaService } from '../../../prisma-connect/prisma.service';
 import { NewsController } from '../news.controller';
 import { NewsService } from '../news.service';
-import { News, Permission } from '@prisma/client';
+import { News, Permission } from '@prisma-app/client';
 import { LoggedInUser } from '../../auth/types';
 import { allPermissions } from '../../auth/constants';
 import { NewsCreateInput, NewsModifyParams, NewsUpdateInput } from '../News';

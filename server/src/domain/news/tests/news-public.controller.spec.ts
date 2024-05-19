@@ -4,7 +4,7 @@ import { LogsService } from '../../logs/logs.service';
 import { PrismaService } from '../../../prisma-connect/prisma.service';
 import { NewsPublicController } from '../news.controller';
 import { NewsService } from '../news.service';
-import { News, Settings } from '@prisma/client';
+import { News, Settings } from '@prisma-app/client';
 import { CacheService } from '../../cache/cache.service';
 describe('NewsPublicController', () => {
   let newsPublicController: NewsPublicController;

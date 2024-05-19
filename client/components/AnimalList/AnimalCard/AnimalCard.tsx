@@ -1,7 +1,7 @@
 import styles from './AnimalCard.module.scss';
 import lupa from 'public/site/lupa.svg';
 import { Overlay } from './Overlay';
-import { Animal } from '.prisma/client';
+import { Animal } from '@prisma-app/client';
 import { AnimalImage } from './AnimalImage';
 import Image from 'next/image';
 

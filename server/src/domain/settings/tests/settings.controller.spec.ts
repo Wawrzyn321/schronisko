@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { Permission, Settings } from '@prisma/client';
+import { Permission, Settings } from '@prisma-app/client';
 import { LogsService } from '../../logs/logs.service';
 import { PrismaService } from '../../../prisma-connect/prisma.service';
 import { SettingsController } from '../settings.controller';

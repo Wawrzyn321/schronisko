@@ -5,17 +5,18 @@
   import { Button, Input } from 'svelma';
   import { pageService } from '../services/PageService';
   import EditorTabs from '../components/shared/EditorTabs.svelte';
-  import type { Page } from '.prisma/client';
+  import type { Page } from '@prisma-app/client';
   import { notifyError, notifySuccess } from '../contexts/notification.context';
   import Loader from '../components/shared/Loader.svelte';
   import type { FileMap } from '../components/shared/Editor/FileMap';
-  import AboutSubstitutions from '../components/AboutSubstitutions.svelte';
+  import AboutSubstitutions from '../components/shared/AboutSubstitutions.svelte';
   import Field from '../components/shared/Field.svelte';
+  import PageExternalLink from '../components/Pages/PageExternalLink.svelte';
 
   export let params: { id: string };
 
   const id = params.id;
-  const mode = new URLSearchParams(get(querystring)).get('mode');
+  const mode = new URLSearchParams(get(querystring)).get('mode') ?? 'view';
 
   let page: Page;
   let editedContent = '';
@@ -67,6 +68,7 @@
         >
           Zapisz
         </Button>
+        <PageExternalLink {page} />
       </div>
     </header>
     <div style="display: flex; justify-content: space-between">
@@ -104,11 +106,7 @@
   .page__header-right {
     display: flex;
     place-items: center;
-
-    span {
-      display: inline-block;
-      margin-right: 12px;
-    }
+    column-gap: 4px;
   }
 
   em {

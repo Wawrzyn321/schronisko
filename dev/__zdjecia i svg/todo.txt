@@ -14,5 +14,11 @@ test na update daty - a raczej zmień podejście, za dużo mockowania
 lepszy sposób deployowania
 
 UPDATE paczek
+    prisma
+    next
+    nest
+    quill?
 
 testuj maile + dodaj handlowanie błędów
+
+https://github.com/mcdado/raspi-temp-report/blob/master/.rsyncrc

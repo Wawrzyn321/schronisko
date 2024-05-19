@@ -1,4 +1,4 @@
-import { Animal } from '.prisma/client';
+import { Animal } from '@prisma-app/client';
 import { fetchAnimal, FetchError } from 'api/api';
 import { useEffect, useState } from 'react';
 import { ErrorWrapper, ERROR_ANIMAL_NOT_FOUND, ERROR_GENERIC } from 'errors';

@@ -6,7 +6,7 @@ import {
   AnimalLocation,
   AnimalType,
   VirtualCaretakerType,
-} from '@prisma/client';
+} from '@prisma-app/client';
 import { AnimalImagesService } from '../../animal-images/animal-images.service';
 import { LogsService } from '../../logs/logs.service';
 import { PrismaService } from '../../../prisma-connect/prisma.service';

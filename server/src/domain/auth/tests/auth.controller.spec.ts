@@ -1,6 +1,6 @@
 import { JwtService } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
-import { Permission, User, UserPermissions } from '@prisma/client';
+import { Permission, User, UserPermissions } from '@prisma-app/client';
 import { UsersService } from '../../users/users.service';
 import { LogsService } from '../../logs/logs.service';
 import { PrismaService } from '../../../prisma-connect/prisma.service';

@@ -1,11 +1,13 @@
 <script lang="ts">
   import { onMount, setContext } from 'svelte';
 
-  function omit(obj: any, ...keysToOmit: string[]) {
+  function omit(obj: Record<string, any>, ...keysToOmit: string[]) {
     return Object.keys(obj).reduce((acc, key) => {
-      if (keysToOmit.indexOf(key) === -1) acc[key] = obj[key];
+      if (!keysToOmit.includes(key)) {
+        acc[key] = obj[key];
+      }
       return acc;
-    }, {});
+    }, {} as Record<string, any>);
   }
 
   export let noStar: boolean = false;
@@ -29,7 +31,7 @@
   /** Message to show beneath input
    * @svelte-prop {String} [message]
    * */
-  export let message = '';
+  export let message: string | null = '';
 
   /** Direct child components/elements of Field will be grouped horizontally
    * @svelte-prop {Boolean} grouped=false

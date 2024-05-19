@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { AnimalGender } from '.prisma/client';
+  import type { AnimalGender } from '@prisma-app/client';
   import { Field, Select } from 'svelma';
   import { animalGenders, animalGendersMap } from '../animalMetadata';
 
