@@ -14,12 +14,14 @@ test.describe("Configuration: ", () => {
         }
 
         const ensureDogVolunteeringDisabled = async () => {
+            await page.waitForTimeout(100); // ensure update
             await page.goto(MAIN_URL + '/volunteering/dogs');
             await expect(contains(page, 'wolontariat-pies-off')).toBeVisible();
             await expect(page.locator('form')).not.toBeVisible();
         }
 
         const ensureDogVolunteeringEnabled = async () => {
+            await page.waitForTimeout(100); // ensure update
             await page.goto(MAIN_URL + '/volunteering/dogs');
             await expect(contains(page, 'wolontariat-pies-on')).toBeVisible();
             await expect(page.locator('form')).toBeVisible();

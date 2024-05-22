@@ -1,12 +1,12 @@
 import type { UserViewModel } from './../common/UserViewModel';
 import { notify, type NotifyParams } from './notification.context';
 import { authService } from './../services/AuthService';
-import { derived, get, writable } from 'svelte/store';
-import jwt_decode from 'jwt-decode';
+import { get, writable } from 'svelte/store';
+import { jwtDecode } from 'jwt-decode';
 import { push } from 'svelte-spa-router';
 
 const getAuthRemainingTime = (token: string) => {
-    const decoded: { exp: number } = jwt_decode(token);
+    const decoded: { exp: number } = jwtDecode(token);
     const diff = decoded.exp * 1000 - Date.now();
     const seconds = diff / 1000;
     return seconds;
