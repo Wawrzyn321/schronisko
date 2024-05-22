@@ -4,9 +4,9 @@
   import type { Page } from '@prisma-app/client';
 
   export let page: Pick<Page, 'id'>;
-
-  const href = `${MAIN_PAGE_URL}/${PAGE_MAP[page.id]}`;
-  const disabled = !PAGE_MAP[page.id];
+  $: showLink = page.id in PAGE_MAP;
+  // @ts-ignore
+  $: href = showLink ? `${MAIN_PAGE_URL}${PAGE_MAP[page.id]}` : '';
 </script>
 
-<ExternalLink {href} {disabled} />
+<ExternalLink {href} disabled={!showLink} />

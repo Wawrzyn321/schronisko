@@ -4,7 +4,7 @@ import { Breadcrumbs } from 'components/Breadcrumbs/Breadcrumbs';
 import { AnimalList } from 'components/AnimalList/AnimalList';
 import { fetchPage } from 'api/api';
 import React from 'react';
-import { LayoutWrapper } from 'components/LayoutWrapper';
+import { LayoutWrapper } from 'components/LayoutWrapper/LayoutWrapper';
 
 const ID_main = 'odeszly';
 const ID_poem = 'odeszly-wiersz';

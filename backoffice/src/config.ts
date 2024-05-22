@@ -1,17 +1,10 @@
-export const MAIN_PAGE_URL = location.hostname === 'localhost' ? 'http://localhost:3015' : 'http://schronisko-main2.oto-jest-wawrzyn.pl';
+const isLocal = () => ['localhost', '127.0.0.1'].includes(location.hostname);
 
-const getApiUrl = () => {
-    if (location.hostname === 'localhost') {
-        return 'http://localhost:60045'
-    } else {
-        return 'http://schronisko-backend2.oto-jest-wawrzyn.pl';
-    }
-}
-
-export const API_URL = getApiUrl();
+export const MAIN_PAGE_URL = isLocal() ? 'http://localhost:3015' : 'http://schronisko-main2.oto-jest-wawrzyn.pl';
+export const API_URL = isLocal() ? 'http://localhost:60045' : 'http://schronisko-backend2.oto-jest-wawrzyn.pl';
 export const STATIC_URL = API_URL + '/img';
 
-export const PAGE_MAP: Record<string, string> = {
+export const PAGE_MAP = {
     'jak-adoptowac-wirtualnie': '/v-adoptions/how-to',
     // 'info-po-adopcji-wirtualnej': 
     'glowna-adopcje': '/',

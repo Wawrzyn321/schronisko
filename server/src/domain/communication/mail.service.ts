@@ -17,7 +17,7 @@ export class MailService {
     try {
       const [_] = await sendGridClient.send(msg);
     } catch (e) {
-      console.log(e);
+      console.log(e); //todo
       throw new InternalServerErrorException();
     }
   }

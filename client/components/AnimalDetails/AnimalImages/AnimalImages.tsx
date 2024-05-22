@@ -4,7 +4,7 @@ import { AnimalImage } from '@prisma-app/client';
 import styles from './AnimalImages.module.scss';
 import { Article } from 'components/Article/Article';
 import { ERROR_ANIMAL_IMAGES } from 'errors';
-import { LayoutWrapper } from 'components/LayoutWrapper';
+import { LayoutWrapper } from 'components/LayoutWrapper/LayoutWrapper';
 import { fetchAnimalImages } from 'api/api';
 
 export function AnimalImages({ id }: { id: string }) {

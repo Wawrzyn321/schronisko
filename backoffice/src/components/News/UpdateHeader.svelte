@@ -4,12 +4,11 @@
   import { Button } from 'svelma';
   import { push } from 'svelte-spa-router';
   import { notifySuccess } from '../../contexts/notification.context';
-  import DateFromTimestamp from '../shared/DateFromTimestamp.svelte';
   import DeleteNewsModal from './DeleteNewsModal.svelte';
   import NewsExternalLink from './NewsExternalLink.svelte';
+  import AboutSubstitutions from '../shared/AboutSubstitutions.svelte';
 
   export let isPublished: boolean;
-  export let timestamp: Date;
   export let isValid: boolean;
   export let news: News;
   export let updateNews: () => void;
@@ -28,10 +27,7 @@
     <a href="/#/news">Newsy</a>
     <span class="g-breadcrumb-separator">/ </span>{news.title}
   </h1>
-  <span>
-    Utworzony:
-    <DateFromTimestamp {timestamp} />
-  </span>
+  <AboutSubstitutions />
   <div class="update-header__actions">
     <label>
       <input

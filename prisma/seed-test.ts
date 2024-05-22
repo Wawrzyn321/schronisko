@@ -22,7 +22,7 @@ async function clearDb(prisma: PrismaClient) {
   console.log("done!");
 }
 
-const ADMIN_USER: any = async () => ({
+const ADMIN_USER: any = {
   where: { login: "ADMIN_LOGIN" },
   update: {},
   create: {
@@ -30,7 +30,7 @@ const ADMIN_USER: any = async () => ({
     lastName: "NAZWISKO",
     isActive: true,
     login: "ADMIN_LOGIN",
-    passwordHash: await hashData("HASLO"),
+    passwordHash: hashData("HASLO"),
     permissions: {
       create: [
         {
@@ -47,10 +47,10 @@ const ADMIN_USER: any = async () => ({
         },
       ],
     },
-  },
-});
+  }
+};
 
-const INACTIVE_NON_ADMIN_USER: any = async () => ({
+const INACTIVE_NON_ADMIN_USER: any = {
   where: { login: "INACTIVE_LOGIN" },
   update: {},
   create: {
@@ -58,7 +58,7 @@ const INACTIVE_NON_ADMIN_USER: any = async () => ({
     lastName: "NAZWISKO_2",
     isActive: false,
     login: "INACTIVE_LOGIN",
-    passwordHash: await hashData("HASLO_2"),
+    passwordHash: hashData("HASLO_2"),
     permissions: {
       create: [
         {
@@ -70,9 +70,9 @@ const INACTIVE_NON_ADMIN_USER: any = async () => ({
       ],
     },
   },
-});
+};
 
-const CHANGE_DATA_USER: any = async () => ({
+const CHANGE_DATA_USER: any = {
   where: { login: "CHANGE_LOGIN" },
   update: {},
   create: {
@@ -80,12 +80,12 @@ const CHANGE_DATA_USER: any = async () => ({
     lastName: "NAZWISKO_3",
     isActive: true,
     login: "CHANGE_LOGIN",
-    passwordHash: await hashData("CHANGE_PASSWORD"),
+    passwordHash: hashData("CHANGE_PASSWORD"),
     permissions: {},
   },
-});
+};
 
-const NO_PERMISSIONS_USER: any = async () => ({
+const NO_PERMISSIONS_USER: any = {
   where: { login: "NO_PERMISSIONS_LOGIN" },
   update: {},
   create: {
@@ -93,10 +93,10 @@ const NO_PERMISSIONS_USER: any = async () => ({
     lastName: "NAZWISKO_4",
     isActive: true,
     login: "NO_PERMISSIONS_LOGIN",
-    passwordHash: await hashData("NO_PERMISSIONS_PASSWORD"),
+    passwordHash: hashData("NO_PERMISSIONS_PASSWORD"),
     permissions: {},
   },
-});
+};
 
 const TEST_PAGE = {
   where: { id: "TEST_PAGE" },
@@ -134,6 +134,16 @@ const DOG_VOLUTEERING_OFF_PAGE = {
   create: {
     id: "wolontariat-pies-off",
     title: "wolontariat-pies-off",
+    content: '',
+  },
+}
+
+const ARTICLE_EDITING_TEST_PAGE = {
+  where: { id: "jak-pomoc" },
+  update: {},
+  create: {
+    id: "jak-pomoc",
+    title: "How to",
     content: '',
   },
 }
@@ -217,15 +227,16 @@ const AFTER_ADOPTION_ANIMAL_2 = {
 
 async function seed(prisma: PrismaClient) {
   console.log("seeding DB...");
-  await prisma.user.upsert(await ADMIN_USER());
-  await prisma.user.upsert(await INACTIVE_NON_ADMIN_USER());
-  await prisma.user.upsert(await CHANGE_DATA_USER());
-  await prisma.user.upsert(await NO_PERMISSIONS_USER());
+  await prisma.user.upsert(ADMIN_USER);
+  await prisma.user.upsert(INACTIVE_NON_ADMIN_USER);
+  await prisma.user.upsert(CHANGE_DATA_USER);
+  await prisma.user.upsert(NO_PERMISSIONS_USER);
 
   await prisma.page.upsert(TEST_PAGE);
   await prisma.page.upsert(MAIN_SITE_PAGE);
   await prisma.page.upsert(DOG_VOLUTEERING_ON_PAGE);
   await prisma.page.upsert(DOG_VOLUTEERING_OFF_PAGE);
+  await prisma.page.upsert(ARTICLE_EDITING_TEST_PAGE);
 
   await prisma.news.upsert(NON_PUBLIC_NEWS);
   await prisma.news.upsert(NEWS_WITH_TEMPLATES);

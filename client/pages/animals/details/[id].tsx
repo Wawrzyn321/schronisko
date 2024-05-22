@@ -2,7 +2,7 @@ import React from 'react';
 import { Animal } from '@prisma-app/client';
 import { fetchAnimal } from 'api/api';
 import { IdWrapper } from 'components/IdWrapper';
-import { LayoutWrapper } from 'components/LayoutWrapper';
+import { LayoutWrapper } from 'components/LayoutWrapper/LayoutWrapper';
 import { SSRContext } from 'types';
 import { AnimalFetcher } from 'components/AnimalFetcher';
 import { AnimalBreadcrumbs } from 'components/AnimalDetails/AnimalBreadcrumbs';

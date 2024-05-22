@@ -10,8 +10,6 @@
   import EmptyListMessage from '../components/shared/EmptyListMessage.svelte';
   import Pagination from '../components/shared/Pagination/Pagination.svelte';
   import { paginate } from '../components/shared/Pagination/pagination';
-  import { ExternalLinkIcon } from 'svelte-feather-icons';
-  import { MAIN_PAGE_URL, PAGE_MAP } from '../config';
   import PageExternalLink from '../components/Pages/PageExternalLink.svelte';
 
   let pages: PageListElement[] = [];
@@ -74,7 +72,7 @@
           >
             <Edit2Icon size="1.0x" />
           </Button>
-          <PageExternalLink {page} />
+          <PageExternalLink bind:page />
         </td>
       </tr>
     {/each}

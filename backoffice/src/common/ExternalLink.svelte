@@ -9,6 +9,7 @@
   class={`external-link ${disabled ? 'external-link--disabled' : ''}`}
   {href}
   target="_blank"
+  aria-label="Otwórz w nowej karcie"
 >
   <span>
     <ExternalLinkIcon size="1.0x" />

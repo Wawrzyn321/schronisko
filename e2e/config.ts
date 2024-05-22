@@ -1,2 +1,2 @@
-export const BACKOFFICE_URL = "http://localhost:5555/";
-export const MAIN_URL = "http://localhost:3015/";
+export const BACKOFFICE_URL = "http://localhost:5555";
+export const MAIN_URL = "http://localhost:3015";

@@ -34,9 +34,9 @@ describe('toPrismaUserCreate', () => {
       permissions: [Permission.ANIMAL, Permission.USER],
     };
 
-    const fakeHasher = jest.fn().mockReturnValue(Promise.resolve('hash'));
+    const fakeHasher = jest.fn(() =>'hash');
 
-    const result = await toPrismaUserCreate(user, fakeHasher);
+    const result = toPrismaUserCreate(user, fakeHasher);
 
     expect(fakeHasher).toHaveBeenCalledWith(user.password);
     expect(result).toMatchInlineSnapshot(`

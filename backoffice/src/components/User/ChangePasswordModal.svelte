@@ -9,6 +9,8 @@
   import Modal from '../shared/Modal.svelte';
   import PasswordInput from './PasswordInput.svelte';
 
+  export const MIN_PASSWORD_LENGTH = 8;
+
   export let modalVisible: boolean;
 
   let form: HTMLFormElement;
@@ -50,14 +52,16 @@
     />
     <div class="tooltip-wrapper-wrapper">
       <Tooltip
-        multilined={true}
+        multilined={false}
         style="width: 420px"
-        label="Nie ma wymagań co do siły hasła. Używanie słabego hasła to wybór."
+        label="Minimum 8 znaków."
+        position='is-bottom'
       >
         <PasswordInput
           label="Nowe hasło"
           bind:password={formData.newPassword}
           autocomplete="new-password"
+          minLength={MIN_PASSWORD_LENGTH}
         />
       </Tooltip>
     </div>
@@ -66,6 +70,7 @@
       bind:password={formData.newPasswordAgain}
       message={formData.isValid ? '' : 'Hasła muszą się zgadzać.'}
       autocomplete="new-password"
+      minLength={MIN_PASSWORD_LENGTH}
     />
     <em>Po zmianie hasła nastąpi wylogowanie.</em>
   </form>

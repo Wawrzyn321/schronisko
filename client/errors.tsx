@@ -1,6 +1,5 @@
 import { FetchError } from 'api/api';
 import { Article, ArticleProps } from 'components/Article/Article';
-import { LayoutWrapper } from 'components/LayoutWrapper';
 import React from 'react';
 
 type ErrorProps = Pick<ArticleProps, 'content' | 'title'>;

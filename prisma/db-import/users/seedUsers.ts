@@ -33,7 +33,7 @@ export async function seedUsers(prisma: PrismaClient) {
             lastName: importedUser.surname,
             isActive,
             login: importedUser.login,
-            passwordHash: await hashData(importedUser.login),
+            passwordHash: hashData(importedUser.login),
             permissions: {
                 create: createPermissions(importedUser.login),
             }
@@ -61,7 +61,7 @@ async function createAdmin(prisma: PrismaClient) {
             lastName: "_admin",
             isActive: true,
             login: '_admin',
-            passwordHash: await hashData('_admin'),
+            passwordHash: hashData('_admin'),
             permissions: {
                 create: [
                     {

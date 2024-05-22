@@ -58,7 +58,6 @@
 <main>
   {#if !!news}
     <UpdateHeader
-      timestamp={news.createdAt}
       {updateNews}
       {isValid}
       {news}

@@ -16,7 +16,7 @@
   export let params: { id: string };
 
   const id = params.id;
-  const mode = new URLSearchParams(get(querystring)).get('mode') ?? 'view';
+  const mode = new URLSearchParams(get(querystring)).get('mode') ?? 'edit';
 
   let page: Page;
   let editedContent = '';

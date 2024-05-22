@@ -26,7 +26,7 @@ export class UsersService {
     private prisma: PrismaService,
     private bcryptService: BcryptService,
     private logsService: LogsService,
-  ) {}
+  ) { }
 
   async findByLogin(login = ''): Promise<User | undefined> {
     return await this.prisma.user.findUnique({ where: { login } });
@@ -50,7 +50,7 @@ export class UsersService {
       throw new BadRequestException();
     }
     const createdUser = await this.prisma.user.create({
-      data: await toPrismaUserCreate(userData, this.bcryptService.hashData),
+      data: toPrismaUserCreate(userData, this.bcryptService.hashData),
     });
     await this.logsService.log({
       message: `dodał użytkownika ${createdUser.firstName} ${createdUser.lastName} (${createdUser.login})`,
@@ -127,8 +127,8 @@ export class UsersService {
       body.permissions,
     )
       ? ` (Zmienione uprawnienia: ${body.permissions.map(
-          (p) => permissionNames[p],
-        )})`
+        (p) => permissionNames[p],
+      )})`
       : '';
 
     const diff = formattedDiff(
@@ -188,7 +188,7 @@ export class UsersService {
   }
 
   async updatePassword(user: UserViewModel, password: string) {
-    const passwordHash = await this.bcryptService.hashData(password);
+    const passwordHash = this.bcryptService.hashData(password);
     return await this.prisma.user
       // @ts-ignore TODO
       .update({ where: { id: user.id }, data: { ...user, passwordHash } })

@@ -47,15 +47,15 @@ export type UserCreateDataForPrisma = {
   };
 };
 
-export async function toPrismaUserCreate(
+export function toPrismaUserCreate(
   dto: FrontendUserCreateDto,
-  dataHasher: (str: string) => Promise<string>,
-): Promise<UserCreateDataForPrisma> {
+  dataHasher: (str: string) => string,
+): UserCreateDataForPrisma {
   return {
     login: dto.login,
     firstName: dto.firstName,
     lastName: dto.lastName,
-    passwordHash: await dataHasher(dto.password),
+    passwordHash: dataHasher(dto.password),
     isActive: true,
     permissions: {
       create: dto.permissions.map((permission) => ({ permission })),

@@ -2,7 +2,7 @@ import { AnimalCategory, AnimalType, Page as PageModel } from '@prisma-app/clien
 import { fetchPage } from 'api/api';
 import { AnimalList } from 'components/AnimalList/AnimalList';
 import { Breadcrumbs } from 'components/Breadcrumbs/Breadcrumbs';
-import { LayoutWrapper } from 'components/LayoutWrapper';
+import { LayoutWrapper } from 'components/LayoutWrapper/LayoutWrapper';
 import { Page } from 'components/Page';
 import React from 'react';
 

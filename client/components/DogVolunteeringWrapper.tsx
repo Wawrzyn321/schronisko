@@ -31,6 +31,5 @@ export function DogVolunteeringWrapper({
     settings?.find((s) => s.id === 'DOG_VOLUNTEERING_ENABLED')?.value ===
     'true';
 
-      console.log(areDogVolunteeringEnabled)
   return areDogVolunteeringEnabled && <VolunteeringForm />;
 }

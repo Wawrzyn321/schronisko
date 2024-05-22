@@ -31,18 +31,17 @@ export class AuthService {
     private usersService: UsersService,
     private jwtService: JwtService,
     private bcryptService: BcryptService,
-  ) {}
+  ) { }
 
   async validateUserLogin(userDto: UserLoginParams): Promise<UserViewModel> {
     const user = await this.usersService.findByLogin(userDto.login);
     if (
       user?.isActive &&
-      (await this.bcryptService.compareHash(
+      (this.bcryptService.compareHash(
         userDto.password,
         user.passwordHash,
       ))
     ) {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { passwordHash, ...result } = user;
       return result;
     }
@@ -76,11 +75,12 @@ export class AuthService {
     if (!user) {
       throw new NotFoundException();
     }
+    const passwordMatches = this.bcryptService.compareHash(
+      params.currentPassword,
+      user.passwordHash,
+    );
     if (
-      await this.bcryptService.compareHash(
-        params.currentPassword,
-        user.passwordHash,
-      )
+      passwordMatches
     ) {
       return this.usersService.updatePassword(user, params.newPassword);
     }

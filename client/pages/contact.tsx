@@ -1,6 +1,6 @@
 import { Page as PageModel } from '@prisma-app/client';
 import { fetchPage } from 'api/api';
-import { LayoutWrapper } from 'components/LayoutWrapper';
+import { LayoutWrapper } from 'components/LayoutWrapper/LayoutWrapper';
 import { Page } from 'components/Page';
 
 const ID = 'kontakt';

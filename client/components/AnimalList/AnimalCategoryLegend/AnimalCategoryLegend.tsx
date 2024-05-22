@@ -1,4 +1,4 @@
-import { LayoutWrapper } from 'components/LayoutWrapper';
+import { LayoutWrapper } from 'components/LayoutWrapper/LayoutWrapper';
 import styles from './AnimalCategoryLegend.module.scss';
 
 export function AnimalCategoryLegend() {

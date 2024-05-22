@@ -3,6 +3,7 @@
   import { Input } from 'svelma';
 
   export let label = 'Hasło';
+  export let minLength: number | undefined = undefined
   export let message = '';
   export let plain = false;
   export let password: string;
@@ -15,6 +16,7 @@
     type={plain ? 'text' : 'password'}
     bind:value={password}
     placeholder={label}
+    minlength={minLength}
     {autocomplete}
   />
 </Field>
