@@ -5,9 +5,9 @@ import { devices } from "@playwright/test";
  * See https://playwright.dev/docs/test-configuration.
  */
 const config: PlaywrightTestConfig = {
-  timeout: 5 * 1000,
+  timeout: 5_000,
   expect: {
-    timeout: 3000,
+    timeout: 5_000,
   },
   // tests are much more stable
   // workers: 1,

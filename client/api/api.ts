@@ -78,7 +78,7 @@ async function genericFetch<T>(
       error: null,
     };
   } catch (e) {
-    console.warn(e);
+    console.warn(url, e.statusCode, e);
     return {
       data: null,
       error: e,

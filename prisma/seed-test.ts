@@ -148,6 +148,16 @@ const ARTICLE_EDITING_TEST_PAGE = {
   },
 }
 
+const ADOPTION_DOGS_PAGE = {
+  where: { id: "psy-do-adopcji" },
+  update: {},
+  create: {
+    id: "psy-do-adopcji",
+    title: "Psy do adopcji",
+    content: '',
+  },
+}
+
 const NEWS_WITH_TEMPLATES = {
   where: { id: 'template-news' },
   update: {},
@@ -237,6 +247,7 @@ async function seed(prisma: PrismaClient) {
   await prisma.page.upsert(DOG_VOLUTEERING_ON_PAGE);
   await prisma.page.upsert(DOG_VOLUTEERING_OFF_PAGE);
   await prisma.page.upsert(ARTICLE_EDITING_TEST_PAGE);
+  await prisma.page.upsert(ADOPTION_DOGS_PAGE);
 
   await prisma.news.upsert(NON_PUBLIC_NEWS);
   await prisma.news.upsert(NEWS_WITH_TEMPLATES);

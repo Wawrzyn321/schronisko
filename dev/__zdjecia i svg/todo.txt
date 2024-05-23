@@ -14,9 +14,9 @@ test na update daty - a raczej zmień podejście, za dużo mockowania
 lepszy sposób deployowania
 
 UPDATE paczek
-    prisma
+    prisma (paczka)
     next
-    nest
+    nest - trudne, testy failują
     quill?
 
 testuj maile + dodaj handlowanie błędów
