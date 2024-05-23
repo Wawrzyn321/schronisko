@@ -14,7 +14,6 @@ test na update daty - a raczej zmień podejście, za dużo mockowania
 lepszy sposób deployowania
 
 UPDATE paczek
-    prisma (paczka)
     next
     nest - trudne, testy failują
     quill?
@@ -29,6 +28,7 @@ WOAH Mozilla SSL Configuration Generator
 Ustaw HSTS 
 Captcha googlowa (po deployu?)
 Sól i pieprz w schroniskowych hasłach
+napraw dodawnie obrazków
 
 
 https://github.com/quilljs/quill/issues/1918 dla schroniska
