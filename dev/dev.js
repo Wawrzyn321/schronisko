@@ -38,7 +38,7 @@ function runAll() {
             name: 'BACKOFFICE',
             prefixColor: '#23de43',
         },
-    ]).then(
+    ]).result.then(
         () => {
             process.exit(0);
         },

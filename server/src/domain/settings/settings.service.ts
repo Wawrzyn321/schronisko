@@ -4,6 +4,7 @@ import { PrismaService } from '../../prisma-connect/prisma.service';
 import { LoggedInUser } from '../auth/types';
 import { LogsService } from '../logs/logs.service';
 import { CacheService } from '../cache/cache.service';
+import * as sanitizeHtml from 'sanitize-html';
 
 @Injectable()
 export class SettingsService {
@@ -22,11 +23,12 @@ export class SettingsService {
     id: string,
     value: string,
   ): Promise<Settings> {
+    const sanitizedValue = sanitizeHtml(value);
     const prevSetting = await this.prisma.settings.findFirst({ where: { id } });
     if (prevSetting) {
-      return this.update(user, id, value, prevSetting);
+      return this.update(user, id, sanitizedValue, prevSetting);
     } else {
-      return this.create(user, id, value);
+      return this.create(user, id, sanitizedValue);
     }
   }
 

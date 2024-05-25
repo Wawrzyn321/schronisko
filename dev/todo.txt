@@ -1,0 +1,26 @@
+po deployu:
+    * zmień link na backoffice z https://www.schronisko.sosnowiec.pl/ na ten nowy
+    * maile (sendgrid key)
+    * usuń admina
+    * dodaj https!
+    
+"o nas" wciąż nieuzupełnione i inne też
+
+ładnie sformatuj wiadomości w mailach, szczególnie tą do v-adopcji
+
+UPDATE paczek
+    next
+    quill?
+
+testuj maile + dodaj handlowanie błędów
+
+
+WOAH Mozilla SSL Configuration Generator 
+Ustaw HSTS 
+Captcha googlowa (po deployu?)
+Sól i pieprz w schroniskowych hasłach
+
+https://github.com/quilljs/quill/issues/1918 dla schroniska
+Skanuj omni/schronisko skipfishem
+
+http://localhost:5555/#/news/106?mode=edit obrazki zwierząt zastąp w contencie?

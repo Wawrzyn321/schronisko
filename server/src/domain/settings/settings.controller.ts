@@ -31,6 +31,6 @@ export class SettingsController {
     @Param('value') value: string,
     @Request() req: { user: LoggedInUser },
   ) {
-    return this.settingsService.upsert(req.user, settingId, value);
+    return this.settingsService.upsert(req.user, settingId, decodeURIComponent(value));
   }
 }

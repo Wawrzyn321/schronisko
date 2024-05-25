@@ -32,19 +32,19 @@ describe('LogsController', () => {
 
     await logsController.getLogs('13');
     expect(mockFindMany.mock.calls).toMatchInlineSnapshot(`
-      Array [
-        Array [
-          Object {
-            "orderBy": Array [
-              Object {
-                "time": "desc",
-              },
-            ],
-            "take": 13,
-          },
-        ],
-      ]
-    `);
+[
+  [
+    {
+      "orderBy": [
+        {
+          "time": "desc",
+        },
+      ],
+      "take": 13,
+    },
+  ],
+]
+`);
   });
 
   it('DELETE deletes all logs, logging single value', async () => {

@@ -52,7 +52,7 @@ export async function seedNews(prisma: PrismaClient, updateFiles: boolean) {
         const news: News = {
             title: n.title,
             description: n.short_descr,
-            content: decode(n.descr),
+            content: decode(n.descr).replaceAll('<font', '<p'),
             imageName: n.picture,
             createdAt: new Date(Date.parse(n.addDate)),
             isPublished: true, //publish jest jakieś losowe - niech zawsze będą publiczne
@@ -60,7 +60,7 @@ export async function seedNews(prisma: PrismaClient, updateFiles: boolean) {
         }
 
         await prisma.news.upsert({
-            where: { id: n.id.toString() },
+            where: { id: news.id },
             update: news,
             create: news,
         });

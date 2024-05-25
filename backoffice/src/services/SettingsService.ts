@@ -10,7 +10,7 @@ export class SettingsService {
   }
 
   async upsert(id: string, value: string): Promise<Settings[]> {
-    return await throwingFetch(`${baseUrl}/${id}/${value}`, { method: 'PUT' });
+    return await throwingFetch(`${baseUrl}/${id}/${encodeURIComponent(value)}`, { method: 'PUT' });
   }
 }
 

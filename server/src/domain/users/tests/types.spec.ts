@@ -40,24 +40,24 @@ describe('toPrismaUserCreate', () => {
 
     expect(fakeHasher).toHaveBeenCalledWith(user.password);
     expect(result).toMatchInlineSnapshot(`
-      Object {
-        "firstName": "fn",
-        "isActive": true,
-        "lastName": "ln",
-        "login": "login",
-        "passwordHash": "hash",
-        "permissions": Object {
-          "create": Array [
-            Object {
-              "permission": "ANIMAL",
-            },
-            Object {
-              "permission": "USER",
-            },
-          ],
-        },
-      }
-    `);
+{
+  "firstName": "fn",
+  "isActive": true,
+  "lastName": "ln",
+  "login": "login",
+  "passwordHash": "hash",
+  "permissions": {
+    "create": [
+      {
+        "permission": "ANIMAL",
+      },
+      {
+        "permission": "USER",
+      },
+    ],
+  },
+}
+`);
   });
 });
 

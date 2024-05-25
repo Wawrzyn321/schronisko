@@ -10,7 +10,6 @@ npm run test --prefix=server -- --ci
 rsync \
     --exclude '.git' \
     --exclude 'node_modules' \
-    --exclude 'deploy.sh' \
     --exclude '.next' \
     --exclude "coverage-ts" \
     --exclude "dist" \

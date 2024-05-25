@@ -71,19 +71,19 @@ describe('CommunicationController', () => {
     );
 
     expect(sendMailMock.mock.calls).toMatchInlineSnapshot(`
-      Array [
-        Array [
-          "Nowa osoba chce dołączyć do wolontariatu",
-          "Tu podaję dane:
-              kto: fn
-              email: email
-              telefon: 123
-              data urodzenia: now
-              coś więcej?: about
-            ",
-        ],
-      ]
-    `);
+[
+  [
+    "Nowa osoba chce dołączyć do wolontariatu",
+    "Tu podaję dane:
+        kto: fn
+        email: email
+        telefon: 123
+        data urodzenia: now
+        coś więcej?: about
+      ",
+  ],
+]
+`);
     expect(captchaService.validateCaptcha).toHaveBeenCalledWith(
       'captcha-id',
       'captcha-text',
@@ -142,13 +142,13 @@ describe('CommunicationController', () => {
     );
 
     expect(sendMailMock.mock.calls).toMatchInlineSnapshot(`
-      Array [
-        Array [
-          "Ktoś będzie adoptował wirtualnie",
-          "todo",
-        ],
-      ]
-    `);
+[
+  [
+    "Ktoś będzie adoptował wirtualnie",
+    "todo",
+  ],
+]
+`);
     expect(captchaService.validateCaptcha).toHaveBeenCalledWith(
       'captcha-id',
       'captcha-text',

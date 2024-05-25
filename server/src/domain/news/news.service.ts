@@ -1,6 +1,7 @@
 import { containsSubsitution, substitute } from '../../substitutions';
 import { Permission } from '@prisma-app/client';
 import { LoggedInUser } from '../auth/types';
+import * as sanitizeHtml from 'sanitize-html';
 import {
   NewsCreateInput,
   NewsUpdateInput,
@@ -115,6 +116,7 @@ export class NewsService {
       throw new BadRequestException(null, 'Brak tytułu lub zdjęcia');
     }
 
+    params.news.content = sanitizeHtml(params.news.content);
     params.news.content = await saveImagesFromContentModyfyingIt(
       params.news.content,
       params.images,
@@ -165,6 +167,7 @@ export class NewsService {
     }
     await deleteImagesInContent(prevNews.content, params.news.content);
 
+    params.news.content = sanitizeHtml(params.news.content);
     params.news.content = await saveImagesFromContentModyfyingIt(
       params.news.content,
       params.images,
