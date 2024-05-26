@@ -7,7 +7,7 @@ import { seedAnimals as seedAnimalsVps } from "./db-import/animals/seedAnimalsVP
 
 const prisma = new PrismaClient();
 
-const UPDATE_FILES = false;
+const UPDATE_FILES = true;
 
 async function main(updateFiles: boolean) {
   console.log('UPDATE_FILES is ', updateFiles)

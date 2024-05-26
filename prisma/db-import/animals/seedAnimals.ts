@@ -15,13 +15,7 @@ import { decode } from "html-entities";
 import path from "path";
 import { z } from "zod";
 import { findDataInTable } from "../findDataInTable";
-
-const galleryPath =
-  "/Users/pw/dev/schronisko/schronisko_sosnowiec_pl/public_html/gallery/";
-const thumbsPath = path.join(galleryPath, "thumbs/");
-const targetAnimalsPath =
-  "/Users/pw/dev/schronisko-out/animals";
-const targetAnimalImagesPath = path.join(targetAnimalsPath, "pics/");
+import { GALLERY_PATH, TARGET_ANIMAL_IMAGES_PATH, TARGET_ANIMALS_PATH, THUMBS_PATH } from "../config";
 
 const animalSchema = z.object({
   id: z.string(),
@@ -115,8 +109,8 @@ function filterWithNoImg(animals: ImportedAnimal[]) {
     if (!a.fileName) {
       return false;
     }
-    return existsAt(galleryPath, a.fileName) ||
-      existsAt(thumbsPath, a.fileName);
+    return existsAt(GALLERY_PATH, a.fileName) ||
+      existsAt(THUMBS_PATH, a.fileName);
   }
   );
 }
@@ -238,11 +232,11 @@ async function seedAnimalImages(
 }
 
 function ensurePaths() {
-  if (!fs.existsSync(galleryPath) || !fs.existsSync(thumbsPath)) {
+  if (!fs.existsSync(GALLERY_PATH) || !fs.existsSync(THUMBS_PATH)) {
     throw Error("No source dir for animal images")
   }
-  if (!fs.existsSync(targetAnimalImagesPath)) {
-    fs.mkdirSync(targetAnimalImagesPath, { recursive: true });
+  if (!fs.existsSync(TARGET_ANIMAL_IMAGES_PATH)) {
+    fs.mkdirSync(TARGET_ANIMAL_IMAGES_PATH, { recursive: true });
   }
 }
 
@@ -311,9 +305,9 @@ export async function seedAnimals(
 }
 
 function copyMainAnimalImage(animal: ImportedAnimal) {
-  const possibleGalleryPath = path.join(galleryPath, animal.fileName);
-  const possibleThumbsPath = path.join(thumbsPath, animal.fileName);
-  const targetPath = path.join(targetAnimalsPath, animal.fileName);
+  const possibleGalleryPath = path.join(GALLERY_PATH, animal.fileName);
+  const possibleThumbsPath = path.join(THUMBS_PATH, animal.fileName);
+  const targetPath = path.join(TARGET_ANIMALS_PATH, animal.fileName);
 
   if (fs.existsSync(possibleGalleryPath)) {
     fs.copyFileSync(possibleGalleryPath, targetPath);
@@ -323,9 +317,9 @@ function copyMainAnimalImage(animal: ImportedAnimal) {
 }
 
 function copyAnimalImageIfExists(animalImage: ImportedAnimalImage) {
-  const possibleGalleryPath = path.join(galleryPath, animalImage.fileName);
-  const possibleThumbsPath = path.join(thumbsPath, animalImage.fileName);
-  const targetPath = path.join(targetAnimalImagesPath, animalImage.fileName);
+  const possibleGalleryPath = path.join(GALLERY_PATH, animalImage.fileName);
+  const possibleThumbsPath = path.join(THUMBS_PATH, animalImage.fileName);
+  const targetPath = path.join(TARGET_ANIMAL_IMAGES_PATH, animalImage.fileName);
 
   if (fs.existsSync(possibleGalleryPath)) {
     fs.copyFileSync(
