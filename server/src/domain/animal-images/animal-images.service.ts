@@ -6,8 +6,8 @@ import {
 import { PrismaService } from '../../prisma-connect/prisma.service';
 import { deleteImage, saveImage } from '../../util/img-fs';
 import { AnimalImageParams } from './animal-images.controller';
-import { v4 as uuid } from 'uuid';
 import { AnimalImage } from '@prisma-app/client';
+import { randomUUID } from "crypto"
 
 const IMAGES_PATH = 'animals/pics/';
 
@@ -63,7 +63,7 @@ export class AnimalImagesService {
         if (!img) throw new BadRequestException('Image not found in post');
         img.handled = true;
       } else {
-        const imageName = `${uuid()}.png`;
+        const imageName = `${randomUUID()}.png`;
         await saveImage({
           subdir: IMAGES_PATH,
           name: imageName,

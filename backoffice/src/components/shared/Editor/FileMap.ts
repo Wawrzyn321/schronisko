@@ -1,4 +1,4 @@
-import { v4 as uuid } from 'uuid';
+import { generateUUID } from "../../../common/generateUUID";
 
 export type FileMap = [File, string][];
 export type ImageData = { name: string, base64: string };
@@ -13,7 +13,7 @@ const getNameAndExtension = (name: string) => {
 
 const generateFileName = (fileName: string) => {
     const [name, extension] = getNameAndExtension(fileName);
-    const id = uuid();
+    const id = generateUUID();
     return `${name}-${id}.${extension}`;
 }
 

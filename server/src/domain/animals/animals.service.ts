@@ -13,7 +13,6 @@ import type {
 } from '@prisma-app/client';
 import { AnimalCategory } from '@prisma-app/client';
 import { VirtualCaretakerType, Permission } from '@prisma-app/client';
-import { v4 as uuid } from 'uuid';
 import { deleteImage, saveImage } from '../../util/img-fs';
 import { LogsService } from '../logs/logs.service';
 import { LoggedInUser } from '../auth/types';
@@ -21,6 +20,7 @@ import { formattedDiff } from '../logs/diff';
 import * as gen from 'random-seed';
 import { AnimalImagesService } from '../animal-images/animal-images.service';
 import { changedToReadonly } from './readonly-animal';
+import { randomUUID } from "crypto"
 
 const IMAGES_PATH = 'animals/';
 
@@ -170,7 +170,7 @@ export class AnimalsService {
       throw new ConflictException('Conflict Exception');
     }
 
-    const id = uuid();
+    const id = randomUUID();
 
     let imageName = null;
     if (animal.imageData) {
@@ -222,7 +222,7 @@ export class AnimalsService {
 
     if (animal.imageData) {
       if (!animal.imageName) {
-        animal.imageName = `${uuid()}.png`;
+        animal.imageName = `${randomUUID()}.png`;
       }
       await saveImage({
         subdir: IMAGES_PATH,

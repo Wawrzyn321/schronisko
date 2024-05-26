@@ -2,9 +2,9 @@ import type { AnimalImageParams } from './AnimalImagesService';
 import { throwingFetch } from "./throwingFetch";
 import type { Animal } from '@prisma-app/client';
 import { animalImagesService } from "./AnimalImagesService";
-import { v4 as uuid } from 'uuid';
 import { isReadonly } from '../components/Animals/Form/animal-readonly';
 import { API_URL } from '../config';
+import { generateUUID } from '../common/generateUUID';
 
 const baseUrl = `${API_URL}/api/animals`
 
@@ -52,7 +52,7 @@ export class AnimalsService {
             await animalImagesService.delete(id);
         } catch (e: unknown) {
             if (e instanceof Error) {
-                const errorId = uuid();
+                const errorId =generateUUID();
                 console.warn(errorId + ": " + e.message);
                 throw Error(`Wystąpił błąd na serwerze (${errorId}).`);
             }

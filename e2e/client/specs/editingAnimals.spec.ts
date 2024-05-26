@@ -25,6 +25,7 @@ test("Renders new newly adopted animals", async ({ page }) => {
     await navTo(page, 'poadopcyjny 2')
     await page.getByLabel('Kategoria').selectOption('Znalazły dom');
     await page.locator("button", { hasText: "Zapisz" }).first().click();
+    await page.getByText('Zatwierdź').click();
 
     await page.goto(MAIN_URL);
     await page.reload(); // force hard reload

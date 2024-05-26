@@ -23,7 +23,6 @@
   "dependencies": {
     "@prisma/client": "^5.14.0",
     "bcryptjs": "^2.4.3",
-    "dotenv-cli": "^7.4.2",
-    "uuid": "^9.0.1"
+    "dotenv-cli": "^7.4.2"
   }
 }
