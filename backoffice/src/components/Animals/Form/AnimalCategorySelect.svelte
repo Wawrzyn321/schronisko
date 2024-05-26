@@ -9,7 +9,7 @@
   export let onChange: (category: AnimalCategory) => void;
   export let disabled: boolean;
 
-  function computeWarning(
+  function hasWarning(
     type: VirtualCaretakerType,
     category: AnimalCategory
   ): boolean {
@@ -39,12 +39,12 @@
 
   const onInput = (e: { detail: AnimalCategory }) => onChange(e.detail);
 
-  $: hasWarning = computeWarning(virtualCaretakerType, category);
+  $: showWarning = hasWarning(virtualCaretakerType, category);
 </script>
 
 <Field
   label="Kategoria"
-  message={hasWarning ? 'Czy to na pewno właściwa kategoria?' : ''}
+  message={showWarning ? 'Czy to na pewno właściwa kategoria?' : ''}
   style="grid-area: category"
   labelFor="category-select"
 >

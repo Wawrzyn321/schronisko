@@ -34,7 +34,7 @@ describe('toPrismaUserCreate', () => {
       permissions: [Permission.ANIMAL, Permission.USER],
     };
 
-    const fakeHasher = jest.fn(() =>'hash');
+    const fakeHasher = jest.fn(() => 'hash');
 
     const result = toPrismaUserCreate(user, fakeHasher);
 

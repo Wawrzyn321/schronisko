@@ -10,15 +10,15 @@ import { PageListElement } from './Page';
 import { LoggedInUser } from '../auth/types';
 import { LogsService } from '../logs/logs.service';
 import { formattedDiff } from '../logs/diff';
-import * as sanitizeHtml from 'sanitize-html';
 import {
   deleteImagesInContent,
   ImageData,
   saveImagesFromContentModyfyingIt,
-} from '../../img-fs';
+} from '../../util/img-fs';
 import { SettingsService } from '../settings/settings.service';
-import { containsSubsitution, substitute } from '../../substitutions';
+import { containsSubsitution, substitute } from '../../util/substitutions';
 import { CacheService } from '../cache/cache.service';
+import { SanitizeService } from '../support/sanitize.service';
 
 @Injectable()
 export class PagesService {
@@ -27,7 +27,8 @@ export class PagesService {
     private settingsService: SettingsService,
     private logsService: LogsService,
     private cacheService: CacheService,
-  ) { }
+    private sanitizeService: SanitizeService,
+  ) {}
 
   async getAll(takeTop?: number): Promise<PageListElement[]> {
     return await this.prisma.page.findMany({
@@ -98,8 +99,12 @@ export class PagesService {
 
     await deleteImagesInContent(prevPage.content, page.content);
 
-    page.content = sanitizeHtml(page.content);
-    page.content = await saveImagesFromContentModyfyingIt(page.content, images);
+    page.content = await saveImagesFromContentModyfyingIt(
+      page.content,
+      images,
+      'pages',
+    );
+    page.content = this.sanitizeService.sanitizeHtml(page.content);
 
     const updatedPage = await this.prisma.page.update({
       where: { id },

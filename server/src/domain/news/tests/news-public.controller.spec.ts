@@ -6,6 +6,8 @@ import { NewsPublicController } from '../news.controller';
 import { NewsService } from '../news.service';
 import { News, Settings } from '@prisma-app/client';
 import { CacheService } from '../../cache/cache.service';
+import { SanitizeService } from '../../support/sanitize.service';
+
 describe('NewsPublicController', () => {
   let newsPublicController: NewsPublicController;
   let newsService: NewsService;
@@ -13,6 +15,7 @@ describe('NewsPublicController', () => {
   let settingsService: SettingsService;
   let logsService: LogsService;
   let cacheService: CacheService;
+  const sanitizeService = new SanitizeService();
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -25,12 +28,14 @@ describe('NewsPublicController', () => {
       prismaServiceMock,
       logsService,
       cacheService,
+      sanitizeService,
     );
     newsService = new NewsService(
       prismaServiceMock,
       logsService,
       settingsService,
       cacheService,
+      sanitizeService,
     );
     newsPublicController = new NewsPublicController(newsService);
   });

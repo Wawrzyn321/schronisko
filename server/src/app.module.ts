@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import * as fs from 'fs';
-import * as path from 'path';
 
 import { AuthModule } from './domain/auth/auth.module';
 import { UsersModule } from './domain/users/users.module';
@@ -13,6 +11,8 @@ import { SettingsModule } from './domain/settings/settings.module';
 import { CommunicationModule } from './domain/communication/communication.module';
 import { ConfigModule } from '@nestjs/config';
 import { CacheModule } from './domain/cache/cache.module';
+import { setupImageDirectories } from './util/setupImageDIrectories';
+import { SupportModule } from './domain/support/support.module';
 
 export const LOCAL_STATIC_FILES_PATH = '../images/';
 
@@ -22,18 +22,10 @@ export const WEB_STATIC_FILES_PATH = DEV
   ? 'http://localhost:60045'
   : 'http://schronisko-backend2.oto-jest-wawrzyn.pl';
 
-const animalsPath = path.join(LOCAL_STATIC_FILES_PATH, 'img/animals');
-const newsPath = path.join(LOCAL_STATIC_FILES_PATH, 'img/news');
-if (!fs.existsSync(animalsPath)) {
-  fs.mkdirSync(animalsPath, { recursive: true });
-}
-if (!fs.existsSync(newsPath)) {
-  fs.mkdirSync(newsPath, { recursive: true });
-}
+setupImageDirectories(LOCAL_STATIC_FILES_PATH);
 
 const domainModules = [
   AuthModule,
-  CacheModule,
   UsersModule,
   PagesModule,
   NewsModule,
@@ -44,7 +36,13 @@ const domainModules = [
   CommunicationModule,
 ];
 
+const supportModules = [
+  // todo niefajnie
+  CacheModule,
+  SupportModule,
+];
+
 @Module({
-  imports: [...domainModules, ConfigModule.forRoot()],
+  imports: [...domainModules, ...supportModules, ConfigModule.forRoot()],
 })
 export class AppModule {}

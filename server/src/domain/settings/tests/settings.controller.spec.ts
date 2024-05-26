@@ -7,6 +7,7 @@ import { SettingsService } from '../settings.service';
 import { LoggedInUser } from '../../auth/types';
 import { allPermissions } from '../../auth/constants';
 import { CacheService } from '../../cache/cache.service';
+import { SanitizeService } from '../../support/sanitize.service';
 
 const mockAdminUser: LoggedInUser = {
   id: -1,
@@ -20,6 +21,7 @@ describe('SettingsController', () => {
   let logsService: LogsService;
   let prismaServiceMock: PrismaService;
   let cacheService: CacheService;
+  const sanitizeService = new SanitizeService();
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -32,6 +34,7 @@ describe('SettingsController', () => {
       prismaServiceMock,
       logsService,
       cacheService,
+      sanitizeService,
     );
     settingsController = new SettingsController(settingsService);
   });

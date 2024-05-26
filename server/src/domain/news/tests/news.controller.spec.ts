@@ -9,6 +9,8 @@ import { LoggedInUser } from '../../auth/types';
 import { allPermissions } from '../../auth/constants';
 import { NewsCreateInput, NewsModifyParams, NewsUpdateInput } from '../News';
 import { CacheService } from '../../cache/cache.service';
+import { SanitizeService } from '../..//support/sanitize.service';
+
 const mockAdminUser: LoggedInUser = {
   id: -1,
   login: 'test-user-login',
@@ -81,6 +83,7 @@ describe('NewsController', () => {
   let settingsService: SettingsService;
   let logsService: LogsService;
   let cacheService: CacheService;
+  const sanitizeService = new SanitizeService();
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -93,12 +96,14 @@ describe('NewsController', () => {
       prismaServiceMock,
       logsService,
       cacheService,
+      sanitizeService,
     );
     newsService = new NewsService(
       prismaServiceMock,
       logsService,
       settingsService,
       cacheService,
+      sanitizeService,
     );
     newsController = new NewsController(newsService);
   });

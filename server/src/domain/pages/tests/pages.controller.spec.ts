@@ -5,10 +5,11 @@ import { PagesController } from '../pages.controller';
 import { PagesService } from '../pages.service';
 import { SettingsService } from '../../settings/settings.service';
 import { Page, Permission } from '@prisma-app/client';
-import { ImageData } from 'img-fs';
+import { ImageData } from '../../../util/img-fs';
 import { LoggedInUser } from '../../auth/types';
 import { allPermissions } from '../../auth/constants';
 import { CacheService } from '../../cache/cache.service';
+import { SanitizeService } from '../..//support/sanitize.service';
 
 const mockAdminUser: LoggedInUser = {
   id: -1,
@@ -50,6 +51,7 @@ describe('PagesController', () => {
   let settingsService: SettingsService;
   let prismaServiceMock: PrismaService;
   let cacheService: CacheService;
+  const sanitizeService = new SanitizeService();
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -62,12 +64,14 @@ describe('PagesController', () => {
       prismaServiceMock,
       logsService,
       cacheService,
+      sanitizeService,
     );
     pagesService = new PagesService(
       prismaServiceMock,
       settingsService,
       logsService,
       cacheService,
+      sanitizeService,
     );
     pagesController = new PagesController(pagesService);
   });
@@ -173,7 +177,7 @@ describe('PagesController', () => {
       `"zaktualizował stronę page-title-2 (id: 12) (Treść, Tytuł: page-title -> page-title-2)"`,
     );
     expect(mockWriteFile).toHaveBeenCalledWith(
-      expect.stringContaining('/img/mock-image-name'),
+      expect.stringContaining('../images/img/pages/mock-image-name'),
       expect.stringContaining('mock file content'),
     );
 

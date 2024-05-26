@@ -26,7 +26,7 @@ export class UsersService {
     private prisma: PrismaService,
     private bcryptService: BcryptService,
     private logsService: LogsService,
-  ) { }
+  ) {}
 
   async findByLogin(login = ''): Promise<User | undefined> {
     return await this.prisma.user.findUnique({ where: { login } });
@@ -127,8 +127,8 @@ export class UsersService {
       body.permissions,
     )
       ? ` (Zmienione uprawnienia: ${body.permissions.map(
-        (p) => permissionNames[p],
-      )})`
+          (p) => permissionNames[p],
+        )})`
       : '';
 
     const diff = formattedDiff(

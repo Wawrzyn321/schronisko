@@ -16,6 +16,7 @@ rsync \
     --exclude "backoffice" \
     --exclude "client" \
     --exclude "e2e" \
+    --exclude "dev" \
     --exclude "prisma/db-import/animals/animals" \
     --exclude "server/dump.rdb" \
     --progress \

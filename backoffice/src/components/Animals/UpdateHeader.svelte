@@ -60,7 +60,11 @@
         <Button
           type="is-primary"
           on:click={() => {
-            if (changedToReadonly(animal.category, prevCategory)) {
+            console.log({
+              current: animalFormData.category,
+              prevCategory
+            })
+            if (changedToReadonly(animalFormData.category, prevCategory)) {
               isWarningModalVisible = true;
             } else {
               updateAnimal();
@@ -92,7 +96,7 @@
 <AnimalUpdateWarningModal
   bind:modalVisible={isWarningModalVisible}
   doUpdateAnimal={updateAnimal}
-  category={animal.category}
+  category={animalFormData.category}
 />
 
 <style lang="scss">

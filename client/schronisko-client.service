@@ -1,0 +1,14 @@
+[Unit]
+Description=Schronisko Main Page Service
+After=network.target
+
+[Service]
+WorkingDirectory=/var/svc/schronisko/server
+#ProtectHome=true
+PrivateTmp=true
+ExecStart=/home/ubuntu/.nvm/versions/node/v18.20.3/bin/npm run start
+Restart=on-failure
+User=ubuntu
+
+[Install]
+WantedBy=multi-user.target

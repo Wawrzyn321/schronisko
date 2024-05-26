@@ -14,5 +14,6 @@ rsync \
     --exclude "server" \
     --exclude "prisma" \
     --exclude "e2e" \
+    --exclude "dev" \
     --progress \
     -r ./ ubuntu@146.59.32.93:schronisko

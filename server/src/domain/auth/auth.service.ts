@@ -31,16 +31,13 @@ export class AuthService {
     private usersService: UsersService,
     private jwtService: JwtService,
     private bcryptService: BcryptService,
-  ) { }
+  ) {}
 
   async validateUserLogin(userDto: UserLoginParams): Promise<UserViewModel> {
     const user = await this.usersService.findByLogin(userDto.login);
     if (
       user?.isActive &&
-      (this.bcryptService.compareHash(
-        userDto.password,
-        user.passwordHash,
-      ))
+      this.bcryptService.compareHash(userDto.password, user.passwordHash)
     ) {
       const { passwordHash, ...result } = user;
       return result;
@@ -79,9 +76,7 @@ export class AuthService {
       params.currentPassword,
       user.passwordHash,
     );
-    if (
-      passwordMatches
-    ) {
+    if (passwordMatches) {
       return this.usersService.updatePassword(user, params.newPassword);
     }
     throw new ForbiddenException();

@@ -1,7 +1,6 @@
-import { containsSubsitution, substitute } from '../../substitutions';
+import { containsSubsitution, substitute } from '../../util/substitutions';
 import { Permission } from '@prisma-app/client';
 import { LoggedInUser } from '../auth/types';
-import * as sanitizeHtml from 'sanitize-html';
 import {
   NewsCreateInput,
   NewsUpdateInput,
@@ -21,12 +20,13 @@ import {
   deleteImage,
   saveImagesFromContentModyfyingIt,
   deleteImagesInContent,
-} from '../../img-fs';
+} from '../../util/img-fs';
 import { validateNewsCreate, validateNewsUpdate } from './helpers';
 import { LogsService } from '../logs/logs.service';
 import { formattedDiff } from '../logs/diff';
 import { SettingsService } from '../settings/settings.service';
 import { CacheService } from '../cache/cache.service';
+import { SanitizeService } from '../support/sanitize.service';
 
 const imageListElementFields = {
   title: true,
@@ -49,6 +49,7 @@ export class NewsService {
     private logsService: LogsService,
     private settingsService: SettingsService,
     private cacheService: CacheService,
+    private sanitizeService: SanitizeService,
   ) {}
 
   toListElement(news: News): NewsListElement {
@@ -116,11 +117,13 @@ export class NewsService {
       throw new BadRequestException(null, 'Brak tytułu lub zdjęcia');
     }
 
-    params.news.content = sanitizeHtml(params.news.content);
     params.news.content = await saveImagesFromContentModyfyingIt(
       params.news.content,
       params.images,
-      'news/',
+      'news',
+    );
+    params.news.content = this.sanitizeService.sanitizeHtml(
+      params.news.content,
     );
 
     params.news.imageName = `${uuid()}.png`;
@@ -167,11 +170,13 @@ export class NewsService {
     }
     await deleteImagesInContent(prevNews.content, params.news.content);
 
-    params.news.content = sanitizeHtml(params.news.content);
     params.news.content = await saveImagesFromContentModyfyingIt(
       params.news.content,
       params.images,
-      'news/',
+      'news',
+    );
+    params.news.content = this.sanitizeService.sanitizeHtml(
+      params.news.content,
     );
 
     const updatedNews = await this.prisma.news.update({

@@ -2,7 +2,7 @@
   "name": "schronisko",
   "version": "1.0.0",
   "scripts": {
-    "dev": "check-node-version --node '= 16' && node ./dev/dev.js",
+    "dev": "check-node-version --node '= 18' && node ./dev/dev.js",
     "check-and-format": "npm run check --prefix=backoffice && npm run lint:fix --prefix=client && npm run lint:fix --prefix=server",
     "ts-coverage": "npx typescript-coverage-report && open coverage-ts/index.html"
   },

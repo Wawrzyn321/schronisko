@@ -6,7 +6,7 @@ After=network.target
 WorkingDirectory=/var/svc/schronisko/main
 #ProtectHome=true
 PrivateTmp=true
-ExecStart=/home/ubuntu/.nvm/versions/node/v16.19.0/bin/npm run start:nest
+ExecStart=/home/ubuntu/.nvm/versions/node/v18.20.3/bin/npm run start:nest
 Restart=on-failure
 User=ubuntu
 

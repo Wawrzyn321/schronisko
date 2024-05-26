@@ -43,8 +43,8 @@ npm run dev
 
 ## Versions
 
-- NodeJS: 16.14.2
-- NPM: 8.5.0
+- NodeJS: v18.20.2
+- NPM: v10.5.0
 - PostgresSQL 14.5
 
 ## `node-canvas` installation problems

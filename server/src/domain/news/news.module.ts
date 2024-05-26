@@ -5,6 +5,7 @@ import { NewsController, NewsPublicController } from './news.controller';
 import { LogsService } from '../logs/logs.service';
 import { SettingsService } from '../settings/settings.service';
 import { CacheService } from '../cache/cache.service';
+import { SanitizeService } from '../support/sanitize.service';
 
 @Module({
   providers: [
@@ -13,6 +14,7 @@ import { CacheService } from '../cache/cache.service';
     LogsService,
     SettingsService,
     CacheService,
+    SanitizeService,
   ],
   exports: [NewsService],
   controllers: [NewsController, NewsPublicController],

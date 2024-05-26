@@ -1,4 +1,4 @@
-import { ImageData } from '../../img-fs';
+import { ImageData } from '../../util/img-fs';
 import type { News } from '@prisma-app/client';
 
 export type NewsCreateInput = Omit<News, 'id' | 'createdAt'>;

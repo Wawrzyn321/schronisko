@@ -6,6 +6,8 @@ import { PagesService } from '../pages.service';
 import { SettingsService } from '../../settings/settings.service';
 import { Page, Settings } from '@prisma-app/client';
 import { CacheService } from '../../cache/cache.service';
+import { SanitizeService } from '../../support/sanitize.service';
+
 describe('PagesPublicController', () => {
   let pagesController: PagesPublicController;
   let pagesService: PagesService;
@@ -13,10 +15,11 @@ describe('PagesPublicController', () => {
   let settingsService: SettingsService;
   let prismaServiceMock: PrismaService;
   let cacheService: CacheService;
+  const sanitizeService = new SanitizeService();
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [PrismaService],
+      providers: [PrismaService, SanitizeService],
     }).compile();
     prismaServiceMock = module.get<PrismaService>(PrismaService);
     logsService = new LogsService(prismaServiceMock);
@@ -25,12 +28,14 @@ describe('PagesPublicController', () => {
       prismaServiceMock,
       logsService,
       cacheService,
+      sanitizeService,
     );
     pagesService = new PagesService(
       prismaServiceMock,
       settingsService,
       logsService,
       cacheService,
+      sanitizeService,
     );
     pagesController = new PagesPublicController(pagesService);
   });

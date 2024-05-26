@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 3015",
-    "build": "NODE_ENV=development next build",
-    "start": "next start",
-    "lint": "next lint --no-cache",
-    "lint:fix": "next lint --fix --no-cache"
+    "dev": "NODE_OPTIONS=--openssl-legacy-provider next dev -p 3015",
+    "build": "NODE_OPTIONS=--openssl-legacy-provider NODE_ENV=development next build",
+    "start": "NODE_OPTIONS=--openssl-legacy-provider next start",
+    "lint": "NODE_OPTIONS=--openssl-legacy-provider next lint --no-cache",
+    "lint:fix": "NODE_OPTIONS=--openssl-legacy-provider  next lint --fix --no-cache"
   },
   "devDependencies": {
     "@types/node": "^16.10.1",
