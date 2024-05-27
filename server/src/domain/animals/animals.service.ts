@@ -20,7 +20,7 @@ import { formattedDiff } from '../logs/diff';
 import * as gen from 'random-seed';
 import { AnimalImagesService } from '../animal-images/animal-images.service';
 import { changedToReadonly } from './readonly-animal';
-import { randomUUID } from "crypto"
+import { randomUUID } from 'crypto';
 
 const IMAGES_PATH = 'animals/';
 

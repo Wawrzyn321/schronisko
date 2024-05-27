@@ -26,7 +26,7 @@ import { formattedDiff } from '../logs/diff';
 import { SettingsService } from '../settings/settings.service';
 import { CacheService } from '../cache/cache.service';
 import { SanitizeService } from '../support/sanitize.service';
-import { randomUUID } from "crypto"
+import { randomUUID } from 'crypto';
 
 const imageListElementFields = {
   title: true,
@@ -50,7 +50,7 @@ export class NewsService {
     private settingsService: SettingsService,
     private cacheService: CacheService,
     private sanitizeService: SanitizeService,
-  ) { }
+  ) {}
 
   toListElement(news: News): NewsListElement {
     const { content, ...listElement } = news;

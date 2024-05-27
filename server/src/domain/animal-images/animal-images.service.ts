@@ -7,7 +7,7 @@ import { PrismaService } from '../../prisma-connect/prisma.service';
 import { deleteImage, saveImage } from '../../util/img-fs';
 import { AnimalImageParams } from './animal-images.controller';
 import { AnimalImage } from '@prisma-app/client';
-import { randomUUID } from "crypto"
+import { randomUUID } from 'crypto';
 
 const IMAGES_PATH = 'animals/pics/';
 
