@@ -13,8 +13,8 @@ type BigSectionProps = { recentNews: NewsListElement[]; mainPage: PageModel };
 export function BigSection({ recentNews, mainPage }: BigSectionProps) {
   return (
     <div className={styles['layout-wrapper']}>
-      <div className={styles['img-wrapper']} id={styles['yellow']}>
-        <Image src={yellow} alt="" />
+      <div className={styles['img-wrapper']}>
+        <Image src={yellow} alt="" width={1200} height={780}/>
       </div>
       <div className={styles['flex-end']}>
         {recentNews && (
@@ -24,7 +24,7 @@ export function BigSection({ recentNews, mainPage }: BigSectionProps) {
         )}
       </div>
       <div className={styles['img-wrapper']} id={styles['green']}>
-        <Image src={green} alt="" />
+        <Image src={green} alt="" width={1020} height={600}/>
         {mainPage && (
           <div className={styles['article']}>
             <h1>Adopcje</h1>

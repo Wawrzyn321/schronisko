@@ -26,8 +26,8 @@ export function AnimalCard({
           <Image
             src={lupa}
             alt="Powiększ"
-            width="20px"
-            height="20px"
+            width={20}
+            height={20}
             onClick={() => openModal(animal)} />
         </div>
         {showOverlay && <Overlay category={animal.category} />}

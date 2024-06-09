@@ -18,6 +18,7 @@ export function NewsCarousel({
     <img
       src={IMAGES_URL + '/news/' + currentNews.imageName}
       alt={currentNews.id}
+      className={styles['carousel__image']}
     />
   );
 

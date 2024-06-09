@@ -13,6 +13,7 @@ import { fetchAnimals, FetchError } from 'api/api';
 import { Article } from 'components/Article/Article';
 import { ERROR_ANIMAL_LIST } from 'errors';
 import { AnimalModal, AnimalModalData } from './AnimalModal/AnimalModal';
+import { useSearchParams } from 'next/navigation';
 
 function NotFoundMessage() {
   return (
@@ -29,32 +30,36 @@ type AnimalListProps = {
   withCategoryOverlay?: boolean;
 };
 
+const PAGE_SIZE = 27;
+
 export function AnimalList({
   categories = [],
   vCaretakerType = null,
   type = null,
   withCategoryOverlay = false,
 }: AnimalListProps) {
-  const pageSize = 27;
+  const searchParams = useSearchParams()
+  const targetPage = parseInt(searchParams.get('page') ?? '1') - 1;
+
   const [animals, setAnimals] = useState<Animal[]>([]);
   const [totalCount, setTotalCount] = useState<number>(0);
   const [error, setError] = useState<FetchError>(null);
-  const [currentPage, setCurrentPage] = useState(
-    getPageFromQueryString(Number.MAX_VALUE),
-  );
+  const [currentPage, setCurrentPage] = useState(targetPage);
   const [modalData, setModalData] = useState<AnimalModalData>({
     isOpen: false,
     animal: null,
   });
 
-  const pagesCount = Math.ceil(totalCount / pageSize);
+  const pagesCount = Math.ceil(totalCount / PAGE_SIZE);
 
-  useEffect(() => {
-    const firstLoadHappened = !!totalCount;
-    if (firstLoadHappened && currentPage > pagesCount) {
-      setCurrentPage(0);
-    }
-  }, [currentPage, animals, totalCount, pagesCount]);
+  const setPage = (pageNumber: number) => {
+    window.history.replaceState(
+      {},
+      document.title,
+      window.location.pathname + '?page=' + (pageNumber + 1),
+    );
+    setCurrentPage(pageNumber)
+  }
 
   useEffect(() => {
     const loadAnimals = async () => {
@@ -62,8 +67,8 @@ export function AnimalList({
         categories,
         vCaretakerType,
         type,
-        skip: currentPage * pageSize,
-        take: pageSize,
+        skip: currentPage * PAGE_SIZE,
+        take: PAGE_SIZE,
       });
       if (error) {
         setError(error);
@@ -72,25 +77,11 @@ export function AnimalList({
         const { animals, totalCount } = data;
         setAnimals(animals);
         setTotalCount(totalCount);
-
-        const pageFromQueryString = getPageFromQueryString(totalCount);
-        setCurrentPage(pageFromQueryString);
       }
     };
 
     loadAnimals();
   }, [currentPage, categories, type, vCaretakerType]);
-
-  useEffect(() => {
-    const firstLoadHappened = !!totalCount;
-    if (firstLoadHappened) {
-      window.history.replaceState(
-        {},
-        document.title,
-        window.location.pathname + '?page=' + (currentPage + 1),
-      );
-    }
-  }, [currentPage, totalCount]);
 
   if (animals) {
     return (
@@ -116,7 +107,7 @@ export function AnimalList({
             <Pagination
               pagesCount={pagesCount}
               currentPage={currentPage}
-              setCurrentPage={setCurrentPage}
+              setCurrentPage={setPage}
             />
             <AnimalModal
               isOpen={modalData.isOpen}
@@ -135,18 +126,22 @@ export function AnimalList({
     return <p>Ładowanie...</p>;
   }
 }
+
 function getPageFromQueryString(totalCount: number) {
   if (typeof window !== 'undefined') {
-    const l = window.location as unknown;
-    let pageFromQueryString =
-      (parseInt(new URL(l as string).searchParams.get('page')) || 1) - 1;
+    const pageNoFromQueryString = ((parseInt(new URL(window.location.href).searchParams.get('page'))) || 1) - 1;
 
-    pageFromQueryString = Math.max(
-      Math.min(pageFromQueryString, totalCount - 1),
-      0,
-    );
-
-    return pageFromQueryString;
+    return clamp({
+      min: 0,
+      max: totalCount - 1,
+      value: pageNoFromQueryString
+    })
   }
-  return 0;
+  return 1;
+}
+
+function clamp({
+  min, max, value
+}: { min: number, max: number, value: number }) {
+  return Math.max(Math.min(value, max), min);
 }

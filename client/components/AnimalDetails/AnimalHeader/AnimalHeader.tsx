@@ -1,4 +1,4 @@
-// import Link from 'next/link';
+import Link from 'next/link';
 import { Animal, VirtualCaretakerType } from '@prisma-app/client';
 import styles from './AnimalHeader.module.scss';
 import { isReadonly } from 'components/AnimalList/isReadonly';
@@ -15,11 +15,11 @@ export function AnimalHeader({ animal }: { animal: Animal }) {
       <div className={styles['animal-details--header']}>
         <h1>{animal.name}</h1>
         {canVAdopt && (
-          <a href={vAdoptLink}>
+          <Link href={vAdoptLink}>
             <span className={styles['animal-details--v-adopt-button']}>
               Adoptuj wirtualnie
             </span>
-          </a>
+          </Link>
         )}
       </div>
       <div className={styles['animal-details--description']}>

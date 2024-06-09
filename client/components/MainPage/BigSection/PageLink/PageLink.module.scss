@@ -1,10 +1,11 @@
 .page-link {
   color: white;
-  font-size: 170%;
+  font-size: 27px;
   font-weight: 300;
 }
 
 .page-link-blob {
+  display: inline-block;
   background-color: var(--text-color);
   text-transform: uppercase;
   padding: 12px 54px;

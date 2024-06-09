@@ -28,7 +28,7 @@
     li > a {
       display: inline-block;
       margin-bottom: 9px;
-      font-size: 160%;
+      font-size: 26px;
       cursor: pointer;
       white-space: nowrap;
     }
@@ -60,9 +60,9 @@
     white-space: nowrap;
     min-width: 100px;
 
-    & > a {
+    & > * {
       width: 100%;
-      font-size: unset !important;
+      font-size: 16px !important;
     }
   }
 }

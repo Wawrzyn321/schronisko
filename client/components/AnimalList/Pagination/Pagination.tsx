@@ -32,13 +32,6 @@ export function paginate<T>(
   return res;
 }
 
-function Arrow() {
-  const size = '10px';
-  return (
-    <Image src={arrow} alt="poprzednia strona" width={size} height={size} />
-  );
-}
-
 export function Pagination({
   currentPage,
   pagesCount,
@@ -57,7 +50,7 @@ export function Pagination({
         disabled={currentPage === 0}
         onClick={() => setCurrentPage(currentPage - 1)}
       >
-        <Arrow />
+        <Image src={arrow} alt="poprzednia strona" width={10} height={10} />
       </button>
       {partitions.map((current, index) => (
         <React.Fragment key={index}>
@@ -78,7 +71,7 @@ export function Pagination({
         disabled={currentPage === pagesCount - 1}
         onClick={() => setCurrentPage(currentPage + 1)}
       >
-        <Arrow />
+        <Image src={arrow} alt="poprzednia strona" width={10} height={10} />
       </button>
     </ul>
   );

@@ -5,7 +5,7 @@ import styles from './AnimalMetadata.module.scss';
 import { Animal } from '@prisma-app/client';
 
 const MiniIcon = ({ name, icon }: { icon: any; name: string }) => (
-  <Image src={icon} alt={name} width="30px" height="30px" />
+  <Image src={icon} alt={name} width={30} height={30} />
 );
 
 export function AnimalMetadata({ animal }: { animal: Animal }) {

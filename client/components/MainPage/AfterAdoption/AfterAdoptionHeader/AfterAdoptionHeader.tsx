@@ -8,8 +8,8 @@ export function AfterAdoptionHeader() {
     <div className={styles['after-adoption-animals__header']}>
       <div className={styles['after-adoption-animals__header__title']}>
         Dziś po adopcji
-        <Image src={dog} alt="piesł" />
-        <Image src={cat} alt="kitku" />
+        <Image width={36} height={36} src={dog} alt="piesł" />
+        <Image width={36} height={36} src={cat} alt="kitku" />
       </div>
       <div className={styles['after-adoption-animals__header__description']}>
         Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsa

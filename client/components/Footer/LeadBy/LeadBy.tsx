@@ -11,7 +11,7 @@ export function LeadBy() {
         target="_blank"
         rel="noopener noreferrer"
       >
-        <Image src={nadziejaLogo} alt="nadzieja na dom link"></Image>
+        <Image width={150} height={82} src={nadziejaLogo} alt="nadzieja na dom link"></Image>
       </a>
     </div>
   );

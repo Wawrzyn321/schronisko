@@ -16,8 +16,8 @@ export function CarouselControl({
   return (
     <>
       <div className={styles['carousel__left-right']}>
-        <Image src={whiteArrow} alt="lewo" onClick={dec} />
-        <Image src={whiteArrow} alt="prawo" onClick={inc} />
+        <Image width={30} height={30} src={whiteArrow} alt="lewo" onClick={dec} />
+        <Image width={30} height={30} src={whiteArrow} alt="prawo" onClick={inc} />
       </div>
       <ul className={styles['carousel__bottom']}>
         {new Array(total).fill(null).map((_: null, i) => (

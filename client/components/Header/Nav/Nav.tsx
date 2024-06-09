@@ -1,7 +1,7 @@
 import React from 'react';
-// import Link from 'next/link';
-import { useRouter } from 'next/router';
+import Link from 'next/link';
 import styles from './Nav.module.scss';
+import { usePathname } from 'next/navigation';
 
 type SubListItem = {
   name: string;
@@ -9,9 +9,9 @@ type SubListItem = {
 };
 
 function LinkBorder({ to }: { to: string }) {
-  const router = useRouter();
+  const pathname = usePathname();
 
-  const isActive = router.pathname.startsWith(to);
+  const isActive = pathname?.startsWith(to);
   const borderClassName = isActive
     ? `${styles.border} ${styles.active}`
     : styles.border;
@@ -28,13 +28,13 @@ function SimpleLink({
 }) {
   return (
     <li>
-      <a href={to}>{children}</a>
+      <Link href={to}>{children}</Link>
       <LinkBorder to={to} />
     </li>
   );
 }
 
-function ParentLink({
+function LinkWithChildren({
   to,
   title,
   links,
@@ -49,9 +49,9 @@ function ParentLink({
       <ul>
         {links.map((link: SubListItem) => (
           <li key={link.path}>
-            <a href={to + link.path}>
+            <Link href={to + link.path}>
               <span>{link.name}</span>
-            </a>
+            </Link>
           </li>
         ))}
       </ul>
@@ -84,13 +84,13 @@ export function Nav() {
     <nav className={styles.nav}>
       <ul>
         <SimpleLink to="/about">O nas</SimpleLink>
-        <ParentLink to="/animals" title="Zwierzęta" links={animalsLinks} />
-        <ParentLink
+        <LinkWithChildren to="/animals" title="Zwierzęta" links={animalsLinks} />
+        <LinkWithChildren
           to="/v-adoptions"
           title="Adopcje wirtualne"
           links={vAdoptionLinks}
         />
-        <ParentLink
+        <LinkWithChildren
           to="/volunteering"
           title="Wolontariat"
           links={volunteeringLinks}

@@ -41,7 +41,13 @@ const baseConfig = {
     ];
   },
   images: {
-    domains: ['localhost', 'http://schronisko-backend2.oto-jest-wawrzyn.pl'],
+    remotePatterns: [{
+      protocol: 'http',
+      hostname: 'localhost',
+    }, {
+      protocol: 'http',//todo change after SSL
+      hostname: 'schronisko-backend2.oto-jest-wawrzyn.pl'
+    }]
   },
   i18n: {
     locales: ['pl'],

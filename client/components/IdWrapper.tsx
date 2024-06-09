@@ -1,10 +1,10 @@
 import React from 'react';
-import { useRouter } from 'next/router';
+import { useParams } from 'next/navigation';
 
 export function IdWrapper({ Component, ...props }) {
-  const router = useRouter();
+  const params = useParams();
 
-  const id = router.query.id as string | undefined;
+  const id = params?.id as string | undefined;
 
-  return id === undefined ? null : <Component id={id} {...props} />;
+  return <Component id={id} {...props} />;
 }

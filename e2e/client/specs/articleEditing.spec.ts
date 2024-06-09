@@ -23,12 +23,12 @@ const chooseHeading = async (page: Page, isHeading: boolean) => {
 }
 
 const expectRenderedArticle = async (container: Locator) => {
-    expect(container.getByRole('heading', { name: 'How to' })).toBeVisible();
     expect(await container.getByRole('strong').textContent()).toEqual('bold text')
+    expect(container.getByRole('heading', { name: 'How to' })).toBeVisible();
     expect(container.getByRole('heading', { name: 'article heading' })).toBeVisible();
 
     const image = container.locator('img')
-    expect(await image.evaluate(e => (e as any).complete)).toBe(true)
+    expect(await image.evaluate(e => (e as HTMLImageElement).complete)).toBe(true)
 }
 
 test("Allows editing articles", async ({ page, context }) => {

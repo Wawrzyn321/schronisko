@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
 import { Modal } from 'components/Modal';
 import { useState } from 'react';
 import styles from './SimpleModal.module.scss';

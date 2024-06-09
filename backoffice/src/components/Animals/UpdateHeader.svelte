@@ -60,10 +60,6 @@
         <Button
           type="is-primary"
           on:click={() => {
-            console.log({
-              current: animalFormData.category,
-              prevCategory
-            })
             if (changedToReadonly(animalFormData.category, prevCategory)) {
               isWarningModalVisible = true;
             } else {
