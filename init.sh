@@ -7,6 +7,9 @@ echo 'force making a symlink from ~/www-data-stuff/img/ to /var/svc/schronisko/i
 rm -rf /var/svc/schronisko/images/img
 ln -sf ~/www-data-stuff/img/ /var/svc/schronisko/images
 
+echo 'WORKAROUND: delete package-lock in /server'
+rm /var/svc/schronisko/server/package-lock.json
+
 echo 'replacing pw with postgres in prisma/.env'
 sed -i s/pw/postgres/ prisma/.env
 

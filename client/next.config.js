@@ -5,6 +5,18 @@
 
 const { withSentryConfig } = require("@sentry/nextjs");
 
+const cspHeader = `
+    default-src 'self' http://localhost:60045 http://schronisko-backend2.oto-jest-wawrzyn.pl;
+    script-src 'self' 'unsafe-eval';
+    style-src 'self' 'unsafe-inline';
+    img-src 'self' http://localhost:60045 http://schronisko-backend2.oto-jest-wawrzyn.pl blob: data:;
+    font-src 'self';
+    object-src 'none';
+    base-uri 'self';
+    form-action 'self';
+    frame-ancestors 'none';
+`;
+
 const baseConfig = {
   async redirects() {
     return [
@@ -39,6 +51,19 @@ const baseConfig = {
         permanent: true,
       },
     ];
+  },
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'Content-Security-Policy',
+            value: cspHeader.replace(/\n/g, ''),
+          },
+        ],
+      },
+    ]
   },
   images: {
     remotePatterns: [{

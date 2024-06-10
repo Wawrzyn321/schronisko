@@ -19,6 +19,12 @@ type ImportedUser = Required<z.infer<typeof userSchema>>;
 type PermissionCollection = { permission: Permission }[];
 
 export async function seedUsers(prisma: PrismaClient) {
+    const pepper = process.env.PEPPER ?? '';
+    if (!pepper.length) {
+        console.log("No pepper provided. Exiting.")
+        process.exit(1);
+    }
+
     await createAdmin(prisma);
 
     const importedUsers = findDataInTable<ImportedUser>(adminUsersTable);

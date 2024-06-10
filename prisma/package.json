@@ -4,12 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "seed": "NODE_ENV=dev dotenv -e .env -- ts-node seed.ts",
+    "seed": "PEPPER=PEPPER NODE_ENV=dev dotenv -e .env -- ts-node seed.ts",
     "seed:vps": "NODE_ENV=vps dotenv -e .env -- ts-node seed.ts",
     "ts-node": "ts-node",
     "push": "../node_modules/.bin/prisma generate && ../node_modules/.bin/prisma db push",
     "test:setup": "dotenv -e .env.test -- npx prisma db push",
-    "test:seed": "dotenv -e .env.test -- ts-node seed-test.ts"
+    "test:seed": "PEPPER=PEPPER dotenv -e .env.test -- ts-node seed-test.ts"
   },
   "keywords": [],
   "author": "",

@@ -30,6 +30,12 @@ if (!DEV && USE_HTTP) {
 }
 
 async function bootstrap() {
+  const pepper = process.env.PEPPER ?? '';
+  if (!pepper.length) {
+    console.log("No pepper provided. Exiting.")
+    process.exit(1);
+  }
+
   const app = await NestFactory.create<NestExpressApplication>(
     AppModule,
     options,

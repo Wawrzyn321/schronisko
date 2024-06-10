@@ -2,10 +2,13 @@ po deployu:
     * maile (sendgrid key)
     * usuń admina
     * dodaj https!
+    * ustaw lepszy pieprz
     
 "o nas" wciąż nieuzupełnione i inne też
 
 ładnie sformatuj wiadomości w mailach, szczególnie tą do v-adopcji
+
+hsts
 
 UPDATE paczek
     quill?
@@ -17,7 +20,6 @@ Ustaw HSTS
 Captcha googlowa (po deployu?)
 pieprz w schroniskowych hasłach
 
-https://github.com/quilljs/quill/issues/1918 dla schroniska
 Skanuj omni/schronisko skipfishem
 
 test na dodawanie obrazków w obu img i news, testy wszystkie funkcje quilla

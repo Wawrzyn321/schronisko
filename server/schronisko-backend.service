@@ -9,6 +9,7 @@ PrivateTmp=true
 ExecStart=/home/ubuntu/.nvm/versions/node/v18.20.3/bin/npm run start:nest
 Restart=on-failure
 User=ubuntu
+Environment="PEPPER="
 
 [Install]
 WantedBy=multi-user.target
