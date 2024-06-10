@@ -4,7 +4,7 @@ import {
 } from "../helpers";
 
 import { BACKOFFICE_URL, MAIN_URL } from "../config";
-import { login, navTo } from "../../backoffice/helpers";
+import { expectSuccessPopups, login, navTo } from "../../backoffice/helpers";
 
 const goToDogAdoption = async (page: Page) => {
     await page.getByText("Zwierzęta", { exact: true }).hover();
@@ -27,8 +27,12 @@ test("Renders new newly adopted animals", async ({ page }) => {
     await page.locator("button", { hasText: "Zapisz" }).first().click();
     await page.getByText('Zatwierdź').click();
 
+    await expectSuccessPopups(page, {
+        okText: "Dane zwierzęcia zostały zapisane.",
+        errorText: "Nie możnac zapisać danych zwierzęcia: ",
+    });
+
     await page.goto(MAIN_URL);
-    await page.reload(); // force hard reload
     await expect(contains(page, 'Pies poadopcyjny')).toBeVisible();
     await expect(contains(page, 'Pies poadopcyjny 2')).toBeVisible()
 

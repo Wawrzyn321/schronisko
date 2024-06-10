@@ -42,17 +42,17 @@ test.describe("News: ", () => {
 
     const addButton = contains(page, "Utwórz");
 
-    expect(addButton).toBeDisabled();
+    await expect(addButton).toBeDisabled();
 
     await page.locator('[placeholder="Tytuł"]').fill("news-title");
-    expect(addButton).toBeDisabled();
+    await expect(addButton).toBeDisabled();
 
     await page.setInputFiles(
       '[aria-label="Wybierz obraz"]',
       "./fixtures/img.jpeg"
     );
     await contains(page, "Dodaj").click();
-    expect(addButton).toBeEnabled();
+    await expect(addButton).toBeEnabled();
 
     await page.locator('[placeholder="Opis"]').fill("news-desc");
 

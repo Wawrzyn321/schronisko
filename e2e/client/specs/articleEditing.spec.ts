@@ -24,8 +24,8 @@ const chooseHeading = async (page: Page, isHeading: boolean) => {
 
 const expectRenderedArticle = async (container: Locator) => {
     expect(await container.getByRole('strong').textContent()).toEqual('bold text')
-    expect(container.getByRole('heading', { name: 'How to' })).toBeVisible();
-    expect(container.getByRole('heading', { name: 'article heading' })).toBeVisible();
+    await expect(container.getByRole('heading', { name: 'How to' })).toBeVisible();
+    await expect(container.getByRole('heading', { name: 'article heading' })).toBeVisible();
 
     const image = container.locator('img')
     expect(await image.evaluate(e => (e as HTMLImageElement).complete)).toBe(true)

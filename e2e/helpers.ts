@@ -45,3 +45,11 @@ export const login = async (
       .first()
   ).toBeVisible();
 };
+
+export const expectSuccessPopups = async (
+  page: Page,
+  { okText, errorText }
+) => {
+  await expect(contains(page, okText)).toBeVisible();
+  await expect(contains(page, errorText)).not.toBeVisible();
+};

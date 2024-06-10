@@ -1,32 +1,24 @@
 po deployu:
     * maile (sendgrid key)
     * usuń admina
-    * dodaj https!
     * ustaw lepszy pieprz
-    
-"o nas" wciąż nieuzupełnione i inne też
+
+po https
+    * Ustaw HSTS
+
+zablokowane
+    * "o nas" wciąż nieuzupełnione i inne też
 
 ładnie sformatuj wiadomości w mailach, szczególnie tą do v-adopcji
-
-hsts
 
 UPDATE paczek
     quill?
 
-testuj maile + dodaj handlowanie błędów
-
 WOAH Mozilla SSL Configuration Generator 
-Ustaw HSTS 
 Captcha googlowa (po deployu?)
-pieprz w schroniskowych hasłach
-
-Skanuj omni/schronisko skipfishem
-
-test na dodawanie obrazków w obu img i news, testy wszystkie funkcje quilla
 
 seedowanie jest upośledzoene, lepiej zrobić export do prismy (+skrypt ./dev/deploy-prisma.sh) i na vpsie tylko ładować z JSONa
 
+
 lokalnie obrazki u Louisa dalej nie działają
-
-maila ogarnij pls, albo nawet zablokuj w momencie gdy jest źle skonfigurowany
-
+testuj maile + dodaj handlowanie błędów maila ogarnij pls, albo nawet zablokuj w momencie gdy jest źle skonfigurowany
