@@ -17,9 +17,7 @@ export function useSimpleModal({
 }: useSimpleModalProps): [JSX.Element, () => void] {
   const [showModal, setShowModal] = useState(false);
 
-  const showBadCaptchaModal = () => setShowModal(true);
-
-  const BadCaptchaModal = (
+  const ModalBody = (
     <Modal isOpen={showModal} onRequestClose={() => setShowModal(false)}>
       <div className={styles['bad-captcha-modal']}>
         <div className={styles['bad-captcha-modal__left']}>
@@ -37,7 +35,7 @@ export function useSimpleModal({
     </Modal>
   );
 
-  return [BadCaptchaModal, showBadCaptchaModal];
+  return [ModalBody, () => setShowModal(true)];
 }
 
 export function useBadCaptchaModal() {

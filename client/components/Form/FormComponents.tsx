@@ -28,11 +28,6 @@ function ValidatedInput({
   const showValidationMessage =
     triedSubmitCounter > 0 && !inputRef.current.validity.valid;
 
-  let pattern = null;
-  if ((inputProps?.type || 'text') == 'text') {
-    pattern = '.*S+.*';
-  }
-
   return (
     <label>
       {label}
@@ -41,7 +36,6 @@ function ValidatedInput({
         value={value}
         onChange={onChange}
         ref={inputRef}
-        pattern={pattern}
         {...inputProps}
       />
       <p className="validation-message">

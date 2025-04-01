@@ -62,7 +62,7 @@ describe('CommunicationController', () => {
     const validateCaptchaMock = jest.fn().mockReturnValue(true);
 
     mailService.send = sendMailMock;
-    captchaService.validateCaptcha = validateCaptchaMock;
+    captchaService.isCaptchaValid = validateCaptchaMock;
 
     await communicationController.sendVolunteering(
       'captcha-id',
@@ -84,7 +84,7 @@ describe('CommunicationController', () => {
   ],
 ]
 `);
-    expect(captchaService.validateCaptcha).toHaveBeenCalledWith(
+    expect(captchaService.isCaptchaValid).toHaveBeenCalledWith(
       'captcha-id',
       'captcha-text',
     );
@@ -95,7 +95,7 @@ describe('CommunicationController', () => {
     const validateCaptchaMock = jest.fn().mockReturnValue(false);
 
     mailService.send = sendMailMock;
-    captchaService.validateCaptcha = validateCaptchaMock;
+    captchaService.isCaptchaValid = validateCaptchaMock;
 
     await expect(
       communicationController.sendVolunteering(
@@ -133,7 +133,7 @@ describe('CommunicationController', () => {
     const validateCaptchaMock = jest.fn().mockReturnValue(true);
 
     mailService.send = sendMailMock;
-    captchaService.validateCaptcha = validateCaptchaMock;
+    captchaService.isCaptchaValid = validateCaptchaMock;
 
     await communicationController.sendVAdoption(
       'captcha-id',
@@ -149,7 +149,7 @@ describe('CommunicationController', () => {
   ],
 ]
 `);
-    expect(captchaService.validateCaptcha).toHaveBeenCalledWith(
+    expect(captchaService.isCaptchaValid).toHaveBeenCalledWith(
       'captcha-id',
       'captcha-text',
     );
@@ -160,7 +160,7 @@ describe('CommunicationController', () => {
     const validateCaptchaMock = jest.fn().mockReturnValue(false);
 
     mailService.send = sendMailMock;
-    captchaService.validateCaptcha = validateCaptchaMock;
+    captchaService.isCaptchaValid = validateCaptchaMock;
 
     await expect(
       communicationController.sendVAdoption(

@@ -67,15 +67,14 @@ export class CommunicationService {
       throw new BadRequestException('Brak wszystkich danych.');
     }
 
-    if (await this.captchaService.validateCaptcha(id, text)) {
-      try {
-        await sendEmail();
-      } catch (e) {
-        throw new BadRequestException('Nie udało się wysłać maila.');
-        throw e;
-      }
-    } else {
+    if (!(await this.captchaService.isCaptchaValid(id, text))) {
       throw new BadRequestException('Brzydka captcha');
+    }
+
+    try {
+      await sendEmail();
+    } catch (e) {
+      throw new BadRequestException('Nie udało się wysłać maila.');
     }
   }
 }

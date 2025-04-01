@@ -12,7 +12,7 @@
     "dev": "PEPPER=PEPPER REDIS_URL=redis://127.0.0.1:6379 NODE_ENV=development nest start --watch --preserveWatchOutput",
     "redis": "redis-server",
     "dev:test": "dotenv -e ../prisma/.env.test -- nest start --watch",
-    "test": "REDIS_URL='DISABLED' SENDGRID_API_KEY=SG. DATABASE_URL='postgres://DONT USE IT' jest"
+    "test": "REDIS_URL='DISABLED' DATABASE_URL='postgres://DONT USE IT' jest"
   },
   "dependencies": {
     "@nestjs/common": "^10.3.8",
@@ -21,8 +21,6 @@
     "@nestjs/jwt": "^10.2.0",
     "@nestjs/passport": "^10.0.3",
     "@nestjs/platform-express": "^10.3.8",
-    "@sendgrid/client": "^7.6.0",
-    "@sendgrid/mail": "^7.6.0",
     "@sentry/node": "^8.4.0",
     "@sentry/profiling-node": "^8.4.0",
     "captchagen": "^1.2.0",
@@ -30,6 +28,7 @@
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
+    "postmark": "^4.0.2",
     "random-seed": "^0.3.0",
     "redis": "^4.6.14",
     "sanitize-html": "^2.13.0",

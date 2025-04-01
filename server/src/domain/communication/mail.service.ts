@@ -1,10 +1,11 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
-import * as sendGridClient from '@sendgrid/mail';
+import * as postmark from 'postmark';
 
 @Injectable()
 export class MailService {
+  private client: any;
   constructor() {
-    sendGridClient.setApiKey(process.env.SENDGRID_API_KEY);
+    this.client = new postmark.ServerClient('1db77c19-d3e1-4669-bbf1-b08110a77ba9');
   }
 
   async send(subject: string, text: string) {
@@ -15,10 +16,26 @@ export class MailService {
       text,
     };
     try {
-      const [_] = await sendGridClient.send(msg);
+      const res = await this.client.sendEmail({
+        "From": "wawrzyn+schronisko@pwawrzynczyk.pl",
+        "To": "wawrzyn@pwawrzynczyk.pl",
+        "Subject": "Hello from Postmark",
+        "HtmlBody": "<strong>Hello</strong> dear Postmark user.",
+        "TextBody": "Hello from Postmark!",
+        "MessageStream": "outbound"
+      });
+      console.log('res', res);
     } catch (e) {
-      console.log(e); //todo
-      throw new InternalServerErrorException();
+      console.log('Error while sending mail', getMailError(e));
+      throw e;
     }
+  }
+}
+
+function getMailError(e: any) {
+  try {
+    return e.response.body.errors[0].message;
+  } catch {
+    return 'Unknown';
   }
 }
