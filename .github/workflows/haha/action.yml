@@ -3,11 +3,9 @@ name: haha
 on:
   merge_group:
   pull_request:
-
-jobs:
-  haha:
-    name: haha
-    runs-on: ubuntu-latest
-    steps:
-      - name: haha
-        run: echo 'haha'
+runs:
+  using: "composite"
+  steps:
+    - name: haha
+      shell: bash
+      run: echo 'haha'
