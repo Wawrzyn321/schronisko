@@ -5,20 +5,20 @@ on:
   pull_request:
     branches: [ "main" ]
 jobs:
-   job1:
+   test server:
      runs-on: ubuntu-latest
      steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v4
       - uses: ./.github/workflows/server-unit.yml
-   job2:
+   test unit:
      runs-on: ubuntu-latest
      steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v4
       - uses: ./.github/workflows/client-unit.yml
-   job3:
+   test backoffice:
      runs-on: ubuntu-latest
      steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v4
       - uses: ./.github/workflows/backoffice-unit.yml
    job4:
      needs:
