@@ -64,28 +64,10 @@
     const container = node.getElementsByClassName('ql-editor')[0];
 
     quill.on('text-change', function () {
-      node.dispatchEvent(
-        new CustomEvent('text-change', {
-          detail: {
-            html: container.innerHTML,
-            text: quill.getText(),
-          },
-        })
-      );
+      content = container.innerHTML;
+      onChange(content, fileMap);
     });
   }
-
-  function onEditorChange(e: { detail: { html: string } }) {
-    content = e.detail.html;
-    onChange(content, fileMap);
-  }
-
-  // function requestMayBeTooLarge() {
-  //   if (!content) return false;
-  //   const contentWithoutImages = '';
-
-  //   return contentWithoutImages?.length / 1024 / 1024 > 9.5; // 10 mb
-  // }
 
   const convertImageToBase64 = (image: File): Promise<string> => {
     return new Promise((resolve, reject) => {
@@ -114,21 +96,11 @@
 <svelte:head>
   <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
 </svelte:head>
-<!-- {#if requestMayBeTooLarge()}
-  <div class="warning-container">
-    <Notification type="is-warning">
-      Rozmiar zawartości może przewyższać 10MB - zapisanie go może się nie udać!
-    </Notification>
-  </div>
-{/if} -->
+
 <svelte:window on:keydown={keydown} />
-<div class="editor" use:makeQuill on:text-change={onEditorChange} />
+<div class="editor" use:makeQuill />
 
 <style lang="scss">
-  // .warning-container > :global(*) {
-  //   margin: 0 16px 22px;
-  // }
-
   .editor {
     margin-bottom: 64px;
 

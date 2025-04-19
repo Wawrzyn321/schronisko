@@ -63,7 +63,7 @@ async function createAdmin(prisma: PrismaClient) {
             isActive: true,
         },
         create: {
-            firstName: "adminek",
+            firstName: "_admin",
             lastName: "_admin",
             isActive: true,
             login: '_admin',

@@ -1,4 +1,4 @@
-name: Server tests
+name: Server job
 on:
   push:
     branches: [ "main" ]
