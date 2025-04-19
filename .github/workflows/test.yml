@@ -6,10 +6,17 @@ on:
     branches: [ "main" ]
 jobs:
    job1:
+     runs-on: ubuntu-latest
+     steps:
+      - uses: actions/checkout@v1
      uses: ./.github/workflows/server-unit.yml
    job2:
+     steps:
+      - uses: actions/checkout@v1
      uses: ./.github/workflows/client-unit.yml
    job3:
+     steps:
+      - uses: actions/checkout@v1
      uses: ./.github/workflows/backoffice-unit.yml
    job4:
      needs:
