@@ -20,7 +20,7 @@ type Auth = {
 const AUTH_STORAGE_KEY = 'AUTH_STORAGE';
 export const LOGOUT_NOTIFY_PARAMS = 'LOGOUT_NOTIFY_PARAMS';
 
-const getSavedAuth = () => {
+function getSavedAuth(){
     let savedValue: Auth | null = null;
     try {
         savedValue = JSON.parse(localStorage.getItem(AUTH_STORAGE_KEY) || 'null');
@@ -29,7 +29,7 @@ const getSavedAuth = () => {
             return null;
         }
         return savedValue;
-    } catch (e: unknown) {
+    } catch (e) {
         console.warn(e)
         return null;
     }
@@ -37,8 +37,8 @@ const getSavedAuth = () => {
 
 const value = writable<Auth | null>(getSavedAuth());
 
-export const logout = (notifyParams?: NotifyParams, damn = true) => {
-    if (damn) {
+export function logout(notifyParams?: NotifyParams, clearSavedAuth = true) {
+    if (clearSavedAuth) {
         value.set(null);
     }
     localStorage.removeItem(AUTH_STORAGE_KEY);

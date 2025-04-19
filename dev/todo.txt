@@ -1,23 +1,21 @@
 po deployu:
     * maile (postmark key)
     * usuń admina
-    * ustaw lepszy pieprz
+    * lepszy pieprz
 
 po https
     * Ustaw HSTS
+    * Mozilla SSL Configuration Generator 
 
-zablokowane
-    * "o nas" wciąż nieuzupełnione i inne też
+ sformatuj wiadomości w mailach, szczególnie tą do v-adopcji
 
-ładnie sformatuj wiadomości w mailach, szczególnie tą do v-adopcji
-
-WOAH Mozilla SSL Configuration Generator 
 Captcha googlowa (po deployu?) albo https://prosopo.io/pricing/
 
-seedowanie jest upośledzoene, lepiej zrobić export do prismy (+skrypt ./dev/deploy-prisma.sh) i na vpsie tylko ładować z JSONa
+seedowanie - lepiej zrobić export do prismy (+skrypt ./dev/deploy-prisma.sh) i na vpsie tylko ładować z JSONa
 
 lokalnie obrazki u Louisa dalej nie działają
-testuj maile + dodaj handlowanie błędów maila ogarnij pls, albo nawet zablokuj w momencie gdy jest źle skonfigurowany
+testuj maile + dodaj handlowanie błędów maila, albo zablokuj w momencie gdy jest źle skonfigurowany
 
+MAILE do usunięcia?
 
-WYWAL MAILE?
+update prismy
