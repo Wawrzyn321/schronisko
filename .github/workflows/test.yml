@@ -6,11 +6,11 @@ on:
     branches: [ "main" ]
 jobs:
    job1:
-     uses: ./.github/workflows/server-unit.yml@ref
+     uses: ./.github/workflows/server-unit.yml
    job2:
-     uses: ./.github/workflows/client-unit.yml@ref
+     uses: ./.github/workflows/client-unit.yml
    job3:
-     uses: ./.github/workflows/backoffice-unit.yml@ref
+     uses: ./.github/workflows/backoffice-unit.yml
    job4:
      needs:
       - job1
