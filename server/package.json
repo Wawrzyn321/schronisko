@@ -7,7 +7,8 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
-    "lint:fix": "tsc && prettier --write \"src/**/*.ts\"",
+    "check": "tsc && prettier --check \"src/**/*.ts\"",
+    "lint:fix": "prettier --write \"src/**/*.ts\"",
     "start:nest": "REDIS_URL=redis://127.0.0.1:6379 NODE_ENV=production nest start",
     "dev": "PEPPER=PEPPER REDIS_URL=redis://127.0.0.1:6379 NODE_ENV=development nest start --watch --preserveWatchOutput",
     "redis": "redis-server",
