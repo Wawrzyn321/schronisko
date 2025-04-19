@@ -24,4 +24,4 @@ popraw wygląd modali po voluteering (ilu_pies)
 
 skrypt do lint-check na server?
 
-adres oto-jest-wawrzyn przenieść do envów
+testy e2e na CI

@@ -4,11 +4,13 @@
 
 const { withSentryConfig } = require("@sentry/nextjs");
 
+const NEXT_PUBLIC_SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL;
+
 const cspHeader = `
-    default-src 'self' http://localhost:60045 http://schronisko-backend2.oto-jest-wawrzyn.pl https://www.google.com/;
+    default-src 'self' http://localhost:60045 ${NEXT_PUBLIC_SERVER_URL} https://www.google.com/;
     script-src 'self' 'unsafe-eval' https://www.google.com/recaptcha/enterprise.js https://www.gstatic.com/recaptcha/releases/;
     style-src 'self' 'unsafe-inline';
-    img-src 'self' http://localhost:60045 http://schronisko-backend2.oto-jest-wawrzyn.pl blob: data:;
+    img-src 'self' http://localhost:60045 ${NEXT_PUBLIC_SERVER_URL} blob: data:;
     font-src 'self';
     object-src 'none';
     base-uri 'self';
@@ -70,7 +72,7 @@ const baseConfig = {
       hostname: 'localhost',
     }, {
       protocol: 'http',//todo change after SSL
-      hostname: 'schronisko-backend2.oto-jest-wawrzyn.pl'
+      hostname: NEXT_PUBLIC_SERVER_URL.replace(/https?:\/\//, '')
     }]
   },
   i18n: {

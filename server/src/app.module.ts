@@ -20,7 +20,7 @@ const DEV = process.env.NODE_ENV !== 'production';
 
 export const WEB_STATIC_FILES_PATH = DEV
   ? 'http://localhost:60045'
-  : 'http://schronisko-backend2.oto-jest-wawrzyn.pl';
+  : process.env.NEXT_PUBLIC_SERVER_DOMAIN;
 
 setupImageDirectories(LOCAL_STATIC_FILES_PATH);
 
