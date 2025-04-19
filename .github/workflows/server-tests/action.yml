@@ -1,0 +1,19 @@
+name: Server job
+
+on:
+  merge_group:
+  pull_request:
+runs:
+  runs-on: ubuntu-latest
+  using: "composite"
+  steps:
+  - uses: actions/checkout@v4
+  - name: Setup nodeJS
+    uses: actions/setup-node@v4
+    with:
+      node-version: '22.x'
+      cache: 'npm'
+  - run: npm ci
+  - run: npm ci --prefix=server
+  - run: npm run check --prefix=server
+  - run: npm run test --prefix=server
