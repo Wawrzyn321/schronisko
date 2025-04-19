@@ -1,0 +1,3 @@
+npm run check --prefix=backoffice
+npm run check --prefix=client
+npm run check --prefix=server

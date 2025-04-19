@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint --no-cache",
-    "lint:fix": " next lint --fix --no-cache"
+    "check": "tsc && next lint --fix --no-cache"
   },
   "devDependencies": {
     "@types/node": "^16.10.1",

@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "check-node-version --node '= 22' && node ./dev/dev.js",
     "check-and-format": "npm run check --prefix=backoffice && npm run lint:fix --prefix=client && npm run lint:fix --prefix=server",
-    "ts-coverage": "npx typescript-coverage-report && open coverage-ts/index.html"
+    "ts-coverage": "npx typescript-coverage-report && open coverage-ts/index.html",
+    "prepare": "husky"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +16,7 @@
     "@types/node": "^20.12.12",
     "check-node-version": "^4.2.1",
     "concurrently": "^8.2.2",
+    "husky": "^9.1.7",
     "prisma": "^5.14.0",
     "ts-node": "^10.9.2",
     "type-coverage": "^2.28.2",
