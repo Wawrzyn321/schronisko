@@ -1,4 +1,4 @@
-name: Server job
+name: Test job
 on:
   push:
     branches: [ "main" ]
@@ -11,8 +11,7 @@ jobs:
      uses: .github/workflows/client-unit.yml@ref
    job3:
      uses: .github/workflows/backoffice-unit.yml@ref
-
-   job3:
+   job4:
      needs:
       - job1
       - job2
