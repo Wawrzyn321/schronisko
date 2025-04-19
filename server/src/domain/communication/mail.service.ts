@@ -5,21 +5,15 @@ import * as postmark from 'postmark';
 export class MailService {
   private client: any;
   constructor() {
-    this.client = new postmark.ServerClient('1db77c19-d3e1-4669-bbf1-b08110a77ba9');
+    this.client = new postmark.ServerClient(process.env.POSTMARK_API_TOKEN);
   }
 
   async send(subject: string, text: string) {
-    const msg = {
-      to: 'Wawrzyn321@gmail.com',
-      from: 'Wawrzyn321@oto-jest-wawrzyn.pl',
-      subject,
-      text,
-    };
     try {
       const res = await this.client.sendEmail({
         "From": "wawrzyn+schronisko@pwawrzynczyk.pl",
         "To": "wawrzyn@pwawrzynczyk.pl",
-        "Subject": "Hello from Postmark",
+        "Subject": subject,
         "HtmlBody": "<strong>Hello</strong> dear Postmark user.",
         "TextBody": "Hello from Postmark!",
         "MessageStream": "outbound"
