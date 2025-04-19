@@ -1,0 +1,22 @@
+name: Server job
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+jobs:
+   job1:
+     uses: .github/workflows/server-unit.yml@ref
+   job2:
+     uses: .github/workflows/client-unit.yml@ref
+   job3:
+     uses: .github/workflows/backoffice-unit.yml@ref
+
+   job3:
+     needs:
+      - job1
+      - job2
+      - job3
+     runs-on: ubuntu-latest
+     steps:
+       - run: echo "DONE"
