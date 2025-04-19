@@ -13,17 +13,17 @@ export function useSimpleModal({
   title,
   text,
   image,
-}: useSimpleModalProps): [JSX.Element, () => void] {
+}: useSimpleModalProps) {
   const [showModal, setShowModal] = useState(false);
 
   const ModalBody = (
     <Modal isOpen={showModal} onRequestClose={() => setShowModal(false)}>
-      <div className={styles['bad-captcha-modal']}>
-        <div className={styles['bad-captcha-modal__left']}>
-          <h1 className={styles['bad-captcha-modal__title']}>{title}</h1>
-          <p className={styles['bad-captcha-modal__text']}>{text}</p>
+      <div className={styles['simple-modal-modal']}>
+        <div className={styles['simple-modal-modal__left']}>
+          <h1 className={styles['simple-modal-modal__title']}>{title}</h1>
+          <p className={styles['simple-modal-modal__text']}>{text}</p>
           <button
-            className={`${styles['bad-captcha-modal__button']} button-link`}
+            className={`${styles['simple-modal-modal__button']} button-link`}
             onClick={() => setShowModal(false)}
           >
             OK
@@ -34,5 +34,5 @@ export function useSimpleModal({
     </Modal>
   );
 
-  return [ModalBody, () => setShowModal(true)];
+  return [ModalBody, () => setShowModal(true)] as const;
 }
