@@ -1,8 +1,9 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import * as postmark from 'postmark';
+import { MailServiceInterface } from './MailServiceInterface';
 
 @Injectable()
-export class MailService {
+export class MailService implements MailServiceInterface {
   private client: any;
   constructor() {
     this.client = new postmark.ServerClient(process.env.POSTMARK_API_TOKEN);
@@ -11,12 +12,12 @@ export class MailService {
   async send(subject: string, text: string) {
     try {
       const res = await this.client.sendEmail({
-        "From": "wawrzyn+schronisko@pwawrzynczyk.pl",
-        "To": "wawrzyn@pwawrzynczyk.pl",
-        "Subject": subject,
-        "HtmlBody": "<strong>Hello</strong> dear Postmark user.",
-        "TextBody": "Hello from Postmark!",
-        "MessageStream": "outbound"
+        From: 'wawrzyn+schronisko@pwawrzynczyk.pl',
+        To: 'wawrzyn@pwawrzynczyk.pl',
+        Subject: subject,
+        HtmlBody: '<strong>Hello</strong> dear Postmark user.',
+        TextBody: 'Hello from Postmark!',
+        MessageStream: 'outbound',
       });
       console.log('res', res);
     } catch (e) {

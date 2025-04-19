@@ -3,8 +3,8 @@ import { PrismaService } from '../../../prisma-connect/prisma.service';
 import { CommunicationController } from '../communication.controller';
 import { CommunicationService } from '../communication.service';
 import { CaptchaService } from '../captcha.service';
-import { MailService } from '../mail.service';
 import { VAdoptionFormFetch, VolunteeringFormFetch } from '../common';
+import { MailServiceInterface } from '../MailServiceInterface';
 
 const mockVolunteeringRequest: VolunteeringFormFetch = {
   about: 'about',
@@ -24,12 +24,16 @@ const mockVAdoptionRequest: VAdoptionFormFetch = {
   animalRefNo: 'ref',
 };
 
+class MockMailService implements MailServiceInterface {
+  async send(subject: string, text: string) {}
+}
+
 describe('CommunicationController', () => {
   let communicationController: CommunicationController;
   let communicationService: CommunicationService;
   let prismaServiceMock: PrismaService;
   let captchaService: CaptchaService;
-  let mailService: MailService;
+  let mailService: MockMailService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -37,7 +41,7 @@ describe('CommunicationController', () => {
     }).compile();
     prismaServiceMock = module.get<PrismaService>(PrismaService);
     captchaService = new CaptchaService(prismaServiceMock);
-    mailService = new MailService();
+    mailService = new MockMailService();
     communicationService = new CommunicationService(
       captchaService,
       mailService,

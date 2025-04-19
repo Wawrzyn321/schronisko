@@ -7,7 +7,7 @@ import {
   validateVAdoptionFormFetch,
   validateVoluneeringFormFetch,
 } from './common';
-import { MailService } from './mail.service';
+import { MailServiceInterface } from './MailServiceInterface';
 
 @Injectable()
 export class CommunicationService {
@@ -15,7 +15,7 @@ export class CommunicationService {
 
   constructor(
     private captchaService: CaptchaService,
-    private mailService: MailService,
+    private mailService: MailServiceInterface,
   ) {
     this.transporter = nodemailer.createTransport({
       sendmail: true,
