@@ -11,7 +11,8 @@
 
 ## Running all packages
 
-Ensure `.env` file is provided in `server` and `prisma`. There's `.env-template` file to base the `.env` upon.
+* Ensure `.env` file is provided in `server` and `prisma`. There's `.env-template` file to base the `.env` upon.
+* Run `npm run push` and `npm run seed` in `prisma` directory.
 
 At root:
 
@@ -19,7 +20,7 @@ At root:
 npm run dev
 ```
 
-## Running backoffice
+## Running backoffice (port 5555)
 
 At `backoffice/`:
 
@@ -27,7 +28,7 @@ At `backoffice/`:
 npm run dev
 ```
 
-## Running server site
+## Running server site (port 60045)
 
 At `server/` - runs backend.
 
@@ -35,7 +36,7 @@ At `server/` - runs backend.
 npm run dev
 ```
 
-## Running client site
+## Running client site (port 3015)
 
 At `client/` - runs client.
 
@@ -45,7 +46,7 @@ npm run dev
 
 ## Versions
 
-- NodeJS: v18.20.2
+- NodeJS: v22
 - NPM: v10.5.0
 - PostgresSQL 14.5
 
