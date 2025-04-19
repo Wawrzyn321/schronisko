@@ -24,7 +24,6 @@ export class CaptchaService implements CaptchaServiceInterface {
       });
 
       const data = (await response.json()) as CaptchaResponse;
-      console.log(data);
       return data.success;
     } catch (error) {
       console.error('Captcha error:', error);
