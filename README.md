@@ -11,6 +11,8 @@
 
 ## Running all packages
 
+Ensure `.env` file is provided in `server` and `prisma`. There's `.env-template` file to base the `.env` upon.
+
 At root:
 
 ```bash
