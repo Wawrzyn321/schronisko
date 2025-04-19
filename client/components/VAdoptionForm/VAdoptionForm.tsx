@@ -10,10 +10,10 @@ import {
   AdditionalMessage,
 } from '../Form/FormComponents';
 import { Form } from '../Form/Form';
-import { useCaptcha } from 'components/Captcha/useCapcha';
 import { fetchVAdoptionForm } from 'api/api';
-import { useBadCaptchaModal, useSimpleModal } from '../SimpleModal/useModal';
+import { useSimpleModal } from '../SimpleModal/useModal';
 import ilu_kot from 'public/site/ilu kot.png';
+import { Captcha } from 'components/common/Captcha';
 
 export function VAdoptionForm({ animal }: { animal: Animal }) {
   const adoptionModalProps = usePrefetchVAdoptionModalQueries();
@@ -23,8 +23,9 @@ export function VAdoptionForm({ animal }: { animal: Animal }) {
   const [email, setEmail] = useState('');
   const [additionalMessage, setAdditionalMessage] = useState('');
 
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null)
+
   const [showAdoptionModal, setShowAdoptionModal] = useState(false);
-  const [badCaptchaModal, showBadCaptchaModal] = useBadCaptchaModal();
   const [errorModal, showErrorModal] = useSimpleModal({
     title: 'Upsss...',
     image: ilu_kot,
@@ -37,12 +38,9 @@ export function VAdoptionForm({ animal }: { animal: Animal }) {
     ),
   });
 
-  const { refetchCaptcha, captchaElement, captchaInput, captchaValue } =
-    useCaptcha();
-
   const onSubmit = async () => {
     try {
-      await fetchVAdoptionForm(captchaValue, {
+      await fetchVAdoptionForm({
         fullName,
         vCaretakerName,
         email,
@@ -50,16 +48,12 @@ export function VAdoptionForm({ animal }: { animal: Animal }) {
         animalId: animal.id,
         animalName: animal.name,
         animalRefNo: animal.refNo,
+        captchaToken,
       });
       setShowAdoptionModal(true);
     } catch (e) {
-      if (e.statusCode === 400) {
-        showBadCaptchaModal();
-        refetchCaptcha();
-      } else {
-        console.warn(e);
-        showErrorModal();
-      }
+      console.warn(e);
+      showErrorModal();
     }
   };
 
@@ -100,9 +94,8 @@ export function VAdoptionForm({ animal }: { animal: Animal }) {
               setValue={setAdditionalMessage}
             />
             <div className="form-grid-3">
-              {captchaElement}
-              {captchaInput(triedSubmitCounter)}
-              <button className="form--button">Wyślij</button>
+              <Captcha onCaptcha={setCaptchaToken} />
+              <button disabled={!captchaToken} className="form--button">Wyślij</button>
             </div>
           </>
         )}
@@ -113,7 +106,6 @@ export function VAdoptionForm({ animal }: { animal: Animal }) {
       >
         <VAdoptionModalContent {...adoptionModalProps} />
       </Modal>
-      {badCaptchaModal}
       {errorModal}
     </>
   );

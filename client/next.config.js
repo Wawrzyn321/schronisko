@@ -1,13 +1,12 @@
-// to nietranspilowany .js, nie można użyć TSa
-
+// non-transpiled file, cannot use TS
 
 // Injected content via Sentry wizard below
 
 const { withSentryConfig } = require("@sentry/nextjs");
 
 const cspHeader = `
-    default-src 'self' http://localhost:60045 http://schronisko-backend2.oto-jest-wawrzyn.pl;
-    script-src 'self' 'unsafe-eval';
+    default-src 'self' http://localhost:60045 http://schronisko-backend2.oto-jest-wawrzyn.pl https://www.google.com/;
+    script-src 'self' 'unsafe-eval' https://www.google.com/recaptcha/enterprise.js https://www.gstatic.com/recaptcha/releases/;
     style-src 'self' 'unsafe-inline';
     img-src 'self' http://localhost:60045 http://schronisko-backend2.oto-jest-wawrzyn.pl blob: data:;
     font-src 'self';

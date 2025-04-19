@@ -2,9 +2,11 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { PrismaService } from '../../../prisma-connect/prisma.service';
 import { CommunicationController } from '../communication.controller';
 import { CommunicationService } from '../communication.service';
-import { CaptchaService } from '../captcha.service';
 import { VAdoptionFormFetch, VolunteeringFormFetch } from '../common';
-import { MailServiceInterface } from '../MailServiceInterface';
+import {
+  CaptchaServiceInterface,
+  MailServiceInterface,
+} from '../MailServiceInterface';
 
 const mockVolunteeringRequest: VolunteeringFormFetch = {
   about: 'about',
@@ -12,6 +14,7 @@ const mockVolunteeringRequest: VolunteeringFormFetch = {
   email: 'email',
   telNumber: '123',
   birthDate: 'now',
+  captchaToken: 'test-token',
 };
 
 const mockVAdoptionRequest: VAdoptionFormFetch = {
@@ -22,17 +25,24 @@ const mockVAdoptionRequest: VAdoptionFormFetch = {
   animalId: 'id',
   animalName: 'name',
   animalRefNo: 'ref',
+  captchaToken: 'test-token',
 };
 
 class MockMailService implements MailServiceInterface {
   async send(subject: string, text: string) {}
 }
 
+class MockCaptchaService implements CaptchaServiceInterface {
+  async validateCaptcha(captchaToken: string) {
+    return Promise.resolve(true);
+  }
+}
+
 describe('CommunicationController', () => {
   let communicationController: CommunicationController;
   let communicationService: CommunicationService;
   let prismaServiceMock: PrismaService;
-  let captchaService: CaptchaService;
+  let captchaService: CaptchaServiceInterface;
   let mailService: MockMailService;
 
   beforeEach(async () => {
@@ -40,7 +50,7 @@ describe('CommunicationController', () => {
       providers: [PrismaService],
     }).compile();
     prismaServiceMock = module.get<PrismaService>(PrismaService);
-    captchaService = new CaptchaService(prismaServiceMock);
+    captchaService = new MockCaptchaService();
     mailService = new MockMailService();
     communicationService = new CommunicationService(
       captchaService,
@@ -49,30 +59,14 @@ describe('CommunicationController', () => {
     communicationController = new CommunicationController(communicationService);
   });
 
-  it('POST captcha returns captcha', async () => {
-    const createMock = jest.fn().mockReturnValue({ id: 'c-id' });
-
-    prismaServiceMock.captcha.create = createMock;
-
-    const result = await communicationController.getCapcha();
-
-    expect(result.id).toBe('c-id');
-    expect(result.uri).toMatch(new RegExp('^data:image/png;base64'));
-    expect(createMock).toHaveBeenCalled();
-  });
-
   it('POST volunteer validates input and sends mail', async () => {
     const sendMailMock = jest.fn();
     const validateCaptchaMock = jest.fn().mockReturnValue(true);
 
     mailService.send = sendMailMock;
-    captchaService.isCaptchaValid = validateCaptchaMock;
+    captchaService.validateCaptcha = validateCaptchaMock;
 
-    await communicationController.sendVolunteering(
-      'captcha-id',
-      'captcha-text',
-      mockVolunteeringRequest,
-    );
+    await communicationController.sendVolunteering(mockVolunteeringRequest);
 
     expect(sendMailMock.mock.calls).toMatchInlineSnapshot(`
 [
@@ -88,10 +82,7 @@ describe('CommunicationController', () => {
   ],
 ]
 `);
-    expect(captchaService.isCaptchaValid).toHaveBeenCalledWith(
-      'captcha-id',
-      'captcha-text',
-    );
+    expect(captchaService.validateCaptcha).toHaveBeenCalledWith('test-token');
   });
 
   it('POST volunteer with invalid captcha returns error', async () => {
@@ -99,14 +90,10 @@ describe('CommunicationController', () => {
     const validateCaptchaMock = jest.fn().mockReturnValue(false);
 
     mailService.send = sendMailMock;
-    captchaService.isCaptchaValid = validateCaptchaMock;
+    captchaService.validateCaptcha = validateCaptchaMock;
 
     await expect(
-      communicationController.sendVolunteering(
-        'captcha-id',
-        'captcha-text',
-        mockVolunteeringRequest,
-      ),
+      communicationController.sendVolunteering(mockVolunteeringRequest),
     ).rejects.toThrow(/captcha/);
   });
 
@@ -117,6 +104,7 @@ describe('CommunicationController', () => {
       email: 'email',
       telNumber: '123',
       birthDate: 'now',
+      captchaToken: 'test-token',
     };
 
     const sendMailMock = jest.fn();
@@ -124,11 +112,7 @@ describe('CommunicationController', () => {
     mailService.send = sendMailMock;
 
     await expect(
-      communicationController.sendVolunteering(
-        'captcha-id',
-        'captcha-text',
-        mockVolunteeringRequest,
-      ),
+      communicationController.sendVolunteering(mockVolunteeringRequest),
     ).rejects.toThrow(/Brak wszystkich danych/);
   });
 
@@ -137,13 +121,9 @@ describe('CommunicationController', () => {
     const validateCaptchaMock = jest.fn().mockReturnValue(true);
 
     mailService.send = sendMailMock;
-    captchaService.isCaptchaValid = validateCaptchaMock;
+    captchaService.validateCaptcha = validateCaptchaMock;
 
-    await communicationController.sendVAdoption(
-      'captcha-id',
-      'captcha-text',
-      mockVAdoptionRequest,
-    );
+    await communicationController.sendVAdoption(mockVAdoptionRequest);
 
     expect(sendMailMock.mock.calls).toMatchInlineSnapshot(`
 [
@@ -153,10 +133,7 @@ describe('CommunicationController', () => {
   ],
 ]
 `);
-    expect(captchaService.isCaptchaValid).toHaveBeenCalledWith(
-      'captcha-id',
-      'captcha-text',
-    );
+    expect(captchaService.validateCaptcha).toHaveBeenCalledWith('test-token');
   });
 
   it('POST v-adoption with invalid captcha returns error', async () => {
@@ -164,14 +141,10 @@ describe('CommunicationController', () => {
     const validateCaptchaMock = jest.fn().mockReturnValue(false);
 
     mailService.send = sendMailMock;
-    captchaService.isCaptchaValid = validateCaptchaMock;
+    captchaService.validateCaptcha = validateCaptchaMock;
 
     await expect(
-      communicationController.sendVAdoption(
-        'captcha-id',
-        'captcha-text',
-        mockVAdoptionRequest,
-      ),
+      communicationController.sendVAdoption(mockVAdoptionRequest),
     ).rejects.toThrow(/captcha/);
   });
 
@@ -184,6 +157,7 @@ describe('CommunicationController', () => {
       animalId: 'id',
       animalName: 'name',
       animalRefNo: 'ref',
+      captchaToken: 'test-token',
     };
 
     const sendMailMock = jest.fn();
@@ -191,11 +165,7 @@ describe('CommunicationController', () => {
     mailService.send = sendMailMock;
 
     await expect(
-      communicationController.sendVAdoption(
-        'captcha-id',
-        'captcha-text',
-        mockVAdoptionRequest,
-      ),
+      communicationController.sendVAdoption(mockVAdoptionRequest),
     ).rejects.toThrow(/Brak wszystkich danych/);
   });
 });

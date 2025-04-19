@@ -4,6 +4,7 @@ export type VolunteeringFormFetch = {
   telNumber: string;
   birthDate: string;
   about: string;
+  captchaToken: string;
 };
 
 export function validateVoluneeringFormFetch(props: VolunteeringFormFetch) {
@@ -12,7 +13,8 @@ export function validateVoluneeringFormFetch(props: VolunteeringFormFetch) {
       props.email &&
       props.telNumber &&
       props.birthDate &&
-      props.about,
+      props.about &&
+      props.captchaToken,
   );
 }
 
@@ -24,6 +26,7 @@ export type VAdoptionFormFetch = {
   animalId: string;
   animalName: string;
   animalRefNo: string;
+  captchaToken: string;
 };
 
 export function validateVAdoptionFormFetch(props: VAdoptionFormFetch) {
@@ -33,6 +36,7 @@ export function validateVAdoptionFormFetch(props: VAdoptionFormFetch) {
       props.email &&
       props.animalId &&
       props.animalName &&
-      props.animalRefNo,
+      props.animalRefNo &&
+      props.captchaToken,
   );
 }

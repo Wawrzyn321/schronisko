@@ -2,7 +2,6 @@ import Image, { StaticImageData } from 'next/image';
 import { Modal } from 'components/Modal';
 import { useState } from 'react';
 import styles from './SimpleModal.module.scss';
-import ilu_kot from 'public/site/ilu kot.png';
 
 type useSimpleModalProps = {
   text: JSX.Element;
@@ -36,18 +35,4 @@ export function useSimpleModal({
   );
 
   return [ModalBody, () => setShowModal(true)];
-}
-
-export function useBadCaptchaModal() {
-  return useSimpleModal({
-    title: 'Upsss...',
-    image: ilu_kot,
-    text: (
-      <>
-        Nieprawidłowa captcha!
-        <br />
-        Spróbuj ponownie.
-      </>
-    ),
-  });
 }

@@ -1,7 +1,5 @@
 import { fetchVolunteeringForm } from 'api/api';
-import { useCaptcha } from 'components/Captcha/useCapcha';
 import {
-  useBadCaptchaModal,
   useSimpleModal,
 } from 'components/SimpleModal/useModal';
 import { useState } from 'react';
@@ -9,6 +7,7 @@ import { Form } from '../Form/Form';
 import { Email, FullName, Tel, BirthDate, About } from '../Form/FormComponents';
 import ilu_pies from 'public/site/ilu pies.png';
 import ilu_kot from 'public/site/ilu kot.png';
+import { Captcha } from 'components/common/Captcha';
 
 export function VolunteeringForm() {
   const [fullName, setFullName] = useState('');
@@ -16,7 +15,9 @@ export function VolunteeringForm() {
   const [telNumber, setTelNumber] = useState('');
   const [birthDate, setBirthDate] = useState('');
   const [about, setAbout] = useState('');
-  const [badCaptchaModal, showBadCaptchaModal] = useBadCaptchaModal();
+
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null)
+
   const [successModal, showSuccessModal] = useSimpleModal({
     title: 'Udało się!',
     image: ilu_pies,
@@ -40,27 +41,20 @@ export function VolunteeringForm() {
     ),
   });
 
-  const { refetchCaptcha, captchaElement, captchaInput, captchaValue } =
-    useCaptcha();
-
   const sendForm = async () => {
     try {
-      await fetchVolunteeringForm(captchaValue, {
+      await fetchVolunteeringForm({
         fullName,
         email,
         telNumber,
         birthDate,
         about,
+        captchaToken
       });
       showSuccessModal();
     } catch (e) {
-      if (e.statusCode === 400) {
-        showBadCaptchaModal();
-        refetchCaptcha();
-      } else {
-        console.warn(e);
-        showErrorModal();
-      }
+      console.warn(e);
+      showErrorModal();
     }
   };
 
@@ -99,14 +93,12 @@ export function VolunteeringForm() {
               triedSubmitCounter={triedSubmitCounter}
             />
             <div className="form-grid-3">
-              {captchaElement}
-              {captchaInput(triedSubmitCounter)}
-              <button className="form--button">Wyślij</button>
+              <Captcha onCaptcha={setCaptchaToken} />
+              <button className="form--button" disabled={!captchaToken}>Wyślij</button>
             </div>
           </>
         )}
       </Form>
-      {badCaptchaModal}
       {successModal}
       {errorModal}
     </>

@@ -4,7 +4,10 @@ import { MailService } from './mail.service';
 import { CaptchaService } from './captcha.service';
 import { CommunicationService } from './communication.service';
 import { CommunicationController } from './communication.controller';
-import { MailServiceInterface } from './MailServiceInterface';
+import {
+  CaptchaServiceInterface,
+  MailServiceInterface,
+} from './MailServiceInterface';
 
 @Module({
   providers: [
@@ -14,7 +17,10 @@ import { MailServiceInterface } from './MailServiceInterface';
       provide: MailServiceInterface,
       useClass: MailService,
     },
-    CaptchaService,
+    {
+      provide: CaptchaServiceInterface,
+      useClass: CaptchaService,
+    },
   ],
   exports: [CommunicationService],
   controllers: [CommunicationController],

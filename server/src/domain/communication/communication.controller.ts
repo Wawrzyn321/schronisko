@@ -8,26 +8,13 @@ import { Controller, Post, Query, Body } from '@nestjs/common';
 export class CommunicationController {
   constructor(private communicationService: CommunicationService) {}
 
-  @Post('/captcha')
-  getCapcha() {
-    return this.communicationService.generateCaptcha();
-  }
-
   @Post('/volunteer')
-  sendVolunteering(
-    @Query('id') id: string,
-    @Query('text') text: string,
-    @Body() props: VolunteeringFormFetch,
-  ) {
-    return this.communicationService.sendVolunteering(id, text, props);
+  sendVolunteering(@Body() props: VolunteeringFormFetch) {
+    return this.communicationService.sendVolunteering(props);
   }
 
   @Post('/v-adoption')
-  sendVAdoption(
-    @Query('id') id: string,
-    @Query('text') text: string,
-    @Body() props: VAdoptionFormFetch,
-  ) {
-    return this.communicationService.sendVAdoption(id, text, props);
+  sendVAdoption(@Body() props: VAdoptionFormFetch) {
+    return this.communicationService.sendVAdoption(props);
   }
 }

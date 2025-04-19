@@ -12,6 +12,7 @@ function makeVolunteeringData(): VolunteeringFormFetch {
     email: 'email',
     telNumber: '123',
     birthDate: 'now',
+    captchaToken: 'test-token',
   };
 }
 
@@ -24,6 +25,7 @@ function makeVAdoptionData(): VAdoptionFormFetch {
     animalId: 'id',
     animalName: 'name',
     animalRefNo: 'ref',
+    captchaToken: 'test-token',
   };
 }
 

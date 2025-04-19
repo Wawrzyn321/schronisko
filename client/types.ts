@@ -35,6 +35,7 @@ export type VolunteeringFormFetch = {
   telNumber: string;
   birthDate: string;
   about: string;
+  captchaToken: string;
 };
 
 export type VAdoptionFormFetch = {
@@ -45,6 +46,7 @@ export type VAdoptionFormFetch = {
   animalId: string;
   animalName: string;
   animalRefNo: string;
+  captchaToken: string;
 };
 
 export type AnimalListResult = {

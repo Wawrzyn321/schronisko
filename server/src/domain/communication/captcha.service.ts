@@ -1,51 +1,34 @@
 import { Injectable } from '@nestjs/common';
-import * as captchagen from 'captchagen';
-import { PrismaService } from '../../prisma-connect/prisma.service';
+import { CaptchaServiceInterface } from './MailServiceInterface';
+
+const CAPTCHA_VALIDATE_URL = 'https://www.google.com/recaptcha/api/siteverify';
+const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY;
+
+type CaptchaResponse = {
+  success: boolean;
+};
 
 @Injectable()
-export class CaptchaService {
-  constructor(private prisma: PrismaService) {}
+export class CaptchaService implements CaptchaServiceInterface {
+  async validateCaptcha(captchaToken: string) {
+    try {
+      const response = await fetch(CAPTCHA_VALIDATE_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+          secret: RECAPTCHA_SECRET_KEY,
+          response: captchaToken,
+        }),
+      });
 
-  generateCaptchaImage(): { text: string; uri: string } {
-    const captchaGenerator = captchagen.create({ height: 60, width: 270 });
-    captchaGenerator.generate();
-    return { text: captchaGenerator.options.text, uri: captchaGenerator.uri() };
-  }
-
-  async generateCaptcha() {
-    await this.cleanup();
-
-    const { text, uri } = this.generateCaptchaImage();
-
-    const captcha = await this.prisma.captcha.create({
-      data: { text, timestamp: new Date() },
-    });
-
-    return { id: captcha.id, uri };
-  }
-
-  async isCaptchaValid(id: string, text: string) {
-    return true;
-    if (!id || !text) {
+      const data = (await response.json()) as CaptchaResponse;
+      console.log(data);
+      return data.success;
+    } catch (error) {
+      console.error('Captcha error:', error);
       return false;
     }
-
-    await this.cleanup();
-
-    const captcha = await this.prisma.captcha.findUnique({ where: { id } });
-    if (captcha && captcha.text === text) {
-      await this.prisma.captcha.delete({ where: { id } });
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  async cleanup() {
-    const some = 5;
-    const nowMinusSomeMinutes = new Date(Date.now() - some * 60 * 1000);
-    this.prisma.captcha.deleteMany({
-      where: { timestamp: { lt: nowMinusSomeMinutes } },
-    });
   }
 }

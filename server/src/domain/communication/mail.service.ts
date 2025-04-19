@@ -2,11 +2,13 @@ import { Injectable } from '@nestjs/common';
 import * as postmark from 'postmark';
 import { MailServiceInterface } from './MailServiceInterface';
 
+const POSTMARK_API_TOKEN = process.env.POSTMARK_API_TOKEN;
+
 @Injectable()
 export class MailService implements MailServiceInterface {
   private client: any;
   constructor() {
-    this.client = new postmark.ServerClient(process.env.POSTMARK_API_TOKEN);
+    this.client = new postmark.ServerClient(POSTMARK_API_TOKEN);
   }
 
   async send(subject: string, text: string) {

@@ -1,20 +1,22 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import * as nodemailer from 'nodemailer';
-import { CaptchaService } from './captcha.service';
 import {
   VAdoptionFormFetch,
   VolunteeringFormFetch,
   validateVAdoptionFormFetch,
   validateVoluneeringFormFetch,
 } from './common';
-import { MailServiceInterface } from './MailServiceInterface';
+import {
+  CaptchaServiceInterface,
+  MailServiceInterface,
+} from './MailServiceInterface';
 
 @Injectable()
 export class CommunicationService {
   transporter: nodemailer.Transporter;
 
   constructor(
-    private captchaService: CaptchaService,
+    private captchaService: CaptchaServiceInterface,
     private mailService: MailServiceInterface,
   ) {
     this.transporter = nodemailer.createTransport({
@@ -24,15 +26,11 @@ export class CommunicationService {
     });
   }
 
-  async generateCaptcha() {
-    return await this.captchaService.generateCaptcha();
-  }
+  async sendVolunteering(props: VolunteeringFormFetch) {
+    if (!this.captchaService.validateCaptcha(props.captchaToken)) {
+      throw new BadRequestException(null, 'Nieprawidłowa captcha');
+    }
 
-  async sendVolunteering(
-    id: string,
-    text: string,
-    props: VolunteeringFormFetch,
-  ) {
     const validateInput = () => validateVoluneeringFormFetch(props);
     const onValidated = async () =>
       await this.mailService.send(
@@ -46,29 +44,24 @@ export class CommunicationService {
       `,
       );
 
-    await this.send(id, text, validateInput, onValidated);
+    await this.send(validateInput, onValidated);
   }
 
-  async sendVAdoption(id: string, text: string, props: VAdoptionFormFetch) {
+  async sendVAdoption(props: VAdoptionFormFetch) {
+    if (!this.captchaService.validateCaptcha(props.captchaToken)) {
+      throw new BadRequestException(null, 'Nieprawidłowa captcha');
+    }
+
     const validateInput = () => validateVAdoptionFormFetch(props);
     const onValidated = async () =>
       await this.mailService.send('Ktoś będzie adoptował wirtualnie', 'todo');
 
-    await this.send(id, text, validateInput, onValidated);
+    await this.send(validateInput, onValidated);
   }
 
-  async send(
-    id: string,
-    text: string,
-    validateInput: () => boolean,
-    sendEmail: () => Promise<void>,
-  ) {
+  async send(validateInput: () => boolean, sendEmail: () => Promise<void>) {
     if (!validateInput()) {
       throw new BadRequestException('Brak wszystkich danych.');
-    }
-
-    if (!(await this.captchaService.isCaptchaValid(id, text))) {
-      throw new BadRequestException('Brzydka captcha');
     }
 
     try {

@@ -131,9 +131,3 @@ model Settings {
   id    String @id
   value String
 }
-
-model Captcha {
-  id        String   @id @default(uuid())
-  text      String
-  timestamp DateTime
-}
