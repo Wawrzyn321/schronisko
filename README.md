@@ -1,4 +1,6 @@
-# Project structure
+# Schronisko [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Wawrzyn321_schronisko&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Wawrzyn321_schronisko)
+
+## Project structure
 
 - `backoffice/` - an administrative panel for the pet shelter.
 - `DEV__zdjecia i svg/` - temporary (for a long time) dir for dev stuff
@@ -20,7 +22,7 @@ At root:
 npm run dev
 ```
 
-## Running backoffice (port 5555)
+### Running backoffice (port 5555)
 
 At `backoffice/`:
 
@@ -28,7 +30,7 @@ At `backoffice/`:
 npm run dev
 ```
 
-## Running server site (port 60045)
+### Running server site (port 60045)
 
 At `server/` - runs backend.
 
@@ -36,7 +38,7 @@ At `server/` - runs backend.
 npm run dev
 ```
 
-## Running client site (port 3015)
+### Running client site (port 3015)
 
 At `client/` - runs client.
 
@@ -44,11 +46,12 @@ At `client/` - runs client.
 npm run dev
 ```
 
-## Versions
+### Versions
 
 - NodeJS: v22
 - NPM: v10.5.0
 - PostgresSQL 14.5
+
 
 ## `node-canvas` installation problems
 
