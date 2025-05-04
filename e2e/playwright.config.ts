@@ -1,23 +1,39 @@
 import type { PlaywrightTestConfig } from "@playwright/test";
 import { devices } from "@playwright/test";
 
+const COMMON_WEBSERVER_CONFIG = {
+  reuseExistingServer: !process.env.CI,
+  stdout: process.env.CI ? 'ignore' : 'pipe',
+  stderr: 'pipe',
+} as const
+
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
 const config: PlaywrightTestConfig = {
-  webServer: {
-    command: 'npm run dev --prefix=../',
-    url: 'http://localhost:60045',
-    reuseExistingServer: !process.env.CI,
-    stdout: 'ignore',
-    stderr: 'pipe',
-  },
+  webServer: [
+      {
+      command: 'npm run dev --prefix=../backoffice',
+      port: 5555,
+      ...COMMON_WEBSERVER_CONFIG
+    }, 
+    {
+      command: 'npm run dev --prefix=../client',
+      port: 3015,
+      ...COMMON_WEBSERVER_CONFIG
+    },
+    {
+      command: 'npm run dev:e2e --prefix=../server',
+      port: 60045,
+      ...COMMON_WEBSERVER_CONFIG
+    },
+  ],
   timeout: 5_000,
   expect: {
     timeout: 5_000,
   },
   // tests are much more stable
-  // workers: 1,
+  workers: 1,
   maxFailures: process.env.CI ? 5 : undefined,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,

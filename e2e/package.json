@@ -12,7 +12,7 @@
     "test:client:dev:debug": "npm run test:client -- --debug",
     "typecheck": "tsc --noEmit",
     "report": "npx playwright show-report",
-    "setup-db": "npm run typecheck && npm run test:setup --prefix=./../prisma && npm run test:seed --prefix=./../prisma && sleep 5"
+    "setup-db": "npm run typecheck && npm run test:setup --prefix=./../prisma && npm run test:seed --prefix=./../prisma"
   },
   "keywords": [],
   "author": "",

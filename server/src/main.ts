@@ -30,7 +30,7 @@ if (!DEV && USE_HTTP) {
 async function bootstrap() {
   const pepper = process.env.PEPPER ?? '';
   if (!pepper.length) {
-    console.log('No pepper provided. Exiting.');
+    console.error('No pepper provided. Exiting.');
     process.exit(1);
   }
 
