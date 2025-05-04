@@ -20,7 +20,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/backoffice-tests
   E2E:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04 # "latest" fails on Playwright deps install
     needs: [Client, Server, Backoffice]
     services:
       postgres:
@@ -50,6 +50,15 @@ jobs:
             echo "Waiting for PostgreSQL to be ready..."
             sleep 2
           done
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          npm ci --prefix=server
+          npm ci --prefix=client
+          npm ci --prefix=backoffice
+          npm ci --prefix=e2e
+          cd e2e && npx playwright install --with-deps
 
       - name: Run tests
         env:
