@@ -11,7 +11,7 @@ import * as Sentry from '@sentry/node';
 
 import * as bodyParser from 'body-parser';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import { MAX_REQUEST_SIZE, PORT } from 'config';
+import { MAX_REQUEST_SIZE, PORT } from './config';
 
 const DEV = process.env.NODE_ENV !== 'production';
 
