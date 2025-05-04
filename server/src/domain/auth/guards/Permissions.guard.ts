@@ -7,7 +7,7 @@ import {
   ForbiddenException,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { Permission } from '@prisma-app/client';
+import { $Enums, Permission } from '@prisma-app/client';
 import { PERMISSIONS_KEY } from '../decorators/Permissions.decorator';
 
 @Injectable()
@@ -26,9 +26,34 @@ export class PermissionsGuard implements CanActivate {
       throw new ForbiddenException();
     }
 
+    this.ensureUserIsActive(user.id);
+
+    const requiredPermissions = this.reflector.getAllAndOverride<Permission[]>(
+      PERMISSIONS_KEY,
+      [context.getHandler(), context.getClass()],
+    );
+
+    return this.hasRequiredPermissions(requiredPermissions, user.id);
+  }
+
+  async hasRequiredPermissions(
+    requiredPermissions: Permission[],
+    userId: number,
+  ) {
+    const permissions = (
+      await this.prismaService.userPermissions.findMany({ where: { userId } })
+    ).map((p) => p.permission);
+    return (
+      requiredPermissions.some((permission) =>
+        permissions.includes(permission),
+      ) || checkAnimalPermissions(requiredPermissions, permissions)
+    );
+  }
+
+  async ensureUserIsActive(userId: number) {
     try {
       const dbUser = await this.prismaService.user.findUnique({
-        where: { id: user.id },
+        where: { id: userId },
       });
 
       if (!dbUser || !dbUser.isActive) {
@@ -36,21 +61,8 @@ export class PermissionsGuard implements CanActivate {
       }
     } catch (e: unknown) {
       console.warn(e);
-      return false;
+      throw e;
     }
-
-    const requiredPermissions = this.reflector.getAllAndOverride<Permission[]>(
-      PERMISSIONS_KEY,
-      [context.getHandler(), context.getClass()],
-    );
-    if (!requiredPermissions) {
-      return true;
-    }
-    return (
-      requiredPermissions.some((permission) =>
-        user.permissions?.includes(permission),
-      ) || checkAnimalPermissions(requiredPermissions, user.permissions)
-    );
   }
 }
 

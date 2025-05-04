@@ -1,11 +1,5 @@
-import * as fs from 'fs';
 import * as path from 'path';
-
-function setupDirIfNotExists(path: string) {
-  if (!fs.existsSync(path)) {
-    fs.mkdirSync(path, { recursive: true });
-  }
-}
+import { setupDirIfNotExists } from './setupDirIfNotExists';
 
 export function setupImageDirectories(localStaticFilesPath: string) {
   const ANIMALS_PATH = path.join(localStaticFilesPath, 'img/animals');

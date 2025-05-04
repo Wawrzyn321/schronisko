@@ -6,7 +6,7 @@
     "dev": "next dev -p 3015",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint --no-cache",
+    "lint:fix": "next lint --no-cache",
     "check": "tsc && next lint --fix --no-cache"
   },
   "devDependencies": {

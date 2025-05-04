@@ -6,7 +6,7 @@ const subsitutions = {
 };
 
 export function substitute(source: string, settings: Settings[]) {
-  if (!settings) {
+  if (!settings.length) {
     return source;
   }
 
