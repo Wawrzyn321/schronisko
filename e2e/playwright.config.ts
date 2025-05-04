@@ -5,6 +5,13 @@ import { devices } from "@playwright/test";
  * See https://playwright.dev/docs/test-configuration.
  */
 const config: PlaywrightTestConfig = {
+  webServer: {
+    command: 'npm run dev --prefix=../',
+    url: 'http://localhost:60045',
+    reuseExistingServer: !process.env.CI,
+    stdout: 'ignore',
+    stderr: 'pipe',
+  },
   timeout: 5_000,
   expect: {
     timeout: 5_000,
