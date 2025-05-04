@@ -3,7 +3,7 @@ import { devices } from "@playwright/test";
 
 const COMMON_WEBSERVER_CONFIG = {
   reuseExistingServer: !process.env.CI,
-  stdout: process.env.CI ? 'ignore' : 'pipe',
+  stdout: process.env.CI ? 'pipe' : 'pipe',
   stderr: 'pipe',
 } as const
 

@@ -26,13 +26,13 @@ jobs:
       postgres:
         image: postgres:latest
         env:
-          POSTGRES_USER: testuser
+          POSTGRES_USER: postgres
           POSTGRES_PASSWORD: testpassword
-          POSTGRES_DB: testdb
+          POSTGRES_DB: schronisko
         ports:
           - 5432:5432
         options: >-
-          --health-cmd "pg_isready -U testuser"
+          --health-cmd "pg_isready -U postgres"
           --health-interval 10s
           --health-timeout 5s
           --health-retries 3
@@ -43,6 +43,12 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt-get update && sudo apt-get install -y postgresql-client
+
+      - name: Install Redis
+        uses: shogo82148/actions-setup-redis@v1
+        with:
+          redis-version: "7.x"
+      - run: redis-cli ping
 
       - name: Wait for PostgreSQL
         run: |
@@ -62,6 +68,11 @@ jobs:
 
       - name: Run tests
         env:
-          DATABASE_URL: postgres://testuser:testpassword@localhost:5432/testdb
+          DATABASE_URL: postgres://postgres:testpassword@localhost:5432/schronisko
+          POSTMARK_API_TOKEN: disabled
+          NEXT_PUBLIC_SERVER_URL: http://localhost:60045
+          NEXT_PUBLIC_CLIENT_URL: http://localhost:3015
+          VITE_SERVER_URL: http://localhost:60045
+          VITE_CLIENT_URL: http://localhost:3015
         run: |
-          echo "Ready, postgres is here: $DATABASE_URL"
+          cd e2e && npm run setup-db && npx playwright test backoffice/

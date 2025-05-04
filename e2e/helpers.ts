@@ -1,5 +1,5 @@
 import { Page, expect } from "@playwright/test";
-import { closeSync, openSync } from "fs";
+import { closeSync, existsSync, openSync } from "fs";
 import { ADMIN_LOGIN } from "./backoffice/config";
 
 export const contains = (page: Page, text: string | RegExp, selector = "*") =>
@@ -10,9 +10,11 @@ export const contains = (page: Page, text: string | RegExp, selector = "*") =>
     .last();
 
 
-export const removeStorageState = (key: string) => {
+export const removeStorageState = (path: string) => {
   // 'w' overrides state
-  closeSync(openSync(key, "w"));
+  if (existsSync(path)) {
+    closeSync(openSync(path, "w"));
+  }
 };
 
 export const navTo = async (page: Page, str: string) =>
