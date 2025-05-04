@@ -2,6 +2,7 @@ po deployu:
     * maile (postmark key)
     * usuń admina
     * lepszy pieprz
+    * postmark verification
 
 po https
     * Ustaw HSTS

@@ -1,15 +1,12 @@
 name: Test job
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches: [ main ]
 jobs:
    test_server:
      runs-on: ubuntu-latest
      steps:
       - uses: actions/checkout@v4
-      # - uses: ./.github/workflows/server-unit.yml
       - uses: ./.github/workflows/server-tests
    test_client:
      runs-on: ubuntu-latest
