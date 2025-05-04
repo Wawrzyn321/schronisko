@@ -1,0 +1,19 @@
+name: 'Client Unit Tests'
+description: 'Validate and run unit tests'
+runs:
+  using: "composite"
+  steps:
+  - uses: actions/checkout@v4
+  - name: Setup nodeJS
+    uses: actions/setup-node@v4
+    with:
+      node-version: '22.x'
+      cache: 'npm'
+  - run: npm ci
+    shell: bash
+  - run: npm ci
+    shell: bash
+  - run: npm ci --prefix=client
+    shell: bash
+  - run: npm run lint:fix --prefix=client
+    shell: bash

@@ -1,0 +1,25 @@
+name: Test job
+on:
+  push:
+    branches: [ main ]
+jobs:
+  test_server:
+     runs-on: ubuntu-latest
+     steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/server-tests
+  test_client:
+     runs-on: ubuntu-latest
+     steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/client-tests
+  test_backoffice:
+     runs-on: ubuntu-latest
+     steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/backoffice-tests
+  teest:
+      runs-on: ubuntu-latest
+      steps:
+        - run: echo 'DONE'
+      needs: [test_client, test_server, test_backoffice]

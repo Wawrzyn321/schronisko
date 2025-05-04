@@ -1,0 +1,19 @@
+name: 'Backoffice Unit Tests'
+description: 'Validate and run unit tests'
+runs:
+  using: "composite"
+  steps:
+  - uses: actions/checkout@v4
+  - name: Setup nodeJS
+    uses: actions/setup-node@v4
+    with:
+      node-version: '22.x'
+      cache: 'npm'
+  - run: npm ci
+    shell: bash
+  - run: npm ci
+    shell: bash
+  - run: npm ci --prefix=backoffice
+    shell: bash
+  - run: npm run check --prefix=backoffice
+    shell: bash
