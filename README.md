@@ -52,14 +52,6 @@ npm run dev
 - NPM: v10.5.0
 - PostgresSQL 14.5
 
-
-## `node-canvas` installation problems
-
-```bash
-npm install -g node-gyp
-brew install jpeg pkg-config cairo pango libpng jpeg giflib librsvg
-```
-
 ## DB installation problems
 
 ```bash
