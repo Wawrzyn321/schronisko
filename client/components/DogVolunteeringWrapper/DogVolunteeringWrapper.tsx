@@ -1,9 +1,9 @@
-import { Settings } from '@prisma-app/client';
-import { Article } from 'components/Article/Article';
-import { VolunteeringForm } from 'components/VolunteeringForm/VolunteeringForm';
-import { ERROR_VOLUNTEERING_FORM } from 'errors';
-import React from 'react';
-import { useLoadSettings } from './useLoadSettings';
+import { Settings } from "@prisma-app/client";
+import { Article } from "components/Article/Article";
+import { VolunteeringForm } from "components/VolunteeringForm/VolunteeringForm";
+import { ERROR_VOLUNTEERING_FORM } from "errors";
+import React from "react";
+import { useLoadSettings } from "./useLoadSettings";
 
 export function DogVolunteeringWrapper({
   ssrSettings,
@@ -17,8 +17,8 @@ export function DogVolunteeringWrapper({
   }
 
   const areDogVolunteeringEnabled =
-    settings?.find((s) => s.id === 'DOG_VOLUNTEERING_ENABLED')?.value ===
-    'true';
+    settings?.find((s) => s.id === "DOG_VOLUNTEERING_ENABLED")?.value ===
+    "true";
 
   return areDogVolunteeringEnabled && <VolunteeringForm />;
 }

@@ -1,33 +1,33 @@
-import { Animal } from '@prisma-app/client';
-import { Modal } from 'components/Modal';
-import { useState } from 'react';
-import { VAdoptionModalContent } from './VAdoptionModalContent/VAdoptionModalContent';
-import { usePrefetchVAdoptionModalQueries } from './VAdoptionModalContent/usePrefetchVAdoptionModalQueries';
+import { Animal } from "@prisma-app/client";
+import { Modal } from "components/Modal";
+import { useState } from "react";
+import { VAdoptionModalContent } from "./VAdoptionModalContent/VAdoptionModalContent";
+import { usePrefetchVAdoptionModalQueries } from "./VAdoptionModalContent/usePrefetchVAdoptionModalQueries";
 import {
   FullName,
   Email,
   VCaretakerName,
   AdditionalMessage,
-} from '../Form/FormComponents';
-import { Form } from '../Form/Form';
-import { fetchVAdoptionForm } from 'api/api';
-import { useSimpleModal } from '../SimpleModal/useModal';
-import ilu_kot from 'public/site/ilu kot.png';
-import { Captcha } from 'components/Captcha';
+} from "../Form/FormComponents";
+import { Form } from "../Form/Form";
+import { fetchVAdoptionForm } from "api/api";
+import { useSimpleModal } from "../SimpleModal/useModal";
+import ilu_kot from "public/site/ilu kot.png";
+import { Captcha } from "components/Captcha";
 
 export function VAdoptionForm({ animal }: { animal: Animal }) {
   const adoptionModalProps = usePrefetchVAdoptionModalQueries();
 
-  const [fullName, setFullName] = useState('');
-  const [vCaretakerName, setVCaretakerName] = useState('');
-  const [email, setEmail] = useState('');
-  const [additionalMessage, setAdditionalMessage] = useState('');
+  const [fullName, setFullName] = useState("");
+  const [vCaretakerName, setVCaretakerName] = useState("");
+  const [email, setEmail] = useState("");
+  const [additionalMessage, setAdditionalMessage] = useState("");
 
-  const [captchaToken, setCaptchaToken] = useState<string | null>(null)
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
 
   const [showAdoptionModal, setShowAdoptionModal] = useState(false);
   const [errorModal, showErrorModal] = useSimpleModal({
-    title: 'Upsss...',
+    title: "Upsss...",
     image: ilu_kot,
     text: (
       <>
@@ -95,7 +95,9 @@ export function VAdoptionForm({ animal }: { animal: Animal }) {
             />
             <div className="form-grid-3">
               <Captcha onCaptcha={setCaptchaToken} />
-              <button disabled={!captchaToken} className="form--button">Wyślij</button>
+              <button disabled={!captchaToken} className="form--button">
+                Wyślij
+              </button>
             </div>
           </>
         )}

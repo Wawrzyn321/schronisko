@@ -1,9 +1,9 @@
-import React from 'react';
-import Head from 'next/head';
-import { Header } from '../components/Header/Header';
-import { Footer } from '../components/Footer/Footer';
-import './../global-styles/font.css';
-import './../global-styles/main.css';
+import React from "react";
+import Head from "next/head";
+import { Header } from "../components/Header/Header";
+import { Footer } from "../components/Footer/Footer";
+import "./../global-styles/font.css";
+import "./../global-styles/main.css";
 
 export default function App({
   Component,

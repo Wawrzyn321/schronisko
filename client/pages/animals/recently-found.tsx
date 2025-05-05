@@ -1,17 +1,17 @@
-import { AnimalCategory, Page as PageModel } from '@prisma-app/client';
-import { fetchPage } from 'api/api';
-import { AnimalList } from 'components/AnimalList/AnimalList';
-import { Breadcrumbs } from 'components/Breadcrumbs/Breadcrumbs';
-import { LayoutWrapper } from 'components/LayoutWrapper/LayoutWrapper';
-import { Page } from 'components/Page/Page';
+import { AnimalCategory, Page as PageModel } from "@prisma-app/client";
+import { fetchPage } from "api/api";
+import { AnimalList } from "components/AnimalList/AnimalList";
+import { Breadcrumbs } from "components/Breadcrumbs/Breadcrumbs";
+import { LayoutWrapper } from "components/LayoutWrapper/LayoutWrapper";
+import { Page } from "components/Page/Page";
 
-const ID = 'zwierzeta-znalezione';
+const ID = "zwierzeta-znalezione";
 
 export default function RecentlyFound({ ssrPage }: { ssrPage: PageModel }) {
   return (
     <>
       <LayoutWrapper>
-        <Breadcrumbs items={['Zwierzęta', 'Zwierzęta znalezione']} />
+        <Breadcrumbs items={["Zwierzęta", "Zwierzęta znalezione"]} />
         <Page id={ID} ssrPage={ssrPage} />
       </LayoutWrapper>
       <AnimalList categories={[AnimalCategory.NiedawnoZnalezione]} />

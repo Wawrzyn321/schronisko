@@ -1,17 +1,17 @@
-import { ReactChild } from 'react';
-import ReactModal from 'react-modal';
+import { ReactChild } from "react";
+import ReactModal from "react-modal";
 
 const customStyles = {
   content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
   },
 };
-ReactModal.setAppElement('#__next');
+ReactModal.setAppElement("#__next");
 
 type ModalProps = {
   isOpen: boolean;

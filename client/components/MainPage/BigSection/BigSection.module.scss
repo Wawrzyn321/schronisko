@@ -2,13 +2,13 @@
   position: relative;
   min-height: 1150px;
 
-  &>* {
+  & > * {
     position: absolute !important;
     width: 100%;
   }
 }
 
-.img-wrapper>* {
+.img-wrapper > * {
   position: absolute !important;
 }
 
@@ -44,7 +44,7 @@
 #links {
   top: 930px;
 
-  &> :first-child {
+  & > :first-child {
     margin-bottom: 10px;
   }
 }

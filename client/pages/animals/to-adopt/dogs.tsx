@@ -1,19 +1,23 @@
-import { AnimalCategory, AnimalType, Page as PageModel } from '@prisma-app/client';
-import { fetchPage } from 'api/api';
-import { AnimalList } from 'components/AnimalList/AnimalList';
-import { Breadcrumbs } from 'components/Breadcrumbs/Breadcrumbs';
-import { LayoutWrapper } from 'components/LayoutWrapper/LayoutWrapper';
-import { Page } from 'components/Page/Page';
-import Link from 'next/link';
-import React from 'react';
+import {
+  AnimalCategory,
+  AnimalType,
+  Page as PageModel,
+} from "@prisma-app/client";
+import { fetchPage } from "api/api";
+import { AnimalList } from "components/AnimalList/AnimalList";
+import { Breadcrumbs } from "components/Breadcrumbs/Breadcrumbs";
+import { LayoutWrapper } from "components/LayoutWrapper/LayoutWrapper";
+import { Page } from "components/Page/Page";
+import Link from "next/link";
+import React from "react";
 
-const ID = 'psy-do-adopcji';
+const ID = "psy-do-adopcji";
 
 export default function DogsToAdopt({ ssrPage }: { ssrPage: PageModel }) {
   return (
     <>
       <LayoutWrapper>
-        <Breadcrumbs items={['Zwierzęta', 'Psy do adopcji']} />
+        <Breadcrumbs items={["Zwierzęta", "Psy do adopcji"]} />
         <Page id={ID} ssrPage={ssrPage} />
       </LayoutWrapper>
       <AnimalList

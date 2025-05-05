@@ -1,6 +1,6 @@
-import { Animal } from '@prisma-app/client';
-import { ErrorWrapper, ERROR_ANIMAL_NOT_FOUND, ERROR_GENERIC } from 'errors';
-import { useLoadAnimal } from './useLoadAnimal';
+import { Animal } from "@prisma-app/client";
+import { ErrorWrapper, ERROR_ANIMAL_NOT_FOUND, ERROR_GENERIC } from "errors";
+import { useLoadAnimal } from "./useLoadAnimal";
 
 export function AnimalFetchContainer({
   id,
@@ -11,7 +11,7 @@ export function AnimalFetchContainer({
   ssrAnimal: Animal;
   Component: React.FunctionComponent<{ animal: Animal }>;
 }) {
-  const {error, animal} = useLoadAnimal(id, ssrAnimal);
+  const { error, animal } = useLoadAnimal(id, ssrAnimal);
 
   return (
     <ErrorWrapper

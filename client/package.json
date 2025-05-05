@@ -7,13 +7,16 @@
     "build": "next build",
     "start": "next start",
     "lint:fix": "next lint --no-cache",
-    "check": "tsc && next lint --fix --no-cache"
+    "check": "tsc && next lint --fix --no-cache",
+    "format": "prettier --write \"**/*.{ts,tsx,md,mdx,css,scss}\"",
+    "lint-and-format": "npm run format && npm run lint:fix"
   },
   "devDependencies": {
     "@types/node": "^16.10.1",
     "@types/react": "18.2.0",
     "eslint": "^7.32.0",
     "eslint-config-next": "^14.2.3",
+    "prettier": "^3.5.3",
     "typescript": "^5.4.5"
   },
   "dependencies": {

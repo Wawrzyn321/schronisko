@@ -1,7 +1,7 @@
-import React from 'react';
-import Image from 'next/image';
-import styles from './Pagination.module.scss';
-import arrow from 'public/site/green arrow.svg';
+import React from "react";
+import Image from "next/image";
+import styles from "./Pagination.module.scss";
+import arrow from "public/site/green arrow.svg";
 
 const makePartitions = (currentPage: number, pagesCount: number) => {
   const radius = 3;
@@ -44,9 +44,9 @@ export function Pagination({
   const partitions = makePartitions(currentPage, pagesCount);
 
   return (
-    <ul className={styles['pagination']}>
+    <ul className={styles["pagination"]}>
       <button
-        className={styles['prev-button']}
+        className={styles["prev-button"]}
         disabled={currentPage === 0}
         onClick={() => setCurrentPage(currentPage - 1)}
       >
@@ -54,11 +54,11 @@ export function Pagination({
       </button>
       {partitions.map((current, index) => (
         <React.Fragment key={index}>
-          {index > 0 && current - partitions[index - 1] > 1 && '...'}
+          {index > 0 && current - partitions[index - 1] > 1 && "..."}
           <li>
             <button
               className={
-                current === currentPage ? styles['pagination-current-item'] : ''
+                current === currentPage ? styles["pagination-current-item"] : ""
               }
               onClick={() => setCurrentPage(current)}
             >

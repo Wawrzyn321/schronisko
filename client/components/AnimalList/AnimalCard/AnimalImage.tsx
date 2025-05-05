@@ -1,11 +1,11 @@
-import Link from 'next/link';
-import { buildAnimalImageUrl, buildAnimalUrl } from 'api/config';
-import { Animal, AnimalCategory } from '@prisma-app/client';
-import { isReadonly } from '../isReadonly';
+import Link from "next/link";
+import { buildAnimalImageUrl, buildAnimalUrl } from "api/config";
+import { Animal, AnimalCategory } from "@prisma-app/client";
+import { isReadonly } from "../isReadonly";
 
 export function AnimalImage({ animal }: { animal: Animal }) {
   const bwMode = animal.category === AnimalCategory.ZaTeczowymMostem;
-  const imageStyle = bwMode ? { filter: 'grayscale(1)' } : {};
+  const imageStyle = bwMode ? { filter: "grayscale(1)" } : {};
 
   const image = (
     <img
@@ -21,7 +21,7 @@ export function AnimalImage({ animal }: { animal: Animal }) {
   if (canGoToDetails) {
     return (
       <Link href={buildAnimalUrl(animal.id)}>
-        <span style={{ cursor: 'pointer' }}>{image}</span>
+        <span style={{ cursor: "pointer" }}>{image}</span>
       </Link>
     );
   } else {

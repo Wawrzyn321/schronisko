@@ -1,10 +1,10 @@
-import { Page as PageModel, Settings } from '@prisma-app/client';
-import { fetchDogVolunteeringPage, fetchSettings } from 'api/api';
-import { Breadcrumbs } from 'components/Breadcrumbs/Breadcrumbs';
-import { LayoutWrapper } from 'components/LayoutWrapper/LayoutWrapper';
-import { Page } from 'components/Page/Page';
-import React from 'react';
-import { DogVolunteeringWrapper } from '../../components/DogVolunteeringWrapper/DogVolunteeringWrapper';
+import { Page as PageModel, Settings } from "@prisma-app/client";
+import { fetchDogVolunteeringPage, fetchSettings } from "api/api";
+import { Breadcrumbs } from "components/Breadcrumbs/Breadcrumbs";
+import { LayoutWrapper } from "components/LayoutWrapper/LayoutWrapper";
+import { Page } from "components/Page/Page";
+import React from "react";
+import { DogVolunteeringWrapper } from "../../components/DogVolunteeringWrapper/DogVolunteeringWrapper";
 
 type VolunteerDogsProps = {
   ssrPage: PageModel;
@@ -17,7 +17,7 @@ export default function VolunteerDogs({
 }: VolunteerDogsProps) {
   return (
     <LayoutWrapper>
-      <Breadcrumbs items={['Wolontariat', 'Pies']} />
+      <Breadcrumbs items={["Wolontariat", "Pies"]} />
       <VolunteerDogsPage ssrPage={ssrPage} />
       <DogVolunteeringWrapper ssrSettings={ssrSettings} />
     </LayoutWrapper>

@@ -1,9 +1,9 @@
-import { IdWrapper } from 'components/IdWrapper';
-import { Page as PageModel } from '@prisma-app/client';
-import { Page } from 'components/Page/Page';
-import { fetchPageIds, fetchPage } from 'api/api';
-import { LayoutWrapper } from 'components/LayoutWrapper/LayoutWrapper';
-import { getStaticPropsProps } from 'types';
+import { IdWrapper } from "components/IdWrapper";
+import { Page as PageModel } from "@prisma-app/client";
+import { Page } from "components/Page/Page";
+import { fetchPageIds, fetchPage } from "api/api";
+import { LayoutWrapper } from "components/LayoutWrapper/LayoutWrapper";
+import { getStaticPropsProps } from "types";
 
 export default function PageComponent({ ssrPage }: { ssrPage: PageModel }) {
   return <IdWrapper Component={ActualPage} ssrPage={ssrPage} />;

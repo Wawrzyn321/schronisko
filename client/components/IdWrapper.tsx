@@ -1,5 +1,5 @@
-import React from 'react';
-import { useParams } from 'next/navigation';
+import React from "react";
+import { useParams } from "next/navigation";
 
 export function IdWrapper({ Component, ...props }) {
   const params = useParams();

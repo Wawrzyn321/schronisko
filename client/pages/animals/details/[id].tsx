@@ -1,14 +1,14 @@
-import React from 'react';
-import { Animal } from '@prisma-app/client';
-import { fetchAnimal } from 'api/api';
-import { IdWrapper } from 'components/IdWrapper';
-import { LayoutWrapper } from 'components/LayoutWrapper/LayoutWrapper';
-import { SSRContext } from 'types';
-import { AnimalFetchContainer } from 'components/AnimalFetchContainer/AnimalFetchContainer';
-import { AnimalBreadcrumbs } from 'components/AnimalDetails/AnimalBreadcrumbs';
-import { AnimalHeader } from 'components/AnimalDetails/AnimalHeader/AnimalHeader';
-import { AnimalMetadata } from 'components/AnimalDetails/AnimalMetadata/AnimalMetadata';
-import { AnimalImages } from 'components/AnimalDetails/AnimalImages/AnimalImages';
+import React from "react";
+import { Animal } from "@prisma-app/client";
+import { fetchAnimal } from "api/api";
+import { IdWrapper } from "components/IdWrapper";
+import { LayoutWrapper } from "components/LayoutWrapper/LayoutWrapper";
+import { SSRContext } from "types";
+import { AnimalFetchContainer } from "components/AnimalFetchContainer/AnimalFetchContainer";
+import { AnimalBreadcrumbs } from "components/AnimalDetails/AnimalBreadcrumbs";
+import { AnimalHeader } from "components/AnimalDetails/AnimalHeader/AnimalHeader";
+import { AnimalMetadata } from "components/AnimalDetails/AnimalMetadata/AnimalMetadata";
+import { AnimalImages } from "components/AnimalDetails/AnimalImages/AnimalImages";
 
 export default function AnimalWrapper({ ssrAnimal }: { ssrAnimal: Animal }) {
   return <IdWrapper Component={AnimalComponent} ssrAnimal={ssrAnimal} />;
@@ -17,7 +17,11 @@ export default function AnimalWrapper({ ssrAnimal }: { ssrAnimal: Animal }) {
 function AnimalComponent({ id, ssrAnimal }: { id: string; ssrAnimal: Animal }) {
   return (
     <LayoutWrapper>
-      <AnimalFetchContainer id={id} ssrAnimal={ssrAnimal} Component={AnimalDetails} />
+      <AnimalFetchContainer
+        id={id}
+        ssrAnimal={ssrAnimal}
+        Component={AnimalDetails}
+      />
     </LayoutWrapper>
   );
 }

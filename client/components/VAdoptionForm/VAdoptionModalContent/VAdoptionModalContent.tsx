@@ -1,7 +1,7 @@
-import { Page as PageModel } from '@prisma-app/client';
-import { FetchError } from 'api/api';
-import { Page } from 'components/Page/Page';
-import styles from './VAdoptionModalContent.module.scss';
+import { Page as PageModel } from "@prisma-app/client";
+import { FetchError } from "api/api";
+import { Page } from "components/Page/Page";
+import styles from "./VAdoptionModalContent.module.scss";
 
 const copyToClipboard = (
   value: string,
@@ -13,14 +13,14 @@ const copyToClipboard = (
     navigator.clipboard.writeText(value).then(successfully, failure);
   } else {
     if (document.execCommand) {
-      const el = document.createElement('input');
+      const el = document.createElement("input");
       el.value = value;
       document.body.append(el);
 
       el.select();
       el.setSelectionRange(0, value.length);
 
-      if (document.execCommand('copy')) {
+      if (document.execCommand("copy")) {
         successfully();
       }
 
@@ -47,14 +47,14 @@ export function VAdoptionModalContent({ data, error }: AdoptionModalProps) {
   }
 
   return (
-    <div className={styles['v-adoption-modal-content']}>
+    <div className={styles["v-adoption-modal-content"]}>
       <Page id="modal-adopcji-wirtualnej" ssrPage={page} />
-      <p className={styles['para']}>
+      <p className={styles["para"]}>
         Numer konta: <strong>{accountNo}</strong>
       </p>
-      <div className={styles['copy-button-wrapper']}>
+      <div className={styles["copy-button-wrapper"]}>
         <button
-          className={`${styles['copy-button']} button-link`}
+          className={`${styles["copy-button"]} button-link`}
           onClick={() => copyToClipboard(accountNo)}
         >
           Kopiuj numer konta

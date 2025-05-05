@@ -1,12 +1,12 @@
-import Link from 'next/link';
-import { Animal } from '@prisma-app/client';
-import { fetchAnimal } from 'api/api';
-import { IdWrapper } from 'components/IdWrapper';
-import { SSRContext } from 'types';
-import { Breadcrumbs } from 'components/Breadcrumbs/Breadcrumbs';
-import { AnimalFetchContainer } from '../../../components/AnimalFetchContainer/AnimalFetchContainer';
-import { Page } from 'components/Page/Page';
-import { VAdoptionForm } from '../../../components/VAdoptionForm/VAdoptionForm';
+import Link from "next/link";
+import { Animal } from "@prisma-app/client";
+import { fetchAnimal } from "api/api";
+import { IdWrapper } from "components/IdWrapper";
+import { SSRContext } from "types";
+import { Breadcrumbs } from "components/Breadcrumbs/Breadcrumbs";
+import { AnimalFetchContainer } from "../../../components/AnimalFetchContainer/AnimalFetchContainer";
+import { Page } from "components/Page/Page";
+import { VAdoptionForm } from "../../../components/VAdoptionForm/VAdoptionForm";
 
 export default function AnimalWrapper({ ssrAnimal }: { ssrAnimal: Animal }) {
   return <IdWrapper Component={AnimalComponent} ssrAnimal={ssrAnimal} />;
@@ -14,7 +14,11 @@ export default function AnimalWrapper({ ssrAnimal }: { ssrAnimal: Animal }) {
 
 function AnimalComponent({ id, ssrAnimal }: { id: string; ssrAnimal: Animal }) {
   return (
-    <AnimalFetchContainer id={id} ssrAnimal={ssrAnimal} Component={VAdoptionDetails} />
+    <AnimalFetchContainer
+      id={id}
+      ssrAnimal={ssrAnimal}
+      Component={VAdoptionDetails}
+    />
   );
 }
 
@@ -23,7 +27,7 @@ function VAdoptionDetails({ animal }: { animal: Animal }) {
     <>
       <Breadcrumbs
         items={[
-          'Adopcje wirtualne',
+          "Adopcje wirtualne",
           <Link key="to-adopt" href="/v-adoptions/to-adopt">
             Szukają opiekunów
           </Link>,

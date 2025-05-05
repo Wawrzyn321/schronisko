@@ -10,7 +10,7 @@
   width: 100%;
   padding-right: 32px;
 
-  &> :global(*) {
+  & > :global(*) {
     max-width: 360px;
   }
 

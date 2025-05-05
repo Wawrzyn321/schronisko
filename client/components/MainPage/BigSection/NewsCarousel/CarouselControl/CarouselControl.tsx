@@ -1,9 +1,11 @@
-import Image from 'next/image';
-import whiteArrow from 'public/site/main/white arrow.svg';
-import styles from './CarouselControl.module.scss';
+import Image from "next/image";
+import whiteArrow from "public/site/main/white arrow.svg";
+import styles from "./CarouselControl.module.scss";
 
 export function CarouselControl({
-  index, total, setIndex,
+  index,
+  total,
+  setIndex,
 }: {
   index: number;
   total: number;
@@ -15,16 +17,29 @@ export function CarouselControl({
 
   return (
     <>
-      <div className={styles['carousel__left-right']}>
-        <Image width={30} height={30} src={whiteArrow} alt="lewo" onClick={dec} />
-        <Image width={30} height={30} src={whiteArrow} alt="prawo" onClick={inc} />
+      <div className={styles["carousel__left-right"]}>
+        <Image
+          width={30}
+          height={30}
+          src={whiteArrow}
+          alt="lewo"
+          onClick={dec}
+        />
+        <Image
+          width={30}
+          height={30}
+          src={whiteArrow}
+          alt="prawo"
+          onClick={inc}
+        />
       </div>
-      <ul className={styles['carousel__bottom']}>
+      <ul className={styles["carousel__bottom"]}>
         {new Array(total).fill(null).map((_: null, i) => (
           <li
-            className={index === i ? styles['carousel--current'] : ''}
+            className={index === i ? styles["carousel--current"] : ""}
             key={i}
-            onClick={() => setIndex(i)} />
+            onClick={() => setIndex(i)}
+          />
         ))}
       </ul>
     </>

@@ -1,9 +1,9 @@
-import { Page as PageModel } from '@prisma-app/client';
-import { fetchPage } from 'api/api';
-import { LayoutWrapper } from 'components/LayoutWrapper/LayoutWrapper';
-import { Page } from 'components/Page/Page';
+import { Page as PageModel } from "@prisma-app/client";
+import { fetchPage } from "api/api";
+import { LayoutWrapper } from "components/LayoutWrapper/LayoutWrapper";
+import { Page } from "components/Page/Page";
 
-const ID = 'jak-pomoc';
+const ID = "jak-pomoc";
 
 export default function HowTo({ ssrPage }: { ssrPage: PageModel }) {
   return (

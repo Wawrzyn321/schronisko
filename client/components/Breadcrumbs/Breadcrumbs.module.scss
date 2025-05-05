@@ -5,6 +5,6 @@
 
   li:not(:last-child)::after {
     padding: 0 4px;
-    content: '/';
+    content: "/";
   }
 }

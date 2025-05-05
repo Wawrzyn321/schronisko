@@ -1,5 +1,5 @@
-import { useRef, useState } from 'react';
-import styles from './Form.module.scss';
+import { useRef, useState } from "react";
+import styles from "./Form.module.scss";
 
 export function Form({
   handleSubmit,
@@ -24,12 +24,12 @@ export function Form({
 
   return (
     <form
-      className={styles['form']}
+      className={styles["form"]}
       ref={formRef}
       onSubmit={onSubmit}
       noValidate
     >
-      <p className={styles['form-required-data-info']}>* Wymagane informacje</p>
+      <p className={styles["form-required-data-info"]}>* Wymagane informacje</p>
       {children(triedSubmit)}
     </form>
   );

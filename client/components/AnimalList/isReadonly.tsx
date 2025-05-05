@@ -1,4 +1,4 @@
-import { AnimalCategory } from '@prisma-app/client';
+import { AnimalCategory } from "@prisma-app/client";
 
 export function isReadonly(category: AnimalCategory) {
   return (

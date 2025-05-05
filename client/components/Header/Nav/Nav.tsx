@@ -1,7 +1,7 @@
-import React from 'react';
-import Link from 'next/link';
-import styles from './Nav.module.scss';
-import { usePathname } from 'next/navigation';
+import React from "react";
+import Link from "next/link";
+import styles from "./Nav.module.scss";
+import { usePathname } from "next/navigation";
 
 type SubListItem = {
   name: string;
@@ -62,29 +62,33 @@ function LinkWithChildren({
 
 export function Nav() {
   const animalsLinks: SubListItem[] = [
-    { name: 'Psy do adopcji', path: '/to-adopt/dogs' },
-    { name: 'Koty do adopcji', path: '/to-adopt/cats' },
-    { name: 'Zwierzęta znalezione', path: '/recently-found' },
-    { name: 'Znalazły dom', path: '/adopted' },
-    { name: 'Odeszły', path: '/gone' },
+    { name: "Psy do adopcji", path: "/to-adopt/dogs" },
+    { name: "Koty do adopcji", path: "/to-adopt/cats" },
+    { name: "Zwierzęta znalezione", path: "/recently-found" },
+    { name: "Znalazły dom", path: "/adopted" },
+    { name: "Odeszły", path: "/gone" },
   ];
 
   const volunteeringLinks: SubListItem[] = [
-    { name: 'Pies', path: '/dogs' },
-    { name: 'Kot', path: '/cats' },
+    { name: "Pies", path: "/dogs" },
+    { name: "Kot", path: "/cats" },
   ];
 
   const vAdoptionLinks: SubListItem[] = [
-    { name: 'Jak adoptować wirtualnie', path: '/how-to' },
-    { name: 'Szukają opiekunów', path: '/to-adopt' },
-    { name: 'Znalazły opiekunów', path: '/adopted' },
+    { name: "Jak adoptować wirtualnie", path: "/how-to" },
+    { name: "Szukają opiekunów", path: "/to-adopt" },
+    { name: "Znalazły opiekunów", path: "/adopted" },
   ];
 
   return (
     <nav className={styles.nav}>
       <ul>
         <SimpleLink to="/about">O nas</SimpleLink>
-        <LinkWithChildren to="/animals" title="Zwierzęta" links={animalsLinks} />
+        <LinkWithChildren
+          to="/animals"
+          title="Zwierzęta"
+          links={animalsLinks}
+        />
         <LinkWithChildren
           to="/v-adoptions"
           title="Adopcje wirtualne"

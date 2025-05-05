@@ -1,13 +1,13 @@
-import { Page as PageModel } from '@prisma-app/client';
-import { BigSection } from 'components/MainPage/BigSection/BigSection';
-import { AfterAdoption } from 'components/MainPage/AfterAdoption/AfterAdoption';
-import { GetInvolved } from 'components/MainPage/GetInvolved/GetInvolved';
-import { DonateAndRecentlyFound } from 'components/MainPage/DonateAndRecentlyFound/DonateAndRecentlyFound';
+import { Page as PageModel } from "@prisma-app/client";
+import { BigSection } from "components/MainPage/BigSection/BigSection";
+import { AfterAdoption } from "components/MainPage/AfterAdoption/AfterAdoption";
+import { GetInvolved } from "components/MainPage/GetInvolved/GetInvolved";
+import { DonateAndRecentlyFound } from "components/MainPage/DonateAndRecentlyFound/DonateAndRecentlyFound";
 
-import { fetchAfterAdoptionAnimals, fetchPage, fetchRecentNews } from 'api/api';
-import { AfterAdoptionAnimal, NewsListElement } from 'types';
+import { fetchAfterAdoptionAnimals, fetchPage, fetchRecentNews } from "api/api";
+import { AfterAdoptionAnimal, NewsListElement } from "types";
 
-const ID = 'glowna-adopcje';
+const ID = "glowna-adopcje";
 
 type HomeProps = {
   ssrData: {

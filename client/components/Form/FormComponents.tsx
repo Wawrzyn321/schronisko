@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 
 type SimpleInputProps = {
   value: string;
@@ -31,13 +31,8 @@ function ValidatedInput({
   return (
     <label>
       {label}
-      {inputProps.required ? ' *' : ''}
-      <input
-        value={value}
-        onChange={onChange}
-        ref={inputRef}
-        {...inputProps}
-      />
+      {inputProps.required ? " *" : ""}
+      <input value={value} onChange={onChange} ref={inputRef} {...inputProps} />
       <p className="validation-message">
         {showValidationMessage && validationMessage}
       </p>
@@ -175,7 +170,7 @@ export function About({
         onChange={(e) => setValue(e.target.value)}
         maxLength={160}
       />
-      <p className="validation-message">{showMessage && 'Uzupełnij pole'}</p>
+      <p className="validation-message">{showMessage && "Uzupełnij pole"}</p>
     </label>
   );
 }

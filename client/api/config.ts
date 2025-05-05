@@ -1,18 +1,18 @@
-import { AnimalType } from '@prisma-app/client';
+import { AnimalType } from "@prisma-app/client";
 
-const DEV = process.env.NODE_ENV !== 'production';
+const DEV = process.env.NODE_ENV !== "production";
 
 export const BACKEND_URL = DEV
-  ? 'http://localhost:60045'
+  ? "http://localhost:60045"
   : process.env.NEXT_PUBLIC_SERVER_URL;
-export const SSR_BACKEND_URL = 'http://localhost:60045'
+export const SSR_BACKEND_URL = "http://localhost:60045";
 
-export const IMAGES_URL = BACKEND_URL + '/img';
-export const ANIMAL_IMAGES_URL = IMAGES_URL + '/animals';
-export const ANIMAL_IMAGES_IMAGES_URL = ANIMAL_IMAGES_URL + '/pics';
+export const IMAGES_URL = BACKEND_URL + "/img";
+export const ANIMAL_IMAGES_URL = IMAGES_URL + "/animals";
+export const ANIMAL_IMAGES_IMAGES_URL = ANIMAL_IMAGES_URL + "/pics";
 
 export function isSSR(): boolean {
-  return typeof window === 'undefined';
+  return typeof window === "undefined";
 }
 
 export function getBackendUrl() {
@@ -28,9 +28,9 @@ export const buildAnimalImageUrl = (animal: {
   imageName: string;
 }) => {
   if (animal.imageName) {
-    return ANIMAL_IMAGES_URL + '/' + animal.imageName;
+    return ANIMAL_IMAGES_URL + "/" + animal.imageName;
   } else {
-    const type = animal.type === AnimalType.DOG ? 'pies' : 'kot';
+    const type = animal.type === AnimalType.DOG ? "pies" : "kot";
     return `/site/placeholders/${type}.png`;
   }
 };

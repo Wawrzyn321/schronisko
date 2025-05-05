@@ -1,45 +1,44 @@
 .carousel__left-right {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 
-    position: absolute;
-    top: calc(50% - 30px / 2);
-    margin-left: 12px;
-    width: calc(100% - 10px * 2);
+  position: absolute;
+  top: calc(50% - 30px / 2);
+  margin-left: 12px;
+  width: calc(100% - 10px * 2);
 
-    &> :global(:first-child) {
-        transform: rotate(180deg);
-    }
+  & > :global(:first-child) {
+    transform: rotate(180deg);
+  }
 
-    &> :global(*) {
-        cursor: pointer;
-    }
+  & > :global(*) {
+    cursor: pointer;
+  }
 }
 
-
 .carousel__bottom {
-    position: absolute;
-    bottom: 0;
+  position: absolute;
+  bottom: 0;
 
-    display: flex;
-    justify-content: center;
-    width: 100%;
+  display: flex;
+  justify-content: center;
+  width: 100%;
 
-    margin-bottom: 30px;
-    padding: 0;
+  margin-bottom: 30px;
+  padding: 0;
 
-    li {
-        width: 16px;
-        height: 16px;
-        background-color: rgba(255, 255, 255, 0.5);
-        border: 1px solid gray;
-        border-radius: 50%;
+  li {
+    width: 16px;
+    height: 16px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 1px solid gray;
+    border-radius: 50%;
 
-        margin-right: 16px;
-        cursor: pointer;
-    }
+    margin-right: 16px;
+    cursor: pointer;
+  }
 }
 
 .carousel--current {
-    background-color: #b8cf62 !important;
+  background-color: #b8cf62 !important;
 }

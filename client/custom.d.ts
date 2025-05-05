@@ -1,8 +1,8 @@
 //https://stackoverflow.com/q/66011598
 
-import 'react';
+import "react";
 
-declare module 'react' {
+declare module "react" {
   interface StyleHTMLAttributes<T> extends React.HTMLAttributes<T> {
     jsx?: boolean;
     global?: boolean;
@@ -10,4 +10,4 @@ declare module 'react' {
 }
 
 // declaration.d.ts
-declare module '*.scss';
+declare module "*.scss";

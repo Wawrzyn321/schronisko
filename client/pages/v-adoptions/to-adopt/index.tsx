@@ -1,17 +1,17 @@
-import { Page as PageModel, VirtualCaretakerType } from '@prisma-app/client';
-import { Page } from 'components/Page/Page';
-import { Breadcrumbs } from 'components/Breadcrumbs/Breadcrumbs';
-import { AnimalList } from 'components/AnimalList/AnimalList';
-import { fetchPage } from 'api/api';
-import { LayoutWrapper } from 'components/LayoutWrapper/LayoutWrapper';
+import { Page as PageModel, VirtualCaretakerType } from "@prisma-app/client";
+import { Page } from "components/Page/Page";
+import { Breadcrumbs } from "components/Breadcrumbs/Breadcrumbs";
+import { AnimalList } from "components/AnimalList/AnimalList";
+import { fetchPage } from "api/api";
+import { LayoutWrapper } from "components/LayoutWrapper/LayoutWrapper";
 
-const ID = 'szukaja-opiekunow';
+const ID = "szukaja-opiekunow";
 
 export default function VirtualToAdopt({ ssrPage }: { ssrPage: PageModel }) {
   return (
     <>
       <LayoutWrapper>
-        <Breadcrumbs items={['Adopcje wirtualne', 'Szukają opiekunów']} />
+        <Breadcrumbs items={["Adopcje wirtualne", "Szukają opiekunów"]} />
         <Page id={ID} ssrPage={ssrPage} />
       </LayoutWrapper>
       <AnimalList

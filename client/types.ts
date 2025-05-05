@@ -1,14 +1,14 @@
-import { FetchResult } from './api/api';
-import { Animal, News, Page as PageModel } from '@prisma-app/client';
+import { FetchResult } from "./api/api";
+import { Animal, News, Page as PageModel } from "@prisma-app/client";
 
 export type AfterAdoptionAnimal = Pick<
   Animal,
-  'id' | 'imageName' | 'name' | 'type'
+  "id" | "imageName" | "name" | "type"
 >;
 
 export type NewsListElement = Pick<
   News,
-  'id' | 'description' | 'title' | 'createdAt' | 'isPublished' | 'imageName'
+  "id" | "description" | "title" | "createdAt" | "isPublished" | "imageName"
 >;
 
 export type SSRContext = { query: { id: string } };
