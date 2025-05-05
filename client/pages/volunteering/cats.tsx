@@ -2,7 +2,7 @@ import { Page as PageModel } from '@prisma-app/client';
 import { fetchPage } from 'api/api';
 import { Breadcrumbs } from 'components/Breadcrumbs/Breadcrumbs';
 import { LayoutWrapper } from 'components/LayoutWrapper/LayoutWrapper';
-import { Page } from 'components/Page';
+import { Page } from 'components/Page/Page';
 import { VolunteeringForm } from 'components/VolunteeringForm/VolunteeringForm';
 
 const ID = 'wolontariat-kot';

@@ -3,7 +3,7 @@ import { fetchPage } from 'api/api';
 import { AnimalList } from 'components/AnimalList/AnimalList';
 import { Breadcrumbs } from 'components/Breadcrumbs/Breadcrumbs';
 import { LayoutWrapper } from 'components/LayoutWrapper/LayoutWrapper';
-import { Page } from 'components/Page';
+import { Page } from 'components/Page/Page';
 import Link from 'next/link';
 import React from 'react';
 

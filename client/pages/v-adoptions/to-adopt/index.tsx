@@ -1,5 +1,5 @@
 import { Page as PageModel, VirtualCaretakerType } from '@prisma-app/client';
-import { Page } from 'components/Page';
+import { Page } from 'components/Page/Page';
 import { Breadcrumbs } from 'components/Breadcrumbs/Breadcrumbs';
 import { AnimalList } from 'components/AnimalList/AnimalList';
 import { fetchPage } from 'api/api';

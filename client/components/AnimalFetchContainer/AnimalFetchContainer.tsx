@@ -1,9 +1,8 @@
 import { Animal } from '@prisma-app/client';
-import { fetchAnimal, FetchError } from 'api/api';
-import { useEffect, useState } from 'react';
 import { ErrorWrapper, ERROR_ANIMAL_NOT_FOUND, ERROR_GENERIC } from 'errors';
+import { useLoadAnimal } from './useLoadAnimal';
 
-export function AnimalFetcher({
+export function AnimalFetchContainer({
   id,
   ssrAnimal,
   Component,
@@ -12,20 +11,7 @@ export function AnimalFetcher({
   ssrAnimal: Animal;
   Component: React.FunctionComponent<{ animal: Animal }>;
 }) {
-  const [animal, setAnimal] = useState<Animal>(ssrAnimal);
-  const [error, setError] = useState<FetchError>(null);
-
-  useEffect(() => {
-    const loadAnimal = async () => {
-      const { data, error } = await fetchAnimal(id);
-      setAnimal(data);
-      setError(error);
-    };
-
-    if (!ssrAnimal) {
-      loadAnimal();
-    }
-  }, [id, ssrAnimal]);
+  const {error, animal} = useLoadAnimal(id, ssrAnimal);
 
   return (
     <ErrorWrapper

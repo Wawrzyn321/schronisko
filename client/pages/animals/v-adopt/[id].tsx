@@ -4,8 +4,8 @@ import { fetchAnimal } from 'api/api';
 import { IdWrapper } from 'components/IdWrapper';
 import { SSRContext } from 'types';
 import { Breadcrumbs } from 'components/Breadcrumbs/Breadcrumbs';
-import { AnimalFetcher } from '../../../components/AnimalFetcher';
-import { Page } from 'components/Page';
+import { AnimalFetchContainer } from '../../../components/AnimalFetchContainer/AnimalFetchContainer';
+import { Page } from 'components/Page/Page';
 import { VAdoptionForm } from '../../../components/VAdoptionForm/VAdoptionForm';
 
 export default function AnimalWrapper({ ssrAnimal }: { ssrAnimal: Animal }) {
@@ -14,7 +14,7 @@ export default function AnimalWrapper({ ssrAnimal }: { ssrAnimal: Animal }) {
 
 function AnimalComponent({ id, ssrAnimal }: { id: string; ssrAnimal: Animal }) {
   return (
-    <AnimalFetcher id={id} ssrAnimal={ssrAnimal} Component={VAdoptionDetails} />
+    <AnimalFetchContainer id={id} ssrAnimal={ssrAnimal} Component={VAdoptionDetails} />
   );
 }
 

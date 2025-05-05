@@ -1,27 +1,16 @@
 import { Settings } from '@prisma-app/client';
-import { FetchError, fetchSettings } from 'api/api';
 import { Article } from 'components/Article/Article';
 import { VolunteeringForm } from 'components/VolunteeringForm/VolunteeringForm';
 import { ERROR_VOLUNTEERING_FORM } from 'errors';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useLoadSettings } from './useLoadSettings';
 
 export function DogVolunteeringWrapper({
   ssrSettings,
 }: {
   ssrSettings: Settings[];
 }) {
-  const [settings, setSettings] = useState<Settings[]>(ssrSettings);
-  const [error, setError] = useState<FetchError>();
-
-  useEffect(() => {
-    const loadSettings = async () => {
-      const { data, error } = await fetchSettings();
-      setSettings(data);
-      setError(error);
-    };
-
-    loadSettings();
-  }, []);
+  const { settings, error } = useLoadSettings(ssrSettings);
 
   if (error) {
     return <Article {...ERROR_VOLUNTEERING_FORM} />;

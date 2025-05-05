@@ -13,7 +13,7 @@ import { Form } from '../Form/Form';
 import { fetchVAdoptionForm } from 'api/api';
 import { useSimpleModal } from '../SimpleModal/useModal';
 import ilu_kot from 'public/site/ilu kot.png';
-import { Captcha } from 'components/common/Captcha';
+import { Captcha } from 'components/Captcha';
 
 export function VAdoptionForm({ animal }: { animal: Animal }) {
   const adoptionModalProps = usePrefetchVAdoptionModalQueries();

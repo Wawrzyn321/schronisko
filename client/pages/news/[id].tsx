@@ -5,26 +5,14 @@ import { News as NewsModel } from '@prisma-app/client';
 import { Article } from 'components/Article/Article';
 import { ErrorWrapper, ERROR_GENERIC, ERROR_NEWS_NOT_FOUND } from 'errors';
 import { getStaticPropsProps } from 'types';
+import { useLoadNews } from './useLoadNews';
 
 export default function News({ ssrNews }: { ssrNews: NewsModel }) {
-  return <IdWrapper Component={ActualNews} ssrNews={ssrNews} />;
+  return <IdWrapper Component={NewsComponent} ssrNews={ssrNews} />;
 }
 
-function ActualNews({ id, ssrNews }: { id: string; ssrNews: NewsModel }) {
-  const [news, setNews] = useState<NewsModel>(ssrNews);
-  const [error, setError] = useState<FetchError>(null);
-
-  useEffect(() => {
-    const loadPage = async () => {
-      const { data, error } = await fetchNews(id);
-      setNews(data);
-      setError(error);
-    };
-
-    if (!ssrNews) {
-      loadPage();
-    }
-  }, [id, ssrNews]);
+function NewsComponent({ id, ssrNews }: { id: string; ssrNews: NewsModel }) {
+  const { news, error } = useLoadNews(id, ssrNews);
 
   return (
     <ErrorWrapper

@@ -1,5 +1,6 @@
 {
     "files.exclude": {
       "server/dist": true,
+      "client/.next": true,
     },
   }

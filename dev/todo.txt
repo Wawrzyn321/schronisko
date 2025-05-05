@@ -13,3 +13,23 @@ po https
 seedowanie - lepiej zrobić export do prismy (+skrypt ./dev/deploy-prisma.sh) i na vpsie tylko ładować z JSONa
 
 lokalnie obrazki u Louisa dalej nie działają
+
+
+function getPageFromQueryString(totalCount: number) {
+  if (typeof window !== 'undefined') {
+    const pageNoFromQueryString = ((parseInt(new URL(window.location.href).searchParams.get('page'))) || 1) - 1;
+
+    return clamp({
+      min: 0,
+      max: totalCount - 1,
+      value: pageNoFromQueryString
+    })
+  }
+  return 1;
+}
+
+function clamp({
+  min, max, value
+}: { min: number, max: number, value: number }) {
+  return Math.max(Math.min(value, max), min);
+}

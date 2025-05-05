@@ -7,7 +7,7 @@ import { Form } from '../Form/Form';
 import { Email, FullName, Tel, BirthDate, About } from '../Form/FormComponents';
 import ilu_pies from 'public/site/ilu pies.png';
 import ilu_kot from 'public/site/ilu kot.png';
-import { Captcha } from 'components/common/Captcha';
+import { Captcha } from 'components/Captcha';
 
 export function VolunteeringForm() {
   const [fullName, setFullName] = useState('');

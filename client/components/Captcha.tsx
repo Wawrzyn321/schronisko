@@ -7,6 +7,7 @@ type CaptchaProps = {
 
 export function Captcha({ onCaptcha }: CaptchaProps) {
     useEffect(() => {
+        // data-callback cannot be a function
         window['onCaptcha'] = onCaptcha;
         return () => { delete window['onCaptcha'] }
     })

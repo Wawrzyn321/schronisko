@@ -2,9 +2,9 @@ import { Page as PageModel, Settings } from '@prisma-app/client';
 import { fetchDogVolunteeringPage, fetchSettings } from 'api/api';
 import { Breadcrumbs } from 'components/Breadcrumbs/Breadcrumbs';
 import { LayoutWrapper } from 'components/LayoutWrapper/LayoutWrapper';
-import { Page } from 'components/Page';
+import { Page } from 'components/Page/Page';
 import React from 'react';
-import { DogVolunteeringWrapper } from '../../components/DogVolunteeringWrapper';
+import { DogVolunteeringWrapper } from '../../components/DogVolunteeringWrapper/DogVolunteeringWrapper';
 
 type VolunteerDogsProps = {
   ssrPage: PageModel;
