@@ -67,7 +67,7 @@ export function AnimalList({
     return <Article {...ERROR_ANIMAL_LIST} />;
   }
 
-  if (animals.length) {
+  if (!animals.length) {
     return <p>Ładowanie...</p>;
   }
 
