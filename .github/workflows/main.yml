@@ -75,4 +75,5 @@ jobs:
           VITE_SERVER_URL: http://localhost:60045
           VITE_CLIENT_URL: http://localhost:3015
         run: |
-          cd e2e && npm run setup-db && npx playwright test backoffice/
+          npm run test:backoffice --prefix=e2e
+          npm run test:client --prefix=e2e
