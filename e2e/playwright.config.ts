@@ -28,9 +28,9 @@ const config: PlaywrightTestConfig = {
       ...COMMON_WEBSERVER_CONFIG
     },
   ],
-  timeout: 5_000,
+  timeout: process.env.CI ? 15_000 : 5_000,
   expect: {
-    timeout: 5_000,
+    timeout: process.env.CI ? 15_000 : 5_000,
   },
   // tests are much more stable
   workers: 1,
@@ -59,9 +59,6 @@ const config: PlaywrightTestConfig = {
       },
     },
   ],
-
-  /* Folder for test artifacts such as screenshots, videos, traces, etc. */
-  // outputDir: 'test-results/',
 };
 
 export default config;

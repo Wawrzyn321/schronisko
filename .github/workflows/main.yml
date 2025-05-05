@@ -19,7 +19,7 @@ jobs:
      steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/backoffice-tests
-  E2E:
+  Backoffice_E2E:
     runs-on: ubuntu-22.04 # "latest" fails on Playwright deps install
     needs: [Client, Server, Backoffice]
     services:
@@ -37,43 +37,25 @@ jobs:
           --health-timeout 5s
           --health-retries 3
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Install system dependencies
-        run: |
-          sudo apt-get update && sudo apt-get install -y postgresql-client
-
-      - name: Install Redis
-        uses: shogo82148/actions-setup-redis@v1
-        with:
-          redis-version: "7.x"
-      - run: redis-cli ping
-
-      - name: Wait for PostgreSQL
-        run: |
-          until pg_isready -h localhost -p 5432 -U testuser; do
-            echo "Waiting for PostgreSQL to be ready..."
-            sleep 2
-          done
-
-      - name: Install dependencies
-        run: |
-          npm ci
-          npm ci --prefix=server
-          npm ci --prefix=client
-          npm ci --prefix=backoffice
-          npm ci --prefix=e2e
-          cd e2e && npx playwright install --with-deps
-
-      - name: Run tests
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/backoffice-e2e
+  Client_E2E:
+    runs-on: ubuntu-22.04 # "latest" fails on Playwright deps install
+    needs: [Client, Server, Backoffice]
+    services:
+      postgres:
+        image: postgres:latest
         env:
-          DATABASE_URL: postgres://postgres:testpassword@localhost:5432/schronisko
-          POSTMARK_API_TOKEN: disabled
-          NEXT_PUBLIC_SERVER_URL: http://localhost:60045
-          NEXT_PUBLIC_CLIENT_URL: http://localhost:3015
-          VITE_SERVER_URL: http://localhost:60045
-          VITE_CLIENT_URL: http://localhost:3015
-        run: |
-          npm run test:backoffice --prefix=e2e
-          npm run test:client --prefix=e2e
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: testpassword
+          POSTGRES_DB: schronisko
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 3
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/client-e2e

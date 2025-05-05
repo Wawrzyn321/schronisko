@@ -1,0 +1,58 @@
+name: 'Backoffice E2e Tests'
+description: 'End to end tests'
+runs:
+  using: "composite"
+  steps:
+  - uses: actions/checkout@v4
+  - name: Setup nodeJS
+    uses: actions/setup-node@v4
+    with:
+      node-version: '22.x'
+      cache: 'npm'
+  - name: Install system dependencies
+    run: |
+      sudo apt-get update && sudo apt-get install -y postgresql-client
+    shell: bash
+
+  - name: Install Redis
+    uses: shogo82148/actions-setup-redis@v1
+    with:
+      redis-version: "7.x"
+  - run: redis-cli ping
+    shell: bash
+
+  - name: Wait for PostgreSQL
+    run: |
+      until pg_isready -h localhost -p 5432 -U testuser; do
+        echo "Waiting for PostgreSQL to be ready..."
+        sleep 2
+      done
+    shell: bash
+
+  - name: Install dependencies
+    run: |
+      npm ci
+      npm ci --prefix=server
+      npm ci --prefix=client
+      npm ci --prefix=backoffice
+      npm ci --prefix=e2e
+      cd e2e && npx playwright install --with-deps
+    shell: bash
+
+  - name: Run tests
+    env:
+      DATABASE_URL: postgres://postgres:testpassword@localhost:5432/schronisko
+      POSTMARK_API_TOKEN: disabled
+      NEXT_PUBLIC_SERVER_URL: http://localhost:60045
+      NEXT_PUBLIC_CLIENT_URL: http://localhost:3015
+      VITE_SERVER_URL: http://localhost:60045
+      VITE_CLIENT_URL: http://localhost:3015
+    run: |
+      npm run test:client --prefix=e2e
+    shell: bash
+  - uses: actions/upload-artifact@v4
+    if: ${{ !cancelled() }}
+    with:
+      name: playwright-report-client
+      path: e2e/playwright-report/
+      retention-days: 10
