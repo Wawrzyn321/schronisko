@@ -29,8 +29,23 @@ const presetsMap: { [gender in ResizingPresets]: Size } = {
   },
 };
 
+function normalizePath(targetPath: string) {
+  return path
+    .normalize(targetPath)
+    .replace(/%2e/gi, '.')
+    .replace(/%2f|%5c/gi, '/');
+}
+
 function createPath(name: string) {
-  return path.join(LOCAL_STATIC_FILES_PATH, 'img', name);
+  const targetPath = path.join(LOCAL_STATIC_FILES_PATH, 'img', name);
+
+  const normalizedPath = normalizePath(targetPath);
+
+  if (!normalizedPath.startsWith(LOCAL_STATIC_FILES_PATH)) {
+    throw Error('Illegal path ' + normalizedPath);
+  }
+
+  return normalizedPath;
 }
 
 type SaveImageArgs = {
