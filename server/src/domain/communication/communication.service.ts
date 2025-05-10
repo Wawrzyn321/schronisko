@@ -6,10 +6,7 @@ import {
   validateVAdoptionFormFetch,
   validateVoluneeringFormFetch,
 } from './common';
-import {
-  CaptchaServiceInterface,
-  MailServiceInterface,
-} from './MailServiceInterface';
+import { CaptchaServiceInterface, MailServiceInterface } from './interface';
 
 @Injectable()
 export class CommunicationService {

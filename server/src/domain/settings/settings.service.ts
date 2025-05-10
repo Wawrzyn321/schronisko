@@ -3,15 +3,15 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma-connect/prisma.service';
 import { LoggedInUser } from '../auth/types';
 import { LogsService } from '../logs/logs.service';
-import { CacheService } from '../cache/cache.service';
 import { SanitizeService } from '../support/sanitize.service';
+import { CacheServiceInterface } from '../../domain/cache/interface';
 
 @Injectable()
 export class SettingsService {
   constructor(
     private prisma: PrismaService,
     private logsService: LogsService,
-    private cacheService: CacheService,
+    private cacheService: CacheServiceInterface,
     private sanitizeService: SanitizeService,
   ) {}
 

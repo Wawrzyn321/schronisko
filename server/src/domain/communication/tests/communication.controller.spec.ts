@@ -3,10 +3,7 @@ import { PrismaService } from '../../../prisma-connect/prisma.service';
 import { CommunicationController } from '../communication.controller';
 import { CommunicationService } from '../communication.service';
 import { VAdoptionFormFetch, VolunteeringFormFetch } from '../common';
-import {
-  CaptchaServiceInterface,
-  MailServiceInterface,
-} from '../MailServiceInterface';
+import { CaptchaServiceInterface, MailServiceInterface } from '../interface';
 
 const mockVolunteeringRequest: VolunteeringFormFetch = {
   about: 'about',

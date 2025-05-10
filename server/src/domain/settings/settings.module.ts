@@ -5,13 +5,17 @@ import { SettingsController } from './settings.controller';
 import { LogsService } from '../logs/logs.service';
 import { CacheService } from '../cache/cache.service';
 import { SanitizeService } from '../support/sanitize.service';
+import { CacheServiceInterface } from '../../domain/cache/interface';
 
 @Module({
   providers: [
     SettingsService,
     PrismaService,
     LogsService,
-    CacheService,
+    {
+      provide: CacheServiceInterface,
+      useClass: CacheService,
+    },
     SanitizeService,
   ],
   exports: [SettingsService],

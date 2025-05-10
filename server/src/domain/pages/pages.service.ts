@@ -17,8 +17,8 @@ import {
 } from '../../util/img-fs';
 import { SettingsService } from '../settings/settings.service';
 import { containsSubsitution, substitute } from '../../util/substitutions';
-import { CacheService } from '../cache/cache.service';
 import { SanitizeService } from '../support/sanitize.service';
+import { CacheServiceInterface } from '../../domain/cache/interface';
 
 @Injectable()
 export class PagesService {
@@ -26,7 +26,7 @@ export class PagesService {
     private prisma: PrismaService,
     private settingsService: SettingsService,
     private logsService: LogsService,
-    private cacheService: CacheService,
+    private cacheService: CacheServiceInterface,
     private sanitizeService: SanitizeService,
   ) {}
 

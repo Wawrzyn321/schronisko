@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { MailServiceInterface } from './MailServiceInterface';
+import { MailServiceInterface } from './interface';
 import { ServerClient } from 'postmark';
 
 const POSTMARK_API_TOKEN = process.env.POSTMARK_API_TOKEN;

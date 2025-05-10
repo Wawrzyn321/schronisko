@@ -8,7 +8,8 @@ import { News, Permission } from '@prisma-app/client';
 import { LoggedInUser } from '../../auth/types';
 import { allPermissions } from '../../auth/constants';
 import { NewsCreateInput, NewsModifyParams, NewsUpdateInput } from '../News';
-import { CacheService } from '../../cache/cache.service';
+import { CacheServiceInterface } from '../../cache/interface';
+import { CacheServiceMock } from '../../../util/testData';
 import { SanitizeService } from '../..//support/sanitize.service';
 
 const mockAdminUser: LoggedInUser = {
@@ -82,7 +83,7 @@ describe('NewsController', () => {
   let prismaServiceMock: PrismaService;
   let settingsService: SettingsService;
   let logsService: LogsService;
-  let cacheService: CacheService;
+  let cacheService: CacheServiceInterface;
   const sanitizeService = new SanitizeService();
 
   beforeEach(async () => {
@@ -91,7 +92,7 @@ describe('NewsController', () => {
     }).compile();
     prismaServiceMock = module.get<PrismaService>(PrismaService);
     logsService = new LogsService(prismaServiceMock);
-    cacheService = new CacheService();
+    cacheService = new CacheServiceMock();
     settingsService = new SettingsService(
       prismaServiceMock,
       logsService,

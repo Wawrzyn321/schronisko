@@ -8,7 +8,8 @@ import { Page, Permission } from '@prisma-app/client';
 import { ImageData } from '../../../util/img-fs';
 import { LoggedInUser } from '../../auth/types';
 import { allPermissions } from '../../auth/constants';
-import { CacheService } from '../../cache/cache.service';
+import { CacheServiceInterface } from '../../cache/interface';
+import { CacheServiceMock } from '../../../util/testData';
 import { SanitizeService } from '../..//support/sanitize.service';
 
 const mockAdminUser: LoggedInUser = {
@@ -50,7 +51,7 @@ describe('PagesController', () => {
   let logsService: LogsService;
   let settingsService: SettingsService;
   let prismaServiceMock: PrismaService;
-  let cacheService: CacheService;
+  let cacheService: CacheServiceInterface;
   const sanitizeService = new SanitizeService();
 
   beforeEach(async () => {
@@ -59,7 +60,7 @@ describe('PagesController', () => {
     }).compile();
     prismaServiceMock = module.get<PrismaService>(PrismaService);
     logsService = new LogsService(prismaServiceMock);
-    cacheService = new CacheService();
+    cacheService = new CacheServiceMock();
     settingsService = new SettingsService(
       prismaServiceMock,
       logsService,

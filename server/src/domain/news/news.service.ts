@@ -24,9 +24,9 @@ import { validateNewsCreate, validateNewsUpdate } from './helpers';
 import { LogsService } from '../logs/logs.service';
 import { formattedDiff } from '../logs/diff';
 import { SettingsService } from '../settings/settings.service';
-import { CacheService } from '../cache/cache.service';
 import { SanitizeService } from '../support/sanitize.service';
 import { randomUUID } from 'crypto';
+import { CacheServiceInterface } from '../../domain/cache/interface';
 
 const imageListElementFields = {
   title: true,
@@ -48,7 +48,7 @@ export class NewsService {
     private prisma: PrismaService,
     private logsService: LogsService,
     private settingsService: SettingsService,
-    private cacheService: CacheService,
+    private cacheService: CacheServiceInterface,
     private sanitizeService: SanitizeService,
   ) {}
 

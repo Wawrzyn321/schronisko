@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CaptchaServiceInterface } from './MailServiceInterface';
+import { CaptchaServiceInterface } from './interface';
 
 const CAPTCHA_VALIDATE_URL = 'https://www.google.com/recaptcha/api/siteverify';
 const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY;

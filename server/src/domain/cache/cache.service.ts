@@ -1,12 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { createClient } from 'redis';
+import { CacheServiceInterface } from './interface';
 
 const REDIS_DISABLED = 'DISABLED';
 
 type RedisClient = ReturnType<typeof createClient>;
 
 @Injectable()
-export class CacheService {
+export class CacheService implements CacheServiceInterface {
   private readonly client: RedisClient = null;
 
   constructor() {

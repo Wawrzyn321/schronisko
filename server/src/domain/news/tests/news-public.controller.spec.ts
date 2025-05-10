@@ -5,8 +5,9 @@ import { PrismaService } from '../../../prisma-connect/prisma.service';
 import { NewsPublicController } from '../news.controller';
 import { NewsService } from '../news.service';
 import { News, Settings } from '@prisma-app/client';
-import { CacheService } from '../../cache/cache.service';
+import { CacheServiceInterface } from '../../cache/interface';
 import { SanitizeService } from '../../support/sanitize.service';
+import { CacheServiceMock } from '../../../util/testData';
 
 describe('NewsPublicController', () => {
   let newsPublicController: NewsPublicController;
@@ -14,7 +15,7 @@ describe('NewsPublicController', () => {
   let prismaServiceMock: PrismaService;
   let settingsService: SettingsService;
   let logsService: LogsService;
-  let cacheService: CacheService;
+  let cacheService: CacheServiceInterface;
   const sanitizeService = new SanitizeService();
 
   beforeEach(async () => {
@@ -23,7 +24,7 @@ describe('NewsPublicController', () => {
     }).compile();
     prismaServiceMock = module.get<PrismaService>(PrismaService);
     logsService = new LogsService(prismaServiceMock);
-    cacheService = new CacheService();
+    cacheService = new CacheServiceMock();
     settingsService = new SettingsService(
       prismaServiceMock,
       logsService,

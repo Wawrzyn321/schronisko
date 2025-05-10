@@ -6,6 +6,7 @@ import { LogsService } from '../logs/logs.service';
 import { SettingsService } from '../settings/settings.service';
 import { CacheService } from '../cache/cache.service';
 import { SanitizeService } from '../support/sanitize.service';
+import { CacheServiceInterface } from '../../domain/cache/interface';
 
 @Module({
   providers: [
@@ -13,7 +14,10 @@ import { SanitizeService } from '../support/sanitize.service';
     PrismaService,
     LogsService,
     SettingsService,
-    CacheService,
+    {
+      provide: CacheServiceInterface,
+      useClass: CacheService,
+    },
     SanitizeService,
   ],
   exports: [NewsService],
