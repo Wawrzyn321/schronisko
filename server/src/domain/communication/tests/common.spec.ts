@@ -10,7 +10,7 @@ function makeVolunteeringData(): VolunteeringFormFetch {
     about: 'about',
     fullName: 'fn',
     email: 'email',
-    telNumber: '123',
+    phoneNumber: '123',
     birthDate: 'now',
     captchaToken: 'test-token',
   };

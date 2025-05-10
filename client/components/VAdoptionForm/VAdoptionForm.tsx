@@ -14,15 +14,18 @@ import { fetchVAdoptionForm } from "api/api";
 import { useSimpleModal } from "../SimpleModal/useModal";
 import ilu_kot from "public/site/ilu kot.png";
 import { Captcha } from "components/Captcha";
+import { useFormDataState } from "util/useFormDataState";
 
 export function VAdoptionForm({ animal }: { animal: Animal }) {
   const adoptionModalProps = useFetchAccountNo();
 
-  const [fullName, setFullName] = useState("");
-  const [vCaretakerName, setVCaretakerName] = useState("");
-  const [email, setEmail] = useState("");
-  const [additionalMessage, setAdditionalMessage] = useState("");
-
+  const [formData, setFormData] = useFormDataState({
+    fullName: '',
+    vCaretakerName: '',
+    email: '',
+    additionalMessage: '',
+  });
+  
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
 
   const [showAdoptionModal, setShowAdoptionModal] = useState(false);
@@ -41,10 +44,7 @@ export function VAdoptionForm({ animal }: { animal: Animal }) {
   const onSubmit = async () => {
     try {
       await fetchVAdoptionForm({
-        fullName,
-        vCaretakerName,
-        email,
-        additionalMessage,
+        ...formData,
         animalId: animal.id,
         animalName: animal.name,
         animalRefNo: animal.refNo,
@@ -74,24 +74,24 @@ export function VAdoptionForm({ animal }: { animal: Animal }) {
             </div>
             <div className="form-grid-2">
               <FullName
-                value={fullName}
-                setValue={setFullName}
+                value={formData.fullName}
+                setValue={setFormData('fullName')}
                 triedSubmitCounter={triedSubmitCounter}
               />
               <Email
-                value={email}
-                setValue={setEmail}
+                value={formData.email}
+                setValue={setFormData('email')}
                 triedSubmitCounter={triedSubmitCounter}
               />
             </div>
             <VCaretakerName
-              value={vCaretakerName}
-              setValue={setVCaretakerName}
+              value={formData.vCaretakerName}
+              setValue={setFormData('vCaretakerName')}
               triedSubmitCounter={triedSubmitCounter}
             />
             <AdditionalMessage
-              value={additionalMessage}
-              setValue={setAdditionalMessage}
+              value={formData.additionalMessage}
+              setValue={setFormData('additionalMessage')}
             />
             <div className="form-grid-3">
               <Captcha onCaptcha={setCaptchaToken} />

@@ -9,7 +9,7 @@ const mockVolunteeringRequest: VolunteeringFormFetch = {
   about: 'about',
   fullName: 'fn',
   email: 'email',
-  telNumber: '123',
+  phoneNumber: '123',
   birthDate: 'now',
   captchaToken: 'test-token',
 };
@@ -99,7 +99,7 @@ describe('CommunicationController', () => {
       about: '',
       fullName: 'fn',
       email: 'email',
-      telNumber: '123',
+      phoneNumber: '123',
       birthDate: 'now',
       captchaToken: 'test-token',
     };

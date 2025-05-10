@@ -8,28 +8,12 @@ po deployu:
 po https
     * Ustaw HSTS
     * Mozilla SSL Configuration Generator 
+    * w next.config.js - protocol
 
  sformatuj wiadomości w mailach, szczególnie tą do v-adopcji
 
 seedowanie - lepiej zrobić export do prismy (+skrypt ./dev/deploy-prisma.sh) i na vpsie tylko ładować z JSONa
 
 lokalnie obrazki u Louisa dalej nie działają
-
-
-
-function useVoluteeringFormState() {
-  const [state, setState] = useState({
-    fullName: '',
-    email: '',
-    phoneNumber: '',
-    birthDate: '',
-    about: ''
-  })
-
-  const setProperty = (property: keyof typeof state, value: string) => setState(state => ({ ...state, [property]: value }))
-
-  return [state, setProperty]
-}
-
 
 useMutation

@@ -1,7 +1,7 @@
 export type VolunteeringFormFetch = {
   fullName: string;
   email: string;
-  telNumber: string;
+  phoneNumber: string;
   birthDate: string;
   about: string;
   captchaToken: string;
@@ -11,7 +11,7 @@ export function validateVoluneeringFormFetch(props: VolunteeringFormFetch) {
   return Boolean(
     props.fullName &&
       props.email &&
-      props.telNumber &&
+      props.phoneNumber &&
       props.birthDate &&
       props.about &&
       props.captchaToken,

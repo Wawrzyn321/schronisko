@@ -23,7 +23,7 @@ export type FormCaptcha = {
 export type VolunteeringFormFetch = {
   fullName: string;
   email: string;
-  telNumber: string;
+  phoneNumber: string;
   birthDate: string;
   about: string;
   captchaToken: string;

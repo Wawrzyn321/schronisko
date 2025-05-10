@@ -71,7 +71,7 @@ const baseConfig = {
       protocol: 'http',
       hostname: 'localhost',
     }, {
-      protocol: 'http',//todo change after SSL
+      protocol: 'http',
       hostname: (NEXT_PUBLIC_SERVER_URL ?? '').replace(/https?:\/\//, '')
     }]
   },

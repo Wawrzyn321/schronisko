@@ -35,7 +35,7 @@ export class CommunicationService {
         `Tu podaję dane:
         kto: ${props.fullName}
         email: ${props.email}
-        telefon: ${props.telNumber}
+        telefon: ${props.phoneNumber}
         data urodzenia: ${props.birthDate}
         coś więcej?: ${props.about}
       `,

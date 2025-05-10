@@ -6,14 +6,16 @@ import { Email, FullName, Tel, BirthDate, About } from "../Form/FormComponents";
 import ilu_pies from "public/site/ilu pies.png";
 import ilu_kot from "public/site/ilu kot.png";
 import { Captcha } from "components/Captcha";
+import { useFormDataState } from "util/useFormDataState";
 
 export function VolunteeringForm() {
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [telNumber, setTelNumber] = useState("");
-  const [birthDate, setBirthDate] = useState("");
-  const [about, setAbout] = useState("");
-
+  const [formData, setFormData] = useFormDataState({
+    fullName: '',
+    email: '',
+    phoneNumber: '',
+    birthDate: '',
+    about: ''
+  });
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
 
   const [successModal, showSuccessModal] = useSimpleModal({
@@ -42,11 +44,7 @@ export function VolunteeringForm() {
   const sendForm = async () => {
     try {
       await fetchVolunteeringForm({
-        fullName,
-        email,
-        telNumber,
-        birthDate,
-        about,
+        ...formData,
         captchaToken,
       });
       showSuccessModal();
@@ -63,31 +61,31 @@ export function VolunteeringForm() {
           <>
             <div className="form-grid-2">
               <FullName
-                value={fullName}
-                setValue={setFullName}
+                value={formData.fullName}
+                setValue={setFormData('fullName')}
                 triedSubmitCounter={triedSubmitCounter}
               />
               <Tel
-                value={telNumber}
-                setValue={setTelNumber}
+                value={formData.phoneNumber}
+                setValue={setFormData('phoneNumber')}
                 triedSubmitCounter={triedSubmitCounter}
               />
             </div>
             <div className="form-grid-2">
               <Email
-                value={email}
-                setValue={setEmail}
+                value={formData.email}
+                setValue={setFormData('email')}
                 triedSubmitCounter={triedSubmitCounter}
               />
               <BirthDate
-                value={birthDate}
-                setValue={setBirthDate}
+                value={formData.birthDate}
+                setValue={setFormData('birthDate')}
                 triedSubmitCounter={triedSubmitCounter}
               />
             </div>
             <About
-              value={about}
-              setValue={setAbout}
+              value={formData.about}
+              setValue={setFormData('about')}
               triedSubmitCounter={triedSubmitCounter}
             />
             <div className="form-grid-3">
