@@ -10,11 +10,11 @@ import {
   AdditionalMessage,
 } from "../Form/FormComponents";
 import { Form } from "../Form/Form";
-import { fetchVAdoptionForm } from "api/api";
-import { useSimpleModal } from "../SimpleModal/useModal";
-import ilu_kot from "public/site/ilu kot.png";
+import { submitVAdoptionForm } from "api/mutations";
 import { Captcha } from "components/Captcha";
 import { useFormDataState } from "util/useFormDataState";
+import { useErrorModal } from "components/SimpleModal/useErrorModal";
+import { useMutation } from "@tanstack/react-query";
 
 export function VAdoptionForm({ animal }: { animal: Animal }) {
   const adoptionModalProps = useFetchAccountNo();
@@ -24,42 +24,32 @@ export function VAdoptionForm({ animal }: { animal: Animal }) {
     vCaretakerName: '',
     email: '',
     additionalMessage: '',
+    captchaToken: null
   });
-  
-  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
 
   const [showAdoptionModal, setShowAdoptionModal] = useState(false);
-  const [errorModal, showErrorModal] = useSimpleModal({
-    title: "Upsss...",
-    image: ilu_kot,
-    text: (
-      <>
-        Coś poszło nie tak.
-        <br />
-        Spróbuj ponownie.
-      </>
-    ),
-  });
+  const [errorModal, showErrorModal] = useErrorModal()
 
-  const onSubmit = async () => {
-    try {
-      await fetchVAdoptionForm({
-        ...formData,
+  const submit = useMutation({
+    mutationFn: () => {
+      const animalData = {
         animalId: animal.id,
         animalName: animal.name,
         animalRefNo: animal.refNo,
-        captchaToken,
+      }
+      return submitVAdoptionForm({
+        ...formData,
+        ...animalData
       });
-      setShowAdoptionModal(true);
-    } catch (e) {
-      console.warn(e);
-      showErrorModal();
-    }
-  };
+    },
+    onError: showErrorModal,
+    onSuccess: () => setShowAdoptionModal(true),
+  })
+
 
   return (
     <>
-      <Form handleSubmit={onSubmit}>
+      <Form handleSubmit={submit.mutate}>
         {(triedSubmitCounter: number) => (
           <>
             <div className="form-grid-2">
@@ -94,8 +84,8 @@ export function VAdoptionForm({ animal }: { animal: Animal }) {
               setValue={setFormData('additionalMessage')}
             />
             <div className="form-grid-3">
-              <Captcha onCaptcha={setCaptchaToken} />
-              <button disabled={!captchaToken} className="form--button">
+              <Captcha onCaptcha={setFormData('captchaToken')} />
+              <button disabled={!formData.captchaToken} className="form--button">
                 Wyślij
               </button>
             </div>

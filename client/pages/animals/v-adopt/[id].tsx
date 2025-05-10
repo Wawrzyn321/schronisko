@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Animal } from "@prisma-app/client";
-import { fetchAnimal } from "api/api";
 import { Breadcrumbs } from "components/Breadcrumbs/Breadcrumbs";
 import { AnimalFetchContainer } from "../../../components/AnimalFetchContainer/AnimalFetchContainer";
 import { Page } from "components/Page/Page";

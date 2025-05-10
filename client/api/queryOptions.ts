@@ -1,5 +1,5 @@
 import { queryOptions } from "@tanstack/react-query";
-import { fetchAfterAdoptionAnimals, fetchAnimal, fetchAnimalImages, fetchAnimals, FetchAnimalsArgs, fetchNews, fetchPage, fetchRecentNews, fetchSettings } from "./api";
+import { fetchAfterAdoptionAnimals, fetchAnimal, fetchAnimalImages, fetchAnimals, FetchAnimalsArgs, fetchNews, fetchPage, fetchRecentNews, fetchSettings } from "./queries";
 
 const COMMON_OPTIONS = {
     staleTime: 60_1000,

@@ -1,6 +1,4 @@
-import { Page as PageModel } from "@prisma-app/client";
 import { DehydratedState, HydrationBoundary } from "@tanstack/react-query";
-import { fetchPage } from "api/api";
 import { getSimplePageServerSideProps } from "api/getServerSideProps";
 import { Breadcrumbs } from "components/Breadcrumbs/Breadcrumbs";
 import { LayoutWrapper } from "components/LayoutWrapper/LayoutWrapper";

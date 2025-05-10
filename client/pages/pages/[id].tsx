@@ -1,9 +1,9 @@
 import { Page } from "components/Page/Page";
-import { fetchPageIds, fetchPage } from "api/api";
 import { LayoutWrapper } from "components/LayoutWrapper/LayoutWrapper";
 import { GetServerSidePropsContext } from "next";
 import { getGenericPageServerSideProps } from "api/getServerSideProps";
 import { DehydratedState, HydrationBoundary } from "@tanstack/react-query";
+import { fetchPageIds } from "api/queries";
 
 type Props = {
   pageId: string;

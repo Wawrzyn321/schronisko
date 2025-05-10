@@ -15,5 +15,3 @@ po https
 seedowanie - lepiej zrobić export do prismy (+skrypt ./dev/deploy-prisma.sh) i na vpsie tylko ładować z JSONa
 
 lokalnie obrazki u Louisa dalej nie działają
-
-useMutation

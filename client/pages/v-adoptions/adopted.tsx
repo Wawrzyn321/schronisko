@@ -1,6 +1,5 @@
-import { AnimalCategory, Page as PageModel, VirtualCaretakerType } from "@prisma-app/client";
+import { AnimalCategory, VirtualCaretakerType } from "@prisma-app/client";
 import { DehydratedState, HydrationBoundary } from "@tanstack/react-query";
-import { fetchPage } from "api/api";
 import { getAnimalListPageServerSideProps } from "api/getServerSideProps";
 import { AnimalList } from "components/AnimalList/AnimalList";
 import { Breadcrumbs } from "components/Breadcrumbs/Breadcrumbs";

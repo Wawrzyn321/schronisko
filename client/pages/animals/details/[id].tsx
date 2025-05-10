@@ -1,6 +1,5 @@
 import React from "react";
 import { Animal } from "@prisma-app/client";
-import { fetchAnimal } from "api/api";
 import { LayoutWrapper } from "components/LayoutWrapper/LayoutWrapper";
 import { AnimalFetchContainer } from "components/AnimalFetchContainer/AnimalFetchContainer";
 import { AnimalBreadcrumbs } from "components/AnimalDetails/AnimalBreadcrumbs";

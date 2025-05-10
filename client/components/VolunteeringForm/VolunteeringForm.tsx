@@ -1,12 +1,11 @@
-import { fetchVolunteeringForm } from "api/api";
-import { useSimpleModal } from "components/SimpleModal/useModal";
-import { useState } from "react";
+import { submitVolunteeringForm } from "api/mutations";
 import { Form } from "../Form/Form";
 import { Email, FullName, Tel, BirthDate, About } from "../Form/FormComponents";
-import ilu_pies from "public/site/ilu pies.png";
-import ilu_kot from "public/site/ilu kot.png";
 import { Captcha } from "components/Captcha";
 import { useFormDataState } from "util/useFormDataState";
+import { useErrorModal } from "components/SimpleModal/useErrorModal";
+import { useSuccessModal } from "components/SimpleModal/useSuccessModal";
+import { useMutation } from "@tanstack/react-query";
 
 export function VolunteeringForm() {
   const [formData, setFormData] = useFormDataState({
@@ -14,49 +13,22 @@ export function VolunteeringForm() {
     email: '',
     phoneNumber: '',
     birthDate: '',
-    about: ''
-  });
-  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
-
-  const [successModal, showSuccessModal] = useSimpleModal({
-    title: "Udało się!",
-    image: ilu_pies,
-    text: (
-      <>
-        Gratulujemy.
-        <br />
-        Pies cieszy się razem z Tobą.
-      </>
-    ),
-  });
-  const [errorModal, showErrorModal] = useSimpleModal({
-    title: "Upsss...",
-    image: ilu_kot,
-    text: (
-      <>
-        Coś poszło nie tak.
-        <br />
-        Spróbuj ponownie.
-      </>
-    ),
+    about: '',
+    captchaToken: null
   });
 
-  const sendForm = async () => {
-    try {
-      await fetchVolunteeringForm({
-        ...formData,
-        captchaToken,
-      });
-      showSuccessModal();
-    } catch (e) {
-      console.warn(e);
-      showErrorModal();
-    }
-  };
+  const [successModal, showSuccessModal] = useSuccessModal();
+  const [errorModal, showErrorModal] = useErrorModal();
+  
+  const submit = useMutation({
+    mutationFn: () => submitVolunteeringForm(formData),
+    onError: showErrorModal,
+    onSuccess: showSuccessModal,
+  })
 
   return (
     <>
-      <Form handleSubmit={sendForm}>
+      <Form handleSubmit={submit.mutate}>
         {(triedSubmitCounter: number) => (
           <>
             <div className="form-grid-2">
@@ -89,8 +61,8 @@ export function VolunteeringForm() {
               triedSubmitCounter={triedSubmitCounter}
             />
             <div className="form-grid-3">
-              <Captcha onCaptcha={setCaptchaToken} />
-              <button className="form--button" disabled={!captchaToken}>
+              <Captcha onCaptcha={setFormData('captchaToken')} />
+              <button className="form--button" disabled={!formData.captchaToken}>
                 Wyślij
               </button>
             </div>
