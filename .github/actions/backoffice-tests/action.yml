@@ -11,8 +11,6 @@ runs:
       cache: 'npm'
   - run: npm ci
     shell: bash
-  - run: npm ci
-    shell: bash
   - run: npm ci --prefix=backoffice
     shell: bash
   - run: npm run check --prefix=backoffice

@@ -11,9 +11,7 @@ runs:
       cache: 'npm'
   - run: npm ci
     shell: bash
-  - run: npm ci
-    shell: bash
   - run: npm ci --prefix=client
     shell: bash
-  - run: npm run lint:fix --prefix=client
+  - run: npm run check --prefix=client
     shell: bash
