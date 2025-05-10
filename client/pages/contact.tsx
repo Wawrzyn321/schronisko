@@ -1,20 +1,24 @@
-import { Page as PageModel } from "@prisma-app/client";
-import { fetchPage } from "api/api";
+import { DehydratedState, HydrationBoundary } from "@tanstack/react-query";
+import { getSimplePageServerSideProps } from "api/getServerSideProps";
 import { LayoutWrapper } from "components/LayoutWrapper/LayoutWrapper";
 import { Page } from "components/Page/Page";
 
 const ID = "kontakt";
 
-export default function Contact({ ssrPage }: { ssrPage: PageModel }) {
+type Props = {
+  dehydratedState: DehydratedState
+}
+
+export default function Contact({ dehydratedState }: Props) {
   return (
-    <LayoutWrapper>
-      <Page id={ID} ssrPage={ssrPage} />
-    </LayoutWrapper>
+    <HydrationBoundary state={dehydratedState}>
+      <LayoutWrapper>
+        <Page id={ID} />
+      </LayoutWrapper>
+    </HydrationBoundary>
   );
 }
 
-export async function getServerSideProps(): Promise<{
-  props: { ssrPage: PageModel };
-}> {
-  return { props: { ssrPage: (await fetchPage(ID)).data } };
+export async function getServerSideProps() {
+  return getSimplePageServerSideProps(ID);
 }

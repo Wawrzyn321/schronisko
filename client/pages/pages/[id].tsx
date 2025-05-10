@@ -1,25 +1,22 @@
-import { IdWrapper } from "components/IdWrapper";
-import { Page as PageModel } from "@prisma-app/client";
 import { Page } from "components/Page/Page";
 import { fetchPageIds, fetchPage } from "api/api";
 import { LayoutWrapper } from "components/LayoutWrapper/LayoutWrapper";
-import { getStaticPropsProps } from "types";
+import { GetServerSidePropsContext } from "next";
+import { getGenericPageServerSideProps } from "api/getServerSideProps";
+import { DehydratedState, HydrationBoundary } from "@tanstack/react-query";
 
-export default function PageComponent({ ssrPage }: { ssrPage: PageModel }) {
-  return <IdWrapper Component={ActualPage} ssrPage={ssrPage} />;
+type Props = {
+  pageId: string;
+  dehydratedState: DehydratedState
 }
 
-export function ActualPage({
-  id,
-  ssrPage,
-}: {
-  id: string;
-  ssrPage: PageModel;
-}) {
+export default function PageComponent({ pageId, dehydratedState }: Props) {
   return (
-    <LayoutWrapper>
-      <Page id={id} ssrPage={ssrPage} />
-    </LayoutWrapper>
+    <HydrationBoundary state={dehydratedState}>
+      <LayoutWrapper>
+        <Page id={pageId} />
+      </LayoutWrapper>
+    </HydrationBoundary>
   );
 }
 
@@ -34,9 +31,6 @@ export async function getStaticPaths() {
   return { paths, fallback: true };
 }
 
-export async function getStaticProps({ params }: getStaticPropsProps): Promise<{
-  props: { ssrPage: PageModel };
-}> {
-  const { id } = params;
-  return { props: { ssrPage: (await fetchPage(id)).data } };
+export async function getStaticPropsProps(context: GetServerSidePropsContext) {
+  return getGenericPageServerSideProps(context)
 }

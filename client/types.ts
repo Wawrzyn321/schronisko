@@ -1,4 +1,3 @@
-import { FetchResult } from "./api/api";
 import { Animal, News, Page as PageModel } from "@prisma-app/client";
 
 export type AfterAdoptionAnimal = Pick<
@@ -11,18 +10,10 @@ export type NewsListElement = Pick<
   "id" | "description" | "title" | "createdAt" | "isPublished" | "imageName"
 >;
 
-export type SSRContext = { query: { id: string } };
-
-export type getStaticPropsProps = {
-  params: {
-    id: string;
-  };
-};
-
 export type PageFetchFn = (
   id: string,
   isSSR?: boolean,
-) => Promise<FetchResult<PageModel>>;
+) => Promise<PageModel>;
 
 export type FormCaptcha = {
   id: string;

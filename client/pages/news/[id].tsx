@@ -1,18 +1,23 @@
-import { IdWrapper } from "components/IdWrapper";
-import { FetchError, fetchNews } from "api/api";
-import { useEffect, useState } from "react";
-import { News as NewsModel } from "@prisma-app/client";
 import { Article } from "components/Article/Article";
 import { ErrorWrapper, ERROR_GENERIC, ERROR_NEWS_NOT_FOUND } from "errors";
-import { getStaticPropsProps } from "types";
-import { useLoadNews } from "./useLoadNews";
+import { DehydratedState, HydrationBoundary, useQuery } from "@tanstack/react-query";
+import { newsQueryOptions } from "api/queryOptions";
+import { GetServerSidePropsContext } from "next";
+import { getNewsServerSideOptions } from "api/getServerSideProps";
 
-export default function News({ ssrNews }: { ssrNews: NewsModel }) {
-  return <IdWrapper Component={NewsComponent} ssrNews={ssrNews} />;
+type Props = {
+  dehydratedState: DehydratedState;
+  newsId: string;
 }
 
-function NewsComponent({ id, ssrNews }: { id: string; ssrNews: NewsModel }) {
-  const { news, error } = useLoadNews(id, ssrNews);
+export default function News({ dehydratedState, newsId }: Props) {
+  return <HydrationBoundary state={dehydratedState}>
+    <NewsComponent id={newsId} />
+  </HydrationBoundary>
+}
+
+function NewsComponent({ id }: { id: string }) {
+  const { data: news, error } = useQuery(newsQueryOptions(id));
 
   return (
     <ErrorWrapper
@@ -22,9 +27,9 @@ function NewsComponent({ id, ssrNews }: { id: string; ssrNews: NewsModel }) {
       error404={ERROR_NEWS_NOT_FOUND}
     >
       <Article
-        title={news?.title}
-        content={news?.content}
-        date={news?.createdAt}
+        title={news.title}
+        content={news.content}
+        date={news.createdAt}
       />
     </ErrorWrapper>
   );
@@ -37,13 +42,6 @@ export async function getStaticPaths() {
   };
 }
 
-export async function getStaticProps({ params }: getStaticPropsProps): Promise<{
-  props: { ssrNews: NewsModel };
-  revalidate: number;
-}> {
-  const { id } = params;
-  return {
-    props: { ssrNews: (await fetchNews(id)).data },
-    revalidate: 60,
-  };
+export async function getStaticProps(context: GetServerSidePropsContext) {
+  return getNewsServerSideOptions(context)
 }

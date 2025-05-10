@@ -1,28 +1,31 @@
 import React from "react";
 import { Animal } from "@prisma-app/client";
 import { fetchAnimal } from "api/api";
-import { IdWrapper } from "components/IdWrapper";
 import { LayoutWrapper } from "components/LayoutWrapper/LayoutWrapper";
-import { SSRContext } from "types";
 import { AnimalFetchContainer } from "components/AnimalFetchContainer/AnimalFetchContainer";
 import { AnimalBreadcrumbs } from "components/AnimalDetails/AnimalBreadcrumbs";
 import { AnimalHeader } from "components/AnimalDetails/AnimalHeader/AnimalHeader";
 import { AnimalMetadata } from "components/AnimalDetails/AnimalMetadata/AnimalMetadata";
 import { AnimalImages } from "components/AnimalDetails/AnimalImages/AnimalImages";
+import { DehydratedState, HydrationBoundary } from "@tanstack/react-query";
+import { GetServerSidePropsContext } from "next";
+import { getAnimalDetailsServerSideProps } from "api/getServerSideProps";
 
-export default function AnimalWrapper({ ssrAnimal }: { ssrAnimal: Animal }) {
-  return <IdWrapper Component={AnimalComponent} ssrAnimal={ssrAnimal} />;
+type Props = {
+  animalId: string;
+  dehydratedState: DehydratedState
 }
 
-function AnimalComponent({ id, ssrAnimal }: { id: string; ssrAnimal: Animal }) {
+export default function AnimalWrapper({ animalId, dehydratedState }: Props) {
   return (
-    <LayoutWrapper>
-      <AnimalFetchContainer
-        id={id}
-        ssrAnimal={ssrAnimal}
-        Component={AnimalDetails}
-      />
-    </LayoutWrapper>
+    <HydrationBoundary state={dehydratedState}>
+      <LayoutWrapper>
+        <AnimalFetchContainer
+          id={animalId}
+          Component={AnimalDetails}
+        />
+      </LayoutWrapper>
+    </HydrationBoundary>
   );
 }
 
@@ -37,9 +40,6 @@ function AnimalDetails({ animal }: { animal: Animal }) {
   );
 }
 
-export async function getServerSideProps(context: SSRContext): Promise<{
-  props: { ssrAnimal: Animal };
-}> {
-  const { id } = context.query;
-  return { props: { ssrAnimal: (await fetchAnimal(id)).data } };
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  return getAnimalDetailsServerSideProps(context)
 }

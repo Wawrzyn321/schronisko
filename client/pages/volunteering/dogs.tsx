@@ -1,42 +1,29 @@
-import { Page as PageModel, Settings } from "@prisma-app/client";
-import { fetchDogVolunteeringPage, fetchSettings } from "api/api";
 import { Breadcrumbs } from "components/Breadcrumbs/Breadcrumbs";
 import { LayoutWrapper } from "components/LayoutWrapper/LayoutWrapper";
 import { Page } from "components/Page/Page";
 import React from "react";
 import { DogVolunteeringWrapper } from "../../components/DogVolunteeringWrapper/DogVolunteeringWrapper";
+import { getDogVolunteeringServerSideProps } from "api/getServerSideProps";
+import { DehydratedState, HydrationBoundary } from "@tanstack/react-query";
 
-type VolunteerDogsProps = {
-  ssrPage: PageModel;
-  ssrSettings: Settings[];
-};
+const ID = "dog-volunteering";
 
-export default function VolunteerDogs({
-  ssrPage,
-  ssrSettings,
-}: VolunteerDogsProps) {
+type Props = {
+  dehydratedState: DehydratedState
+}
+
+export default function VolunteerDogs({ dehydratedState }: Props) {
   return (
-    <LayoutWrapper>
-      <Breadcrumbs items={["Wolontariat", "Pies"]} />
-      <VolunteerDogsPage ssrPage={ssrPage} />
-      <DogVolunteeringWrapper ssrSettings={ssrSettings} />
-    </LayoutWrapper>
+    <HydrationBoundary state={dehydratedState}>
+      <LayoutWrapper>
+        <Breadcrumbs items={["Wolontariat", "Pies"]} />
+        <Page id={ID} />
+        <DogVolunteeringWrapper />
+      </LayoutWrapper>
+    </HydrationBoundary>
   );
 }
 
-function VolunteerDogsPage({ ssrPage }: { ssrPage: PageModel }) {
-  return (
-    <Page id={null} ssrPage={ssrPage} fetchFn={fetchDogVolunteeringPage} />
-  );
-}
-
-export async function getServerSideProps(): Promise<{
-  props: VolunteerDogsProps;
-}> {
-  return {
-    props: {
-      ssrPage: (await fetchDogVolunteeringPage()).data,
-      ssrSettings: (await fetchSettings()).data,
-    },
-  };
+export async function getServerSideProps() {
+  return getDogVolunteeringServerSideProps(ID);
 }

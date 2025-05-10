@@ -2,7 +2,7 @@ import { Animal } from "@prisma-app/client";
 import { Modal } from "components/Modal";
 import { useState } from "react";
 import { VAdoptionModalContent } from "./VAdoptionModalContent/VAdoptionModalContent";
-import { usePrefetchVAdoptionModalQueries } from "./VAdoptionModalContent/usePrefetchVAdoptionModalQueries";
+import { useFetchAccountNo } from "./VAdoptionModalContent/useFetchAccountNo";
 import {
   FullName,
   Email,
@@ -16,7 +16,7 @@ import ilu_kot from "public/site/ilu kot.png";
 import { Captcha } from "components/Captcha";
 
 export function VAdoptionForm({ animal }: { animal: Animal }) {
-  const adoptionModalProps = usePrefetchVAdoptionModalQueries();
+  const adoptionModalProps = useFetchAccountNo();
 
   const [fullName, setFullName] = useState("");
   const [vCaretakerName, setVCaretakerName] = useState("");

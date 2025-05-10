@@ -1,5 +1,3 @@
-import { Page as PageModel } from "@prisma-app/client";
-import { FetchError } from "api/api";
 import { Page } from "components/Page/Page";
 import styles from "./VAdoptionModalContent.module.scss";
 
@@ -32,23 +30,18 @@ const copyToClipboard = (
 };
 
 export type AdoptionModalProps = {
-  data: {
-    page: PageModel;
-    accountNo: string;
-  };
-  error: FetchError;
+  accountNo: string;
+  error: Error;
 };
 
-export function VAdoptionModalContent({ data, error }: AdoptionModalProps) {
-  const { page, accountNo } = data;
-
+export function VAdoptionModalContent({ accountNo, error }: AdoptionModalProps) {
   if (error) {
     return <p>Ups... coś poszło nie tak.</p>;
   }
 
   return (
     <div className={styles["v-adoption-modal-content"]}>
-      <Page id="modal-adopcji-wirtualnej" ssrPage={page} />
+      <Page id="modal-adopcji-wirtualnej" />
       <p className={styles["para"]}>
         Numer konta: <strong>{accountNo}</strong>
       </p>

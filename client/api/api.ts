@@ -23,12 +23,7 @@ export class FetchError extends Error {
   }
 }
 
-export type FetchResult<T> = {
-  data?: T;
-  error?: FetchError;
-};
-
-async function throwingFetch(
+async function doFetch(
   input: string,
   init: RequestInit = null,
 ): Promise<any> {
@@ -58,56 +53,46 @@ async function throwingFetch(
   throw new FetchError(error.message, error.statusCode);
 }
 
-async function throwingPOST(url: string, body: unknown) {
-  return await throwingFetch(url, {
+async function doPost(url: string, body: unknown) {
+  return await doFetch(url, {
     method: "POST",
     body: JSON.stringify(body),
     headers: { "Content-Type": "application/json" },
   });
 }
 
-async function genericFetch<T>(
-  url: string,
-  init: RequestInit = null,
-): Promise<FetchResult<T>> {
-  try {
-    return {
-      data: await throwingFetch(url, init),
-      error: null,
-    };
-  } catch (e) {
-    console.warn(url, e.statusCode, e);
-    return {
-      data: null,
-      error: e,
-    };
-  }
-}
-
-export async function fetchAnimal(id: string): Promise<FetchResult<Animal>> {
+export async function fetchAnimal(id: string): Promise<Animal> {
   const url = getBackendUrl() + "/api/c/animals/" + id;
-  return genericFetch(url);
+  return doFetch(url);
 }
 
 export async function fetchAnimalImages(
   id: string,
-): Promise<FetchResult<AnimalImage[]>> {
+): Promise<AnimalImage[]> {
   const url = BACKEND_URL + "/api/c/animal-images/" + id;
-  return genericFetch(url);
+  return doFetch(url);
 }
 
-export async function fetchPage(id: string): Promise<FetchResult<PageModel>> {
+export async function fetchPage(id: string): Promise<PageModel> {
   const url = getBackendUrl() + "/api/c/pages/" + id;
-  return genericFetch(url);
+  return doFetch(url);
 }
 
 export async function fetchPageIds(): Promise<string[]> {
-  return await throwingFetch(SSR_BACKEND_URL + "/api/c/pages");
+  return await doFetch(SSR_BACKEND_URL + "/api/c/pages");
 }
 
-export async function fetchSettings(): Promise<FetchResult<Settings[]>> {
+export async function fetchSettings(): Promise<Settings[]> {
   const url = getBackendUrl() + "/api/settings";
-  return genericFetch(url);
+  return doFetch(url);
+}
+
+export type FetchAnimalsArgs = {
+  categories: AnimalCategory[];
+  vCaretakerType?: VirtualCaretakerType;
+  type?: AnimalType;
+  skip: number;
+  take: number;
 }
 
 export async function fetchAnimals({
@@ -116,55 +101,43 @@ export async function fetchAnimals({
   vCaretakerType,
   skip,
   take,
-}: {
-  categories: AnimalCategory[];
-  vCaretakerType: VirtualCaretakerType;
-  type: AnimalType;
-  skip: number;
-  take: number;
-}): Promise<FetchResult<AnimalListResult>> {
-  const url = `${BACKEND_URL}/api/c/animals?categories=${categories.join(
-    ",",
-  )}&vCaretakerType=${vCaretakerType}&type=${type}&skip=${skip}&take=${take}`;
-  return genericFetch(url);
+}: FetchAnimalsArgs): Promise<AnimalListResult> {
+  const params = new URLSearchParams({
+    categories: categories.join(","),
+    vCaretakerType,
+    type,
+    skip: skip.toString(),
+    take: take.toString(),
+  }).toString()
+
+  return doFetch(`${BACKEND_URL}/api/c/animals?${params}`);
 }
 
-export async function fetchAfterAdoptionAnimals(): Promise<
-  FetchResult<Animal[]>
-> {
+export async function fetchAfterAdoptionAnimals(): Promise<Animal[]> {
   const url = getBackendUrl() + "/api/c/animals/after-adoption?count=3";
-  return genericFetch(url);
+  return doFetch(url);
 }
 
-export async function fetchNews(id: string): Promise<FetchResult<News>> {
+export async function fetchNews(id: string): Promise<News> {
   const url = getBackendUrl() + "/api/c/news/" + id;
-  return genericFetch(url);
+  return doFetch(url);
 }
 
-export async function fetchRecentNews(): Promise<
-  FetchResult<NewsListElement[]>
-> {
+export async function fetchRecentNews(): Promise<NewsListElement[]> {
   const url = getBackendUrl() + "/api/c/news/recent?count=5";
-  return genericFetch(url);
+  return doFetch(url);
 }
 
 export async function fetchVolunteeringForm(
   props: VolunteeringFormFetch,
-): Promise<FetchResult<void>> {
+): Promise<void> {
   const url = BACKEND_URL + "/api/comms/volunteer";
-  return throwingPOST(url, props);
+  return doPost(url, props);
 }
 
 export async function fetchVAdoptionForm(
   props: VAdoptionFormFetch,
-): Promise<FetchResult<void>> {
+): Promise<void> {
   const url = BACKEND_URL + "/api/comms/v-adoption?";
-  return throwingPOST(url, props);
-}
-
-export async function fetchDogVolunteeringPage(): Promise<
-  FetchResult<PageModel>
-> {
-  const url = getBackendUrl() + "/api/c/pages/dog-volunteering";
-  return genericFetch(url);
+  return doPost(url, props);
 }

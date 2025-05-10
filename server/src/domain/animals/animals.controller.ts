@@ -57,12 +57,12 @@ export class AnimalsPublicController {
 
     const categories = [];
     for (const possibleCategory of (possibleCategories || '').split(',')) {
-      const c = getFromEnumOrUndefined<AnimalCategory>(
+      const category = getFromEnumOrUndefined<AnimalCategory>(
         possibleCategory,
         Object.keys(AnimalCategory),
       );
-      if (c) {
-        categories.push(c);
+      if (category) {
+        categories.push(category);
       }
     }
 

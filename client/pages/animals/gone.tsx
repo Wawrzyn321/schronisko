@@ -1,41 +1,37 @@
-import { AnimalCategory, Page as PageModel } from "@prisma-app/client";
-import { Page } from "components/Page/Page";
-import { Breadcrumbs } from "components/Breadcrumbs/Breadcrumbs";
-import { AnimalList } from "components/AnimalList/AnimalList";
-import { fetchPage } from "api/api";
-import React from "react";
+import { GetServerSidePropsContext } from "next";
+import { DehydratedState, HydrationBoundary } from "@tanstack/react-query";
 import { LayoutWrapper } from "components/LayoutWrapper/LayoutWrapper";
+import { Breadcrumbs } from "components/Breadcrumbs/Breadcrumbs";
+import { Page } from "components/Page/Page";
+import { AnimalList } from "components/AnimalList/AnimalList";
+import {
+  AnimalCategory,
+} from "@prisma-app/client";
+import { getGonePageServerSideProps } from "api/getServerSideProps";
 
 const ID_main = "odeszly";
 const ID_poem = "odeszly-wiersz";
 
-type GoneProps = {
-  ssrDescription: PageModel;
-  ssrPoem: PageModel;
-};
+type Props = {
+  initialPage: number;
+  dehydratedState: DehydratedState
+}
 
-export default function Gone(props: GoneProps) {
+export default function Gone({ dehydratedState, initialPage }: Props) {
   return (
-    <>
+    <HydrationBoundary state={dehydratedState}>
       <LayoutWrapper>
         <Breadcrumbs items={["Zwierzęta", "Odeszły"]} />
-        <Page id={ID_main} ssrPage={props.ssrDescription} />
+        <Page id={ID_main} />
         <div style={{ maxWidth: "30em" }}>
-          <Page id={ID_poem} ssrPage={props.ssrPoem} showTitle={false} />
+          <Page id={ID_poem} showTitle={false} />
         </div>
       </LayoutWrapper>
-      <AnimalList categories={[AnimalCategory.ZaTeczowymMostem]} />
-    </>
+      <AnimalList categories={[AnimalCategory.ZaTeczowymMostem]} initialPage={initialPage} />
+    </HydrationBoundary>
   );
 }
 
-export async function getServerSideProps(): Promise<{
-  props: GoneProps;
-}> {
-  return {
-    props: {
-      ssrDescription: (await fetchPage(ID_main)).data,
-      ssrPoem: (await fetchPage(ID_poem)).data,
-    },
-  };
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  return getGonePageServerSideProps(ID_main, ID_poem)(context);
 }

@@ -13,8 +13,8 @@ async function main(updateFiles: boolean) {
   console.log('UPDATE_FILES is ', updateFiles)
 
   await seedPages(prisma);
-  await seedNews(prisma, updateFiles);
   await seedUsers(prisma);
+  await seedNews(prisma, updateFiles);
   switch (process.env.NODE_ENV) {
     case "dev":
       await seedAnimals(prisma, UPDATE_FILES);

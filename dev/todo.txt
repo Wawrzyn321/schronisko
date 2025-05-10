@@ -2,7 +2,8 @@ po deployu:
     * maile (postmark key)
     * usuń admina
     * lepszy pieprz
-    * postmark verification
+    * postmark verification (albo https://emaillabs.io/)
+    * cors
 
 po https
     * Ustaw HSTS
@@ -13,3 +14,22 @@ po https
 seedowanie - lepiej zrobić export do prismy (+skrypt ./dev/deploy-prisma.sh) i na vpsie tylko ładować z JSONa
 
 lokalnie obrazki u Louisa dalej nie działają
+
+
+
+function useVoluteeringFormState() {
+  const [state, setState] = useState({
+    fullName: '',
+    email: '',
+    phoneNumber: '',
+    birthDate: '',
+    about: ''
+  })
+
+  const setProperty = (property: keyof typeof state, value: string) => setState(state => ({ ...state, [property]: value }))
+
+  return [state, setProperty]
+}
+
+
+useMutation

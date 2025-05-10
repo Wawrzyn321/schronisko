@@ -1,38 +1,27 @@
-import { Page as PageModel } from "@prisma-app/client";
 import { BigSection } from "components/MainPage/BigSection/BigSection";
 import { AfterAdoption } from "components/MainPage/AfterAdoption/AfterAdoption";
 import { GetInvolved } from "components/MainPage/GetInvolved/GetInvolved";
 import { DonateAndRecentlyFound } from "components/MainPage/DonateAndRecentlyFound/DonateAndRecentlyFound";
 
-import { fetchAfterAdoptionAnimals, fetchPage, fetchRecentNews } from "api/api";
-import { AfterAdoptionAnimal, NewsListElement } from "types";
+import { DehydratedState, HydrationBoundary } from "@tanstack/react-query";
+import { getMainPageServerSideProps } from "api/getServerSideProps";
 
-const ID = "glowna-adopcje";
+type Props = {
+  dehydratedState: DehydratedState
+}
 
-type HomeProps = {
-  ssrData: {
-    afterAdoptionAnimals: AfterAdoptionAnimal[];
-    recentNews: NewsListElement[];
-    mainPage: PageModel;
-  };
-};
-
-export default function Home({ ssrData }: HomeProps) {
+export default function Home({ dehydratedState }: Props) {
   return (
-    <>
-      <BigSection mainPage={ssrData.mainPage} recentNews={ssrData.recentNews} />
-      <AfterAdoption afterAdoptionAnimals={ssrData.afterAdoptionAnimals} />
+    <HydrationBoundary state={dehydratedState}>
+      <BigSection />
+      <AfterAdoption />
       <GetInvolved />
       <DonateAndRecentlyFound />
-    </>
+    </HydrationBoundary>
+
   );
 }
 
-export async function getServerSideProps(): Promise<{
-  props: HomeProps;
-}> {
-  const afterAdoptionAnimals = (await fetchAfterAdoptionAnimals()).data;
-  const recentNews = (await fetchRecentNews()).data;
-  const mainPage = (await fetchPage(ID)).data;
-  return { props: { ssrData: { afterAdoptionAnimals, recentNews, mainPage } } };
+export async function getServerSideProps() {
+  return getMainPageServerSideProps();
 }

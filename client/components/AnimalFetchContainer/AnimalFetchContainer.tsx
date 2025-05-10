@@ -1,17 +1,18 @@
 import { Animal } from "@prisma-app/client";
+import { useQuery } from "@tanstack/react-query";
+import { animalDetailsQueryOptions } from "api/queryOptions";
 import { ErrorWrapper, ERROR_ANIMAL_NOT_FOUND, ERROR_GENERIC } from "errors";
-import { useLoadAnimal } from "./useLoadAnimal";
+
+type Props = {
+  id: string;
+  Component: React.FunctionComponent<{ animal: Animal }>;
+}
 
 export function AnimalFetchContainer({
   id,
-  ssrAnimal,
   Component,
-}: {
-  id: string;
-  ssrAnimal: Animal;
-  Component: React.FunctionComponent<{ animal: Animal }>;
-}) {
-  const { error, animal } = useLoadAnimal(id, ssrAnimal);
+}: Props) {
+  const { data: animal, error } = useQuery(animalDetailsQueryOptions(id))
 
   return (
     <ErrorWrapper

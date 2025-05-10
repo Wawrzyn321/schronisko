@@ -1,24 +1,27 @@
 import Link from "next/link";
 import { Animal } from "@prisma-app/client";
 import { fetchAnimal } from "api/api";
-import { IdWrapper } from "components/IdWrapper";
-import { SSRContext } from "types";
 import { Breadcrumbs } from "components/Breadcrumbs/Breadcrumbs";
 import { AnimalFetchContainer } from "../../../components/AnimalFetchContainer/AnimalFetchContainer";
 import { Page } from "components/Page/Page";
 import { VAdoptionForm } from "../../../components/VAdoptionForm/VAdoptionForm";
+import { GetServerSidePropsContext } from "next";
+import { getAnimalDetailsServerSideProps } from "api/getServerSideProps";
+import { DehydratedState, HydrationBoundary } from "@tanstack/react-query";
 
-export default function AnimalWrapper({ ssrAnimal }: { ssrAnimal: Animal }) {
-  return <IdWrapper Component={AnimalComponent} ssrAnimal={ssrAnimal} />;
+type Props = {
+  animalId: string;
+  dehydratedState: DehydratedState
 }
 
-function AnimalComponent({ id, ssrAnimal }: { id: string; ssrAnimal: Animal }) {
+export default function AnimalWrapper({ animalId, dehydratedState }: Props) {
   return (
-    <AnimalFetchContainer
-      id={id}
-      ssrAnimal={ssrAnimal}
-      Component={VAdoptionDetails}
-    />
+    <HydrationBoundary state={dehydratedState}>
+      <AnimalFetchContainer
+        id={animalId}
+        Component={VAdoptionDetails}
+      />
+    </HydrationBoundary>
   );
 }
 
@@ -36,15 +39,12 @@ function VAdoptionDetails({ animal }: { animal: Animal }) {
           </Link>,
         ]}
       />
-      <Page id="info-po-adopcji-wirtualnej" ssrPage={null} />
+      <Page id="info-po-adopcji-wirtualnej" />
       <VAdoptionForm animal={animal} />
     </>
   );
 }
 
-export async function getServerSideProps(context: SSRContext): Promise<{
-  props: { ssrAnimal: Animal };
-}> {
-  const { id } = context.query;
-  return { props: { ssrAnimal: (await fetchAnimal(id)).data } };
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  return getAnimalDetailsServerSideProps(context)
 }

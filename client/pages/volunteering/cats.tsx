@@ -1,5 +1,7 @@
 import { Page as PageModel } from "@prisma-app/client";
+import { DehydratedState, HydrationBoundary } from "@tanstack/react-query";
 import { fetchPage } from "api/api";
+import { getSimplePageServerSideProps } from "api/getServerSideProps";
 import { Breadcrumbs } from "components/Breadcrumbs/Breadcrumbs";
 import { LayoutWrapper } from "components/LayoutWrapper/LayoutWrapper";
 import { Page } from "components/Page/Page";
@@ -7,18 +9,22 @@ import { VolunteeringForm } from "components/VolunteeringForm/VolunteeringForm";
 
 const ID = "wolontariat-kot";
 
-export default function VolunteerCats({ ssrPage }: { ssrPage: PageModel }) {
+type Props = {
+  dehydratedState: DehydratedState
+}
+
+export default function VolunteerCats({ dehydratedState }: Props) {
   return (
-    <LayoutWrapper>
-      <Breadcrumbs items={["Wolontariat", "Kot"]} />
-      <Page id={ID} ssrPage={ssrPage} />
-      <VolunteeringForm />
-    </LayoutWrapper>
+    <HydrationBoundary state={dehydratedState}>
+      <LayoutWrapper>
+        <Breadcrumbs items={["Wolontariat", "Kot"]} />
+        <Page id={ID} />
+        <VolunteeringForm />
+      </LayoutWrapper>
+    </HydrationBoundary>
   );
 }
 
-export async function getServerSideProps(): Promise<{
-  props: { ssrPage: PageModel };
-}> {
-  return { props: { ssrPage: (await fetchPage(ID)).data } };
+export async function getServerSideProps() {
+  return getSimplePageServerSideProps(ID);
 }

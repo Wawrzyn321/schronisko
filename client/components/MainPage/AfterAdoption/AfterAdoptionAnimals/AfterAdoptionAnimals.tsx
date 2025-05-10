@@ -5,6 +5,8 @@ import { buildAnimalImageUrl, buildAnimalUrl } from "api/config";
 import { Animal } from "@prisma-app/client";
 import Image from "next/image";
 import placeholderImage from "public/site/main/404_placeholder.png";
+import { useQuery } from "@tanstack/react-query";
+import { afterAdoptionQueryOptions } from "api/queryOptions";
 
 function AnimalImage({ animal }: { animal: AfterAdoptionAnimal }) {
   const imageSrc = buildAnimalImageUrl(animal);
@@ -22,11 +24,9 @@ function AnimalImage({ animal }: { animal: AfterAdoptionAnimal }) {
   );
 }
 
-export function AfterAdoptionAnimals({
-  afterAdoptionAnimals,
-}: {
-  afterAdoptionAnimals: AfterAdoptionAnimal[];
-}) {
+export function AfterAdoptionAnimals() {
+  const {data: afterAdoptionAnimals} = useQuery(afterAdoptionQueryOptions())
+
   if (!afterAdoptionAnimals) return null;
 
   const placeholders = new Array(3 - afterAdoptionAnimals.length).fill(null);

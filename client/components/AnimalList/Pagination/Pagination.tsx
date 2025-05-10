@@ -32,15 +32,17 @@ export function paginate<T>(
   return res;
 }
 
+type Props = {
+  currentPage: number;
+  pagesCount: number;
+  setCurrentPage: (page: number) => void;
+}
+
 export function Pagination({
   currentPage,
   pagesCount,
   setCurrentPage,
-}: {
-  currentPage: number;
-  pagesCount: number;
-  setCurrentPage: (page: number) => void;
-}) {
+}: Props) {
   const partitions = makePartitions(currentPage, pagesCount);
 
   return (
@@ -61,6 +63,7 @@ export function Pagination({
                 current === currentPage ? styles["pagination-current-item"] : ""
               }
               onClick={() => setCurrentPage(current)}
+              disabled={current === currentPage}
             >
               {current + 1}
             </button>
@@ -71,7 +74,7 @@ export function Pagination({
         disabled={currentPage === pagesCount - 1}
         onClick={() => setCurrentPage(currentPage + 1)}
       >
-        <Image src={arrow} alt="poprzednia strona" width={10} height={10} />
+        <Image src={arrow} alt="następna strona" width={10} height={10} />
       </button>
     </ul>
   );

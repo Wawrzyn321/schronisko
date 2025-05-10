@@ -12,8 +12,9 @@ import { Pagination } from "./Pagination/Pagination";
 import { Article } from "components/Article/Article";
 import { ERROR_ANIMAL_LIST } from "errors";
 import { AnimalModal, AnimalModalData } from "./AnimalModal/AnimalModal";
-import { useSearchParams } from "next/navigation";
-import { PAGE_SIZE, useLoadAnimals } from "./useLoadAnimals";
+import { useQuery } from "@tanstack/react-query";
+import { animalsQueryOptions } from "api/queryOptions";
+import { PAGE_SIZE } from "api/getServerSideProps";
 
 function NotFoundMessage() {
   return (
@@ -28,18 +29,17 @@ type AnimalListProps = {
   vCaretakerType?: VirtualCaretakerType;
   type?: AnimalType;
   withCategoryOverlay?: boolean;
+  initialPage: number;
 };
 
 export function AnimalList({
   categories = [],
-  vCaretakerType = null,
-  type = null,
+  vCaretakerType,
+  type,
   withCategoryOverlay = false,
+  initialPage,
 }: AnimalListProps) {
-  const searchParams = useSearchParams();
-  const targetPage = parseInt(searchParams.get("page") ?? "1") - 1;
-
-  const [currentPage, setCurrentPage] = useState(targetPage);
+  const [currentPage, setCurrentPage] = useState(initialPage);
   const [modalData, setModalData] = useState<AnimalModalData>({
     isOpen: false,
     animal: null,
@@ -54,12 +54,15 @@ export function AnimalList({
     setCurrentPage(pageNumber);
   };
 
-  const { animals, totalCount, error } = useLoadAnimals({
+  const { data, error , isLoading} = useQuery(animalsQueryOptions({
     categories,
     vCaretakerType,
-    currentPage,
     type,
-  });
+    skip: currentPage * PAGE_SIZE,
+    take: PAGE_SIZE,
+  }))
+
+  const { animals, totalCount } = data ?? { animals: [], totalCount: 0 };
 
   const pagesCount = Math.ceil(totalCount / PAGE_SIZE);
 
@@ -67,7 +70,7 @@ export function AnimalList({
     return <Article {...ERROR_ANIMAL_LIST} />;
   }
 
-  if (!animals.length) {
+  if (isLoading) {
     return <p>Ładowanie...</p>;
   }
 

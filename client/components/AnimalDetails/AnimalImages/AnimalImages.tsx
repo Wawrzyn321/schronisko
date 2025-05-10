@@ -3,12 +3,21 @@ import styles from "./AnimalImages.module.scss";
 import { Article } from "components/Article/Article";
 import { ERROR_ANIMAL_IMAGES } from "errors";
 import { LayoutWrapper } from "components/LayoutWrapper/LayoutWrapper";
-import { useLoadAnimalImages } from "./useLoadAnimalImages";
+import { useQuery } from "@tanstack/react-query";
+import { animalImagesQueryOptions } from "api/queryOptions";
 
 export function AnimalImages({ id }: { id: string }) {
-  const images = useLoadAnimalImages(id);
+  const {data: images, error} = useQuery(animalImagesQueryOptions(id))
 
-  if (images) {
+  if (error) {
+    return (
+      <LayoutWrapper>
+        <Article {...ERROR_ANIMAL_IMAGES} showTitle={false} />
+      </LayoutWrapper>
+    );
+  }
+
+  if (images?.length) {
     return (
       <ul className={styles["animal-images"]}>
         {images.map((i) => (
@@ -21,11 +30,7 @@ export function AnimalImages({ id }: { id: string }) {
         ))}
       </ul>
     );
-  } else {
-    return (
-      <LayoutWrapper>
-        <Article {...ERROR_ANIMAL_IMAGES} showTitle={false} />
-      </LayoutWrapper>
-    );
   }
+
+  return null;
 }
