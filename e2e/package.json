@@ -10,7 +10,7 @@
     "test:client": "npm run setup-db && npx playwright test client/",
     "test:client:dev": "npm run test:client -- --headed",
     "test:client:dev:debug": "npm run test:client -- --debug",
-    "typecheck": "tsc --noEmit",
+    "check": "tsc --noEmit",
     "report": "npx playwright show-report",
     "setup-db": "npm run typecheck && npm run test:setup --prefix=./../prisma && npm run test:seed --prefix=./../prisma"
   },
