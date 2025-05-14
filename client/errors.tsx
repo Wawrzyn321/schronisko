@@ -1,4 +1,3 @@
-import { FetchError } from "api/api";
 import { Article, ArticleProps } from "components/Article/Article";
 import React from "react";
 
