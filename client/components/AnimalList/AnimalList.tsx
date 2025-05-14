@@ -11,7 +11,7 @@ import { AnimalCard } from "./AnimalCard/AnimalCard";
 import { Pagination } from "./Pagination/Pagination";
 import { Article } from "components/Article/Article";
 import { ERROR_ANIMAL_LIST } from "errors";
-import { AnimalModal, AnimalModalData } from "./AnimalModal/AnimalModal";
+import { AnimalModal } from "./AnimalModal/AnimalModal";
 import { useQuery } from "@tanstack/react-query";
 import { animalsQueryOptions } from "api/queryOptions";
 import { PAGE_SIZE } from "api/getServerSideProps";
@@ -26,8 +26,8 @@ function NotFoundMessage() {
 
 type AnimalListProps = {
   categories?: AnimalCategory[];
-  vCaretakerType?: VirtualCaretakerType;
-  type?: AnimalType;
+  vCaretakerType?: VirtualCaretakerType | null;
+  type?: AnimalType | null;
   withCategoryOverlay?: boolean;
   initialPage: number;
 };
@@ -40,10 +40,7 @@ export function AnimalList({
   initialPage,
 }: AnimalListProps) {
   const [currentPage, setCurrentPage] = useState(initialPage);
-  const [modalData, setModalData] = useState<AnimalModalData>({
-    isOpen: false,
-    animal: null,
-  });
+  const [selectedAnimal, setSelectedAnimal] = useState<Animal | null>(null);
 
   const setPage = (pageNumber: number) => {
     window.history.replaceState(
@@ -54,13 +51,15 @@ export function AnimalList({
     setCurrentPage(pageNumber);
   };
 
-  const { data, error , isLoading} = useQuery(animalsQueryOptions({
-    categories,
-    vCaretakerType,
-    type,
-    skip: currentPage * PAGE_SIZE,
-    take: PAGE_SIZE,
-  }))
+  const { data, error, isLoading } = useQuery(
+    animalsQueryOptions({
+      categories,
+      vCaretakerType,
+      type,
+      skip: currentPage * PAGE_SIZE,
+      take: PAGE_SIZE,
+    }),
+  );
 
   const { animals, totalCount } = data ?? { animals: [], totalCount: 0 };
 
@@ -85,12 +84,7 @@ export function AnimalList({
                 animal={animal}
                 key={animal.id}
                 showOverlay={withCategoryOverlay}
-                openModal={(animal: Animal) => {
-                  setModalData({
-                    isOpen: true,
-                    animal,
-                  });
-                }}
+                openModal={setSelectedAnimal}
               />
             ))}
           </ul>
@@ -100,9 +94,9 @@ export function AnimalList({
             setCurrentPage={setPage}
           />
           <AnimalModal
-            isOpen={modalData.isOpen}
-            animal={modalData.animal}
-            close={() => setModalData({ animal: null, isOpen: false })}
+            isOpen={!!selectedAnimal}
+            animal={selectedAnimal}
+            close={() => setSelectedAnimal(null)}
           />
         </>
       ) : (

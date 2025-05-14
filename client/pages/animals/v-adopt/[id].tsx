@@ -10,16 +10,13 @@ import { DehydratedState, HydrationBoundary } from "@tanstack/react-query";
 
 type Props = {
   animalId: string;
-  dehydratedState: DehydratedState
-}
+  dehydratedState: DehydratedState;
+};
 
 export default function AnimalWrapper({ animalId, dehydratedState }: Props) {
   return (
     <HydrationBoundary state={dehydratedState}>
-      <AnimalFetchContainer
-        id={animalId}
-        Component={VAdoptionDetails}
-      />
+      <AnimalFetchContainer id={animalId} Component={VAdoptionDetails} />
     </HydrationBoundary>
   );
 }
@@ -45,5 +42,5 @@ function VAdoptionDetails({ animal }: { animal: Animal }) {
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  return getAnimalDetailsServerSideProps(context)
+  return getAnimalDetailsServerSideProps(context);
 }

@@ -8,8 +8,8 @@ import { VolunteeringForm } from "components/VolunteeringForm/VolunteeringForm";
 const ID = "wolontariat-kot";
 
 type Props = {
-  dehydratedState: DehydratedState
-}
+  dehydratedState: DehydratedState;
+};
 
 export default function VolunteerCats({ dehydratedState }: Props) {
   return (

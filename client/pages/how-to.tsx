@@ -6,8 +6,8 @@ import { Page } from "components/Page/Page";
 const ID = "jak-pomoc";
 
 type Props = {
-  dehydratedState: DehydratedState
-}
+  dehydratedState: DehydratedState;
+};
 
 export default function HowTo({ dehydratedState }: Props) {
   return (

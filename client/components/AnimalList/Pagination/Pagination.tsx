@@ -36,13 +36,9 @@ type Props = {
   currentPage: number;
   pagesCount: number;
   setCurrentPage: (page: number) => void;
-}
+};
 
-export function Pagination({
-  currentPage,
-  pagesCount,
-  setCurrentPage,
-}: Props) {
+export function Pagination({ currentPage, pagesCount, setCurrentPage }: Props) {
   const partitions = makePartitions(currentPage, pagesCount);
 
   return (

@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { settingsQueryOptions } from "api/queryOptions";
 
 export function useFetchAccountNo(): AdoptionModalProps {
-  const settingsQuery = useQuery(settingsQueryOptions())
+  const settingsQuery = useQuery(settingsQueryOptions());
 
   const getData = () => {
     if (!settingsQuery.data) {
@@ -15,11 +15,10 @@ export function useFetchAccountNo(): AdoptionModalProps {
     );
 
     return accountNoSetting?.value || "Nie podano numeru konta!";
-  }
-
+  };
 
   return {
     accountNo: getData(),
-    error: settingsQuery.error
+    error: settingsQuery.error,
   };
 }

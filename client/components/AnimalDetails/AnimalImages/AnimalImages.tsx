@@ -7,7 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { animalImagesQueryOptions } from "api/queryOptions";
 
 export function AnimalImages({ id }: { id: string }) {
-  const {data: images, error} = useQuery(animalImagesQueryOptions(id))
+  const { data: images, error } = useQuery(animalImagesQueryOptions(id));
 
   if (error) {
     return (

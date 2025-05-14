@@ -10,7 +10,7 @@ type ValidatedInputProps = {
   value: string;
   onChange: (value: ChangeEvent<HTMLInputElement>) => void;
   label: string;
-  triedSubmitCounter: number;
+  triedSubmitCounter: number | undefined;
   validationMessage: string;
   [x: string]: any;
 };
@@ -23,10 +23,12 @@ function ValidatedInput({
   validationMessage,
   ...inputProps
 }: ValidatedInputProps) {
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const showValidationMessage =
-    triedSubmitCounter > 0 && !inputRef.current.validity.valid;
+    triedSubmitCounter &&
+    triedSubmitCounter > 0 &&
+    !inputRef.current!.validity.valid;
 
   return (
     <label>
@@ -154,7 +156,7 @@ export function About({
   const [showMessage, setShowMessage] = useState(false);
 
   useEffect(() => {
-    if (triedSubmitCounter > 0) {
+    if (triedSubmitCounter && triedSubmitCounter > 0) {
       setShowMessage(!value);
     }
   }, [triedSubmitCounter, value]);

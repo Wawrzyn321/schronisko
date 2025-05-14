@@ -1,4 +1,4 @@
-import {  isSSR } from "./config";
+import { isSSR } from "./config";
 
 export class FetchError extends Error {
   statusCode: number;
@@ -11,9 +11,9 @@ export class FetchError extends Error {
 
 export async function doFetch(
   input: string,
-  init: RequestInit = null,
+  init: RequestInit | null = null,
 ): Promise<any> {
-  function createRequestOptions(): RequestInit {
+  function createRequestOptions(): RequestInit | null {
     if (input.startsWith("http://")) {
       return null;
     }

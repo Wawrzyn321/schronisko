@@ -15,7 +15,7 @@ function AnimalImage({ animal }: { animal: AfterAdoptionAnimal }) {
 
   return (
     <div className={styles["animal-image"]}>
-      <img src={imageSrc} alt={animal.imageName} />
+      <img src={imageSrc} alt={animal.imageName ?? ""} />
 
       <div className={styles["animal-image__link"]}>
         <Link href={animalUrl}>{linkText}</Link>
@@ -25,7 +25,7 @@ function AnimalImage({ animal }: { animal: AfterAdoptionAnimal }) {
 }
 
 export function AfterAdoptionAnimals() {
-  const {data: afterAdoptionAnimals} = useQuery(afterAdoptionQueryOptions())
+  const { data: afterAdoptionAnimals } = useQuery(afterAdoptionQueryOptions());
 
   if (!afterAdoptionAnimals) return null;
 

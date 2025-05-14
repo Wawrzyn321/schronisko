@@ -7,8 +7,8 @@ import { fetchPageIds } from "api/queries";
 
 type Props = {
   pageId: string;
-  dehydratedState: DehydratedState
-}
+  dehydratedState: DehydratedState;
+};
 
 export default function PageComponent({ pageId, dehydratedState }: Props) {
   return (
@@ -32,5 +32,5 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticPropsProps(context: GetServerSidePropsContext) {
-  return getGenericPageServerSideProps(context)
+  return getGenericPageServerSideProps(context);
 }

@@ -3,15 +3,15 @@ import { BACKEND_URL } from "./config";
 import { doPost } from "./api";
 
 export async function submitVolunteeringForm(
-    props: VolunteeringFormFetch,
+  props: VolunteeringFormFetch,
 ): Promise<void> {
-    const url = BACKEND_URL + "/api/comms/volunteer";
-    return doPost(url, props);
+  const url = BACKEND_URL + "/api/comms/volunteer";
+  return doPost(url, props);
 }
 
 export async function submitVAdoptionForm(
-    props: VAdoptionFormFetch,
+  props: VAdoptionFormFetch,
 ): Promise<void> {
-    const url = BACKEND_URL + "/api/comms/v-adoption?";
-    return doPost(url, props);
+  const url = BACKEND_URL + "/api/comms/v-adoption?";
+  return doPost(url, props);
 }

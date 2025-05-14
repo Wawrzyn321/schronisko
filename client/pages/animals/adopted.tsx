@@ -13,8 +13,8 @@ const CATEGORIES = [AnimalCategory.ZnalazlyDom];
 
 type Props = {
   initialPage: number;
-  dehydratedState: DehydratedState
-}
+  dehydratedState: DehydratedState;
+};
 export default function Adopted({ dehydratedState, initialPage }: Props) {
   return (
     <HydrationBoundary state={dehydratedState}>
@@ -22,11 +22,15 @@ export default function Adopted({ dehydratedState, initialPage }: Props) {
         <Breadcrumbs items={["Zwierzęta", "Znalazły dom"]} />
         <Page id={ID} />
       </LayoutWrapper>
-      <AnimalList categories={CATEGORIES} initialPage={initialPage}/>
+      <AnimalList categories={CATEGORIES} initialPage={initialPage} />
     </HydrationBoundary>
   );
 }
 
-export async function getServerSideProps(context: GetServerSidePropsContext): Promise<{ props: Props }> {
-  return getAnimalListPageServerSideProps(ID, {categories: CATEGORIES})(context)
+export async function getServerSideProps(
+  context: GetServerSidePropsContext,
+): Promise<{ props: Props }> {
+  return getAnimalListPageServerSideProps(ID, { categories: CATEGORIES })(
+    context,
+  );
 }

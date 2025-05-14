@@ -4,7 +4,7 @@ import { useState } from "react";
 import styles from "./SimpleModal.module.scss";
 
 type useSimpleModalProps = {
-  text: JSX.Element;
+  text: React.ReactNode;
   image: StaticImageData;
   title: string;
 };

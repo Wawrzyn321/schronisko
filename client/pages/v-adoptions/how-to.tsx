@@ -7,13 +7,15 @@ import { getSimplePageServerSideProps } from "api/getServerSideProps";
 const ID = "jak-adoptowac-wirtualnie";
 
 type Props = {
-  dehydratedState: DehydratedState
-}
+  dehydratedState: DehydratedState;
+};
 export default function VirtualHowTo({ dehydratedState }: Props) {
   return (
     <HydrationBoundary state={dehydratedState}>
       <LayoutWrapper>
-        <Breadcrumbs items={["Adopcje wirtualne", "Jak adoptować wirtualnie"]} />
+        <Breadcrumbs
+          items={["Adopcje wirtualne", "Jak adoptować wirtualnie"]}
+        />
         <Page id={ID} />
       </LayoutWrapper>
     </HydrationBoundary>

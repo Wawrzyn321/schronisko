@@ -4,9 +4,7 @@ import { LayoutWrapper } from "components/LayoutWrapper/LayoutWrapper";
 import { Breadcrumbs } from "components/Breadcrumbs/Breadcrumbs";
 import { Page } from "components/Page/Page";
 import { AnimalList } from "components/AnimalList/AnimalList";
-import {
-  AnimalCategory,
-} from "@prisma-app/client";
+import { AnimalCategory } from "@prisma-app/client";
 import { getGonePageServerSideProps } from "api/getServerSideProps";
 
 const ID_main = "odeszly";
@@ -14,8 +12,8 @@ const ID_poem = "odeszly-wiersz";
 
 type Props = {
   initialPage: number;
-  dehydratedState: DehydratedState
-}
+  dehydratedState: DehydratedState;
+};
 
 export default function Gone({ dehydratedState, initialPage }: Props) {
   return (
@@ -27,7 +25,10 @@ export default function Gone({ dehydratedState, initialPage }: Props) {
           <Page id={ID_poem} showTitle={false} />
         </div>
       </LayoutWrapper>
-      <AnimalList categories={[AnimalCategory.ZaTeczowymMostem]} initialPage={initialPage} />
+      <AnimalList
+        categories={[AnimalCategory.ZaTeczowymMostem]}
+        initialPage={initialPage}
+      />
     </HydrationBoundary>
   );
 }

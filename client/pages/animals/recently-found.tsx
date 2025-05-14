@@ -14,7 +14,7 @@ const CATEGORIES = [AnimalCategory.NiedawnoZnalezione];
 type Props = {
   initialPage: number;
   dehydratedState: DehydratedState;
-}
+};
 
 export default function RecentlyFound({ dehydratedState, initialPage }: Props) {
   return (
@@ -28,6 +28,10 @@ export default function RecentlyFound({ dehydratedState, initialPage }: Props) {
   );
 }
 
-export async function getServerSideProps(context: GetServerSidePropsContext): Promise<{ props: Props }> {
-  return getAnimalListPageServerSideProps(ID, { categories: CATEGORIES })(context)
+export async function getServerSideProps(
+  context: GetServerSidePropsContext,
+): Promise<{ props: Props }> {
+  return getAnimalListPageServerSideProps(ID, { categories: CATEGORIES })(
+    context,
+  );
 }

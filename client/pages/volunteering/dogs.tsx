@@ -9,8 +9,8 @@ import { DehydratedState, HydrationBoundary } from "@tanstack/react-query";
 const ID = "dog-volunteering";
 
 type Props = {
-  dehydratedState: DehydratedState
-}
+  dehydratedState: DehydratedState;
+};
 
 export default function VolunteerDogs({ dehydratedState }: Props) {
   return (

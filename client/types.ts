@@ -10,10 +10,7 @@ export type NewsListElement = Pick<
   "id" | "description" | "title" | "createdAt" | "isPublished" | "imageName"
 >;
 
-export type PageFetchFn = (
-  id: string,
-  isSSR?: boolean,
-) => Promise<PageModel>;
+export type PageFetchFn = (id: string, isSSR?: boolean) => Promise<PageModel>;
 
 export type FormCaptcha = {
   id: string;
@@ -26,7 +23,7 @@ export type VolunteeringFormFetch = {
   phoneNumber: string;
   birthDate: string;
   about: string;
-  captchaToken: string;
+  captchaToken: string | null;
 };
 
 export type VAdoptionFormFetch = {
@@ -37,7 +34,7 @@ export type VAdoptionFormFetch = {
   animalId: string;
   animalName: string;
   animalRefNo: string;
-  captchaToken: string;
+  captchaToken: string | null;
 };
 
 export type AnimalListResult = {

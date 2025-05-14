@@ -8,8 +8,10 @@ type CaptchaProps = {
 export function Captcha({ onCaptcha }: CaptchaProps) {
   useEffect(() => {
     // data-callback cannot be a function
+    // @ts-ignore
     window["onCaptcha"] = onCaptcha;
     return () => {
+      // @ts-ignore
       delete window["onCaptcha"];
     };
   });

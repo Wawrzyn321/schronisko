@@ -20,15 +20,15 @@ export function VAdoptionForm({ animal }: { animal: Animal }) {
   const adoptionModalProps = useFetchAccountNo();
 
   const [formData, setFormData] = useFormDataState({
-    fullName: '',
-    vCaretakerName: '',
-    email: '',
-    additionalMessage: '',
-    captchaToken: null
+    fullName: "",
+    vCaretakerName: "",
+    email: "",
+    additionalMessage: "",
+    captchaToken: null,
   });
 
   const [showAdoptionModal, setShowAdoptionModal] = useState(false);
-  const [errorModal, showErrorModal] = useErrorModal()
+  const [errorModal, showErrorModal] = useErrorModal();
 
   const submit = useMutation({
     mutationFn: () => {
@@ -36,16 +36,15 @@ export function VAdoptionForm({ animal }: { animal: Animal }) {
         animalId: animal.id,
         animalName: animal.name,
         animalRefNo: animal.refNo,
-      }
+      };
       return submitVAdoptionForm({
         ...formData,
-        ...animalData
+        ...animalData,
       });
     },
     onError: showErrorModal,
     onSuccess: () => setShowAdoptionModal(true),
-  })
-
+  });
 
   return (
     <>
@@ -65,27 +64,30 @@ export function VAdoptionForm({ animal }: { animal: Animal }) {
             <div className="form-grid-2">
               <FullName
                 value={formData.fullName}
-                setValue={setFormData('fullName')}
+                setValue={setFormData("fullName")}
                 triedSubmitCounter={triedSubmitCounter}
               />
               <Email
                 value={formData.email}
-                setValue={setFormData('email')}
+                setValue={setFormData("email")}
                 triedSubmitCounter={triedSubmitCounter}
               />
             </div>
             <VCaretakerName
               value={formData.vCaretakerName}
-              setValue={setFormData('vCaretakerName')}
+              setValue={setFormData("vCaretakerName")}
               triedSubmitCounter={triedSubmitCounter}
             />
             <AdditionalMessage
               value={formData.additionalMessage}
-              setValue={setFormData('additionalMessage')}
+              setValue={setFormData("additionalMessage")}
             />
             <div className="form-grid-3">
-              <Captcha onCaptcha={setFormData('captchaToken')} />
-              <button disabled={!formData.captchaToken} className="form--button">
+              <Captcha onCaptcha={setFormData("captchaToken")} />
+              <button
+                disabled={!formData.captchaToken}
+                className="form--button"
+              >
                 Wyślij
               </button>
             </div>

@@ -45,8 +45,8 @@ export const ERROR_VOLUNTEERING_FORM: ErrorProps = {
 
 type ErrorWrapperProps = {
   isLoaded: boolean;
-  error: Error;
-  children: JSX.Element;
+  error: Error | null;
+  children: React.ReactNode;
   errorGeneric: ErrorProps & { showTitle?: boolean };
   error404?: ErrorProps & { showTitle?: boolean };
 };
@@ -59,7 +59,7 @@ export function ErrorWrapper({
   error404,
 }: ErrorWrapperProps): JSX.Element {
   if (error) {
-    if ('statusCode' in error && error.statusCode === 404 && error404) {
+    if ("statusCode" in error && error.statusCode === 404 && error404) {
       return <Article {...error404} />;
     } else {
       return <Article {...errorGeneric} />;
@@ -67,6 +67,6 @@ export function ErrorWrapper({
   } else if (!isLoaded) {
     return <p>Ładowanie...</p>;
   } else {
-    return children;
+    return <>{children}</>;
   }
 }

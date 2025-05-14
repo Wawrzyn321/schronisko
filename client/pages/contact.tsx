@@ -6,8 +6,8 @@ import { Page } from "components/Page/Page";
 const ID = "kontakt";
 
 type Props = {
-  dehydratedState: DehydratedState
-}
+  dehydratedState: DehydratedState;
+};
 
 export default function Contact({ dehydratedState }: Props) {
   return (

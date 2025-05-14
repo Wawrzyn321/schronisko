@@ -7,8 +7,8 @@ import { DehydratedState, HydrationBoundary } from "@tanstack/react-query";
 import { getMainPageServerSideProps } from "api/getServerSideProps";
 
 type Props = {
-  dehydratedState: DehydratedState
-}
+  dehydratedState: DehydratedState;
+};
 
 export default function Home({ dehydratedState }: Props) {
   return (
@@ -18,7 +18,6 @@ export default function Home({ dehydratedState }: Props) {
       <GetInvolved />
       <DonateAndRecentlyFound />
     </HydrationBoundary>
-
   );
 }
 

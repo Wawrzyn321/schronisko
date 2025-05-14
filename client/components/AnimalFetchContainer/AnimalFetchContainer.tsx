@@ -6,13 +6,10 @@ import { ErrorWrapper, ERROR_ANIMAL_NOT_FOUND, ERROR_GENERIC } from "errors";
 type Props = {
   id: string;
   Component: React.FunctionComponent<{ animal: Animal }>;
-}
+};
 
-export function AnimalFetchContainer({
-  id,
-  Component,
-}: Props) {
-  const { data: animal, error } = useQuery(animalDetailsQueryOptions(id))
+export function AnimalFetchContainer({ id, Component }: Props) {
+  const { data: animal, error } = useQuery(animalDetailsQueryOptions(id));
 
   return (
     <ErrorWrapper
@@ -21,7 +18,7 @@ export function AnimalFetchContainer({
       errorGeneric={ERROR_GENERIC}
       error404={ERROR_ANIMAL_NOT_FOUND}
     >
-      <Component animal={animal} />
+      {animal && <Component animal={animal} />}
     </ErrorWrapper>
   );
 }

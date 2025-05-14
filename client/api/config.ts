@@ -25,7 +25,7 @@ export const buildAnimalUrl = (animalId: string) => {
 
 export const buildAnimalImageUrl = (animal: {
   type: AnimalType;
-  imageName: string;
+  imageName: string | null;
 }) => {
   if (animal.imageName) {
     return ANIMAL_IMAGES_URL + "/" + animal.imageName;

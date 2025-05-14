@@ -2,12 +2,15 @@ import { Page } from "components/Page/Page";
 import styles from "./VAdoptionModalContent.module.scss";
 
 export type AdoptionModalProps = {
-  accountNo: string;
-  error: Error;
+  accountNo: string | null;
+  error: Error | null;
 };
 
-export function VAdoptionModalContent({ accountNo, error }: AdoptionModalProps) {
-  if (error) {
+export function VAdoptionModalContent({
+  accountNo,
+  error,
+}: AdoptionModalProps) {
+  if (error || !accountNo) {
     return <p>Ups... coś poszło nie tak.</p>;
   }
 

@@ -14,15 +14,18 @@ const V_CARETAKER_TYPE = VirtualCaretakerType.Szuka;
 const CATEGORIES = [
   AnimalCategory.DoAdopcji,
   AnimalCategory.PilniePotrzebuja,
-  AnimalCategory.Weterani
-]
+  AnimalCategory.Weterani,
+];
 
 type Props = {
   initialPage: number;
-  dehydratedState: DehydratedState
-}
+  dehydratedState: DehydratedState;
+};
 
-export default function VirtualToAdopt({ dehydratedState, initialPage }: Props) {
+export default function VirtualToAdopt({
+  dehydratedState,
+  initialPage,
+}: Props) {
   return (
     <HydrationBoundary state={dehydratedState}>
       <LayoutWrapper>
@@ -39,9 +42,11 @@ export default function VirtualToAdopt({ dehydratedState, initialPage }: Props) 
   );
 }
 
-export async function getServerSideProps(context: GetServerSidePropsContext): Promise<{ props: Props }> {
+export async function getServerSideProps(
+  context: GetServerSidePropsContext,
+): Promise<{ props: Props }> {
   return getAnimalListPageServerSideProps(ID, {
     vCaretakerType: V_CARETAKER_TYPE,
-    categories: CATEGORIES
-  })(context)
+    categories: CATEGORIES,
+  })(context);
 }

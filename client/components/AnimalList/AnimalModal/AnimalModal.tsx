@@ -3,20 +3,13 @@ import { buildAnimalImageUrl } from "api/config";
 import { Modal } from "components/Modal";
 import styles from "./AnimalModal.module.scss";
 
-export type AnimalModalData = {
+type Props = {
   isOpen: boolean;
-  animal: Animal;
+  animal: Animal | null;
+  close: () => void;
 };
 
-export function AnimalModal({
-  isOpen,
-  animal,
-  close,
-}: {
-  isOpen: boolean;
-  animal: Animal;
-  close: () => void;
-}) {
+export function AnimalModal({ isOpen, animal, close }: Props) {
   if (!animal) return null;
 
   const bwMode = animal.category === AnimalCategory.ZaTeczowymMostem;

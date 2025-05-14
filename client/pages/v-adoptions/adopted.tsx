@@ -16,28 +16,37 @@ const CATEGORIES = [
   AnimalCategory.DoAdopcji,
   AnimalCategory.PilniePotrzebuja,
   AnimalCategory.Weterani,
-]
+];
 
 type Props = {
   initialPage: number;
-  dehydratedState: DehydratedState
-}
+  dehydratedState: DehydratedState;
+};
 
-export default function VirtualAdopted({ dehydratedState, initialPage }: Props) {
+export default function VirtualAdopted({
+  dehydratedState,
+  initialPage,
+}: Props) {
   return (
     <HydrationBoundary state={dehydratedState}>
       <LayoutWrapper>
         <Breadcrumbs items={["Adopcje wirtualne", "Znalazły opiekunów"]} />
         <Page id={ID} />
       </LayoutWrapper>
-      <AnimalList categories={CATEGORIES} initialPage={initialPage} vCaretakerType={VirtualCaretakerType.Znalazl} />
+      <AnimalList
+        categories={CATEGORIES}
+        initialPage={initialPage}
+        vCaretakerType={VirtualCaretakerType.Znalazl}
+      />
     </HydrationBoundary>
   );
 }
 
-export async function getServerSideProps(context: GetServerSidePropsContext): Promise<{ props: Props }> {
+export async function getServerSideProps(
+  context: GetServerSidePropsContext,
+): Promise<{ props: Props }> {
   return getAnimalListPageServerSideProps(ID, {
     vCaretakerType: V_CARETAKER_TYPE,
-    categories: CATEGORIES
-  })(context)
+    categories: CATEGORIES,
+  })(context);
 }

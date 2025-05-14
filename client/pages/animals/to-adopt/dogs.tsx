@@ -1,18 +1,12 @@
-import {
-  DehydratedState,
-  HydrationBoundary,
-} from '@tanstack/react-query'
-import {
-  AnimalCategory,
-  AnimalType,
-} from "@prisma-app/client";
+import { DehydratedState, HydrationBoundary } from "@tanstack/react-query";
+import { AnimalCategory, AnimalType } from "@prisma-app/client";
 import { AnimalList } from "components/AnimalList/AnimalList";
 import { Breadcrumbs } from "components/Breadcrumbs/Breadcrumbs";
 import { LayoutWrapper } from "components/LayoutWrapper/LayoutWrapper";
 import { Page } from "components/Page/Page";
 import React from "react";
-import { getAnimalListPageServerSideProps } from 'api/getServerSideProps';
-import { GetServerSidePropsContext } from 'next';
+import { getAnimalListPageServerSideProps } from "api/getServerSideProps";
+import { GetServerSidePropsContext } from "next";
 
 const ID = "psy-do-adopcji";
 
@@ -26,8 +20,8 @@ const ANIMAL_TYPE = AnimalType.DOG;
 
 type Props = {
   initialPage: number;
-  dehydratedState: DehydratedState
-}
+  dehydratedState: DehydratedState;
+};
 
 export default function DogsToAdopt({ dehydratedState, initialPage }: Props) {
   return (
@@ -46,9 +40,11 @@ export default function DogsToAdopt({ dehydratedState, initialPage }: Props) {
   );
 }
 
-export async function getServerSideProps(context: GetServerSidePropsContext): Promise<{ props: Props }> {
+export async function getServerSideProps(
+  context: GetServerSidePropsContext,
+): Promise<{ props: Props }> {
   return getAnimalListPageServerSideProps(ID, {
     categories: CATEGORIES,
-    type: ANIMAL_TYPE
-  })(context)
+    type: ANIMAL_TYPE,
+  })(context);
 }

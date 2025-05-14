@@ -5,15 +5,12 @@ import { pageQueryOptions } from "api/queryOptions";
 import { useQuery } from "@tanstack/react-query";
 
 type PageProps = {
-  id?: string;
+  id: string;
   showTitle?: boolean;
 };
 
-export function Page({
-  id,
-  showTitle = true,
-}: PageProps) {
-  const { data: page, error } = useQuery(pageQueryOptions(id))
+export function Page({ id, showTitle = true }: PageProps) {
+  const { data: page, error } = useQuery(pageQueryOptions(id));
 
   return (
     <ErrorWrapper
@@ -22,11 +19,13 @@ export function Page({
       errorGeneric={{ ...ERROR_PAGE, showTitle }}
       error404={{ ...ERROR_PAGE_NOT_FOUND, showTitle }}
     >
-      <Article
-        title={page?.title}
-        content={page?.content}
-        showTitle={showTitle}
-      />
+      {page && (
+        <Article
+          title={page.title}
+          content={page.content}
+          showTitle={showTitle}
+        />
+      )}
     </ErrorWrapper>
   );
 }

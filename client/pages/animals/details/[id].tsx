@@ -12,17 +12,14 @@ import { getAnimalDetailsServerSideProps } from "api/getServerSideProps";
 
 type Props = {
   animalId: string;
-  dehydratedState: DehydratedState
-}
+  dehydratedState: DehydratedState;
+};
 
 export default function AnimalWrapper({ animalId, dehydratedState }: Props) {
   return (
     <HydrationBoundary state={dehydratedState}>
       <LayoutWrapper>
-        <AnimalFetchContainer
-          id={animalId}
-          Component={AnimalDetails}
-        />
+        <AnimalFetchContainer id={animalId} Component={AnimalDetails} />
       </LayoutWrapper>
     </HydrationBoundary>
   );
@@ -40,5 +37,5 @@ function AnimalDetails({ animal }: { animal: Animal }) {
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  return getAnimalDetailsServerSideProps(context)
+  return getAnimalDetailsServerSideProps(context);
 }
