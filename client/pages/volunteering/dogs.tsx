@@ -2,9 +2,15 @@ import { Breadcrumbs } from "components/Breadcrumbs/Breadcrumbs";
 import { LayoutWrapper } from "components/LayoutWrapper/LayoutWrapper";
 import { Page } from "components/Page/Page";
 import React from "react";
-import { DogVolunteeringWrapper } from "../../components/DogVolunteeringWrapper/DogVolunteeringWrapper";
 import { getDogVolunteeringServerSideProps } from "api/getServerSideProps";
-import { DehydratedState, HydrationBoundary } from "@tanstack/react-query";
+import {
+  DehydratedState,
+  HydrationBoundary,
+  useQuery,
+} from "@tanstack/react-query";
+import { VolunteeringForm } from "components/VolunteeringForm/VolunteeringForm";
+import { AnimalType } from "@prisma-app/client";
+import { dogVolunteeringQueryOptions } from "api/queryOptions";
 
 const ID = "dog-volunteering";
 
@@ -13,12 +19,18 @@ type Props = {
 };
 
 export default function VolunteerDogs({ dehydratedState }: Props) {
+  const { data: isDogVolunteeringEnabled } = useQuery(
+    dogVolunteeringQueryOptions(),
+  );
+
   return (
     <HydrationBoundary state={dehydratedState}>
       <LayoutWrapper>
         <Breadcrumbs items={["Wolontariat", "Pies"]} />
         <Page id={ID} />
-        <DogVolunteeringWrapper />
+        {isDogVolunteeringEnabled && (
+          <VolunteeringForm animalType={AnimalType.DOG} />
+        )}
       </LayoutWrapper>
     </HydrationBoundary>
   );

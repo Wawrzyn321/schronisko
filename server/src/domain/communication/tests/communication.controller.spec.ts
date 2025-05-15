@@ -4,6 +4,7 @@ import { CommunicationController } from '../communication.controller';
 import { CommunicationService } from '../communication.service';
 import { VAdoptionFormFetch, VolunteeringFormFetch } from '../common';
 import { CaptchaServiceInterface, MailServiceInterface } from '../interface';
+import { AnimalType } from '@prisma-app/client';
 
 const mockVolunteeringRequest: VolunteeringFormFetch = {
   about: 'about',
@@ -12,6 +13,7 @@ const mockVolunteeringRequest: VolunteeringFormFetch = {
   phoneNumber: '123',
   birthDate: 'now',
   captchaToken: 'test-token',
+  animalType: AnimalType.CAT,
 };
 
 const mockVAdoptionRequest: VAdoptionFormFetch = {
@@ -102,6 +104,7 @@ describe('CommunicationController', () => {
       phoneNumber: '123',
       birthDate: 'now',
       captchaToken: 'test-token',
+      animalType: AnimalType.CAT,
     };
 
     const sendMailMock = jest.fn();

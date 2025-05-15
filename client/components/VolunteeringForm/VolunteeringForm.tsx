@@ -6,8 +6,13 @@ import { useFormDataState } from "util/useFormDataState";
 import { useErrorModal } from "components/SimpleModal/useErrorModal";
 import { useSuccessModal } from "components/SimpleModal/useSuccessModal";
 import { useMutation } from "@tanstack/react-query";
+import { AnimalType } from "@prisma-app/client";
 
-export function VolunteeringForm() {
+type Props = {
+  animalType: AnimalType;
+};
+
+export function VolunteeringForm({ animalType }: Props) {
   const [formData, setFormData] = useFormDataState({
     fullName: "",
     email: "",
@@ -21,7 +26,7 @@ export function VolunteeringForm() {
   const [errorModal, showErrorModal] = useErrorModal();
 
   const submit = useMutation({
-    mutationFn: () => submitVolunteeringForm(formData),
+    mutationFn: () => submitVolunteeringForm(formData, animalType),
     onError: showErrorModal,
     onSuccess: showSuccessModal,
   });

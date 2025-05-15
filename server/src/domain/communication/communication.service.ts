@@ -38,6 +38,7 @@ export class CommunicationService {
         telefon: ${props.phoneNumber}
         data urodzenia: ${props.birthDate}
         coś więcej?: ${props.about}
+        type: ${props.animalType}
       `,
       );
 

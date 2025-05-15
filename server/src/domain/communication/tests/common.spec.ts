@@ -4,6 +4,7 @@ import {
   VolunteeringFormFetch,
   VAdoptionFormFetch,
 } from '../common';
+import { AnimalType } from '@prisma-app/client';
 
 function makeVolunteeringData(): VolunteeringFormFetch {
   return {
@@ -13,6 +14,7 @@ function makeVolunteeringData(): VolunteeringFormFetch {
     phoneNumber: '123',
     birthDate: 'now',
     captchaToken: 'test-token',
+    animalType: AnimalType.CAT,
   };
 }
 

@@ -2,6 +2,10 @@
   display: flex;
   flex-wrap: wrap;
   padding-left: 0;
+
+  &--loading {
+    filter: blur(5px);
+  }
 }
 
 .not-found-message {

@@ -10,6 +10,7 @@ import {
   fetchRecentNews,
   fetchSettings,
 } from "./queries";
+import type { Settings } from "@prisma-app/client";
 
 const COMMON_OPTIONS = {
   staleTime: 60_1000,
@@ -43,14 +44,41 @@ export function animalsQueryOptions(args: FetchAnimalsArgs) {
   return queryOptions({
     queryKey: ["animals", defaultedArgs],
     queryFn: () => fetchAnimals(defaultedArgs),
+    placeholderData: (previousData) => previousData,
     ...COMMON_OPTIONS,
   });
 }
 
-export function settingsQueryOptions() {
+export function accountNoQueryOptions() {
+  const selectAccountNo = (settings: Settings[]) => {
+    const accountNoSetting = settings.find(
+      (s) => s.id === "V_ADOPTION_ACCOUNT_NUMBER",
+    );
+
+    return accountNoSetting?.value || "Nie podano numeru konta!";
+  };
+
   return queryOptions({
     queryKey: ["settings"],
     queryFn: fetchSettings,
+    select: selectAccountNo,
+    ...COMMON_OPTIONS,
+  });
+}
+
+export function dogVolunteeringQueryOptions() {
+  const selectDogVolunteering = (settings: Settings[]) => {
+    const dogVoluteeringSetting = settings.find(
+      (s) => s.id === "DOG_VOLUNTEERING_ENABLED",
+    );
+
+    return dogVoluteeringSetting?.value === "true";
+  };
+
+  return queryOptions({
+    queryKey: ["settings"],
+    queryFn: fetchSettings,
+    select: selectDogVolunteering,
     ...COMMON_OPTIONS,
   });
 }

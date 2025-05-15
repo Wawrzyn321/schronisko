@@ -14,7 +14,8 @@
     "dev:e2e": "concurrently 'npm run dev' 'npm run redis'",
     "redis": "redis-server",
     "dev:test": "dotenv -e ../prisma/.env.test -- nest start --watch",
-    "test": "REDIS_URL='DISABLED' DATABASE_URL='postgres://DONT USE IT' jest"
+    "test": "REDIS_URL='DISABLED' DATABASE_URL='postgres://DONT USE IT' jest",
+    "format": "prettier --write \"**/*.ts\""
   },
   "dependencies": {
     "@nestjs/common": "^10.3.8",

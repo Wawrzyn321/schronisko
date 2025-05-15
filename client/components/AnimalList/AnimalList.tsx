@@ -51,7 +51,7 @@ export function AnimalList({
     setCurrentPage(pageNumber);
   };
 
-  const { data, error, isLoading } = useQuery(
+  const { data, error, isFetching } = useQuery(
     animalsQueryOptions({
       categories,
       vCaretakerType,
@@ -69,16 +69,16 @@ export function AnimalList({
     return <Article {...ERROR_ANIMAL_LIST} />;
   }
 
-  if (isLoading) {
-    return <p>Ładowanie...</p>;
-  }
+  const listClasses = isFetching
+    ? `${styles["animals-list"]} ${styles["animals-list--loading"]}`
+    : styles["animals-list"];
 
   return (
     <>
       {withCategoryOverlay && <AnimalCategoryLegend />}
       {animals.length ? (
         <>
-          <ul className={styles["animals-list"]}>
+          <ul className={listClasses}>
             {animals.map((animal: Animal) => (
               <AnimalCard
                 animal={animal}

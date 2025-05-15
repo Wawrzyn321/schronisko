@@ -18,3 +18,7 @@ seedowanie - lepiej zrobić export do prismy (+skrypt ./dev/deploy-prisma.sh) i 
 lokalnie obrazki u Louisa dalej nie działają
 
 sprawdź czy rerender pages po edycji działa
+testy klienta -  https://tkdodo.eu/blog/testing-react-query
+                const { result } = renderHook(() => useCustomHook(), {
+                wrapper: createWrapper(),
+            })

@@ -1,12 +1,14 @@
 import { VAdoptionFormFetch, VolunteeringFormFetch } from "types";
 import { BACKEND_URL } from "./config";
 import { doPost } from "./api";
+import { AnimalType } from "@prisma-app/client";
 
 export async function submitVolunteeringForm(
   props: VolunteeringFormFetch,
+  animalType: AnimalType,
 ): Promise<void> {
   const url = BACKEND_URL + "/api/comms/volunteer";
-  return doPost(url, props);
+  return doPost(url, { ...props, animalType });
 }
 
 export async function submitVAdoptionForm(

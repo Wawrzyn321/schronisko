@@ -1,31 +1,46 @@
 import { Page } from "components/Page/Page";
 import styles from "./VAdoptionModalContent.module.scss";
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { accountNoQueryOptions } from "api/queryOptions";
 
-export type AdoptionModalProps = {
-  accountNo: string | null;
-  error: Error | null;
-};
+export function VAdoptionModalContent() {
+  const {
+    data: accountNo,
+    error,
+    isLoading,
+  } = useQuery(accountNoQueryOptions());
+  const [accountNoCopied, setAccountNoCopied] = useState(false);
 
-export function VAdoptionModalContent({
-  accountNo,
-  error,
-}: AdoptionModalProps) {
-  if (error || !accountNo) {
-    return <p>Ups... coś poszło nie tak.</p>;
-  }
+  const accountNoDisplay = error ? (
+    "Błąd pobierania numeru konta..."
+  ) : (
+    <>
+      Numer konta: <strong>{isLoading ? "Ładowanie..." : accountNo}</strong>
+    </>
+  );
+
+  const copyText = accountNoCopied
+    ? "Numer konta skopiowany!"
+    : "Kopiuj numer konta";
+
+  const handleCopyClick = () => {
+    navigator.clipboard.writeText(accountNo!);
+    setAccountNoCopied(true);
+  };
 
   return (
     <div className={styles["v-adoption-modal-content"]}>
       <Page id="modal-adopcji-wirtualnej" />
-      <p className={styles["para"]}>
-        Numer konta: <strong>{accountNo}</strong>
-      </p>
+      <p className={styles["para"]}>{accountNoDisplay}</p>
       <div className={styles["copy-button-wrapper"]}>
         <button
+          disabled={isLoading}
           className={`${styles["copy-button"]} button-link`}
-          onClick={() => navigator.clipboard.writeText(accountNo)}
+          onClick={handleCopyClick}
+          onMouseLeave={() => setAccountNoCopied(false)}
         >
-          Kopiuj numer konta
+          {copyText}
         </button>
       </div>
     </div>

@@ -2,7 +2,6 @@ import { Animal } from "@prisma-app/client";
 import { Modal } from "components/Modal";
 import { useState } from "react";
 import { VAdoptionModalContent } from "./VAdoptionModalContent/VAdoptionModalContent";
-import { useFetchAccountNo } from "./VAdoptionModalContent/useFetchAccountNo";
 import {
   FullName,
   Email,
@@ -17,8 +16,6 @@ import { useErrorModal } from "components/SimpleModal/useErrorModal";
 import { useMutation } from "@tanstack/react-query";
 
 export function VAdoptionForm({ animal }: { animal: Animal }) {
-  const adoptionModalProps = useFetchAccountNo();
-
   const [formData, setFormData] = useFormDataState({
     fullName: "",
     vCaretakerName: "",
@@ -51,6 +48,9 @@ export function VAdoptionForm({ animal }: { animal: Animal }) {
       <Form handleSubmit={submit.mutate}>
         {(triedSubmitCounter: number) => (
           <>
+            <button type="button" onClick={() => setShowAdoptionModal(true)}>
+              asd
+            </button>
             <div className="form-grid-2">
               <label>
                 Imię
@@ -98,7 +98,7 @@ export function VAdoptionForm({ animal }: { animal: Animal }) {
         isOpen={showAdoptionModal}
         onRequestClose={() => setShowAdoptionModal(false)}
       >
-        <VAdoptionModalContent {...adoptionModalProps} />
+        <VAdoptionModalContent />
       </Modal>
       {errorModal}
     </>

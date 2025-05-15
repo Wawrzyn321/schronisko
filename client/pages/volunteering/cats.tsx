@@ -4,6 +4,7 @@ import { Breadcrumbs } from "components/Breadcrumbs/Breadcrumbs";
 import { LayoutWrapper } from "components/LayoutWrapper/LayoutWrapper";
 import { Page } from "components/Page/Page";
 import { VolunteeringForm } from "components/VolunteeringForm/VolunteeringForm";
+import { AnimalType } from "@prisma-app/client";
 
 const ID = "wolontariat-kot";
 
@@ -17,7 +18,7 @@ export default function VolunteerCats({ dehydratedState }: Props) {
       <LayoutWrapper>
         <Breadcrumbs items={["Wolontariat", "Kot"]} />
         <Page id={ID} />
-        <VolunteeringForm />
+        <VolunteeringForm animalType={AnimalType.CAT} />
       </LayoutWrapper>
     </HydrationBoundary>
   );

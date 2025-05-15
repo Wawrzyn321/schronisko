@@ -1,3 +1,5 @@
+import { AnimalType } from '@prisma-app/client';
+
 export type VolunteeringFormFetch = {
   fullName: string;
   email: string;
@@ -5,6 +7,7 @@ export type VolunteeringFormFetch = {
   birthDate: string;
   about: string;
   captchaToken: string;
+  animalType: AnimalType;
 };
 
 export function validateVoluneeringFormFetch(props: VolunteeringFormFetch) {

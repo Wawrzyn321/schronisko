@@ -7,7 +7,7 @@ import {
   newsQueryOptions,
   pageQueryOptions,
   recentNewsQueryOptions,
-  settingsQueryOptions,
+  dogVolunteeringQueryOptions,
 } from "./queryOptions";
 import {
   AnimalCategory,
@@ -119,7 +119,7 @@ export async function getDogVolunteeringServerSideProps(pageId: string) {
 
   await Promise.all([
     await queryClient.prefetchQuery(pageQueryOptions(pageId)),
-    await queryClient.prefetchQuery(settingsQueryOptions()),
+    await queryClient.prefetchQuery(dogVolunteeringQueryOptions()),
   ]);
 
   return { props: { dehydratedState: dehydrate(queryClient) } };
