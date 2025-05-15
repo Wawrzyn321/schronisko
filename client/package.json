@@ -12,6 +12,7 @@
     "lint-and-format": "npm run format && npm run lint:fix"
   },
   "devDependencies": {
+    "@tanstack/eslint-plugin-query": "^4.38.0",
     "@types/node": "^16.10.1",
     "@types/react": "18.2.0",
     "@types/react-modal": "^3.16.3",
