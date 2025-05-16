@@ -16,7 +16,7 @@ import {
 } from "@prisma-app/client";
 import { GetServerSidePropsContext } from "next";
 
-export const PAGE_SIZE = 27;
+export const PAGE_SIZE = 3;
 
 type AnimalListArgs = {
   categories: AnimalCategory[];

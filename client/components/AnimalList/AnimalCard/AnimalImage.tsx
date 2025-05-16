@@ -3,7 +3,12 @@ import { buildAnimalImageUrl, buildAnimalUrl } from "api/config";
 import { Animal, AnimalCategory } from "@prisma-app/client";
 import { isReadonly } from "../isReadonly";
 
-export function AnimalImage({ animal }: { animal: Animal }) {
+type Props = {
+  animal: Animal;
+  canNavigate: boolean;
+};
+
+export function AnimalImage({ animal, canNavigate }: Props) {
   const bwMode = animal.category === AnimalCategory.ZaTeczowymMostem;
   const imageStyle = bwMode ? { filter: "grayscale(1)" } : {};
 
@@ -18,7 +23,7 @@ export function AnimalImage({ animal }: { animal: Animal }) {
   );
 
   const canGoToDetails = !isReadonly(animal.category);
-  if (canGoToDetails) {
+  if (canGoToDetails && canNavigate) {
     return (
       <Link href={buildAnimalUrl(animal.id)}>
         <span style={{ cursor: "pointer" }}>{image}</span>

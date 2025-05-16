@@ -51,7 +51,7 @@ export function AnimalList({
     setCurrentPage(pageNumber);
   };
 
-  const { data, error, isFetching } = useQuery(
+  const { data, error, isPlaceholderData } = useQuery(
     animalsQueryOptions({
       categories,
       vCaretakerType,
@@ -69,7 +69,7 @@ export function AnimalList({
     return <Article {...ERROR_ANIMAL_LIST} />;
   }
 
-  const listClasses = isFetching
+  const listClasses = isPlaceholderData
     ? `${styles["animals-list"]} ${styles["animals-list--loading"]}`
     : styles["animals-list"];
 
@@ -85,6 +85,7 @@ export function AnimalList({
                 key={animal.id}
                 showOverlay={withCategoryOverlay}
                 openModal={setSelectedAnimal}
+                interactive={!isPlaceholderData}
               />
             ))}
           </ul>

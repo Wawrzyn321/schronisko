@@ -9,26 +9,26 @@ type AnimalCardProps = {
   animal: Animal;
   showOverlay: boolean;
   openModal: (animal: Animal) => void;
+  interactive: boolean;
 };
 
 export function AnimalCard({
   animal,
   showOverlay = false,
   openModal,
+  interactive,
 }: AnimalCardProps) {
-  const image = <AnimalImage animal={animal} />;
-
   return (
     <li className={styles["animal-card"]}>
       <div className={styles["img-wrapper"]}>
-        {image}
+        <AnimalImage animal={animal} canNavigate={interactive} />
         <div className={styles["mag-glass"]}>
           <Image
             src={lupa}
             alt="Powiększ"
             width={20}
             height={20}
-            onClick={() => openModal(animal)}
+            onClick={interactive ? () => openModal(animal) : () => {}}
           />
         </div>
         {showOverlay && <Overlay category={animal.category} />}
