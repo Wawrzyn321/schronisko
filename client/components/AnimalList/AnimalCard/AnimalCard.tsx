@@ -39,7 +39,7 @@ export function AnimalCard({
       </div>
       <dl className={styles["animal-data"]}>
         <dt>Miejsce pobytu:</dt>
-        <dd>{animal.location}</dd>
+        <dd>{animal.location ?? 'Nie podano'}</dd>
         <dt>Opiekun wirtualny:</dt>
         <dd>{animal.virtualCaretakerName || "Brak"}</dd>
       </dl>

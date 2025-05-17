@@ -18,7 +18,7 @@ export default function App({
       new QueryClient({
         defaultOptions: {
           queries: {
-            staleTime: 60_1000,
+            staleTime: 60_000,
           },
         },
       }),

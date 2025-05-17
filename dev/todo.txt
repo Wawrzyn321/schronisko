@@ -22,3 +22,5 @@ testy klienta -  https://tkdodo.eu/blog/testing-react-query
                 const { result } = renderHook(() => useCustomHook(), {
                 wrapper: createWrapper(),
             })
+
+  width: 1200px; max-width

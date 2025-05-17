@@ -1,3 +1,4 @@
+import Image from "next/image";
 import styles from "./AnimalCard.module.scss";
 import { AnimalCategory } from "@prisma-app/client";
 
@@ -12,7 +13,7 @@ function OverlayImage({
       : "pilnie szukam domu.svg";
   const src = "/site/overlays/" + imageName;
 
-  return <img src={src} alt="" className={styles["overlay"]} />;
+  return <Image src={src} alt="" className={styles["overlay"]} />;
 }
 
 export function Overlay({ category }: { category: AnimalCategory }) {

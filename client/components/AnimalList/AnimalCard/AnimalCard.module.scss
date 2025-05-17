@@ -68,11 +68,6 @@
     font-size: 85%;
     word-break: break-word;
   }
-
-  dt:not(:last-of-type),
-  dd:not(:last-of-type) {
-    border-bottom: 1px solid grey;
-  }
 }
 
 .overlay {

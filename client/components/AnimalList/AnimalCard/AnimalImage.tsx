@@ -2,6 +2,7 @@ import Link from "next/link";
 import { buildAnimalImageUrl, buildAnimalUrl } from "api/config";
 import { Animal, AnimalCategory } from "@prisma-app/client";
 import { isReadonly } from "../isReadonly";
+import Image from "next/image";
 
 type Props = {
   animal: Animal;
@@ -13,11 +14,11 @@ export function AnimalImage({ animal, canNavigate }: Props) {
   const imageStyle = bwMode ? { filter: "grayscale(1)" } : {};
 
   const image = (
-    <img
+    <Image
       src={buildAnimalImageUrl(animal)}
       alt={animal.name}
-      width="340px"
-      height="340px"
+      width={340}
+      height={340}
       style={imageStyle}
     />
   );
