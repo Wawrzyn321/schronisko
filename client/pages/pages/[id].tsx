@@ -31,6 +31,6 @@ export async function getStaticPaths() {
   return { paths, fallback: true };
 }
 
-export async function getStaticPropsProps(context: GetServerSidePropsContext) {
+export async function getStaticProps(context: GetServerSidePropsContext) {
   return getGenericPageServerSideProps(context);
 }
