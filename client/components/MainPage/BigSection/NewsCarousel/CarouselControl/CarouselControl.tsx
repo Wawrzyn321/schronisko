@@ -34,7 +34,7 @@ export function CarouselControl({
         />
       </div>
       <ul className={styles["carousel__bottom"]}>
-        {new Array(total).fill(null).map((_: null, i) => (
+        {new Array(total).fill(null).map((_, i) => (
           <li
             className={index === i ? styles["carousel--current"] : ""}
             key={i}

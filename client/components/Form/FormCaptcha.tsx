@@ -2,7 +2,7 @@ import { Controller, FieldValues } from "react-hook-form";
 import { Captcha } from "./Captcha";
 
 type FormCaptchaProps<TFormData extends FieldValues> = {
-  property?: keyof TFormData;
+  property?: keyof TFormData & string;
 };
 
 export function FormCaptcha<TFormData extends FieldValues>({
@@ -10,7 +10,7 @@ export function FormCaptcha<TFormData extends FieldValues>({
 }: FormCaptchaProps<TFormData>) {
   return (
     <Controller
-      name={property as string}
+      name={property}
       render={({ field }) => <Captcha onCaptcha={field.onChange} />}
     />
   );

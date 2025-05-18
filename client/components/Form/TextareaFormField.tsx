@@ -1,7 +1,7 @@
 import { FieldValues, useFormContext } from "react-hook-form";
 
 type TextareaFormFieldProps<TFormData extends FieldValues> = {
-  property: keyof TFormData;
+  property: keyof TFormData & string;
   maxLength: number;
   required?: boolean;
   label: string;
@@ -23,7 +23,7 @@ export function TextareaFormField<TFormData extends FieldValues>({
     <label>
       {label}
       <textarea
-        {...register(property as string, { required })}
+        {...register(property, { required })}
         rows={rows}
         placeholder={placeholder}
         maxLength={maxLength}

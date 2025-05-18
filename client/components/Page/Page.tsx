@@ -1,4 +1,3 @@
-import { Page as PageModel } from "@prisma-app/client";
 import { ErrorWrapper, ERROR_PAGE, ERROR_PAGE_NOT_FOUND } from "errors";
 import { Article } from "../Article/Article";
 import { pageQueryOptions } from "api/queryOptions";

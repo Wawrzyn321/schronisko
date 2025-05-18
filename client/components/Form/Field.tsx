@@ -2,7 +2,7 @@ import { HTMLInputTypeAttribute } from "react";
 import { FieldValues, useFormContext } from "react-hook-form";
 
 type FormFieldProps<TFormData extends FieldValues> = {
-  property: keyof TFormData;
+  property: keyof TFormData & string;
   required?: boolean;
   readOnly?: boolean;
   maxLength?: number;
@@ -30,7 +30,7 @@ export function FormField<TFormData extends FieldValues>({
         placeholder={placeholder}
         type={type}
         readOnly={readOnly}
-        {...register(property as string, { required, maxLength })}
+        {...register(property, { required, maxLength })}
       />
       <p className="validation-message"></p>
     </label>
