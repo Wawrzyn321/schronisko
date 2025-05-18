@@ -10,14 +10,14 @@ export type VolunteeringFormFetch = {
   animalType: AnimalType;
 };
 
-export function validateVoluneeringFormFetch(props: VolunteeringFormFetch) {
+export function validateVoluneeringFormFetch(args: VolunteeringFormFetch) {
   return Boolean(
-    props.fullName &&
-      props.email &&
-      props.phoneNumber &&
-      props.birthDate &&
-      props.about &&
-      props.captchaToken,
+    args.fullName &&
+      args.email &&
+      args.phoneNumber &&
+      args.birthDate &&
+      args.about &&
+      args.captchaToken,
   );
 }
 
@@ -32,14 +32,14 @@ export type VAdoptionFormFetch = {
   captchaToken: string;
 };
 
-export function validateVAdoptionFormFetch(props: VAdoptionFormFetch) {
+export function validateVAdoptionFormFetch(args: VAdoptionFormFetch) {
   return Boolean(
-    props.fullName &&
-      props.vCaretakerName &&
-      props.email &&
-      props.animalId &&
-      props.animalName &&
-      props.animalRefNo &&
-      props.captchaToken,
+    args.fullName &&
+      args.vCaretakerName &&
+      args.email &&
+      args.animalId &&
+      args.animalName &&
+      args.animalRefNo &&
+      args.captchaToken,
   );
 }

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "check-node-version --node '= 22' && node ./dev/dev.js",
-    "check-and-format": "npm run check --prefix=backoffice && npm run lint:fix --prefix=client && npm run lint:fix --prefix=server",
+    "check-and-format": "npm run check --prefix=backoffice && npm run lint-and-format --prefix=client && npm run lint:fix --prefix=server",
     "prepare": "husky"
   },
   "keywords": [],

@@ -1,7 +1,7 @@
 import {
   AnimalListResult,
-  VolunteeringFormFetch,
-  VAdoptionFormFetch,
+  VolunteeringFormData,
+  VAdoptionFormData,
 } from "./../types";
 import { NewsListElement } from "types";
 import { AnimalCategory, AnimalType, News } from "@prisma-app/client";

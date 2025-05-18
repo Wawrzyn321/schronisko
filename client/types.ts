@@ -17,7 +17,7 @@ export type FormCaptcha = {
   text: string;
 };
 
-export type VolunteeringFormFetch = {
+export type VolunteeringFormData = {
   fullName: string;
   email: string;
   phoneNumber: string;
@@ -26,7 +26,7 @@ export type VolunteeringFormFetch = {
   captchaToken: string | null;
 };
 
-export type VAdoptionFormFetch = {
+export type VAdoptionFormData = {
   fullName: string;
   vCaretakerName: string;
   email: string;

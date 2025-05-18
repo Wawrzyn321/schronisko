@@ -1,36 +1,48 @@
-import { useRef, useState } from "react";
+import {
+  FieldValues,
+  FormProvider,
+  useForm,
+  UseFormProps,
+} from "react-hook-form";
 import styles from "./Form.module.scss";
+import { FormField } from "./Field";
+import { TextareaFormField } from "./TextareaFormField";
+import { SubmitButton } from "./SubmitButton";
+import { FormCaptcha } from "./FormCaptcha";
 
-export function Form({
-  handleSubmit,
+type Props<TFormData extends FieldValues> = {
+  handleFormSubmit: (formData: TFormData) => void;
+  children: React.ReactNode;
+  defaultValues: UseFormProps<TFormData>["defaultValues"];
+};
+
+export function Form<TFormData extends FieldValues>({
+  handleFormSubmit,
   children,
-}: {
-  handleSubmit: () => void;
-  children: (triedSubmitCounter: number) => React.ReactNode;
-}) {
-  const formRef = useRef<HTMLFormElement>(null);
-  const [triedSubmit, setTriedSubmit] = useState(0);
-
-  const onSubmit = (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-    if (formRef.current!.checkValidity()) {
-      handleSubmit();
-      setTriedSubmit(0);
-    } else {
-      setTriedSubmit(triedSubmit + 1);
-    }
-    return false;
-  };
+  defaultValues,
+}: Props<TFormData>) {
+  const formMethods = useForm({
+    mode: "onChange",
+    defaultValues,
+  });
 
   return (
-    <form
-      className={styles["form"]}
-      ref={formRef}
-      onSubmit={onSubmit}
-      noValidate
-    >
-      <p className={styles["form-required-data-info"]}>* Wymagane informacje</p>
-      {children(triedSubmit)}
-    </form>
+    <FormProvider<TFormData> {...formMethods}>
+      <form
+        className={styles["form"]}
+        onSubmit={formMethods.handleSubmit(handleFormSubmit)}
+        noValidate
+      >
+        <p className={styles["form-required-data-info"]}>
+          * Wymagane informacje
+        </p>
+        {children}
+      </form>
+    </FormProvider>
   );
 }
+
+Form.Field = FormField;
+Form.Textarea = TextareaFormField;
+Form.SubmitButton = SubmitButton;
+Form.Captcha = FormCaptcha;

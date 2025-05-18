@@ -2,42 +2,37 @@ import { Animal } from "@prisma-app/client";
 import { Modal } from "components/Modal";
 import { useState } from "react";
 import { VAdoptionModalContent } from "./VAdoptionModalContent/VAdoptionModalContent";
-import {
-  FullName,
-  Email,
-  VCaretakerName,
-  AdditionalMessage,
-} from "../Form/FormComponents";
 import { Form } from "../Form/Form";
 import { submitVAdoptionForm } from "api/mutations";
-import { Captcha } from "components/Captcha";
-import { useFormDataState } from "util/useFormDataState";
 import { useErrorModal } from "components/SimpleModal/useErrorModal";
 import { useMutation } from "@tanstack/react-query";
+import { VAdoptionFormData } from "types";
+
+const DEFAULT_VALUES: VAdoptionFormData = {
+  fullName: "",
+  vCaretakerName: "",
+  email: "",
+  additionalMessage: "",
+  captchaToken: null,
+  animalId: "",
+  animalName: "",
+  animalRefNo: "",
+};
 
 export function VAdoptionForm({ animal }: { animal: Animal }) {
-  const [formData, setFormData] = useFormDataState({
-    fullName: "",
-    vCaretakerName: "",
-    email: "",
-    additionalMessage: "",
-    captchaToken: null,
-  });
-
   const [showAdoptionModal, setShowAdoptionModal] = useState(false);
   const [errorModal, showErrorModal] = useErrorModal();
 
-  const submit = useMutation({
-    mutationFn: () => {
-      const animalData = {
-        animalId: animal.id,
-        animalName: animal.name,
-        animalRefNo: animal.refNo,
-      };
-      return submitVAdoptionForm({
-        ...formData,
-        ...animalData,
-      });
+  const defaultValues = {
+    ...DEFAULT_VALUES,
+    animalId: animal.id,
+    animalName: animal.name,
+    animalRefNo: animal.refNo,
+  };
+
+  const submitMutation = useMutation({
+    mutationFn: (formData: typeof DEFAULT_VALUES) => {
+      return submitVAdoptionForm(formData);
     },
     onError: showErrorModal,
     onSuccess: () => setShowAdoptionModal(true),
@@ -45,54 +40,55 @@ export function VAdoptionForm({ animal }: { animal: Animal }) {
 
   return (
     <>
-      <Form handleSubmit={submit.mutate}>
-        {(triedSubmitCounter: number) => (
-          <>
-            <button type="button" onClick={() => setShowAdoptionModal(true)}>
-              asd
-            </button>
-            <div className="form-grid-2">
-              <label>
-                Imię
-                <input readOnly defaultValue={animal.name} />
-              </label>
-              <label>
-                Numer ewidencyjny
-                <input readOnly defaultValue={animal.refNo} />
-              </label>
-            </div>
-            <div className="form-grid-2">
-              <FullName
-                value={formData.fullName}
-                setValue={setFormData("fullName")}
-                triedSubmitCounter={triedSubmitCounter}
-              />
-              <Email
-                value={formData.email}
-                setValue={setFormData("email")}
-                triedSubmitCounter={triedSubmitCounter}
-              />
-            </div>
-            <VCaretakerName
-              value={formData.vCaretakerName}
-              setValue={setFormData("vCaretakerName")}
-              triedSubmitCounter={triedSubmitCounter}
-            />
-            <AdditionalMessage
-              value={formData.additionalMessage}
-              setValue={setFormData("additionalMessage")}
-            />
-            <div className="form-grid-3">
-              <Captcha onCaptcha={setFormData("captchaToken")} />
-              <button
-                disabled={!formData.captchaToken}
-                className="form--button"
-              >
-                Wyślij
-              </button>
-            </div>
-          </>
-        )}
+      <Form
+        defaultValues={defaultValues}
+        handleFormSubmit={submitMutation.mutate}
+      >
+        <div className="form-grid-2">
+          <Form.Field<VAdoptionFormData>
+            property="animalName"
+            label="Imię zwierzęcia"
+            readOnly
+          />
+          <Form.Field<VAdoptionFormData>
+            property="animalRefNo"
+            label="Numer ewidencyjny"
+            readOnly
+          />
+        </div>
+        <div className="form-grid-2">
+          <Form.Field<VAdoptionFormData>
+            property="fullName"
+            label="Imię i nazwisko"
+            placeholder="Nie przetwarzamy danych"
+            maxLength={50}
+          />
+          <Form.Field<VAdoptionFormData>
+            property="email"
+            label="Email"
+            placeholder="Email do kontaktu"
+            type="email"
+            maxLength={120}
+          />
+        </div>
+        <Form.Field<VAdoptionFormData>
+          property="vCaretakerName"
+          label="Moim wirtualnym opiekunem jest..."
+          placeholder='Tu wpisz opis wyświetlany na stronie, na przykład "Hania z Gliwic", "klasa 3b z 17"'
+          type="email"
+          maxLength={120}
+        />
+        <Form.Textarea<VAdoptionFormData>
+          property="additionalMessage"
+          required
+          maxLength={160}
+          label="Uwagi"
+          placeholder="Dodatkowe uwagi"
+        />
+        <div className="form-grid-3">
+          <Form.Captcha />
+          <Form.SubmitButton>Wyślij</Form.SubmitButton>
+        </div>
       </Form>
       <Modal
         isOpen={showAdoptionModal}
