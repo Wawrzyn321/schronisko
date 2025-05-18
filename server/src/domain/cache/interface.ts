@@ -1,6 +1,6 @@
-type CacheEntry = {
-  value: string;
-  set(value: string): Promise<string>;
+export type CacheEntry = {
+  value: string | null;
+  set(value: string): Promise<void>;
   clear(): Promise<void>;
 };
 

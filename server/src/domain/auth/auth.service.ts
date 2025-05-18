@@ -33,7 +33,9 @@ export class AuthService {
     private bcryptService: BcryptService,
   ) {}
 
-  async validateUserLogin(userDto: UserLoginParams): Promise<UserViewModel> {
+  async validateUserLogin(
+    userDto: UserLoginParams,
+  ): Promise<UserViewModel | null> {
     const user = await this.usersService.findByLogin(userDto.login);
     if (
       user?.isActive &&

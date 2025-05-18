@@ -16,7 +16,7 @@ export type UpsertParams = {
   order: number;
   animalId: string;
   imageName?: string;
-  data?: string;
+  data: string;
   visible: boolean;
 };
 
@@ -116,7 +116,9 @@ export class AnimalImagesService {
   async deleteImage(id: string): Promise<void> {
     const image = await this.prisma.animalImage.findFirst({ where: { id } });
     try {
-      await deleteImage(IMAGES_PATH, image.imageName);
+      if (image?.imageName) {
+        await deleteImage(IMAGES_PATH, image.imageName);
+      }
     } catch (e: unknown) {
       console.warn(e);
     }

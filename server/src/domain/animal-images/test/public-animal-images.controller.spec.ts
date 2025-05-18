@@ -21,9 +21,9 @@ describe('AnimalImagesPublicController', () => {
   });
 
   it('GET by invalid id returns a 404', async () => {
-    prismaServiceMock.animal.findFirst = jest.fn(() => null);
+    prismaServiceMock.animal.findFirst = jest.fn().mockReturnValue(null);
 
-    await expect(
+    await expect(() =>
       animalImagesController.getImages('some-id'),
     ).rejects.toThrowError(/Not Found/);
   });

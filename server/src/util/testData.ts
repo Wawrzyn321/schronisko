@@ -1,15 +1,15 @@
-import { CacheServiceInterface } from '../domain/cache/interface';
+import { CacheEntry, CacheServiceInterface } from '../domain/cache/interface';
 
 export class CacheServiceMock implements CacheServiceInterface {
   useArticleCache(
     type: 'news' | 'page',
     id: string,
     useSubstitution?: boolean,
-  ) {
-    return null;
+  ): Promise<CacheEntry | null> {
+    return Promise.resolve(null);
   }
 
   onSettingsChange() {
-    return null;
+    return Promise.resolve();
   }
 }

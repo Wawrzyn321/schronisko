@@ -104,7 +104,7 @@ export class NewsService {
       news.content = substitute(news.content, settings);
     }
 
-    cache.set(JSON.stringify(news));
+    cache?.set(JSON.stringify(news));
 
     return news;
   }
@@ -187,7 +187,7 @@ export class NewsService {
     // add createdAt to satisfy the types
     const diff = formattedDiff(
       prevNews,
-      { ...params.news, createdAt: null },
+      { ...params.news, createdAt: new Date() },
       [
         { name: 'Opis', selector: (n: News) => n.description },
         { name: 'Tytuł', selector: (n: News) => n.title },
@@ -203,7 +203,7 @@ export class NewsService {
       user,
     });
 
-    await cache.clear();
+    await cache?.clear();
 
     return this.toListElement(updatedNews);
   }

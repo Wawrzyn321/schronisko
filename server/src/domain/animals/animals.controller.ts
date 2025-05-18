@@ -38,7 +38,7 @@ export class AnimalsPublicController {
     @Query('categories') possibleCategories: string,
     @Query('type') possibleType: string,
     @Query('vCaretakerType') possibleVaretakerType: string,
-    @Query('skip') possiblySkip,
+    @Query('skip') possiblySkip: string,
     @Query('take') possiblyTake: string,
   ) {
     const skip = parseInt(possiblySkip) || 0;
@@ -55,7 +55,7 @@ export class AnimalsPublicController {
       }
     }
 
-    const categories = [];
+    const categories: AnimalCategory[] = [];
     for (const possibleCategory of (possibleCategories || '').split(',')) {
       const category = getFromEnumOrUndefined<AnimalCategory>(
         possibleCategory,

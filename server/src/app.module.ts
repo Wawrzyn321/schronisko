@@ -19,9 +19,20 @@ export const LOCAL_STATIC_FILES_PATH = '../images/';
 
 const DEV = process.env.NODE_ENV !== 'production';
 
-export const WEB_STATIC_FILES_PATH = DEV
-  ? `http://localhost:${PORT}`
-  : process.env.NEXT_PUBLIC_SERVER_DOMAIN;
+const NEXT_PUBLIC_SERVER_DOMAIN = process.env.NEXT_PUBLIC_SERVER_DOMAIN;
+
+function getStaticFilesPath() {
+  if (DEV) {
+    return `http://localhost:${PORT}`;
+  }
+
+  if (!NEXT_PUBLIC_SERVER_DOMAIN) {
+    throw Error('NEXT_PUBLIC_SERVER_DOMAIN is required');
+  }
+  return NEXT_PUBLIC_SERVER_DOMAIN;
+}
+
+export const WEB_STATIC_FILES_PATH = getStaticFilesPath();
 
 setupImageDirectories(LOCAL_STATIC_FILES_PATH);
 

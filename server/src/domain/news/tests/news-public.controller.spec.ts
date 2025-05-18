@@ -66,7 +66,7 @@ describe('NewsPublicController', () => {
       title: 'title',
       description: 'desc',
       isPublished: true,
-      createdAt: undefined,
+      createdAt: new Date(),
       imageName: '',
     };
 

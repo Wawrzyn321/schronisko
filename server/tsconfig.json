@@ -17,7 +17,8 @@
       "img-fs": ["./src/img-fs"],
       "domain": ["./src/domain"],
     },
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "strict": true
   },
   "include": ["src/**/*"]
 }

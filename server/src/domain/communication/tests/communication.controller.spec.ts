@@ -77,6 +77,7 @@ describe('CommunicationController', () => {
         telefon: 123
         data urodzenia: now
         coś więcej?: about
+        type: CAT
       ",
   ],
 ]

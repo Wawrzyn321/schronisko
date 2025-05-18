@@ -11,6 +11,10 @@ type CaptchaResponse = {
 @Injectable()
 export class CaptchaService implements CaptchaServiceInterface {
   async validateCaptcha(captchaToken: string) {
+    if (!RECAPTCHA_SECRET_KEY) {
+      throw Error('RECAPTCHA_SECRET_KEY is required');
+    }
+
     try {
       const response = await fetch(CAPTCHA_VALIDATE_URL, {
         method: 'POST',

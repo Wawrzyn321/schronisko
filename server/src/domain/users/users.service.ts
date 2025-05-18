@@ -28,11 +28,11 @@ export class UsersService {
     private logsService: LogsService,
   ) {}
 
-  async findByLogin(login = ''): Promise<User | undefined> {
+  async findByLogin(login = ''): Promise<User | null> {
     return await this.prisma.user.findUnique({ where: { login } });
   }
 
-  async findById(id: number): Promise<User | undefined> {
+  async findById(id: number): Promise<User | null> {
     return await this.prisma.user.findUnique({ where: { id } });
   }
 
@@ -78,16 +78,19 @@ export class UsersService {
       data: user,
     });
 
-    // add passwordHash to satisfy the types
     const prevUserDiffData = {
       login: prevUser.login,
       firstName: prevUser.firstName,
       lastName: prevUser.lastName,
     };
-    const diff = formattedDiff(prevUserDiffData, user, [
-      { name: 'Login', selector: (n: User) => n.login },
-      { name: 'Imię', selector: (n: User) => n.firstName },
-      { name: 'Nazwisko', selector: (n: User) => n.lastName },
+
+    const { login, firstName, lastName } = user;
+    const diffableUser = { login, firstName, lastName };
+
+    const diff = formattedDiff(prevUserDiffData, diffableUser, [
+      { name: 'Login', selector: (n) => n.login },
+      { name: 'Imię', selector: (n) => n.firstName },
+      { name: 'Nazwisko', selector: (n) => n.lastName },
     ]);
 
     await this.logsService.log({
@@ -115,11 +118,12 @@ export class UsersService {
     const prevPermissions = await this.getPermissions(id);
     await this.prisma.userPermissions.deleteMany({ where: { userId: id } });
 
-    const permissionNames = {
+    const permissionNames: Record<Permission, string> = {
       USER: 'Użytkownicy',
       PAGE: 'Stałe strony',
       NEWS: 'Newsy',
       ANIMAL: 'Zwierzęta',
+      ANIMAL_VIEW_ONLY: 'Zwierzęta (tylko do odczytu)',
     };
 
     const permissionsDiff = havePermissionsChanged(

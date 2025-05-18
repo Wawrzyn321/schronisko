@@ -253,9 +253,11 @@ export class AnimalsService {
       data: { ...animalData, modifiedAt: new Date() },
     });
 
+    // date won't be diffed
+    const mockDate = new Date();
     const animalToDiff: Animal = {
-      addedAt: null,
-      modifiedAt: null,
+      addedAt: mockDate,
+      modifiedAt: mockDate,
       imageName: null,
       note: null,
       ...animal,
@@ -264,28 +266,28 @@ export class AnimalsService {
       prevAnimal,
       animalToDiff,
       [
-        { name: 'Imię', selector: (n: Animal) => n.name },
-        { name: 'Numer referencyjny', selector: (n: Animal) => n.refNo },
-        { name: 'Opis', selector: (n: Animal) => n.description },
-        { name: 'Notatka', selector: (n: Animal) => n.note },
-        { name: 'Kategoria', selector: (n: Animal) => n.category },
-        { name: 'Płeć', selector: (n: Animal) => n.gender },
-        { name: 'Upublicznienie', selector: (n: Animal) => n.isPublic },
-        { name: 'Miejsce przebywania', selector: (n: Animal) => n.location },
-        { name: 'Rodzaj', selector: (n: Animal) => n.type },
+        { name: 'Imię', selector: (n) => n.name },
+        { name: 'Numer referencyjny', selector: (n) => n.refNo },
+        { name: 'Opis', selector: (n) => n.description },
+        { name: 'Notatka', selector: (n) => n.note },
+        { name: 'Kategoria', selector: (n) => n.category },
+        { name: 'Płeć', selector: (n) => n.gender },
+        { name: 'Upublicznienie', selector: (n) => n.isPublic },
+        { name: 'Miejsce przebywania', selector: (n) => n.location },
+        { name: 'Rodzaj', selector: (n) => n.type },
         {
           name: 'Opiekun wirtualny',
-          selector: (n: Animal) => n.virtualCaretakerType,
+          selector: (n) => n.virtualCaretakerType,
         },
         {
           name: 'Nazwa opiekuna wirtualnego',
-          selector: (n: Animal) => n.virtualCaretakerName,
+          selector: (n) => n.virtualCaretakerName,
         },
         {
           name: 'Opis miejsca przebywania',
-          selector: (n: Animal) => n.locationDescription,
+          selector: (n) => n.locationDescription,
         },
-        { name: 'Dane kontakowe', selector: (n: Animal) => n.contactInfo },
+        { name: 'Dane kontakowe', selector: (n) => n.contactInfo },
       ],
       animal.imageData ? [{ name: 'Miniaturka' }] : [],
     );

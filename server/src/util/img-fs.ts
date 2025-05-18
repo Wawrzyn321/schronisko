@@ -11,6 +11,11 @@ export type ImageData = { name: string; base64: string };
 
 type ResizingPresets = 'News' | 'Animal Gallery' | 'Animal Miniature';
 
+const DEFAULT_RESIZING_PRESET = {
+  width: 1920,
+  height: 1080,
+};
+
 type Size = { width: number; height: number };
 
 const presetsMap: { [gender in ResizingPresets]: Size } = {
@@ -52,7 +57,7 @@ type SaveImageArgs = {
   subdir: string;
   name: string;
   base64Data: string;
-  resizingPreset: ResizingPresets;
+  resizingPreset: ResizingPresets | null;
 };
 
 export async function saveImage({
@@ -65,10 +70,9 @@ export async function saveImage({
   base64Data = base64Data.replace(/^data:image\/jpeg;base64,/, '');
   base64Data = base64Data.replace(/^data:image\/gif;base64,/, '');
   const buf = Buffer.from(base64Data, 'base64');
-  const preset: Size = presetsMap[resizingPreset] || {
-    width: 1920,
-    height: 1080,
-  };
+  const preset: Size = resizingPreset
+    ? presetsMap[resizingPreset]
+    : DEFAULT_RESIZING_PRESET;
   const resizeOptions = { ...preset, fit: 'cover', withoutEnlargement: true };
   const resized = await sharp(buf).resize(resizeOptions).toBuffer();
 

@@ -8,7 +8,7 @@ type RedisClient = ReturnType<typeof createClient>;
 
 @Injectable()
 export class CacheService implements CacheServiceInterface {
-  private readonly client: RedisClient = null;
+  private readonly client: RedisClient | null = null;
 
   constructor() {
     const redisEnvValue = process.env.REDIS_URL;
@@ -39,13 +39,16 @@ export class CacheService implements CacheServiceInterface {
 
     const key = createKey(id, useSubstitution);
 
-    if (this.client) {
+    const client = this.client;
+    if (client) {
       return {
         value: await this.client.get(key),
-        set: async (value: string) => this.client.set(key, value),
+        set: async (value: string) => {
+          client.set(key, value);
+        },
         clear: async () => {
-          await this.client.del(createKey(id, false));
-          await this.client.del(createKey(id, true));
+          await client.del(createKey(id, false));
+          await client.del(createKey(id, true));
         },
       };
     }
@@ -53,15 +56,13 @@ export class CacheService implements CacheServiceInterface {
   }
 
   async onSettingsChange() {
-    if (this.client) {
+    const client = this.client;
+    if (client) {
       const keys = (
-        await Promise.all([
-          this.client.keys('page*'),
-          this.client.keys('news*'),
-        ])
+        await Promise.all([client.keys('page*'), client.keys('news*')])
       ).flat();
 
-      await Promise.all(keys.map((key) => this.client.del(key)));
+      await Promise.all(keys.map((key) => client.del(key)));
     }
   }
 }

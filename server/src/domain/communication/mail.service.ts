@@ -6,16 +6,20 @@ const POSTMARK_API_TOKEN = process.env.POSTMARK_API_TOKEN;
 
 @Injectable()
 export class MailService implements MailServiceInterface {
-  private client: ServerClient;
+  private client: ServerClient | null = null;
+
   constructor() {
     if (POSTMARK_API_TOKEN !== 'disabled') {
+      if (!POSTMARK_API_TOKEN) {
+        throw Error('POSTMARK_API_TOKEN is required');
+      }
       this.client = new ServerClient(POSTMARK_API_TOKEN);
     }
   }
 
   async send(subject: string, text: string) {
     try {
-      const res = await this.client.sendEmail({
+      const res = await this.client!.sendEmail({
         From: 'wawrzyn+schronisko@pwawrzynczyk.pl',
         To: 'wawrzyn@pwawrzynczyk.pl',
         Subject: subject,

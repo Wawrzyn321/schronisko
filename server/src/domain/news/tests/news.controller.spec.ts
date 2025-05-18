@@ -24,7 +24,7 @@ const mockNews: News = {
   description: 'test-desc',
   content: 'test-content',
   isPublished: false,
-  createdAt: undefined,
+  createdAt: new Date(),
   imageName: 'test-img-name',
 };
 
@@ -165,7 +165,7 @@ describe('NewsController', () => {
   it('POST throws on invalid data', async () => {
     await expect(
       newsController.createNews(
-        { ...mockNewsCreate, imageData: null },
+        { ...mockNewsCreate, imageData: '' },
         {
           user: mockAdminUser,
         },
@@ -176,7 +176,7 @@ describe('NewsController', () => {
   it('POST throws on invalid data', async () => {
     await expect(
       newsController.createNews(
-        { ...mockNewsCreate, imageData: null },
+        { ...mockNewsCreate, imageData: '' },
         {
           user: mockAdminUser,
         },

@@ -2,7 +2,7 @@ import { Permission } from '@prisma-app/client';
 import { diff, havePermissionsChanged, formattedDiff } from '../diff';
 
 type MockDiff = { f: number; t?: string };
-const from: MockDiff = { f: 1, t: null };
+const from: MockDiff = { f: 1, t: undefined };
 const to: MockDiff = { f: 2, t: 't' };
 const props = [
   {
@@ -11,13 +11,13 @@ const props = [
   },
   {
     name: 'poleT',
-    selector: (obj: MockDiff) => obj.t,
+    selector: (obj: MockDiff) => obj.t ?? null,
   },
 ];
 const additionalChanges = [
   {
     name: 'additional',
-    selector: (obj: MockDiff) => obj.f + obj.t,
+    selector: (obj: MockDiff) => obj.f.toString() + obj.t,
   },
 ];
 

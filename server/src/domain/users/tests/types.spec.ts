@@ -67,7 +67,7 @@ describe('validation functions', () => {
     expect(validateCreate(dto)).toBe(true);
   });
 
-  for (const key of ['login', 'firstName', 'lastName', 'password']) {
+  for (const key of ['login', 'firstName', 'lastName', 'password'] as const) {
     it('validateCreate returns false for invalid data: ' + key, () => {
       const data = makeFrontendCreateDto();
       data[key] = '';
@@ -86,7 +86,9 @@ describe('validation functions', () => {
     expect(validateSelfUpdate(data)).toBe(true);
   });
 
-  for (const key of Object.keys(makeFrontendSelfUpdateDto())) {
+  for (const key of Object.keys(
+    makeFrontendSelfUpdateDto(),
+  ) as (keyof FrontendSelfUpdateDto)[]) {
     it('validateSelfUpdate returns false for invalid data: ' + key, () => {
       const data = makeFrontendSelfUpdateDto();
       data[key] = '';

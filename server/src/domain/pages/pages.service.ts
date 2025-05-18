@@ -120,7 +120,7 @@ export class PagesService {
       user,
     });
 
-    await cache.clear();
+    await cache?.clear();
 
     return updatedPage;
   }
