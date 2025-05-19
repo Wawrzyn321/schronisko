@@ -1,0 +1,16 @@
+.label-required::after {
+  content: " *";
+}
+
+.input-error {
+  border-color: red;
+  border-width: 3px;
+}
+
+.validation-message {
+  color: red;
+  float: right;
+  margin-top: 4px;
+  margin-bottom: 0px;
+  font-weight: lighter;
+}

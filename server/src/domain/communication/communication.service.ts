@@ -45,6 +45,7 @@ export class CommunicationService {
       `,
       );
     } catch (e) {
+      console.warn(e);
       throw new BadRequestException('Nie udało się wysłać maila.');
     }
   }
@@ -61,6 +62,7 @@ export class CommunicationService {
     try {
       await this.mailService.send('Ktoś będzie adoptował wirtualnie', 'todo');
     } catch (e) {
+      console.warn(e);
       throw new BadRequestException('Nie udało się wysłać maila.');
     }
   }

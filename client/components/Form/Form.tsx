@@ -5,10 +5,10 @@ import {
   UseFormProps,
 } from "react-hook-form";
 import styles from "./Form.module.scss";
-import { FormField } from "./Field";
+import { FormField } from "./Field/Field";
 import { TextareaFormField } from "./TextareaFormField";
-import { SubmitButton } from "./SubmitButton";
-import { FormCaptcha } from "./FormCaptcha";
+import { SubmitButton } from "./SubmitButton/SubmitButton";
+import { FormCaptcha } from "./Captcha/FormCaptcha";
 
 type Props<TFormData extends FieldValues> = {
   handleFormSubmit: (formData: TFormData) => void;

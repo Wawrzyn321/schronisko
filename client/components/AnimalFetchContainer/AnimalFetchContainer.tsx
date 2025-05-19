@@ -1,7 +1,11 @@
 import { Animal } from "@prisma-app/client";
 import { useQuery } from "@tanstack/react-query";
 import { animalDetailsQueryOptions } from "api/queryOptions";
-import { ErrorWrapper, ERROR_ANIMAL_NOT_FOUND, ERROR_GENERIC } from "errors";
+import {
+  ErrorWrapper,
+  ERROR_ANIMAL_NOT_FOUND,
+  ERROR_GENERIC,
+} from "util/errors";
 
 type Props = {
   id: string;

@@ -7,6 +7,7 @@ import { submitVAdoptionForm } from "api/mutations";
 import { useErrorModal } from "components/SimpleModal/useErrorModal";
 import { useMutation } from "@tanstack/react-query";
 import { VAdoptionFormData } from "types";
+import { getZodIsses } from "api/error";
 
 const DEFAULT_VALUES: VAdoptionFormData = {
   fullName: "",
@@ -34,7 +35,10 @@ export function VAdoptionForm({ animal }: { animal: Animal }) {
     mutationFn: (formData: typeof DEFAULT_VALUES) => {
       return submitVAdoptionForm(formData);
     },
-    onError: showErrorModal,
+    onError: (error) => {
+      console.log(getZodIsses(error));
+      return showErrorModal();
+    },
     onSuccess: () => setShowAdoptionModal(true),
   });
 
@@ -62,6 +66,7 @@ export function VAdoptionForm({ animal }: { animal: Animal }) {
             label="Imię i nazwisko"
             placeholder="Nie przetwarzamy danych"
             maxLength={50}
+            minLength={1}
           />
           <Form.Field<VAdoptionFormData>
             property="email"
@@ -69,6 +74,7 @@ export function VAdoptionForm({ animal }: { animal: Animal }) {
             placeholder="Email do kontaktu"
             type="email"
             maxLength={120}
+            pattern={/\S+@\S+\.\S+/}
           />
         </div>
         <Form.Field<VAdoptionFormData>
@@ -77,10 +83,10 @@ export function VAdoptionForm({ animal }: { animal: Animal }) {
           placeholder='Tu wpisz opis wyświetlany na stronie, na przykład "Hania z Gliwic", "klasa 3b z 17"'
           type="email"
           maxLength={120}
+          minLength={1}
         />
         <Form.Textarea<VAdoptionFormData>
           property="additionalMessage"
-          required
           maxLength={160}
           label="Uwagi"
           placeholder="Dodatkowe uwagi"

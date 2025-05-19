@@ -1,5 +1,5 @@
 import { Article } from "components/Article/Article";
-import { ErrorWrapper, ERROR_GENERIC, ERROR_NEWS_NOT_FOUND } from "errors";
+import { ErrorWrapper, ERROR_GENERIC, ERROR_NEWS_NOT_FOUND } from "util/errors";
 import {
   DehydratedState,
   HydrationBoundary,

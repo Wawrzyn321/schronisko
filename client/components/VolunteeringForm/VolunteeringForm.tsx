@@ -42,12 +42,14 @@ export function VolunteeringForm({ animalType }: Props) {
             label="Imię i nazwisko"
             placeholder="Nie przetwarzamy danych"
             maxLength={50}
+            minLength={3}
           />
           <Form.Field<VolunteeringFormData>
             property="phoneNumber"
             label="Numer telefonu"
             placeholder="Telefon kontaktowy"
             type="tel"
+            minLength={9}
           />
         </div>
         <div className="form-grid-2">
@@ -57,6 +59,7 @@ export function VolunteeringForm({ animalType }: Props) {
             placeholder="Email do kontaktu"
             type="email"
             maxLength={120}
+            pattern={/\S+@\S+\.\S+/}
           />
           <Form.Field<VolunteeringFormData>
             property="birthDate"

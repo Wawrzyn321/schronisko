@@ -1,4 +1,4 @@
-import { ErrorWrapper, ERROR_PAGE, ERROR_PAGE_NOT_FOUND } from "errors";
+import { ErrorWrapper, ERROR_PAGE, ERROR_PAGE_NOT_FOUND } from "util/errors";
 import { Article } from "../Article/Article";
 import { pageQueryOptions } from "api/queryOptions";
 import { useQuery } from "@tanstack/react-query";

@@ -10,7 +10,7 @@ import { AnimalCategoryLegend } from "./AnimalCategoryLegend/AnimalCategoryLegen
 import { AnimalCard } from "./AnimalCard/AnimalCard";
 import { Pagination } from "./Pagination/Pagination";
 import { Article } from "components/Article/Article";
-import { ERROR_ANIMAL_LIST } from "errors";
+import { ERROR_ANIMAL_LIST } from "util/errors";
 import { AnimalModal } from "./AnimalModal/AnimalModal";
 import { useQuery } from "@tanstack/react-query";
 import { animalsQueryOptions } from "api/queryOptions";

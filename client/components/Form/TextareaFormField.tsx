@@ -28,7 +28,6 @@ export function TextareaFormField<TFormData extends FieldValues>({
         placeholder={placeholder}
         maxLength={maxLength}
       />
-      {/* <p className="validation-message">{showMessage && "Uzupełnij pole"}</p> */}
     </label>
   );
 }

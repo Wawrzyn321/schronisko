@@ -1,5 +1,3 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { PrismaService } from '../../../prisma-connect/prisma.service';
 import { CommunicationController } from '../communication.controller';
 import { CommunicationService } from '../communication.service';
 import { CaptchaServiceInterface, MailServiceInterface } from '../interface';
@@ -28,11 +26,11 @@ const mockVAdoptionRequest: VAdoptionFormData = {
 };
 
 class MockMailService implements MailServiceInterface {
-  async send(subject: string, text: string) {}
+  async send() {}
 }
 
 class MockCaptchaService implements CaptchaServiceInterface {
-  async validateCaptcha(captchaToken: string) {
+  async validateCaptcha() {
     return Promise.resolve(true);
   }
 }
@@ -40,15 +38,10 @@ class MockCaptchaService implements CaptchaServiceInterface {
 describe('CommunicationController', () => {
   let communicationController: CommunicationController;
   let communicationService: CommunicationService;
-  let prismaServiceMock: PrismaService;
   let captchaService: CaptchaServiceInterface;
   let mailService: MockMailService;
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [PrismaService],
-    }).compile();
-    prismaServiceMock = module.get<PrismaService>(PrismaService);
     captchaService = new MockCaptchaService();
     mailService = new MockMailService();
     communicationService = new CommunicationService(

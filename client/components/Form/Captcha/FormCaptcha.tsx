@@ -12,6 +12,7 @@ export function FormCaptcha<TFormData extends FieldValues>({
     <Controller
       name={property}
       render={({ field }) => <Captcha onCaptcha={field.onChange} />}
+      rules={{ required: true }}
     />
   );
 }

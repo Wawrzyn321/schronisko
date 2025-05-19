@@ -1,13 +1,5 @@
 import { isSSR } from "./config";
-
-export class FetchError extends Error {
-  statusCode: number;
-
-  constructor(message: string, statusCode: number) {
-    super(message);
-    this.statusCode = statusCode;
-  }
-}
+import { FetchError, ZodIssue } from "./error";
 
 export async function doFetch(
   input: string,
@@ -36,6 +28,13 @@ export async function doFetch(
     }
   }
   const error = await response.json();
+  if (error.name === "ZodError") {
+    throw new FetchError(
+      error.message,
+      error.statusCode,
+      error.issues as ZodIssue[],
+    );
+  }
   throw new FetchError(error.message, error.statusCode);
 }
 

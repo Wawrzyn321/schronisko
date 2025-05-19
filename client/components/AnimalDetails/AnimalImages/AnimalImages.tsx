@@ -1,7 +1,7 @@
 import { ANIMAL_IMAGES_IMAGES_URL } from "api/config";
 import styles from "./AnimalImages.module.scss";
 import { Article } from "components/Article/Article";
-import { ERROR_ANIMAL_IMAGES } from "errors";
+import { ERROR_ANIMAL_IMAGES } from "util/errors";
 import { LayoutWrapper } from "components/LayoutWrapper/LayoutWrapper";
 import { useQuery } from "@tanstack/react-query";
 import { animalImagesQueryOptions } from "api/queryOptions";
