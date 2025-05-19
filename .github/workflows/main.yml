@@ -60,5 +60,5 @@ jobs:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/client-e2e
         with:
-          POSTMARK_API_TOKEN: ${{ secrets.POSTMARK_API_TOKEN }}
+          POSTMARK_API_TOKEN: ${{ secrets.POSTMARK_TESTING_TOKEN }}
 
