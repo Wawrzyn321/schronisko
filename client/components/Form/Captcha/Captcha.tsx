@@ -1,6 +1,9 @@
 import Script from "next/script";
 import { useEffect } from "react";
 
+const captchaDisabled =
+  process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY === "DISABLED";
+
 type CaptchaProps = {
   onCaptcha: (token: string) => void;
 };
@@ -15,6 +18,11 @@ export function Captcha({ onCaptcha }: CaptchaProps) {
       delete window["onCaptcha"];
     };
   });
+
+  if (captchaDisabled) {
+    onCaptcha("MOCK_CAPTCHA");
+    return null;
+  }
 
   return (
     <div>

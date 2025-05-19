@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { MailServiceInterface } from './interface';
 import { ServerClient } from 'postmark';
 
-const POSTMARK_API_TOKEN = 'DISABLED'; //process.env.POSTMARK_API_TOKEN;
+const POSTMARK_API_TOKEN = process.env.POSTMARK_API_TOKEN;
 
 @Injectable()
 export class MailService implements MailServiceInterface {

@@ -1,5 +1,4 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import * as nodemailer from 'nodemailer';
 import { CaptchaServiceInterface, MailServiceInterface } from './interface';
 import {
   VAdoptionFormData,
@@ -10,18 +9,10 @@ import {
 
 @Injectable()
 export class CommunicationService {
-  transporter: nodemailer.Transporter;
-
   constructor(
     private captchaService: CaptchaServiceInterface,
     private mailService: MailServiceInterface,
-  ) {
-    this.transporter = nodemailer.createTransport({
-      sendmail: true,
-      newline: 'unix',
-      path: '/usr/sbin/sendmail',
-    });
-  }
+  ) {}
 
   async sendVolunteering(formData: VolunteeringFormData) {
     if (!(await this.captchaService.validateCaptcha(formData.captchaToken))) {

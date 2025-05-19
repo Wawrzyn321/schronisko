@@ -21,7 +21,7 @@ export const VolunteeringFormDataSchema = z
     fullName: z.string().min(1).max(50),
     email: z.string().email().max(120),
     phoneNumber: z.string().min(9).max(20),
-    birthDate: z.string().max(10),
+    birthDate: z.string(),
     about: z.string().max(160),
     captchaToken: z.string(),
     animalType: z.union([z.literal(AnimalType.CAT), z.literal(AnimalType.DOG)]),

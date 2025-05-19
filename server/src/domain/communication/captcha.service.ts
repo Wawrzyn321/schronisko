@@ -14,6 +14,9 @@ export class CaptchaService implements CaptchaServiceInterface {
     if (!RECAPTCHA_SECRET_KEY) {
       throw Error('RECAPTCHA_SECRET_KEY is required');
     }
+    if (RECAPTCHA_SECRET_KEY === 'DISABLED') {
+      return true;
+    }
 
     try {
       const response = await fetch(CAPTCHA_VALIDATE_URL, {

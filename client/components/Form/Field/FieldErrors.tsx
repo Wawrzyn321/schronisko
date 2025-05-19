@@ -16,6 +16,9 @@ export function FieldErrors({ error }: Props) {
         return "Pole jest wymagane";
       case "pattern":
         return "Należy podać adres e-mail";
+      case "minLength":
+      case "maxLength":
+        return "Nieprawidłowa długość";
       default:
         return "Bład";
     }
