@@ -17,6 +17,16 @@ const DEV = process.env.NODE_ENV !== 'production';
 
 export const USE_HTTP = false;
 
+if (!process.env.POSTMARK_API_TOKEN) {
+  throw Error('POSTMARK_API_TOKEN is required');
+}
+if (!process.env.RECAPTCHA_SECRET_KEY) {
+  throw Error('RECAPTCHA_SECRET_KEY is required');
+}
+if (!process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY) {
+  throw Error('NEXT_PUBLIC_RECAPTCHA_SITE_KEY is required');
+}
+
 let options = {};
 if (!DEV && USE_HTTP) {
   options = {

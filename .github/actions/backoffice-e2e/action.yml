@@ -42,11 +42,13 @@ runs:
   - name: Run tests
     env:
       DATABASE_URL: postgres://postgres:testpassword@localhost:5432/schronisko
-      POSTMARK_API_TOKEN: disabled
+      POSTMARK_API_TOKEN: DISABLED
       NEXT_PUBLIC_SERVER_URL: http://localhost:60045
       NEXT_PUBLIC_CLIENT_URL: http://localhost:3015
       VITE_SERVER_URL: http://localhost:60045
       VITE_CLIENT_URL: http://localhost:3015
+      RECAPTCHA_SECRET_KEY: DISABLED
+      NEXT_PUBLIC_RECAPTCHA_SITE_KEY: DISABLED
     run: |
       npm run test:backoffice --prefix=e2e
     shell: bash
