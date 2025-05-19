@@ -45,6 +45,7 @@ export function FormField<TFormData extends FieldValues>({
         readOnly={readOnly}
         className={fieldError ? styles["input-error"] : ""}
         {...register(property, rules)}
+        aria-invalid={fieldError ? "true" : "false"}
       />
       <FieldErrors error={fieldError} />
     </label>

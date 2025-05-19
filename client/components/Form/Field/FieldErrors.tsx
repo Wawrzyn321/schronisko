@@ -21,5 +21,9 @@ export function FieldErrors({ error }: Props) {
     }
   })();
 
-  return <p className={styles["validation-message"]}>{message}</p>;
+  return (
+    <p role="alert" className={styles["validation-message"]}>
+      {message}
+    </p>
+  );
 }

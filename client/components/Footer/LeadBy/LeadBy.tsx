@@ -16,7 +16,7 @@ export function LeadBy() {
           height={82}
           src={nadziejaLogo}
           alt="nadzieja na dom link"
-        ></Image>
+        />
       </a>
     </div>
   );
