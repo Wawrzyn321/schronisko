@@ -1,4 +1,4 @@
-import type { AnimalType, AnimalGender, AnimalLocation, AnimalCategory, Animal } from '@prisma-app/client';
+import type { AnimalType, AnimalGender, AnimalLocation, AnimalCategory } from '@prisma-app/client';
 import type { AnimalListElement } from './../../../common/types';
 
 export type AnimalFilteringParams = {

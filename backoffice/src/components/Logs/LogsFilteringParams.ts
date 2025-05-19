@@ -1,6 +1,5 @@
 import { allPermissions } from './../../common/allPermissions';
-import type { Permission } from '@prisma-app/client';
-import type { Logs } from '@prisma-app/client';
+import type { Permission, Logs } from '@prisma-app/client';
 
 export type LogsFilteringParams = {
     userIdFilter: string,

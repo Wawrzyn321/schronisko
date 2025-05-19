@@ -24,7 +24,7 @@ export class CommunicationService {
   }
 
   async sendVolunteering(formData: VolunteeringFormData) {
-    if (!this.captchaService.validateCaptcha(formData.captchaToken)) {
+    if (!(await this.captchaService.validateCaptcha(formData.captchaToken))) {
       throw new BadRequestException(null, 'Nieprawidłowa captcha');
     }
     const { error } = VolunteeringFormDataSchema.safeParse(formData);
@@ -51,7 +51,7 @@ export class CommunicationService {
   }
 
   async sendVAdoption(formData: VAdoptionFormData) {
-    if (!this.captchaService.validateCaptcha(formData.captchaToken)) {
+    if (!(await this.captchaService.validateCaptcha(formData.captchaToken))) {
       throw new BadRequestException(null, 'Nieprawidłowa captcha');
     }
     const { error } = VAdoptionFormDataSchema.safeParse(formData);
