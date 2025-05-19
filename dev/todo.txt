@@ -24,3 +24,5 @@ testy klienta -  https://tkdodo.eu/blog/testing-react-query
             })
 
   width: 1200px; max-width
+
+  //todo invalid data test

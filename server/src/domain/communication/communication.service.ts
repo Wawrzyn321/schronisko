@@ -1,12 +1,12 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import * as nodemailer from 'nodemailer';
-import {
-  VAdoptionFormFetch,
-  VolunteeringFormFetch,
-  validateVAdoptionFormFetch,
-  validateVoluneeringFormFetch,
-} from './common';
 import { CaptchaServiceInterface, MailServiceInterface } from './interface';
+import {
+  VAdoptionFormData,
+  VAdoptionFormDataSchema,
+  VolunteeringFormData,
+  VolunteeringFormDataSchema,
+} from './validation';
 
 @Injectable()
 export class CommunicationService {
@@ -23,47 +23,43 @@ export class CommunicationService {
     });
   }
 
-  async sendVolunteering(props: VolunteeringFormFetch) {
-    if (!this.captchaService.validateCaptcha(props.captchaToken)) {
+  async sendVolunteering(formData: VolunteeringFormData) {
+    if (!this.captchaService.validateCaptcha(formData.captchaToken)) {
       throw new BadRequestException(null, 'Nieprawidłowa captcha');
     }
-
-    const validateInput = () => validateVoluneeringFormFetch(props);
-    const onValidated = async () =>
-      await this.mailService.send(
-        'Nowa osoba chce dołączyć do wolontariatu',
-        `Tu podaję dane:
-        kto: ${props.fullName}
-        email: ${props.email}
-        telefon: ${props.phoneNumber}
-        data urodzenia: ${props.birthDate}
-        coś więcej?: ${props.about}
-        type: ${props.animalType}
-      `,
-      );
-
-    await this.send(validateInput, onValidated);
-  }
-
-  async sendVAdoption(props: VAdoptionFormFetch) {
-    if (!this.captchaService.validateCaptcha(props.captchaToken)) {
-      throw new BadRequestException(null, 'Nieprawidłowa captcha');
-    }
-
-    const validateInput = () => validateVAdoptionFormFetch(props);
-    const onValidated = async () =>
-      await this.mailService.send('Ktoś będzie adoptował wirtualnie', 'todo');
-
-    await this.send(validateInput, onValidated);
-  }
-
-  async send(validateInput: () => boolean, sendEmail: () => Promise<void>) {
-    if (!validateInput()) {
-      throw new BadRequestException('Brak wszystkich danych.');
+    const { error } = VolunteeringFormDataSchema.safeParse(formData);
+    if (error) {
+      throw new BadRequestException(error, 'Nieprawidłowe dane');
     }
 
     try {
-      await sendEmail();
+      await this.mailService.send(
+        'Nowa osoba chce dołączyć do wolontariatu',
+        `Tu podaję dane:
+        kto: ${formData.fullName}
+        email: ${formData.email}
+        telefon: ${formData.phoneNumber}
+        data urodzenia: ${formData.birthDate}
+        coś więcej?: ${formData.about}
+        type: ${formData.animalType}
+      `,
+      );
+    } catch (e) {
+      throw new BadRequestException('Nie udało się wysłać maila.');
+    }
+  }
+
+  async sendVAdoption(formData: VAdoptionFormData) {
+    if (!this.captchaService.validateCaptcha(formData.captchaToken)) {
+      throw new BadRequestException(null, 'Nieprawidłowa captcha');
+    }
+    const { error } = VAdoptionFormDataSchema.safeParse(formData);
+    if (error) {
+      throw new BadRequestException(error, 'Nieprawidłowe dane');
+    }
+
+    try {
+      await this.mailService.send('Ktoś będzie adoptował wirtualnie', 'todo');
     } catch (e) {
       throw new BadRequestException('Nie udało się wysłać maila.');
     }

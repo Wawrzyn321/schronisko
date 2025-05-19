@@ -2,24 +2,24 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { PrismaService } from '../../../prisma-connect/prisma.service';
 import { CommunicationController } from '../communication.controller';
 import { CommunicationService } from '../communication.service';
-import { VAdoptionFormFetch, VolunteeringFormFetch } from '../common';
 import { CaptchaServiceInterface, MailServiceInterface } from '../interface';
 import { AnimalType } from '@prisma-app/client';
+import { VAdoptionFormData, VolunteeringFormData } from '../validation';
 
-const mockVolunteeringRequest: VolunteeringFormFetch = {
+const mockVolunteeringRequest: VolunteeringFormData = {
   about: 'about',
   fullName: 'fn',
-  email: 'email',
-  phoneNumber: '123',
+  email: 'email@email.com',
+  phoneNumber: '123 456 789',
   birthDate: 'now',
   captchaToken: 'test-token',
   animalType: AnimalType.CAT,
 };
 
-const mockVAdoptionRequest: VAdoptionFormFetch = {
-  fullName: 'fn',
+const mockVAdoptionRequest: VAdoptionFormData = {
+  fullName: 'fullname',
   vCaretakerName: 'vn',
-  email: 'email',
+  email: 'email@email.com',
   additionalMessage: '',
   animalId: 'id',
   animalName: 'name',
@@ -73,8 +73,8 @@ describe('CommunicationController', () => {
     "Nowa osoba chce dołączyć do wolontariatu",
     "Tu podaję dane:
         kto: fn
-        email: email
-        telefon: 123
+        email: email@email.com
+        telefon: 123 456 789
         data urodzenia: now
         coś więcej?: about
         type: CAT
@@ -98,10 +98,10 @@ describe('CommunicationController', () => {
   });
 
   it('POST volunteer with invalid data returns error', async () => {
-    const mockVolunteeringRequest: VolunteeringFormFetch = {
+    const mockVolunteeringRequest: VolunteeringFormData = {
       about: '',
       fullName: 'fn',
-      email: 'email',
+      email: 'email@email.com',
       phoneNumber: '123',
       birthDate: 'now',
       captchaToken: 'test-token',
@@ -114,7 +114,21 @@ describe('CommunicationController', () => {
 
     await expect(
       communicationController.sendVolunteering(mockVolunteeringRequest),
-    ).rejects.toThrow(/Brak wszystkich danych/);
+    ).rejects.toThrowErrorMatchingInlineSnapshot(`
+"[
+  {
+    "code": "too_small",
+    "minimum": 9,
+    "type": "string",
+    "inclusive": true,
+    "exact": false,
+    "message": "String must contain at least 9 character(s)",
+    "path": [
+      "phoneNumber"
+    ]
+  }
+]"
+`);
   });
 
   it('POST v-adoption validates input and sends mail', async () => {
@@ -150,10 +164,10 @@ describe('CommunicationController', () => {
   });
 
   it('POST v-adoption with invalid data returns error', async () => {
-    const mockVAdoptionRequest: VAdoptionFormFetch = {
-      fullName: '',
+    const mockVAdoptionRequest: VAdoptionFormData = {
+      fullName: 'full name',
       vCaretakerName: 'vn',
-      email: 'email',
+      email: '',
       additionalMessage: '',
       animalId: 'id',
       animalName: 'name',
@@ -165,8 +179,18 @@ describe('CommunicationController', () => {
 
     mailService.send = sendMailMock;
 
-    await expect(
-      communicationController.sendVAdoption(mockVAdoptionRequest),
-    ).rejects.toThrow(/Brak wszystkich danych/);
+    await expect(communicationController.sendVAdoption(mockVAdoptionRequest))
+      .rejects.toThrowErrorMatchingInlineSnapshot(`
+"[
+  {
+    "validation": "email",
+    "code": "invalid_string",
+    "message": "Invalid email",
+    "path": [
+      "email"
+    ]
+  }
+]"
+`);
   });
 });
