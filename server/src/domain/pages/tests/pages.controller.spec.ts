@@ -4,7 +4,7 @@ import { PrismaService } from '../../../prisma-connect/prisma.service';
 import { PagesController } from '../pages.controller';
 import { PagesService } from '../pages.service';
 import { SettingsService } from '../../settings/settings.service';
-import { Page, Permission } from '@prisma-app/client';
+import { Page, Permission, Settings } from '@prisma-app/client';
 import { ImageData } from '../../../util/img-fs';
 import { LoggedInUser } from '../../auth/types';
 import { allPermissions } from '../../auth/constants';
@@ -77,6 +77,15 @@ describe('PagesController', () => {
     pagesController = new PagesController(pagesService);
   });
 
+  it('GET returns page ids for pre render', async () => {
+    prismaServiceMock.page.findMany = jest
+      .fn()
+      .mockReturnValueOnce([{ id: 1 }, { id: 2 }]);
+
+    const result = await pagesController.getPageIdsForPrerender();
+    expect(result).toMatchObject([1, 2]);
+  });
+
   it('GET with no valid params returns all pages', async () => {
     prismaServiceMock.page.findMany = jest.fn().mockReturnValue('pages');
 
@@ -126,11 +135,46 @@ describe('PagesController', () => {
     });
   });
 
-  it('GET one returns page for valid id', async () => {
-    prismaServiceMock.page.findUnique = jest.fn().mockReturnValue(mockPage);
+  it('GET with valid id returns a page, using substitution', async () => {
+    const mockSetting: Settings = {
+      id: 'V_ADOPTION_ACCOUNT_NUMBER',
+      value: 'SUBSTITUTED',
+    };
+    const mockPage: Page = {
+      id: 'page-id',
+      title: 'some-title',
+      content: 'this is %KONTO%',
+    };
+    const findPageMock = jest.fn().mockReturnValue(mockPage);
 
-    const result = await pagesController.getPage(mockPage.id);
-    expect(result).toBe(mockPage);
+    prismaServiceMock.page.findUnique = findPageMock;
+    settingsService.getAll = jest.fn().mockReturnValue([mockSetting]);
+
+    const result = await pagesController.getPage('page-id');
+    expect(result.id).toBe('page-id');
+    expect(result.content).toBe('this is SUBSTITUTED');
+    expect(settingsService.getAll).toHaveBeenCalled();
+    expect(findPageMock).toHaveBeenCalledWith({ where: { id: 'page-id' } });
+  });
+
+  it('GET with valid id returns a page, substitution disabled', async () => {
+    const mockSetting: Settings = {
+      id: 'V_ADOPTION_ACCOUNT_NUMBER',
+      value: 'SUBSTITUTED',
+    };
+    const mockPage: Page = {
+      id: 'page-id',
+      title: 'some-title',
+      content: 'this is %KONTO%',
+    };
+    const findPageMock = jest.fn().mockReturnValue(mockPage);
+
+    prismaServiceMock.page.findUnique = findPageMock;
+    settingsService.getAll = jest.fn().mockReturnValue([mockSetting]);
+
+    const result = await pagesController.getPage('page-id', 'false');
+    expect(result.id).toBe('page-id');
+    expect(result.content).toBe('this is %KONTO%');
   });
 
   it('PATCH throws if page is not found', async () => {
@@ -184,5 +228,52 @@ describe('PagesController', () => {
 
     expect(cacheClearMock).toHaveBeenCalled();
     expect(cacheSetMock).toHaveBeenCalledWith(JSON.stringify(mockPage));
+  });
+
+  it('GET dog-volunteering returns a doggy-on page if setting is true', async () => {
+    const mockSetting: Settings = {
+      id: 'DOG_VOLUNTEERING_ENABLED',
+      value: 'true',
+    };
+    const getPageMock = jest.fn().mockReturnValue('mock-page');
+
+    settingsService.getAll = jest.fn().mockReturnValueOnce([mockSetting]);
+    pagesService.get = getPageMock;
+
+    const result = await pagesController.getDogVolunteeringPage();
+    expect(result).toBe('mock-page');
+    expect(getPageMock).toHaveBeenCalledWith('wolontariat-pies-on', {
+      useSubstitution: true,
+    });
+  });
+
+  it('GET dog-volunteering returns a doggy-off page if setting is missing', async () => {
+    const getPageMock = jest.fn().mockReturnValue('mock-page');
+
+    settingsService.getAll = jest.fn().mockReturnValueOnce([]);
+    pagesService.get = getPageMock;
+
+    const result = await pagesController.getDogVolunteeringPage();
+    expect(result).toBe('mock-page');
+    expect(getPageMock).toHaveBeenCalledWith('wolontariat-pies-off', {
+      useSubstitution: true,
+    });
+  });
+
+  it('GET dog-volunteering returns a doggy-off page if setting is false', async () => {
+    const mockSetting: Settings = {
+      id: 'DOG_VOLUNTEERING_ENABLED',
+      value: 'false',
+    };
+    const getPageMock = jest.fn().mockReturnValue('mock-page');
+
+    settingsService.getAll = jest.fn().mockReturnValueOnce([mockSetting]);
+    pagesService.get = getPageMock;
+
+    const result = await pagesController.getDogVolunteeringPage();
+    expect(result).toBe('mock-page');
+    expect(getPageMock).toHaveBeenCalledWith('wolontariat-pies-off', {
+      useSubstitution: true,
+    });
   });
 });

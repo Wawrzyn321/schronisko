@@ -59,7 +59,6 @@ export function ErrorWrapper({
   error404,
 }: ErrorWrapperProps): JSX.Element {
   if (error) {
-    console.log(Object.keys(error));
     if ("statusCode" in error && error.statusCode === 404 && error404) {
       return <Article {...error404} />;
     } else {

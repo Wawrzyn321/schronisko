@@ -18,7 +18,8 @@ export class PageService {
     }
 
     async get(id: string): Promise<Page> {
-        return await throwingFetch(`${baseUrl}/${id}`);
+        const params = new URLSearchParams({ useSubstitution: 'false' }).toString();
+        return await throwingFetch(`${baseUrl}/${id}?${params}`);
     }
 
     async save(page: Page, imagesMap: FileMap): Promise<Page> {

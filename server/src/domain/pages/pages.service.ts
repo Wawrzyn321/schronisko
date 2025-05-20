@@ -49,7 +49,7 @@ export class PagesService {
       areDogVolunteeringEnabled
         ? 'wolontariat-pies-on'
         : 'wolontariat-pies-off',
-      true,
+      { useSubstitution: true },
     );
   }
 
@@ -57,7 +57,10 @@ export class PagesService {
     return (await this.prisma.page.findMany()).map((p) => p.id);
   }
 
-  async get(id: string, useSubstitution: boolean): Promise<Page> {
+  async get(
+    id: string,
+    { useSubstitution }: { useSubstitution: boolean },
+  ): Promise<Page> {
     const cache = await this.cacheService.useArticleCache(
       'page',
       id,
@@ -92,7 +95,7 @@ export class PagesService {
     images: ImageData[],
   ): Promise<Page> {
     const cache = await this.cacheService.useArticleCache('page', id);
-    const prevPage = await this.get(id, false);
+    const prevPage = await this.get(id, { useSubstitution: false });
     if (prevPage.id !== id) {
       throw new BadRequestException(id, 'id musi się zgadzać');
     }

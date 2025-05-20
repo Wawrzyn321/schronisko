@@ -35,10 +35,7 @@ export function VAdoptionForm({ animal }: { animal: Animal }) {
     mutationFn: (formData: typeof DEFAULT_VALUES) => {
       return submitVAdoptionForm(formData);
     },
-    onError: (error) => {
-      console.log(getZodIsses(error));
-      return showErrorModal();
-    },
+    onError: showErrorModal,
     onSuccess: () => setShowAdoptionModal(true),
   });
 

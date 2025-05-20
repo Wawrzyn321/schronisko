@@ -22,12 +22,13 @@ export async function fetchAnimalImages(id: string): Promise<AnimalImage[]> {
 }
 
 export async function fetchPage(id: string): Promise<PageModel> {
-  const url = getBackendUrl() + "/api/c/pages/" + id;
+  console.log(getBackendUrl() + "/api/pages/" + id)
+  const url = getBackendUrl() + "/api/pages/" + id;
   return doFetch(url);
 }
 
 export async function fetchPageIds(): Promise<string[]> {
-  return await doFetch(SSR_BACKEND_URL + "/api/c/pages");
+  return await doFetch(SSR_BACKEND_URL + "/api/pages/static-ids");
 }
 
 export async function fetchSettings(): Promise<Settings[]> {

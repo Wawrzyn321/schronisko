@@ -17,31 +17,21 @@ import { PermissionsGuard } from '../auth/guards/Permissions.guard';
 import { Query } from '@nestjs/common';
 import { ImageData } from '../../util/img-fs';
 
-@Controller('api/c/pages')
-export class PagesPublicController {
+@Controller('api/pages')
+export class PagesController {
   constructor(private pagesService: PagesService) {}
 
   @Public()
-  @Get('dog-volunteering')
+  @Get('/dog-volunteering')
   getDogVolunteeringPage() {
     return this.pagesService.getDogsPage();
   }
 
   @Public()
-  @Get(':id')
-  getPage(@Param('id') pageId: string) {
-    return this.pagesService.get(pageId, true);
-  }
-
-  @Public()
-  @Get()
+  @Get('/static-ids')
   getPageIdsForPrerender() {
     return this.pagesService.getIds();
   }
-}
-@Controller('api/pages')
-export class PagesController {
-  constructor(private pagesService: PagesService) {}
 
   @Public()
   @Get()
@@ -52,8 +42,13 @@ export class PagesController {
 
   @Public()
   @Get(':id')
-  getPage(@Param('id') pageId: string) {
-    return this.pagesService.get(pageId, false);
+  getPage(
+    @Param('id') pageId: string,
+    @Query('useSubstitution') useSubstitution: string = '',
+  ) {
+    return this.pagesService.get(pageId, {
+      useSubstitution: useSubstitution !== 'false',
+    });
   }
 
   @RequirePermission(Permission.PAGE)
