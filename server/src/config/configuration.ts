@@ -1,12 +1,8 @@
-import { setupImageDirectories } from './setupImageDIrectories';
-
 export const MAX_REQUEST_SIZE = '50mb';
 export const PORT = 60045;
 export const ENV_DISABLED = 'DISABLED';
 export const LOCAL_STATIC_FILES_PATH = '../images/';
 export const IS_DEV = process.env.NODE_ENV !== 'production';
-
-setupImageDirectories(LOCAL_STATIC_FILES_PATH);
 
 export enum CONFIG {
   'redisUrl' = 'redisUrl',

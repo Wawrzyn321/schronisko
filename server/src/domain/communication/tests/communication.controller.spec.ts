@@ -1,39 +1,12 @@
 import { CommunicationController } from '../communication.controller';
 import { CommunicationService } from '../communication.service';
-import { CaptchaServiceInterface, MailServiceInterface } from '../interface';
-import { AnimalType } from '@prisma-app/client';
-import { VAdoptionFormData, VolunteeringFormData } from '../validation';
-
-const mockVolunteeringRequest: VolunteeringFormData = {
-  about: 'about',
-  fullName: 'fn',
-  email: 'email@email.com',
-  phoneNumber: '123 456 789',
-  birthDate: 'now',
-  captchaToken: 'test-token',
-  animalType: AnimalType.CAT,
-};
-
-const mockVAdoptionRequest: VAdoptionFormData = {
-  fullName: 'fullname',
-  vCaretakerName: 'vn',
-  email: 'email@email.com',
-  additionalMessage: '',
-  animalId: 'id',
-  animalName: 'name',
-  animalRefNo: 'ref',
-  captchaToken: 'test-token',
-};
-
-class MockMailService implements MailServiceInterface {
-  async send() {}
-}
-
-class MockCaptchaService implements CaptchaServiceInterface {
-  async validateCaptcha() {
-    return Promise.resolve(true);
-  }
-}
+import { CaptchaServiceInterface } from '../interface';
+import {
+  MockCaptchaService,
+  MockMailService,
+  mockVAdoptionRequest,
+  mockVolunteeringRequest,
+} from './testData';
 
 describe('CommunicationController', () => {
   let communicationController: CommunicationController;
@@ -51,16 +24,17 @@ describe('CommunicationController', () => {
     communicationController = new CommunicationController(communicationService);
   });
 
-  it('POST volunteer validates input and sends mail', async () => {
-    const sendMailMock = jest.fn();
-    const validateCaptchaMock = jest.fn().mockReturnValue(true);
+  describe('POST volunteer', () => {
+    it('validates input and sends mail', async () => {
+      const sendMailMock = jest.fn();
+      const validateCaptchaMock = jest.fn().mockReturnValue(true);
 
-    mailService.send = sendMailMock;
-    captchaService.validateCaptcha = validateCaptchaMock;
+      mailService.send = sendMailMock;
+      captchaService.validateCaptcha = validateCaptchaMock;
 
-    await communicationController.sendVolunteering(mockVolunteeringRequest);
+      await communicationController.sendVolunteering(mockVolunteeringRequest);
 
-    expect(sendMailMock.mock.calls).toMatchInlineSnapshot(`
+      expect(sendMailMock.mock.calls).toMatchInlineSnapshot(`
 [
   [
     "Nowa osoba chce dołączyć do wolontariatu",
@@ -75,39 +49,24 @@ describe('CommunicationController', () => {
   ],
 ]
 `);
-    expect(captchaService.validateCaptcha).toHaveBeenCalledWith('test-token');
-  });
+      expect(captchaService.validateCaptcha).toHaveBeenCalledWith('test-token');
+    });
 
-  it('POST volunteer with invalid captcha returns error', async () => {
-    const sendMailMock = jest.fn();
-    const validateCaptchaMock = jest.fn().mockReturnValue(false);
+    it('with invalid captcha returns error', async () => {
+      const validateCaptchaMock = jest.fn().mockReturnValue(false);
 
-    mailService.send = sendMailMock;
-    captchaService.validateCaptcha = validateCaptchaMock;
+      captchaService.validateCaptcha = validateCaptchaMock;
 
-    await expect(
-      communicationController.sendVolunteering(mockVolunteeringRequest),
-    ).rejects.toThrow(/captcha/);
-  });
+      await expect(
+        communicationController.sendVolunteering(mockVolunteeringRequest),
+      ).rejects.toThrow(/captcha/);
+    });
 
-  it('POST volunteer with invalid data returns error', async () => {
-    const mockVolunteeringRequest: VolunteeringFormData = {
-      about: '',
-      fullName: 'fn',
-      email: 'email@email.com',
-      phoneNumber: '123',
-      birthDate: 'now',
-      captchaToken: 'test-token',
-      animalType: AnimalType.CAT,
-    };
+    it('with invalid data returns error', async () => {
+      const invalidRequest = { ...mockVolunteeringRequest, phoneNumber: '' };
 
-    const sendMailMock = jest.fn();
-
-    mailService.send = sendMailMock;
-
-    await expect(
-      communicationController.sendVolunteering(mockVolunteeringRequest),
-    ).rejects.toThrowErrorMatchingInlineSnapshot(`
+      await expect(communicationController.sendVolunteering(invalidRequest))
+        .rejects.toThrowErrorMatchingInlineSnapshot(`
 "[
   {
     "code": "too_small",
@@ -122,18 +81,20 @@ describe('CommunicationController', () => {
   }
 ]"
 `);
+    });
   });
 
-  it('POST v-adoption validates input and sends mail', async () => {
-    const sendMailMock = jest.fn();
-    const validateCaptchaMock = jest.fn().mockReturnValue(true);
+  describe('POST v-adoption', () => {
+    it('validates input and sends mail', async () => {
+      const sendMailMock = jest.fn();
+      const validateCaptchaMock = jest.fn().mockReturnValue(true);
 
-    mailService.send = sendMailMock;
-    captchaService.validateCaptcha = validateCaptchaMock;
+      mailService.send = sendMailMock;
+      captchaService.validateCaptcha = validateCaptchaMock;
 
-    await communicationController.sendVAdoption(mockVAdoptionRequest);
+      await communicationController.sendVAdoption(mockVAdoptionRequest);
 
-    expect(sendMailMock.mock.calls).toMatchInlineSnapshot(`
+      expect(sendMailMock.mock.calls).toMatchInlineSnapshot(`
 [
   [
     "Ktoś będzie adoptował wirtualnie",
@@ -141,39 +102,24 @@ describe('CommunicationController', () => {
   ],
 ]
 `);
-    expect(captchaService.validateCaptcha).toHaveBeenCalledWith('test-token');
-  });
+      expect(captchaService.validateCaptcha).toHaveBeenCalledWith('test-token');
+    });
 
-  it('POST v-adoption with invalid captcha returns error', async () => {
-    const sendMailMock = jest.fn();
-    const validateCaptchaMock = jest.fn().mockReturnValue(false);
+    it('with invalid captcha returns error', async () => {
+      const validateCaptchaMock = jest.fn().mockReturnValue(false);
 
-    mailService.send = sendMailMock;
-    captchaService.validateCaptcha = validateCaptchaMock;
+      captchaService.validateCaptcha = validateCaptchaMock;
 
-    await expect(
-      communicationController.sendVAdoption(mockVAdoptionRequest),
-    ).rejects.toThrow(/captcha/);
-  });
+      await expect(
+        communicationController.sendVAdoption(mockVAdoptionRequest),
+      ).rejects.toThrow(/captcha/);
+    });
 
-  it('POST v-adoption with invalid data returns error', async () => {
-    const mockVAdoptionRequest: VAdoptionFormData = {
-      fullName: 'full name',
-      vCaretakerName: 'vn',
-      email: '',
-      additionalMessage: '',
-      animalId: 'id',
-      animalName: 'name',
-      animalRefNo: 'ref',
-      captchaToken: 'test-token',
-    };
+    it('with invalid data returns error', async () => {
+      const invalidRequest = { ...mockVAdoptionRequest, email: '' };
 
-    const sendMailMock = jest.fn();
-
-    mailService.send = sendMailMock;
-
-    await expect(communicationController.sendVAdoption(mockVAdoptionRequest))
-      .rejects.toThrowErrorMatchingInlineSnapshot(`
+      await expect(communicationController.sendVAdoption(invalidRequest))
+        .rejects.toThrowErrorMatchingInlineSnapshot(`
 "[
   {
     "validation": "email",
@@ -185,5 +131,6 @@ describe('CommunicationController', () => {
   }
 ]"
 `);
+    });
   });
 });

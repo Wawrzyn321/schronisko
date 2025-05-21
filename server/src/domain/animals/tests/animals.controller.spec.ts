@@ -61,18 +61,6 @@ const animalData: AnimalData = {
   virtualCaretakerName: '',
 };
 
-// const mockUnlink = jest.fn();
-// const mockWriteFile = jest.fn();
-// jest.mock('fs', () => ({
-//   existsSync: jest.fn(() => true),
-//   // needed for Prisma
-//   readFileSync: jest.requireActual('fs').readFileSync,
-//   promises: {
-//     unlink: (...args: any) => mockUnlink(...args),
-//     writeFile: (...args: any) => mockWriteFile(...args),
-//   },
-// }));
-
 jest.mock('sharp', () => (buffer: Buffer) => ({
   resize: () => ({
     toBuffer: () =>
