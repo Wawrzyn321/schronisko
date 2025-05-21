@@ -26,7 +26,7 @@ import { FsService } from '../fs/fs.service';
     },
     SanitizeService,
   ],
-  exports: [PagesService],
+  exports: [],
   controllers: [PagesController],
 })
 export class PagesModule {}

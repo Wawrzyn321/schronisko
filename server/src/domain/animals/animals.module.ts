@@ -21,7 +21,7 @@ import { FsService } from '../fs/fs.service';
       useClass: FsService,
     },
   ],
-  exports: [AnimalsService],
+  exports: [],
   controllers: [AnimalsController, AnimalsPublicController],
 })
 export class AnimalsModule {}

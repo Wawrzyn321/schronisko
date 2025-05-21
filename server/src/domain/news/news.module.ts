@@ -26,7 +26,6 @@ import { FsService } from '../fs/fs.service';
     },
     SanitizeService,
   ],
-  exports: [NewsService],
   controllers: [NewsController, NewsPublicController],
 })
 export class NewsModule {}

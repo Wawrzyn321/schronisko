@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { JwtStrategy } from './jwt.strategy';
-import { UsersModule } from '../users/users.module';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './constants';
@@ -11,6 +10,7 @@ import { BcryptService } from './bcrypt.service';
 import { AuthController } from './auth.controller';
 import { PrismaService } from '../../prisma-connect/prisma.service';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { UsersModule } from '../users/users.module';
 
 const JwtGuard = {
   provide: APP_GUARD,
@@ -28,6 +28,5 @@ const JwtGuard = {
   ],
   providers: [AuthService, JwtStrategy, BcryptService, PrismaService, JwtGuard],
   controllers: [AuthController],
-  exports: [AuthService],
 })
 export class AuthModule {}

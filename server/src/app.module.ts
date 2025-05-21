@@ -12,8 +12,8 @@ import { ConfigModule } from '@nestjs/config';
 import configuration from './config/configuration';
 
 const domainModules = [
-  AuthModule,
   UsersModule,
+  AuthModule,
   PagesModule,
   NewsModule,
   AnimalsModule,

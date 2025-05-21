@@ -18,7 +18,7 @@ import { CacheServiceInterface } from '../../domain/cache/interface';
     },
     SanitizeService,
   ],
-  exports: [SettingsService],
+  exports: [],
   controllers: [SettingsController],
 })
 export class SettingsModule {}

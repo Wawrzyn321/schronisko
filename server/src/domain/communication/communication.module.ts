@@ -8,7 +8,6 @@ import { CaptchaServiceInterface, MailServiceInterface } from './interface';
 
 @Module({
   providers: [
-    CommunicationService,
     PrismaService,
     {
       provide: MailServiceInterface,
@@ -19,7 +18,7 @@ import { CaptchaServiceInterface, MailServiceInterface } from './interface';
       useClass: CaptchaService,
     },
   ],
-  exports: [CommunicationService],
+  exports: [],
   controllers: [CommunicationController],
 })
 export class CommunicationModule {}
