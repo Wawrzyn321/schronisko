@@ -5,19 +5,12 @@ import {
   AnimalImagesController,
   AnimalImagesPublicController,
 } from './animal-images.controller';
-import { FsServiceInterface } from '../fs/interface';
-import { FsService } from '../fs/fs.service';
+import { FsModule } from '../fs/fs.module';
 
 @Module({
-  providers: [
-    AnimalImagesService,
-    PrismaService,
-    {
-      provide: FsServiceInterface,
-      useClass: FsService,
-    },
-  ],
-  exports: [],
+  imports: [FsModule],
+  providers: [AnimalImagesService, PrismaService],
+  exports: [AnimalImagesService],
   controllers: [AnimalImagesController, AnimalImagesPublicController],
 })
 export class AnimalImagesModule {}

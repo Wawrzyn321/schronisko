@@ -2,30 +2,15 @@ import { Module } from '@nestjs/common';
 import { PrismaService } from '../../prisma-connect/prisma.service';
 import { NewsService } from './news.service';
 import { NewsController, NewsPublicController } from './news.controller';
-import { LogsService } from '../logs/logs.service';
-import { SettingsService } from '../settings/settings.service';
-import { CacheService } from '../cache/cache.service';
-import { SanitizeService } from '../support/sanitize.service';
-import { CacheServiceInterface } from '../../domain/cache/interface';
-import { FsServiceInterface } from '../fs/interface';
-import { FsService } from '../fs/fs.service';
+import { LogsModule } from '../logs/logs.module';
+import { CacheModule } from '../cache/cache.module';
+import { FsModule } from '../fs/fs.module';
+import { SettingsModule } from '../settings/settings.module';
+import { SupportModule } from '../support/support.module';
 
 @Module({
-  providers: [
-    NewsService,
-    PrismaService,
-    LogsService,
-    SettingsService,
-    {
-      provide: CacheServiceInterface,
-      useClass: CacheService,
-    },
-    {
-      provide: FsServiceInterface,
-      useClass: FsService,
-    },
-    SanitizeService,
-  ],
+  imports: [LogsModule, CacheModule, FsModule, SettingsModule, SupportModule],
+  providers: [NewsService, PrismaService],
   controllers: [NewsController, NewsPublicController],
 })
 export class NewsModule {}

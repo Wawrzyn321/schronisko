@@ -3,10 +3,11 @@ import { Module } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { BcryptService } from '../auth/bcrypt.service';
 import { UsersController } from './users.controller';
-import { LogsService } from '../logs/logs.service';
+import { LogsModule } from '../logs/logs.module';
 
 @Module({
-  providers: [UsersService, PrismaService, BcryptService, LogsService],
+  imports: [LogsModule],
+  providers: [UsersService, PrismaService, BcryptService],
   exports: [UsersService],
   controllers: [UsersController],
 })

@@ -2,23 +2,14 @@ import { PrismaService } from '../../prisma-connect/prisma.service';
 import { Module } from '@nestjs/common';
 import { SettingsService } from './settings.service';
 import { SettingsController } from './settings.controller';
-import { LogsService } from '../logs/logs.service';
-import { CacheService } from '../cache/cache.service';
-import { SanitizeService } from '../support/sanitize.service';
-import { CacheServiceInterface } from '../../domain/cache/interface';
+import { LogsModule } from '../logs/logs.module';
+import { CacheModule } from '../cache/cache.module';
+import { SupportModule } from '../support/support.module';
 
 @Module({
-  providers: [
-    SettingsService,
-    PrismaService,
-    LogsService,
-    {
-      provide: CacheServiceInterface,
-      useClass: CacheService,
-    },
-    SanitizeService,
-  ],
-  exports: [],
+  imports: [LogsModule, CacheModule, SettingsModule, SupportModule],
+  providers: [SettingsService, PrismaService],
+  exports: [SettingsService],
   controllers: [SettingsController],
 })
 export class SettingsModule {}

@@ -2,31 +2,15 @@ import { PrismaService } from '../../prisma-connect/prisma.service';
 import { Module } from '@nestjs/common';
 import { PagesService } from './pages.service';
 import { PagesController } from './pages.controller';
-import { LogsService } from '../logs/logs.service';
-import { SettingsService } from '../settings/settings.service';
-import { CacheService } from '../cache/cache.service';
-import { SanitizeService } from '../support/sanitize.service';
-import { CacheServiceInterface } from '../../domain/cache/interface';
-import { FsServiceInterface } from '../fs/interface';
-import { FsService } from '../fs/fs.service';
+import { LogsModule } from '../logs/logs.module';
+import { CacheModule } from '../cache/cache.module';
+import { FsModule } from '../fs/fs.module';
+import { SettingsModule } from '../settings/settings.module';
+import { SupportModule } from '../support/support.module';
 
 @Module({
-  providers: [
-    PagesService,
-    PrismaService,
-    LogsService,
-    SettingsService,
-    {
-      provide: CacheServiceInterface,
-      useClass: CacheService,
-    },
-    {
-      provide: FsServiceInterface,
-      useClass: FsService,
-    },
-    SanitizeService,
-  ],
-  exports: [],
+  imports: [LogsModule, CacheModule, FsModule, SettingsModule, SupportModule],
+  providers: [PagesService, PrismaService],
   controllers: [PagesController],
 })
 export class PagesModule {}
