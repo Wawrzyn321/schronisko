@@ -12,6 +12,8 @@ import { LogsService } from '../../logs/logs.service';
 import { PrismaService } from '../../../prisma-connect/prisma.service';
 import { AnimalsPublicController } from '../animals.controller';
 import { AnimalsService } from '../animals.service';
+import { FsServiceMock } from '../../../util/testData';
+import { FsServiceInterface } from '../../fs/interface';
 
 const makeAnimal = (id: string): Animal => ({
   addedAt: new Date(),
@@ -39,6 +41,7 @@ describe('AnimalsPublicController', () => {
   let prismaServiceMock: PrismaService;
   let animalImagesService: AnimalImagesService;
   let logsService: LogsService;
+  let fsService: FsServiceInterface;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -46,11 +49,13 @@ describe('AnimalsPublicController', () => {
     }).compile();
     prismaServiceMock = module.get<PrismaService>(PrismaService);
     logsService = new LogsService(prismaServiceMock);
-    animalImagesService = new AnimalImagesService(prismaServiceMock);
+    animalImagesService = new AnimalImagesService(prismaServiceMock, fsService);
+    fsService = new FsServiceMock();
     animalsService = new AnimalsService(
       prismaServiceMock,
       logsService,
       animalImagesService,
+      fsService,
     );
     animalController = new AnimalsPublicController(animalsService);
   });

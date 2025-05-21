@@ -3,21 +3,17 @@ import { AnimalImage } from '@prisma-app/client';
 import { PrismaService } from '../../../prisma-connect/prisma.service';
 import { AnimalImagesController } from '../animal-images.controller';
 import { AnimalImagesService, UpsertParams } from '../animal-images.service';
-
-const mockImage: AnimalImage = {
-  id: 'mock-animal-image-id',
-  order: 0,
-  animalId: 'some-id',
-  imageName: 'animal-image-name',
-  visible: true,
-};
+import { FsServiceInterface } from '../../fs/interface';
+import { FsServiceMock } from '../../../util/testData';
+import { mockImage } from './testData';
 
 const mockUnlink = jest.fn();
 const mockWriteFile = jest.fn();
 jest.mock('fs', () => ({
-  ...(jest.requireActual('fs') as object),
+  existsSync: jest.fn(() => true),
+  // needed for Prisma
+  readFileSync: jest.requireActual('fs').readFileSync,
   promises: {
-    ...jest.requireActual('fs').promises,
     unlink: (...args: any) => mockUnlink(...args),
     writeFile: (...args: any) => mockWriteFile(...args),
   },
@@ -34,13 +30,15 @@ describe('AnimalImagesController', () => {
   let animalImagesController: AnimalImagesController;
   let animalImagesService: AnimalImagesService;
   let prismaServiceMock: PrismaService;
+  let fsService: FsServiceInterface;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [PrismaService],
     }).compile();
+    fsService = new FsServiceMock();
     prismaServiceMock = module.get<PrismaService>(PrismaService);
-    animalImagesService = new AnimalImagesService(prismaServiceMock);
+    animalImagesService = new AnimalImagesService(prismaServiceMock, fsService);
     animalImagesController = new AnimalImagesController(animalImagesService);
   });
 

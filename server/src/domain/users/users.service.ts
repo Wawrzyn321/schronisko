@@ -200,7 +200,6 @@ export class UsersService {
   }
 
   toViewModel(user: User): UserViewModel {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { passwordHash, ...u }: { passwordHash: string } & UserViewModel =
       user;
     return u;

@@ -12,7 +12,6 @@ import {
   Body,
   Delete,
   Post,
-  BadRequestException,
   Request,
   Query,
 } from '@nestjs/common';

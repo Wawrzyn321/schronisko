@@ -10,15 +10,12 @@ import { PageListElement } from './Page';
 import { LoggedInUser } from '../auth/types';
 import { LogsService } from '../logs/logs.service';
 import { formattedDiff } from '../logs/diff';
-import {
-  deleteImagesInContent,
-  ImageData,
-  saveImagesFromContentModyfyingIt,
-} from '../../util/img-fs';
 import { SettingsService } from '../settings/settings.service';
 import { containsSubsitution, substitute } from '../../util/substitutions';
 import { SanitizeService } from '../support/sanitize.service';
 import { CacheServiceInterface } from '../../domain/cache/interface';
+import { FsServiceInterface } from '../fs/interface';
+import { ImageData } from '../fs/types';
 
 @Injectable()
 export class PagesService {
@@ -28,6 +25,7 @@ export class PagesService {
     private logsService: LogsService,
     private cacheService: CacheServiceInterface,
     private sanitizeService: SanitizeService,
+    private fsService: FsServiceInterface,
   ) {}
 
   async getAll(takeTop?: number): Promise<PageListElement[]> {
@@ -100,9 +98,9 @@ export class PagesService {
       throw new BadRequestException(id, 'id musi się zgadzać');
     }
 
-    await deleteImagesInContent(prevPage.content, page.content);
+    await this.fsService.deleteImagesInContent(prevPage.content, page.content);
 
-    page.content = await saveImagesFromContentModyfyingIt(
+    page.content = await this.fsService.saveImagesFromContentModyfyingIt(
       page.content,
       images,
       'pages',

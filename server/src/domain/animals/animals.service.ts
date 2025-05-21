@@ -13,7 +13,6 @@ import type {
 } from '@prisma-app/client';
 import { AnimalCategory } from '@prisma-app/client';
 import { VirtualCaretakerType, Permission } from '@prisma-app/client';
-import { deleteImage, saveImage } from '../../util/img-fs';
 import { LogsService } from '../logs/logs.service';
 import { LoggedInUser } from '../auth/types';
 import { formattedDiff } from '../logs/diff';
@@ -21,6 +20,7 @@ import * as gen from 'random-seed';
 import { AnimalImagesService } from '../animal-images/animal-images.service';
 import { changedToReadonly } from './readonly-animal';
 import { randomUUID } from 'crypto';
+import { FsServiceInterface } from '../fs/interface';
 
 const IMAGES_PATH = 'animals/';
 
@@ -78,6 +78,7 @@ export class AnimalsService {
     private prisma: PrismaService,
     private logsService: LogsService,
     private animalImagesService: AnimalImagesService,
+    private fsService: FsServiceInterface,
   ) {}
 
   async getAllPublic(
@@ -175,7 +176,7 @@ export class AnimalsService {
     let imageName = null;
     if (animal.imageData) {
       imageName = `${id}.png`;
-      await saveImage({
+      await this.fsService.saveImage({
         subdir: IMAGES_PATH,
         base64Data: animal.imageData,
         name: imageName,
@@ -183,7 +184,6 @@ export class AnimalsService {
       });
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { imageData, ...animalData } = animal;
     const createdAnimal = await this.prisma.animal.create({
       data: { ...animalData, imageName, id },
@@ -224,7 +224,7 @@ export class AnimalsService {
       if (!animal.imageName) {
         animal.imageName = `${randomUUID()}.png`;
       }
-      await saveImage({
+      await this.fsService.saveImage({
         subdir: IMAGES_PATH,
         name: animal.imageName,
         base64Data: animal.imageData,
@@ -234,7 +234,7 @@ export class AnimalsService {
       // previous image exist, next doesn't
       if (!animal.imageName && prevAnimal.imageName) {
         try {
-          await deleteImage(IMAGES_PATH, prevAnimal.imageName);
+          await this.fsService.deleteImage(IMAGES_PATH, prevAnimal.imageName);
         } catch (e) {
           console.warn(e);
         }
@@ -307,7 +307,7 @@ export class AnimalsService {
     let imageDeleteFailed = false;
     if (animal.imageName) {
       try {
-        await deleteImage(IMAGES_PATH, animal.imageName);
+        await this.fsService.deleteImage(IMAGES_PATH, animal.imageName);
       } catch (e: unknown) {
         console.warn(e);
         imageDeleteFailed = true;

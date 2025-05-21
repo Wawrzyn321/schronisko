@@ -23,10 +23,12 @@ const domainModules = [
 ];
 
 const configModule = ConfigModule.forRoot({
-  isGlobal: true, load: [configuration], cache: true,
-})
+  isGlobal: true,
+  load: [configuration],
+  cache: true,
+});
 
 @Module({
   imports: [...domainModules, configModule],
 })
-export class AppModule { }
+export class AppModule {}

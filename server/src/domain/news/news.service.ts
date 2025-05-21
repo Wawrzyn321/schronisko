@@ -14,12 +14,6 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { PrismaService } from '../../prisma-connect/prisma.service';
-import {
-  saveImage,
-  deleteImage,
-  saveImagesFromContentModyfyingIt,
-  deleteImagesInContent,
-} from '../../util/img-fs';
 import { validateNewsCreate, validateNewsUpdate } from './helpers';
 import { LogsService } from '../logs/logs.service';
 import { formattedDiff } from '../logs/diff';
@@ -27,6 +21,7 @@ import { SettingsService } from '../settings/settings.service';
 import { SanitizeService } from '../support/sanitize.service';
 import { randomUUID } from 'crypto';
 import { CacheServiceInterface } from '../../domain/cache/interface';
+import { FsServiceInterface } from '../fs/interface';
 
 const imageListElementFields = {
   title: true,
@@ -50,6 +45,7 @@ export class NewsService {
     private settingsService: SettingsService,
     private cacheService: CacheServiceInterface,
     private sanitizeService: SanitizeService,
+    private fsService: FsServiceInterface,
   ) {}
 
   toListElement(news: News): NewsListElement {
@@ -117,7 +113,7 @@ export class NewsService {
       throw new BadRequestException(null, 'Brak tytułu lub zdjęcia');
     }
 
-    params.news.content = await saveImagesFromContentModyfyingIt(
+    params.news.content = await this.fsService.saveImagesFromContentModyfyingIt(
       params.news.content,
       params.images,
       'news',
@@ -127,7 +123,7 @@ export class NewsService {
     );
 
     params.news.imageName = `${randomUUID()}.png`;
-    await saveImage({
+    await this.fsService.saveImage({
       subdir: 'news/',
       name: params.news.imageName,
       base64Data: params.imageData,
@@ -161,16 +157,19 @@ export class NewsService {
     });
 
     if (params.imageData) {
-      await saveImage({
+      await this.fsService.saveImage({
         subdir: 'news/',
         name: params.news.imageName,
         base64Data: params.imageData,
         resizingPreset: 'News',
       });
     }
-    await deleteImagesInContent(prevNews.content, params.news.content);
+    await this.fsService.deleteImagesInContent(
+      prevNews.content,
+      params.news.content,
+    );
 
-    params.news.content = await saveImagesFromContentModyfyingIt(
+    params.news.content = await this.fsService.saveImagesFromContentModyfyingIt(
       params.news.content,
       params.images,
       'news',
@@ -214,12 +213,12 @@ export class NewsService {
       throw new NotFoundException();
     }
     try {
-      await deleteImage('news/', news.imageName);
+      await this.fsService.deleteImage('news/', news.imageName);
     } catch (e: unknown) {
       console.warn(e);
     }
 
-    await deleteImagesInContent(news.content);
+    await this.fsService.deleteImagesInContent(news.content);
 
     const deletedNews = await this.prisma.news.delete({
       where: { id },

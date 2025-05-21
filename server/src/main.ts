@@ -11,12 +11,17 @@ import * as Sentry from '@sentry/node';
 
 import * as bodyParser from 'body-parser';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import {  IS_DEV, MAX_REQUEST_SIZE, PORT } from './config';
-import { setupImageDirectories } from './util/setupImageDIrectories';
-import { LOCAL_STATIC_FILES_PATH } from './config/configuration';
+import { setupImageDirectories } from './config/setupImageDIrectories';
+import {
+  IS_DEV,
+  LOCAL_STATIC_FILES_PATH,
+  MAX_REQUEST_SIZE,
+  PORT,
+} from './config/configuration';
 
 // to be changed after migrating to target domain
 const USE_HTTP = false;
+
 let options = {};
 if (!IS_DEV && USE_HTTP) {
   options = {

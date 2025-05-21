@@ -4,10 +4,16 @@ import { LogsService } from '../../logs/logs.service';
 import { PrismaService } from '../../../prisma-connect/prisma.service';
 import { NewsPublicController } from '../news.controller';
 import { NewsService } from '../news.service';
-import { News, Settings } from '@prisma-app/client';
 import { CacheServiceInterface } from '../../cache/interface';
 import { SanitizeService } from '../../support/sanitize.service';
-import { CacheServiceMock } from '../../../util/testData';
+import {
+  CacheServiceMock,
+  CONFIG_SERVICE_MOCK,
+  FsServiceMock,
+} from '../../../util/testData';
+import { FsServiceInterface } from '../../fs/interface';
+import { mockNewsWithSubstitution, mockSetting } from './testData';
+import { FsService } from '../../fs/fs.service';
 
 describe('NewsPublicController', () => {
   let newsPublicController: NewsPublicController;
@@ -16,15 +22,17 @@ describe('NewsPublicController', () => {
   let settingsService: SettingsService;
   let logsService: LogsService;
   let cacheService: CacheServiceInterface;
+  let fsService: FsServiceInterface;
   const sanitizeService = new SanitizeService();
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [PrismaService],
+      providers: [PrismaService, FsService, CONFIG_SERVICE_MOCK],
     }).compile();
     prismaServiceMock = module.get<PrismaService>(PrismaService);
     logsService = new LogsService(prismaServiceMock);
     cacheService = new CacheServiceMock();
+    fsService = module.get<FsService>(FsService);
     settingsService = new SettingsService(
       prismaServiceMock,
       logsService,
@@ -37,6 +45,7 @@ describe('NewsPublicController', () => {
       settingsService,
       cacheService,
       sanitizeService,
+      fsService,
     );
     newsPublicController = new NewsPublicController(newsService);
   });
@@ -56,22 +65,10 @@ describe('NewsPublicController', () => {
   });
 
   it('GET getSingleNews', async () => {
-    const mockSetting: Settings = {
-      id: 'KRS_NUMBER',
-      value: 'SUBSTITUTED',
-    };
-    const mockNews: News = {
-      content: 'that is %KRS%',
-      id: 'news-id',
-      title: 'title',
-      description: 'desc',
-      isPublished: true,
-      createdAt: new Date(),
-      imageName: '',
-    };
-
     settingsService.getAll = jest.fn().mockReturnValue([mockSetting]);
-    prismaServiceMock.news.findFirst = jest.fn().mockReturnValue(mockNews);
+    prismaServiceMock.news.findFirst = jest
+      .fn()
+      .mockReturnValue(mockNewsWithSubstitution);
 
     const cacheSetMock = jest.fn();
     cacheService.useArticleCache = jest
@@ -83,7 +80,9 @@ describe('NewsPublicController', () => {
     expect(result.id).toBe('news-id');
     expect(result.content).toBe('that is SUBSTITUTED');
 
-    expect(cacheSetMock).toHaveBeenCalledWith(JSON.stringify(mockNews));
+    expect(cacheSetMock).toHaveBeenCalledWith(
+      JSON.stringify(mockNewsWithSubstitution),
+    );
   });
 
   it('GET recent returns recent news', async () => {

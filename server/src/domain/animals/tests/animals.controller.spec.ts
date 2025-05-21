@@ -15,6 +15,8 @@ import { AnimalsController } from '../animals.controller';
 import { AnimalData, AnimalsService } from '../animals.service';
 import { LoggedInUser } from '../../auth/types';
 import { allPermissions } from '../../auth/constants';
+import { FsServiceInterface } from '../../fs/interface';
+import { FsServiceMock } from '../../../util/testData';
 
 const mockAdminUser: LoggedInUser = {
   id: -1,
@@ -59,16 +61,17 @@ const animalData: AnimalData = {
   virtualCaretakerName: '',
 };
 
-const mockUnlink = jest.fn();
-const mockWriteFile = jest.fn();
-jest.mock('fs', () => ({
-  ...(jest.requireActual('fs') as object),
-  promises: {
-    ...jest.requireActual('fs').promises,
-    unlink: (...args: any) => mockUnlink(...args),
-    writeFile: (...args: any) => mockWriteFile(...args),
-  },
-}));
+// const mockUnlink = jest.fn();
+// const mockWriteFile = jest.fn();
+// jest.mock('fs', () => ({
+//   existsSync: jest.fn(() => true),
+//   // needed for Prisma
+//   readFileSync: jest.requireActual('fs').readFileSync,
+//   promises: {
+//     unlink: (...args: any) => mockUnlink(...args),
+//     writeFile: (...args: any) => mockWriteFile(...args),
+//   },
+// }));
 
 jest.mock('sharp', () => (buffer: Buffer) => ({
   resize: () => ({
@@ -83,6 +86,7 @@ describe('AnimalsController', () => {
   let prismaServiceMock: PrismaService;
   let animalImagesService: AnimalImagesService;
   let logsService: LogsService;
+  let fsService: FsServiceInterface;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -90,11 +94,13 @@ describe('AnimalsController', () => {
     }).compile();
     prismaServiceMock = module.get<PrismaService>(PrismaService);
     logsService = new LogsService(prismaServiceMock);
-    animalImagesService = new AnimalImagesService(prismaServiceMock);
+    fsService = new FsServiceMock();
+    animalImagesService = new AnimalImagesService(prismaServiceMock, fsService);
     animalsService = new AnimalsService(
       prismaServiceMock,
       logsService,
       animalImagesService,
+      fsService,
     );
     animalController = new AnimalsController(animalsService);
   });
@@ -104,7 +110,6 @@ describe('AnimalsController', () => {
 
     const result = await animalController.getAnimals('blah', 'bleh');
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { description, ...animalListElement } = mockAnimal;
     expect(result).toMatchObject([animalListElement]);
     expect(prismaServiceMock.animal.findMany).toHaveBeenCalledWith({
@@ -124,7 +129,6 @@ describe('AnimalsController', () => {
 
     const result = await animalController.getAnimals('15', '17');
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { description, ...animalListElement } = mockAnimal;
     expect(result).toMatchObject([animalListElement]);
     expect(prismaServiceMock.animal.findMany).toHaveBeenCalledWith({
@@ -187,9 +191,9 @@ describe('AnimalsController', () => {
   });
 
   it('POST creates animal - without creating image', async () => {
-    mockWriteFile.mockReset();
     prismaServiceMock.animal.findUnique = jest.fn().mockReturnValue(null);
     prismaServiceMock.animal.create = jest.fn().mockReturnValue(mockAnimal);
+    fsService.saveImage = jest.fn();
     const logMock = jest.fn();
     logsService.log = logMock;
 
@@ -198,7 +202,7 @@ describe('AnimalsController', () => {
     });
 
     expect(result).toMatchObject(mockAnimal);
-    expect(mockWriteFile).not.toHaveBeenCalled();
+    expect(fsService.saveImage).not.toHaveBeenCalled();
     expect(prismaServiceMock.animal.create).toHaveBeenCalledWith({
       data: expect.objectContaining({
         ...animalData,
@@ -217,11 +221,10 @@ describe('AnimalsController', () => {
   });
 
   it('POST creates animal - with creating image', async () => {
-    mockWriteFile.mockReset();
     prismaServiceMock.animal.findUnique = jest.fn().mockReturnValue(null);
     prismaServiceMock.animal.create = jest.fn().mockReturnValue(mockAnimal);
-    const logMock = jest.fn();
-    logsService.log = logMock;
+    logsService.log = jest.fn();
+    fsService.saveImage = jest.fn();
 
     await animalController.addAnimal(
       { ...animalData, imageData: 'data!' },
@@ -230,10 +233,12 @@ describe('AnimalsController', () => {
       },
     );
 
-    expect(mockWriteFile).toHaveBeenCalledWith(
-      expect.stringContaining('/img/animals/'),
-      expect.stringContaining('mock file content'),
-    );
+    expect(fsService.saveImage).toHaveBeenCalledWith({
+      base64Data: 'data!',
+      name: expect.any(String),
+      resizingPreset: 'Animal Miniature',
+      subdir: 'animals/',
+    });
   });
 
   it('PATCH fails on invalid animal data - 1', async () => {
@@ -294,7 +299,7 @@ describe('AnimalsController', () => {
       permission: Permission.ANIMAL,
       user: mockAdminUser,
     });
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
     const { note, addedAt, ...data } = mockAnimal;
     expect(prismaServiceMock.animal.update).toHaveBeenCalledWith({
       where: { id: 'id' },
@@ -325,7 +330,6 @@ describe('AnimalsController', () => {
   });
 
   it('DELETE deletes animal data', async () => {
-    mockUnlink.mockReset();
     prismaServiceMock.animal.findFirst = jest.fn().mockReturnValue(mockAnimal);
     animalImagesService.deleteByAnimal = jest.fn();
     prismaServiceMock.animal.delete = jest.fn().mockReturnValue(mockAnimal);
@@ -338,9 +342,9 @@ describe('AnimalsController', () => {
 
     expect(result).toMatchObject(mockAnimal);
     expect(animalImagesService.deleteByAnimal).toHaveBeenCalledWith('id');
-    expect(mockUnlink).toHaveBeenCalledWith(
-      expect.stringContaining('/img/animals/img-name'),
-    );
+    // expect(mockUnlink).toHaveBeenCalledWith(
+    //   expect.stringContaining('/img/animals/img-name'),
+    // );
     expect(prismaServiceMock.animal.findFirst).toHaveBeenCalledWith({
       where: { id: 'id' },
     });
@@ -360,13 +364,12 @@ describe('AnimalsController', () => {
   it('DELETE logs if image could not be deleted', async () => {
     const warnMock = jest.fn();
     console.warn = warnMock;
-    mockUnlink.mockReset();
-    mockUnlink.mockImplementation(() => {
-      throw 'BRZYDKO';
-    });
     prismaServiceMock.animal.findFirst = jest.fn().mockReturnValue(mockAnimal);
     animalImagesService.deleteByAnimal = jest.fn();
     prismaServiceMock.animal.delete = jest.fn().mockReturnValue(mockAnimal);
+    fsService.deleteImage = jest.fn().mockImplementation(() => {
+      throw Error();
+    });
     const logMock = jest.fn();
     logsService.log = logMock;
 

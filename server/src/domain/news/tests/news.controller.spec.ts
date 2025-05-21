@@ -4,67 +4,25 @@ import { LogsService } from '../../logs/logs.service';
 import { PrismaService } from '../../../prisma-connect/prisma.service';
 import { NewsController } from '../news.controller';
 import { NewsService } from '../news.service';
-import { News, Permission } from '@prisma-app/client';
-import { LoggedInUser } from '../../auth/types';
-import { allPermissions } from '../../auth/constants';
-import { NewsCreateInput, NewsModifyParams, NewsUpdateInput } from '../News';
+import { Permission } from '@prisma-app/client';
 import { CacheServiceInterface } from '../../cache/interface';
-import { CacheServiceMock } from '../../../util/testData';
+import { CacheServiceMock, CONFIG_SERVICE_MOCK } from '../../../util/testData';
 import { SanitizeService } from '../..//support/sanitize.service';
-
-const mockAdminUser: LoggedInUser = {
-  id: -1,
-  login: 'test-user-login',
-  permissions: allPermissions,
-};
-
-const mockNews: News = {
-  id: '15',
-  title: 'test-news',
-  description: 'test-desc',
-  content: 'test-content',
-  isPublished: false,
-  createdAt: new Date(),
-  imageName: 'test-img-name',
-};
-
-const mockNewsCreate: NewsModifyParams<NewsCreateInput> = {
-  news: {
-    title: 'test-title',
-    description: 'test-desc',
-    isPublished: false,
-    content: 'test-content',
-    imageName: 'test-image-name',
-  },
-  images: [
-    {
-      base64: 'images_image-base-64',
-      name: 'images_image-name',
-    },
-  ],
-  imageData: 'test-image-data',
-};
-
-const mockNewsUpdate: NewsModifyParams<NewsUpdateInput> = {
-  news: {
-    title: 'test-title',
-    description: 'test-desc-2',
-    isPublished: true,
-    content: 'test-content',
-    imageName: 'test-image-name-2',
-    id: '15',
-    imagePath: '/test-path',
-  },
-  images: [],
-  imageData: 'test-image-data',
-};
+import { FsService } from '../../fs/fs.service';
+import {
+  mockAdminUser,
+  mockNews,
+  mockNewsCreate,
+  mockNewsUpdate,
+} from './testData';
 
 const mockUnlink = jest.fn();
 const mockWriteFile = jest.fn();
 jest.mock('fs', () => ({
-  ...(jest.requireActual('fs') as object),
+  existsSync: jest.fn(() => true),
+  // needed for Prisma
+  readFileSync: jest.requireActual('fs').readFileSync,
   promises: {
-    ...jest.requireActual('fs').promises,
     unlink: (...args: any) => mockUnlink(...args),
     writeFile: (...args: any) => mockWriteFile(...args),
   },
@@ -88,7 +46,7 @@ describe('NewsController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [PrismaService],
+      providers: [PrismaService, FsService, CONFIG_SERVICE_MOCK],
     }).compile();
     prismaServiceMock = module.get<PrismaService>(PrismaService);
     logsService = new LogsService(prismaServiceMock);
@@ -105,6 +63,7 @@ describe('NewsController', () => {
       settingsService,
       cacheService,
       sanitizeService,
+      module.get<FsService>(FsService),
     );
     newsController = new NewsController(newsService);
   });
@@ -196,7 +155,6 @@ describe('NewsController', () => {
       user: mockAdminUser,
     });
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { content, ...expectedMock } = mockNews;
     expect(result).toMatchObject(expectedMock);
     expect(mockWriteFile).toHaveBeenCalledTimes(2);
@@ -269,7 +227,6 @@ describe('NewsController', () => {
       },
     );
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { content, createdAt, ...expectedMock } = {
       ...mockNews,
       ...mockNewsUpdate.news,

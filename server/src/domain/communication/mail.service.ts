@@ -9,7 +9,9 @@ export class MailService implements MailServiceInterface {
   private client: ServerClient | null = null;
 
   constructor(configService: ConfigService) {
-    const postmarkApiToken = configService.getOrThrow<string>(CONFIG.postmarkApiToken);
+    const postmarkApiToken = configService.getOrThrow<string>(
+      CONFIG.postmarkApiToken,
+    );
     if (postmarkApiToken !== ENV_DISABLED) {
       this.client = new ServerClient(postmarkApiToken);
     }

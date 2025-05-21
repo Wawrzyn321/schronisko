@@ -14,7 +14,6 @@
     "lib": ["es2021"],
     "paths": {
       "prisma-connect/*": ["./src/prisma-connect/*"],
-      "img-fs": ["./src/img-fs"],
       "domain": ["./src/domain"],
     },
     "skipLibCheck": true,

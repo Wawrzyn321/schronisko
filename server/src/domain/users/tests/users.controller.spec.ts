@@ -135,7 +135,7 @@ describe('UsersController', () => {
     expect(logMock.mock.calls[0][0].message).toMatchInlineSnapshot(
       `"dodał użytkownika fName lName (log)"`,
     );
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
     const { password, ...u } = newUserData;
     expect(createMock).toHaveBeenCalledWith({
       data: {
@@ -299,7 +299,6 @@ describe('UsersController', () => {
       { user: mockAdminUser },
     );
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { passwordHash, ...otherUserMockViewModel } = otherUserMock;
     expect(result).toEqual(otherUserMockViewModel);
     expect(deletePermissionsMock).toHaveBeenCalledWith({

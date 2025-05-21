@@ -11,7 +11,7 @@ export class CacheService implements CacheServiceInterface {
   private readonly client: RedisClient | null = null;
 
   constructor(configService: ConfigService) {
-    const redisUrl =  configService.getOrThrow<string>(CONFIG.redisUrl);
+    const redisUrl = configService.getOrThrow<string>(CONFIG.redisUrl);
 
     if (redisUrl !== ENV_DISABLED) {
       this.client = createClient({ url: redisUrl });

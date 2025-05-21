@@ -4,10 +4,10 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { PrismaService } from '../../prisma-connect/prisma.service';
-import { deleteImage, saveImage } from '../../util/img-fs';
 import { AnimalImageParams } from './animal-images.controller';
 import { AnimalImage } from '@prisma-app/client';
 import { randomUUID } from 'crypto';
+import { FsServiceInterface } from '../fs/interface';
 
 const IMAGES_PATH = 'animals/pics/';
 
@@ -22,7 +22,10 @@ export type UpsertParams = {
 
 @Injectable()
 export class AnimalImagesService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private fsService: FsServiceInterface,
+  ) {}
 
   async get(animalId: string, onlyPublic = false): Promise<AnimalImage[]> {
     if (
@@ -64,13 +67,13 @@ export class AnimalImagesService {
         img.handled = true;
       } else {
         const imageName = `${randomUUID()}.png`;
-        await saveImage({
+        await this.fsService.saveImage({
           subdir: IMAGES_PATH,
           name: imageName,
           base64Data: image.data,
           resizingPreset: 'Animal Gallery',
         });
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
         const { data, ...imageWithNoData } = image;
 
         await this.prisma.animalImage.create({
@@ -105,7 +108,7 @@ export class AnimalImagesService {
     const images = await this.get(animalId);
     for (const image of images) {
       try {
-        await deleteImage(IMAGES_PATH, image.imageName);
+        await this.fsService.deleteImage(IMAGES_PATH, image.imageName);
       } catch (e: unknown) {
         console.warn(e);
       }
@@ -117,7 +120,7 @@ export class AnimalImagesService {
     const image = await this.prisma.animalImage.findFirst({ where: { id } });
     try {
       if (image?.imageName) {
-        await deleteImage(IMAGES_PATH, image.imageName);
+        await this.fsService.deleteImage(IMAGES_PATH, image.imageName);
       }
     } catch (e: unknown) {
       console.warn(e);

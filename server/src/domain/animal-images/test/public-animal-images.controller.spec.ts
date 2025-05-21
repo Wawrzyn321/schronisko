@@ -3,18 +3,23 @@ import { AnimalImage } from '@prisma-app/client';
 import { PrismaService } from '../../../prisma-connect/prisma.service';
 import { AnimalImagesPublicController } from '../animal-images.controller';
 import { AnimalImagesService } from '../animal-images.service';
+import { FsServiceInterface } from '../../fs/interface';
+import { FsServiceMock } from '../../../util/testData';
+import { ANIMAL_ID, mockAnimalImages } from './testData';
 
 describe('AnimalImagesPublicController', () => {
   let animalImagesController: AnimalImagesPublicController;
   let animalImagesService: AnimalImagesService;
   let prismaServiceMock: PrismaService;
+  let fsService: FsServiceInterface;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [PrismaService],
     }).compile();
+    fsService = new FsServiceMock();
     prismaServiceMock = module.get<PrismaService>(PrismaService);
-    animalImagesService = new AnimalImagesService(prismaServiceMock);
+    animalImagesService = new AnimalImagesService(prismaServiceMock, fsService);
     animalImagesController = new AnimalImagesPublicController(
       animalImagesService,
     );
@@ -29,24 +34,6 @@ describe('AnimalImagesPublicController', () => {
   });
 
   it('GET by id returns images, filtering public', async () => {
-    const ANIMAL_ID = 'id-1';
-
-    const mockAnimalImages: AnimalImage[] = [
-      {
-        id: '1',
-        order: 1,
-        animalId: ANIMAL_ID,
-        imageName: 'img-name',
-        visible: true,
-      },
-      {
-        id: '3',
-        order: 3,
-        animalId: ANIMAL_ID,
-        imageName: 'img-name',
-        visible: true,
-      },
-    ];
     prismaServiceMock.animal.findFirst = jest
       .fn()
       .mockReturnValue('truthy-animal-mock');

@@ -7,9 +7,20 @@ import {
 } from './animals.controller';
 import { LogsService } from '../logs/logs.service';
 import { AnimalImagesService } from '../animal-images/animal-images.service';
+import { FsServiceInterface } from '../fs/interface';
+import { FsService } from '../fs/fs.service';
 
 @Module({
-  providers: [AnimalsService, PrismaService, LogsService, AnimalImagesService],
+  providers: [
+    AnimalsService,
+    PrismaService,
+    LogsService,
+    AnimalImagesService,
+    {
+      provide: FsServiceInterface,
+      useClass: FsService,
+    },
+  ],
   exports: [AnimalsService],
   controllers: [AnimalsController, AnimalsPublicController],
 })

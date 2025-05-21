@@ -22,7 +22,7 @@ export async function fetchAnimalImages(id: string): Promise<AnimalImage[]> {
 }
 
 export async function fetchPage(id: string): Promise<PageModel> {
-  console.log(getBackendUrl() + "/api/pages/" + id)
+  console.log(getBackendUrl() + "/api/pages/" + id);
   const url = getBackendUrl() + "/api/pages/" + id;
   return doFetch(url);
 }
