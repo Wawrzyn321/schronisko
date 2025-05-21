@@ -3,7 +3,7 @@ import {
   NotFoundException,
   BadRequestException,
 } from '@nestjs/common';
-import { PrismaService } from '../../prisma-connect/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { AnimalImageParams } from './animal-images.controller';
 import { AnimalImage } from '@prisma-app/client';
 import { randomUUID } from 'crypto';

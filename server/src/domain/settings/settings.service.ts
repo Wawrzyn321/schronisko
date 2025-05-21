@@ -1,6 +1,6 @@
 import { Permission, Settings } from '@prisma-app/client';
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../../prisma-connect/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { LoggedInUser } from '../auth/types';
 import { LogsService } from '../logs/logs.service';
 import { SanitizeService } from '../support/sanitize.service';

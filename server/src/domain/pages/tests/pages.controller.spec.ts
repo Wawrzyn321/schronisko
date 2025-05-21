@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { LogsService } from '../../logs/logs.service';
-import { PrismaService } from '../../../prisma-connect/prisma.service';
+import { PrismaService } from '../../prisma/prisma.service';
 import { PagesController } from '../pages.controller';
 import { PagesService } from '../pages.service';
 import { SettingsService } from '../../settings/settings.service';

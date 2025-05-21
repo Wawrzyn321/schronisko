@@ -12,10 +12,6 @@
     "incremental": true,
     "jsx": "preserve",
     "lib": ["es2021"],
-    "paths": {
-      "prisma-connect/*": ["./src/prisma-connect/*"],
-      "domain": ["./src/domain"],
-    },
     "skipLibCheck": true,
     "strict": true
   },

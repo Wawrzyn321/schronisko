@@ -1,4 +1,3 @@
-import { PrismaService } from '../../prisma-connect/prisma.service';
 import { Module } from '@nestjs/common';
 import { AnimalImagesService } from './animal-images.service';
 import {
@@ -6,10 +5,11 @@ import {
   AnimalImagesPublicController,
 } from './animal-images.controller';
 import { FsModule } from '../fs/fs.module';
+import { PrismaModule } from '../prisma/prisma.module';
 
 @Module({
-  imports: [FsModule],
-  providers: [AnimalImagesService, PrismaService],
+  imports: [FsModule, PrismaModule],
+  providers: [AnimalImagesService],
   exports: [AnimalImagesService],
   controllers: [AnimalImagesController, AnimalImagesPublicController],
 })

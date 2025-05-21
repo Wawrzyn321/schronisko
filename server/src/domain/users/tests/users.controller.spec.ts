@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UsersService } from '../users.service';
 import { LogsService } from '../../logs/logs.service';
-import { PrismaService } from '../../../prisma-connect/prisma.service';
+import { PrismaService } from '../../prisma/prisma.service';
 import { LoggedInUser } from '../../auth/types';
 import { UsersController } from '../users.controller';
 import { BcryptService } from '../../auth/bcrypt.service';

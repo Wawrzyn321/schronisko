@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { Permission } from '@prisma-app/client';
 import { allPermissions } from '../../auth/constants';
 import { LogsService } from '../logs.service';
-import { PrismaService } from '../../../prisma-connect/prisma.service';
+import { PrismaService } from '../../prisma/prisma.service';
 import { LoggedInUser } from '../../auth/types';
 import { LogsController } from '../logs.controller';
 

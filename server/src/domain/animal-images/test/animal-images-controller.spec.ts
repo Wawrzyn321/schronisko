@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AnimalImage } from '@prisma-app/client';
-import { PrismaService } from '../../../prisma-connect/prisma.service';
+import { PrismaService } from '../../prisma/prisma.service';
 import { AnimalImagesController } from '../animal-images.controller';
 import { AnimalImagesService, UpsertParams } from '../animal-images.service';
 import { FsServiceInterface } from '../../fs/interface';

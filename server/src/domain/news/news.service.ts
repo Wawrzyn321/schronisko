@@ -13,7 +13,7 @@ import {
   BadRequestException,
   NotFoundException,
 } from '@nestjs/common';
-import { PrismaService } from '../../prisma-connect/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { validateNewsCreate, validateNewsUpdate } from './helpers';
 import { LogsService } from '../logs/logs.service';
 import { formattedDiff } from '../logs/diff';

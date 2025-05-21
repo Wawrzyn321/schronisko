@@ -9,7 +9,7 @@ import {
 } from '@prisma-app/client';
 import { AnimalImagesService } from '../../animal-images/animal-images.service';
 import { LogsService } from '../../logs/logs.service';
-import { PrismaService } from '../../../prisma-connect/prisma.service';
+import { PrismaService } from '../../prisma/prisma.service';
 import { AnimalsPublicController } from '../animals.controller';
 import { AnimalsService } from '../animals.service';
 import { FsServiceMock } from '../../../util/testData';

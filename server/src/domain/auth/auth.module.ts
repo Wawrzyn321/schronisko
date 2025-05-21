@@ -8,9 +8,9 @@ import { APP_GUARD } from '@nestjs/core';
 
 import { BcryptService } from './bcrypt.service';
 import { AuthController } from './auth.controller';
-import { PrismaService } from '../../prisma-connect/prisma.service';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { UsersModule } from '../users/users.module';
+import { PrismaModule } from '../prisma/prisma.module';
 
 const JwtGuard = {
   provide: APP_GUARD,
@@ -25,8 +25,9 @@ const JwtGuard = {
       secret: jwtConstants.secret,
       signOptions: { expiresIn: jwtConstants.ttl },
     }),
+    PrismaModule,
   ],
-  providers: [AuthService, JwtStrategy, BcryptService, PrismaService, JwtGuard],
+  providers: [AuthService, JwtStrategy, BcryptService, JwtGuard],
   controllers: [AuthController],
 })
 export class AuthModule {}
