@@ -11,6 +11,8 @@ import {
   Patch,
   Body,
   Request,
+  ParseIntPipe,
+  ParseBoolPipe,
 } from '@nestjs/common';
 import { Permission } from '@prisma-app/client';
 import { PermissionsGuard } from '../auth/guards/Permissions.guard';
@@ -36,8 +38,9 @@ export class PagesController {
 
   @Public()
   @Get()
-  getPages(@Query('takeTop') takeTopStr: string) {
-    const takeTop = parseInt(takeTopStr) || undefined;
+  getPages(
+    @Query('takeTop', new ParseIntPipe({ optional: true })) takeTop?: number,
+  ) {
     return this.pagesService.getAll(takeTop);
   }
 
@@ -45,10 +48,11 @@ export class PagesController {
   @Get(':id')
   getPage(
     @Param('id') pageId: string,
-    @Query('useSubstitution') useSubstitution: string = '',
+    @Query('useSubstitution', new ParseBoolPipe({ optional: true }))
+    useSubstitution: boolean = true,
   ) {
     return this.pagesService.get(pageId, {
-      useSubstitution: useSubstitution !== 'false',
+      useSubstitution,
     });
   }
 

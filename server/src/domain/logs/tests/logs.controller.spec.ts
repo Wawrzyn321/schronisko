@@ -30,7 +30,7 @@ describe('LogsController', () => {
     const mockFindMany = jest.fn();
     prismaServiceMock.logs.findMany = mockFindMany;
 
-    await logsController.getLogs('13');
+    await logsController.getLogs(13);
     expect(mockFindMany.mock.calls).toMatchInlineSnapshot(`
 [
   [

@@ -16,6 +16,7 @@ import {
   Param,
   Delete,
   Request,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { Permission } from '@prisma-app/client';
 import { LoggedInUser } from '../auth/types';
@@ -51,27 +52,27 @@ export class UsersController {
 
   @Patch('update-other/:id')
   updateOtherUser(
-    @Param('id') userId: string,
+    @Param('id', ParseIntPipe) userId: number,
     @Body() body: FrontendUpdateOtherUserDto,
     @Request() req: { user: LoggedInUser },
   ) {
-    return this.usersService.updateOther(parseInt(userId), body, req.user);
+    return this.usersService.updateOther(userId, body, req.user);
   }
 
   @RequirePermission(Permission.USER)
   @Delete(':id')
   @UseGuards(PermissionsGuard)
   deleteUser(
-    @Param('id') userId: string,
+    @Param('id', ParseIntPipe) userId: number,
     @Request() req: { user: LoggedInUser },
   ) {
-    return this.usersService.delete(req.user, parseInt(userId));
+    return this.usersService.delete(req.user, userId);
   }
 
   @RequirePermission(Permission.USER)
   @Get(':id/permissions')
   @UseGuards(PermissionsGuard)
-  getUserPermissions(@Param('id') userId: string) {
-    return this.usersService.getPermissions(parseInt(userId));
+  getUserPermissions(@Param('id', ParseIntPipe) userId: number) {
+    return this.usersService.getPermissions(userId);
   }
 }

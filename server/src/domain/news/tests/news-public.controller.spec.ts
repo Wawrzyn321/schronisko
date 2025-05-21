@@ -89,7 +89,7 @@ describe('NewsPublicController', () => {
     const findManyMock = jest.fn().mockReturnValue([]);
     prismaServiceMock.news.findMany = findManyMock;
 
-    await newsPublicController.getRecentNews('10');
+    await newsPublicController.getRecentNews(10);
 
     expect(findManyMock).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -104,7 +104,7 @@ describe('NewsPublicController', () => {
     const findManyMock = jest.fn().mockReturnValue([]);
     prismaServiceMock.news.findMany = findManyMock;
 
-    await newsPublicController.getRecentNews('bla');
+    await newsPublicController.getRecentNews();
 
     expect(findManyMock).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -119,7 +119,7 @@ describe('NewsPublicController', () => {
     const findManyMock = jest.fn().mockReturnValue([]);
     prismaServiceMock.news.findMany = findManyMock;
 
-    await newsPublicController.getNews('12');
+    await newsPublicController.getNews(12);
 
     expect(findManyMock).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -134,7 +134,7 @@ describe('NewsPublicController', () => {
     const findManyMock = jest.fn().mockReturnValue([]);
     prismaServiceMock.news.findMany = findManyMock;
 
-    await newsPublicController.getNews('bla');
+    await newsPublicController.getNews();
 
     expect(findManyMock).toHaveBeenCalledWith(
       expect.objectContaining({

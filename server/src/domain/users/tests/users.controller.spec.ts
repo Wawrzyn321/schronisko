@@ -96,7 +96,7 @@ describe('UsersController', () => {
 
     prismaServiceMock.userPermissions.findMany = findPermissionsMock;
 
-    const result = await usersController.getUserPermissions('10');
+    const result = await usersController.getUserPermissions(10);
 
     expect(result).toBe(mockPermissions);
     expect(findPermissionsMock).toHaveBeenCalledWith({
@@ -207,13 +207,9 @@ describe('UsersController', () => {
 
   it('PATCH (other) - fail trying to update self', async () => {
     await expect(
-      usersController.updateOtherUser(
-        mockAdminUser.id.toString(),
-        updateOtherUserData,
-        {
-          user: mockAdminUser,
-        },
-      ),
+      usersController.updateOtherUser(mockAdminUser.id, updateOtherUserData, {
+        user: mockAdminUser,
+      }),
     ).rejects.toThrow(/Forbidden/);
   });
 
@@ -223,11 +219,9 @@ describe('UsersController', () => {
     prismaServiceMock.user.findUnique = findUserMock;
 
     await expect(
-      usersController.updateOtherUser(
-        otherUserMock.id.toString(),
-        updateOtherUserData,
-        { user: mockAdminUser },
-      ),
+      usersController.updateOtherUser(otherUserMock.id, updateOtherUserData, {
+        user: mockAdminUser,
+      }),
     ).rejects.toThrow(/Not Found/);
     expect(findUserMock).toHaveBeenCalledWith({
       where: { id: otherUserMock.id },
@@ -250,7 +244,7 @@ describe('UsersController', () => {
     usersService.findById = findUserMock;
 
     await usersController.updateOtherUser(
-      otherUserMock.id.toString(),
+      otherUserMock.id,
       updateOtherUserData,
       { user: mockAdminUser },
     );
@@ -279,7 +273,7 @@ describe('UsersController', () => {
 
   it('DELETE - cannot delete self', async () => {
     await expect(
-      usersController.deleteUser(mockAdminUser.id.toString(), {
+      usersController.deleteUser(mockAdminUser.id, {
         user: mockAdminUser,
       }),
     ).rejects.toThrow(/Bad Request/);
@@ -294,10 +288,9 @@ describe('UsersController', () => {
     prismaServiceMock.user.delete = deleteUserMock;
     logsService.log = logMock;
 
-    const result = await usersController.deleteUser(
-      otherUserMock.id.toString(),
-      { user: mockAdminUser },
-    );
+    const result = await usersController.deleteUser(otherUserMock.id, {
+      user: mockAdminUser,
+    });
 
     const { passwordHash, ...otherUserMockViewModel } = otherUserMock;
     expect(result).toEqual(otherUserMockViewModel);

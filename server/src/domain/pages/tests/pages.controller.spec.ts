@@ -75,7 +75,7 @@ describe('PagesController', () => {
   it('GET with no valid params returns all pages', async () => {
     prismaServiceMock.page.findMany = jest.fn().mockReturnValue('pages');
 
-    const result = await pagesController.getPages('blah');
+    const result = await pagesController.getPages();
 
     expect(result).toBe('pages');
     expect(prismaServiceMock.page.findMany).toHaveBeenCalledWith({
@@ -95,7 +95,7 @@ describe('PagesController', () => {
   it('GET one with valid id returns page with unsubsituted content', async () => {
     prismaServiceMock.page.findMany = jest.fn().mockReturnValue(mockPage);
 
-    const result = await pagesController.getPages('10');
+    const result = await pagesController.getPages(10);
 
     expect(result).toMatchObject(mockPage);
     expect(prismaServiceMock.page.findMany).toHaveBeenCalledWith({
@@ -158,7 +158,7 @@ describe('PagesController', () => {
     prismaServiceMock.page.findUnique = findPageMock;
     settingsService.getAll = jest.fn().mockReturnValue([mockSetting]);
 
-    const result = await pagesController.getPage('page-id', 'false');
+    const result = await pagesController.getPage('page-id', false);
     expect(result.id).toBe('page-id');
     expect(result.content).toBe('this is %KONTO%');
   });

@@ -8,6 +8,7 @@ import {
   Query,
   Delete,
   Request,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { Permission } from '@prisma-app/client';
 import { PermissionsGuard } from '../auth/guards/Permissions.guard';
@@ -19,8 +20,9 @@ export class LogsController {
   @RequirePermission(Permission.USER)
   @Get()
   @UseGuards(PermissionsGuard)
-  getLogs(@Query('takeTop') takeTopStr: string) {
-    const takeTop = parseInt(takeTopStr) || undefined;
+  getLogs(
+    @Query('takeTop', new ParseIntPipe({ optional: true })) takeTop?: number,
+  ) {
     return this.logsService.get(takeTop);
   }
 

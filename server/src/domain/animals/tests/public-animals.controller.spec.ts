@@ -106,7 +106,7 @@ describe('AnimalsPublicController', () => {
 
     prismaServiceMock.animal.findMany = findAnimalsMock;
 
-    const result = await animalController.getAfterAdoptionAnimals('bleh');
+    const result = await animalController.getAfterAdoptionAnimals();
     expect(result.length).toBe(3);
     expect(findAnimalsMock).toHaveBeenCalled();
   });
@@ -125,7 +125,7 @@ describe('AnimalsPublicController', () => {
 
     prismaServiceMock.animal.findMany = findAnimalsMock;
 
-    const result = await animalController.getAfterAdoptionAnimals('8');
+    const result = await animalController.getAfterAdoptionAnimals(8);
     expect(result.length).toBe(6);
     expect(findAnimalsMock).toHaveBeenCalled();
   });
@@ -138,11 +138,11 @@ describe('AnimalsPublicController', () => {
     prismaServiceMock.animal.count = countAnimalsMock;
 
     const result = await animalController.getAnimalsPublic(
-      'ZnalazlyDom,Weterani',
-      'CAT',
-      VirtualCaretakerType.Szuka.toString(),
-      '10',
-      '20',
+      [AnimalCategory.ZnalazlyDom, AnimalCategory.Weterani],
+      AnimalType.CAT,
+      VirtualCaretakerType.Szuka,
+      10,
+      20,
     );
 
     expect(result.animals).toEqual([{ animal: true }]);
@@ -152,41 +152,11 @@ describe('AnimalsPublicController', () => {
       skip: 10,
       where: {
         category: {
-          in: ['ZnalazlyDom', 'Weterani'],
+          in: [AnimalCategory.ZnalazlyDom, AnimalCategory.Weterani],
         },
         isPublic: true,
-        type: 'CAT',
-        virtualCaretakerType: 'Szuka',
-      },
-    });
-    expect(countAnimalsMock).toHaveBeenCalled();
-  });
-
-  it('GET getAnimalsPublic with no proper params calls proper ORM query', async () => {
-    const findAnimalsMock = jest.fn().mockReturnValue([{ animal: true }]);
-    const countAnimalsMock = jest.fn().mockReturnValue(10);
-
-    prismaServiceMock.animal.findMany = findAnimalsMock;
-    prismaServiceMock.animal.count = countAnimalsMock;
-
-    const result = await animalController.getAnimalsPublic(
-      'a',
-      'b',
-      'c',
-      'd',
-      'e',
-    );
-
-    expect(result.animals).toEqual([{ animal: true }]);
-    expect(result.totalCount).toBe(10);
-    expect(findAnimalsMock).toHaveBeenCalledWith({
-      take: 27,
-      skip: 0,
-      where: {
-        category: undefined,
-        isPublic: true,
-        type: undefined,
-        virtualCaretakerType: undefined,
+        type: AnimalType.CAT,
+        virtualCaretakerType: VirtualCaretakerType.Szuka,
       },
     });
     expect(countAnimalsMock).toHaveBeenCalled();

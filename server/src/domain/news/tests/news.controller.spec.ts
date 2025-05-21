@@ -72,7 +72,7 @@ describe('NewsController', () => {
     const findNewsMock = jest.fn().mockReturnValue('news');
     prismaServiceMock.news.findMany = findNewsMock;
 
-    const result = await newsController.getNews('blah');
+    const result = await newsController.getNews();
 
     expect(result).toBe('news');
     expect(findNewsMock).toHaveBeenCalledWith({
@@ -113,7 +113,7 @@ describe('NewsController', () => {
     const findPagesMock = jest.fn().mockReturnValue('news');
     prismaServiceMock.news.findMany = findPagesMock;
 
-    const result = await newsController.getNews('15');
+    const result = await newsController.getNews(15);
 
     expect(result).toBe('news');
     expect(findPagesMock).toHaveBeenCalledWith(

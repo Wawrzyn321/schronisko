@@ -96,13 +96,13 @@ describe('AnimalsController', () => {
   it('GET returns all animals (default params)', async () => {
     prismaServiceMock.animal.findMany = jest.fn().mockReturnValue([mockAnimal]);
 
-    const result = await animalController.getAnimals('blah', 'bleh');
+    const result = await animalController.getAnimals();
 
     const { description, ...animalListElement } = mockAnimal;
     expect(result).toMatchObject([animalListElement]);
     expect(prismaServiceMock.animal.findMany).toHaveBeenCalledWith({
-      skip: undefined,
-      take: undefined,
+      skip: 0,
+      take: 27,
       where: {
         category: undefined,
         isPublic: undefined,
@@ -115,7 +115,7 @@ describe('AnimalsController', () => {
   it('GET returns all animals (custom params)', async () => {
     prismaServiceMock.animal.findMany = jest.fn().mockReturnValue([mockAnimal]);
 
-    const result = await animalController.getAnimals('15', '17');
+    const result = await animalController.getAnimals(15, 17);
 
     const { description, ...animalListElement } = mockAnimal;
     expect(result).toMatchObject([animalListElement]);

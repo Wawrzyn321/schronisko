@@ -14,6 +14,7 @@ import {
   Post,
   Request,
   Query,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { Permission } from '@prisma-app/client';
 import { PermissionsGuard } from '../auth/guards/Permissions.guard';
@@ -24,15 +25,17 @@ export class NewsPublicController {
   constructor(private newsService: NewsService) {}
 
   @Get()
-  getNews(@Query('takeTop') takeTopStr: string) {
-    const takeTop = parseInt(takeTopStr) || undefined;
+  getNews(
+    @Query('takeTop', new ParseIntPipe({ optional: true })) takeTop?: number,
+  ) {
     return this.newsService.getAll(takeTop, true);
   }
 
   @Get('recent')
-  getRecentNews(@Query('count') countStr: string) {
-    const count = parseInt(countStr) || 5;
-    return this.newsService.getRecent(count);
+  getRecentNews(
+    @Query('count', new ParseIntPipe({ optional: true })) count?: number,
+  ) {
+    return this.newsService.getRecent(count ?? 5);
   }
 
   @Get(':id')
@@ -50,8 +53,9 @@ export class NewsController {
 
   @RequirePermission(Permission.NEWS)
   @Get()
-  getNews(@Query('takeTop') takeTopStr: string) {
-    const takeTop = parseInt(takeTopStr) || undefined;
+  getNews(
+    @Query('takeTop', new ParseIntPipe({ optional: true })) takeTop?: number,
+  ) {
     return this.newsService.getAll(takeTop);
   }
 

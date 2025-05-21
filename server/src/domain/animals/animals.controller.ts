@@ -18,9 +18,13 @@ import {
   Delete,
   Request,
   Query,
+  ParseIntPipe,
+  ParseArrayPipe,
+  ParseEnumPipe,
 } from '@nestjs/common';
 import { Permission } from '@prisma-app/client';
 import { PermissionsGuard } from '../auth/guards/Permissions.guard';
+import { AnimalCategoryArrayPipe } from './AnimalCategoryArrayPipe';
 
 @Public()
 @Controller('api/c/animals')
@@ -28,60 +32,32 @@ export class AnimalsPublicController {
   constructor(private animalsService: AnimalsService) {}
 
   @Get('after-adoption')
-  getAfterAdoptionAnimals(@Query('count') countStr: string) {
-    const count = parseInt(countStr) || 3;
-    return this.animalsService.getAfterAdoption(count);
+  getAfterAdoptionAnimals(
+    @Query('count', new ParseIntPipe({ optional: true })) count?: number,
+  ) {
+    return this.animalsService.getAfterAdoption(count ?? 3);
   }
 
   @Get()
   getAnimalsPublic(
-    @Query('categories') possibleCategories: string,
-    @Query('type') possibleType: string,
-    @Query('vCaretakerType') possibleVaretakerType: string,
-    @Query('skip') possiblySkip: string,
-    @Query('take') possiblyTake: string,
+    @Query('categories', AnimalCategoryArrayPipe) categories: AnimalCategory[],
+    @Query('type', new ParseEnumPipe(AnimalType, { optional: true }))
+    type?: AnimalType,
+    @Query(
+      'vCaretakerType',
+      new ParseEnumPipe(VirtualCaretakerType, { optional: true }),
+    )
+    virtualCaretakerType?: VirtualCaretakerType,
+    @Query('skip', new ParseIntPipe({ optional: true })) skip?: number,
+    @Query('take', new ParseIntPipe({ optional: true })) take?: number,
   ) {
-    const skip = parseInt(possiblySkip) || 0;
-    const take = parseInt(possiblyTake) || 27;
-
-    function getFromEnumOrUndefined<T>(
-      possibleT: string,
-      keys: string[],
-    ): T | undefined {
-      if (keys.includes(possibleT)) {
-        return possibleT as unknown as T;
-      } else {
-        return undefined;
-      }
-    }
-
-    const categories: AnimalCategory[] = [];
-    for (const possibleCategory of (possibleCategories || '').split(',')) {
-      const category = getFromEnumOrUndefined<AnimalCategory>(
-        possibleCategory,
-        Object.keys(AnimalCategory),
-      );
-      if (category) {
-        categories.push(category);
-      }
-    }
-
-    const type = getFromEnumOrUndefined<AnimalType>(
-      possibleType,
-      Object.keys(AnimalType),
-    );
-    const virtualCaretakerType = getFromEnumOrUndefined<VirtualCaretakerType>(
-      possibleVaretakerType,
-      Object.keys(VirtualCaretakerType),
-    );
-
-    return this.animalsService.getAllPublic(
+    return this.animalsService.getAllPublic({
       take,
       skip,
       virtualCaretakerType,
       categories,
       type,
-    );
+    });
   }
 
   @Get(':id')
@@ -96,10 +72,11 @@ export class AnimalsController {
 
   @RequirePermission(Permission.ANIMAL_VIEW_ONLY)
   @Get()
-  getAnimals(@Query('take') takeStr: string, @Query('skip') skipStr: string) {
-    const take = parseInt(takeStr) || undefined;
-    const skip = parseInt(skipStr) || undefined;
-    return this.animalsService.getAll(take, skip);
+  getAnimals(
+    @Query('take', new ParseIntPipe({ optional: true })) take?: number,
+    @Query('skip', new ParseIntPipe({ optional: true })) skip?: number,
+  ) {
+    return this.animalsService.getAll({ take, skip });
   }
 
   @RequirePermission(Permission.ANIMAL_VIEW_ONLY)

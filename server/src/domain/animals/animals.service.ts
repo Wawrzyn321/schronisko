@@ -4,7 +4,6 @@ import {
   BadRequestException,
   ConflictException,
 } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service';
 import type {
   Animal,
   AnimalGender,
@@ -21,6 +20,7 @@ import { AnimalImagesService } from '../animal-images/animal-images.service';
 import { changedToReadonly } from './readonly-animal';
 import { randomUUID } from 'crypto';
 import { FsServiceInterface } from '../fs/interface';
+import { PrismaService } from '../prisma/prisma.service';
 
 const IMAGES_PATH = 'animals/';
 
@@ -72,6 +72,16 @@ function getDailyRandom<T>(items: T[], count: number): T[] {
   return indices.map((i) => items[i]);
 }
 
+type GetAllPublicArgs = {
+  take?: number;
+  skip?: number;
+  virtualCaretakerType?: VirtualCaretakerType;
+  categories?: AnimalCategory[];
+  type?: AnimalType;
+};
+
+type GetAllArgs = GetAllPublicArgs & { onlyPublic?: boolean };
+
 @Injectable()
 export class AnimalsService {
   constructor(
@@ -81,26 +91,16 @@ export class AnimalsService {
     private fsService: FsServiceInterface,
   ) {}
 
-  async getAllPublic(
-    take?: number,
-    skip?: number,
-    virtualCaretakerType?: VirtualCaretakerType,
-    categories?: AnimalCategory[],
-    type?: AnimalType,
-  ) {
-    const animals = await this.getAll(
-      take,
-      skip,
-      virtualCaretakerType,
-      categories,
-      type,
-      true,
-    );
+  async getAllPublic(args: GetAllPublicArgs) {
+    const animals = await this.getAll({
+      ...args,
+      onlyPublic: true,
+    });
     const totalCount = await this.prisma.animal.count({
       where: {
-        category: categories?.length ? { in: categories } : undefined,
-        type,
-        virtualCaretakerType,
+        category: args.categories?.length ? { in: args.categories } : undefined,
+        type: args.type,
+        virtualCaretakerType: args.virtualCaretakerType,
         isPublic: true,
       },
     });
@@ -110,14 +110,14 @@ export class AnimalsService {
     };
   }
 
-  async getAll(
-    take?: number,
-    skip?: number,
-    virtualCaretakerType?: VirtualCaretakerType,
-    categories?: AnimalCategory[],
-    type?: AnimalType,
-    onlyPublic?: boolean,
-  ): Promise<AnimalListElement[]> {
+  async getAll({
+    take = 27,
+    skip = 0,
+    virtualCaretakerType,
+    categories,
+    type,
+    onlyPublic,
+  }: GetAllArgs): Promise<AnimalListElement[]> {
     const animals = await this.prisma.animal.findMany({
       take,
       skip,

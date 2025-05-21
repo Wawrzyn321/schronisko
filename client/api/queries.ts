@@ -22,7 +22,6 @@ export async function fetchAnimalImages(id: string): Promise<AnimalImage[]> {
 }
 
 export async function fetchPage(id: string): Promise<PageModel> {
-  console.log(getBackendUrl() + "/api/pages/" + id);
   const url = getBackendUrl() + "/api/pages/" + id;
   return doFetch(url);
 }
@@ -44,21 +43,10 @@ export type FetchAnimalsArgs = {
   take: number;
 };
 
-export async function fetchAnimals({
-  categories = [],
-  type = null,
-  vCaretakerType = null,
-  skip,
-  take,
-}: FetchAnimalsArgs): Promise<AnimalListResult> {
-  const params = new URLSearchParams({
-    categories: categories.join(","),
-    vCaretakerType: vCaretakerType as string,
-    type: type as string,
-    skip: skip.toString(),
-    take: take.toString(),
-  }).toString();
-
+export async function fetchAnimals(
+  args: FetchAnimalsArgs,
+): Promise<AnimalListResult> {
+  const params = new URLSearchParams(filterQueryParams(args)).toString();
   return doFetch(`${BACKEND_URL}/api/c/animals?${params}`);
 }
 
@@ -75,4 +63,16 @@ export async function fetchNews(id: string): Promise<News> {
 export async function fetchRecentNews(): Promise<NewsListElement[]> {
   const url = getBackendUrl() + "/api/c/news/recent?count=5";
   return doFetch(url);
+}
+
+function filterQueryParams(
+  unfiltered: Record<string, unknown>,
+): Record<string, string> {
+  return Object.fromEntries(
+    Object.entries(unfiltered)
+      .filter(([, value]) => value !== undefined && value !== null)
+      .map(([key, value]) => {
+        return [key, value?.toString() ?? ""];
+      }),
+  );
 }
