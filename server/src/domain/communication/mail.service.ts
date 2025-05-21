@@ -1,19 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { MailServiceInterface } from './interface';
 import { ServerClient } from 'postmark';
-
-const POSTMARK_API_TOKEN = process.env.POSTMARK_API_TOKEN;
+import { CONFIG, ENV_DISABLED } from '../../config/configuration';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class MailService implements MailServiceInterface {
   private client: ServerClient | null = null;
 
-  constructor() {
-    if (POSTMARK_API_TOKEN !== 'DISABLED') {
-      if (!POSTMARK_API_TOKEN) {
-        throw Error('POSTMARK_API_TOKEN is required');
-      }
-      this.client = new ServerClient(POSTMARK_API_TOKEN);
+  constructor(configService: ConfigService) {
+    const postmarkApiToken = configService.getOrThrow<string>(CONFIG.postmarkApiToken);
+    if (postmarkApiToken !== ENV_DISABLED) {
+      this.client = new ServerClient(postmarkApiToken);
     }
   }
 

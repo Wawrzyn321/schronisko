@@ -27,6 +27,7 @@ export class PagesController {
     return this.pagesService.getDogsPage();
   }
 
+  // todo use https://docs.nestjs.com/controllers#sub-domain-routing ?
   @Public()
   @Get('/static-ids')
   getPageIdsForPrerender() {

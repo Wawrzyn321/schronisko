@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { createClient } from 'redis';
 import { CacheServiceInterface } from './interface';
-
-const REDIS_DISABLED = 'DISABLED';
+import { ConfigService } from '@nestjs/config';
+import { CONFIG, ENV_DISABLED } from '../../config/configuration';
 
 type RedisClient = ReturnType<typeof createClient>;
 
@@ -10,15 +10,11 @@ type RedisClient = ReturnType<typeof createClient>;
 export class CacheService implements CacheServiceInterface {
   private readonly client: RedisClient | null = null;
 
-  constructor() {
-    const redisEnvValue = process.env.REDIS_URL;
+  constructor(configService: ConfigService) {
+    const redisUrl =  configService.getOrThrow<string>(CONFIG.redisUrl);
 
-    if (redisEnvValue !== REDIS_DISABLED && !redisEnvValue) {
-      throw Error("REDIS_URL is not configured or not 'DISABLED'");
-    }
-
-    if (redisEnvValue !== REDIS_DISABLED) {
-      this.client = createClient({ url: redisEnvValue });
+    if (redisUrl !== ENV_DISABLED) {
+      this.client = createClient({ url: redisUrl });
 
       this.client.on('error', (err: Error) => {
         throw err;

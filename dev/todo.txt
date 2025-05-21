@@ -6,7 +6,7 @@ po deployu:
     * cors
     * Gzip compression
 
-po https
+po https const USE_HTTP = false;
     * Ustaw HSTS
     * Mozilla SSL Configuration Generator 
     * w next.config.js - protocol

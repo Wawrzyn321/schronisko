@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { CaptchaServiceInterface } from './interface';
+import { ConfigService } from '@nestjs/config';
+import { CONFIG, ENV_DISABLED } from '../../config/configuration';
 
 const CAPTCHA_VALIDATE_URL = 'https://www.google.com/recaptcha/api/siteverify';
-const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY;
 
 type CaptchaResponse = {
   success: boolean;
@@ -10,11 +11,14 @@ type CaptchaResponse = {
 
 @Injectable()
 export class CaptchaService implements CaptchaServiceInterface {
+  private captchaKey: string;
+
+  constructor(configService: ConfigService) {
+    this.captchaKey = configService.getOrThrow<string>(CONFIG.captchaKey);
+  }
+
   async validateCaptcha(captchaToken: string) {
-    if (!RECAPTCHA_SECRET_KEY) {
-      throw Error('RECAPTCHA_SECRET_KEY is required');
-    }
-    if (RECAPTCHA_SECRET_KEY === 'DISABLED') {
+    if (this.captchaKey == ENV_DISABLED) {
       return true;
     }
 
@@ -25,7 +29,7 @@ export class CaptchaService implements CaptchaServiceInterface {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: new URLSearchParams({
-          secret: RECAPTCHA_SECRET_KEY,
+          secret: this.captchaKey,
           response: captchaToken,
         }),
       });
